@@ -13,8 +13,8 @@
         </div>
         <nav class="main-menu">
             <ul class="nav metismenu">
-                <li class="{{ Request::is('dashboard') ? ' active' : null }}">
-                    <router-link class="has-arrow" to="/admin/dashboard" aria-expanded="false">
+                <li> {{-- class="{{ Request::is('dashboard') ? ' active' : null }}" --}}
+                    <router-link class="has-arrow" to="/dashboard" aria-expanded="false">
                         <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i>
                         <span>Dashboard</span>
                     </router-link>
@@ -194,10 +194,10 @@
                 @endif
 
                 @if (Auth::check() and Auth::user()->user_type == 'Administrator')
-                    <li class="{{ Request::is('admin') ? ' active' : null }}">
-                        <router-link class="has-arrow" to="admin/module" aria-expanded="false">
+                    <li>  {{-- class="{{ Request::is('module') ? ' active' : null }}" --}}
+                        <router-link class="has-arrow" to="/module" aria-expanded="false">
                             <i class="zmdi zmdi-menu zmdi-hc-fw"></i>
-                            <span>POS Control</span>
+                            <span>Modules</span>
                         </router-link>
                     </li>
                 @endif

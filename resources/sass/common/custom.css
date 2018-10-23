@@ -38,3 +38,11 @@ small, .small {
 .dataTables_info {
     font-size: .69rem;
 }
+
+body.compact-menu .sidebar.sidebar-left .sidebar-content .main-menu .nav.metismenu>li>.router-link-exact-active>i{
+    color: #fff;
+}
+
+.card {
+    margin-bottom: 0.5rem;
+}

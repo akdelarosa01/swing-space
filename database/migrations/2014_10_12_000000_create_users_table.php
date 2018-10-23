@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('actual_password');
-            $table->enum('user_type',['Owner','Employee','Customer']);
+            $table->enum('user_type',['Owner','Employee','Customer','Administrator']);
             $table->integer('is_admin')->default(0);
             $table->integer('disabled')->default(0);
             $table->string('language')->default('en');

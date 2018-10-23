@@ -7,7 +7,6 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <module-form></module-form>
                 </div>
 
                 <div class="col-md-6">
