@@ -13,11 +13,11 @@
         </div>
         <nav class="main-menu">
             <ul class="nav metismenu">
-                <li> {{-- class="{{ Request::is('dashboard') ? ' active' : null }}" --}}
-                    <router-link class="has-arrow" to="/dashboard" aria-expanded="false">
+                <li class="{{ Request::is('dashboard') ? ' active' : null }}">
+                    <a class="has-arrow" href="/dashboard" aria-expanded="false">
                         <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i>
                         <span>Dashboard</span>
-                    </router-link>
+                    </a>
                 </li>
 
                 @if (Auth::check() and Auth::user()->user_type == 'Owner')
@@ -194,11 +194,11 @@
                 @endif
 
                 @if (Auth::check() and Auth::user()->user_type == 'Administrator')
-                    <li>  {{-- class="{{ Request::is('module') ? ' active' : null }}" --}}
-                        <router-link class="has-arrow" to="/module" aria-expanded="false">
+                    <li class="{{ Request::is('admin/module') ? ' active' : null }}">
+                        <a class="has-arrow" href="/admin/module" aria-expanded="false">
                             <i class="zmdi zmdi-menu zmdi-hc-fw"></i>
                             <span>Modules</span>
-                        </router-link>
+                        </a>
                     </li>
                 @endif
                     

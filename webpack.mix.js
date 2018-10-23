@@ -24,8 +24,15 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/chartist/dist/chartist.js',
 		'resources/plugins/datatables.net/js/jquery.dataTables.js',
 		'resources/plugins/datatables.net-bs4/js/dataTables.bootstrap4.js',
-		'resources/js/scripts/app.js'
+		'resources/js/scripts/app.js',
+		'resources/js/global.js'
     ], 'public/js/main.js')
+    .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
+
+
+
+
+
     .sass('resources/sass/app.scss', 'public/css')
     .styles([
     	'public/css/app.css',

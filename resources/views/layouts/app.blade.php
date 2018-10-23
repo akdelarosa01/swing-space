@@ -24,13 +24,12 @@
 
                 <div class="content">
                     <section class="page-content container-fluid">
-                        <router-view></router-view>
-                        {{-- @yield('content') --}}
+                        @yield('content')
                     </section>
                 </div>
 
                 @include('partials.footer')
-
+                @include('modals.global')
             </div>
         </div>
     </div>

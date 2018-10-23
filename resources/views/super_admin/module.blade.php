@@ -7,14 +7,66 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <module-form></module-form>
+                    <form method="post" id="frm_module" action="/admin/module/save">
+                        @csrf
+                        <input type="hidden" id="id" name="id" class="clear">
+
+                        <div class="form-group row">
+                            <label for="module_code" class="col-sm-2 col-form-label">Code</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="module_code" name="module_code" class="form-control form-control-sm clear validate">
+                                <div id="module_code_feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="module_name" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="module_name" name="module_name" class="form-control form-control-sm clear validate">
+                                <div id="module_name_feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="module_category" class="col-sm-2 col-form-label">Category</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="module_category" name="module_category" class="form-control form-control-sm clear validate">
+                                <div id="module_category_feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="icon" class="col-sm-2 col-form-label">Icon</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="icon" name="icon" class="form-control form-control-sm clear validate">
+                                <div id="icon_feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-info btn-sm pull-right" >Save</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="col-md-6">
-                    
+                    <table class="table table-sm table-striped" id="tbl_modules">
+                        <thead>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Icon</th>
+                            <th></th>
+                        </thead>
+                        <tbody id="tbl_modules_body"></tbody>
+                    </table>
                 </div>
             </div>
 
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+        let token = $('meta[name=csrf-token]').attr('content');
+    </script>
+    <script type="text/javascript" src="{{ asset('/js/pages/super_admin/module.js') }}"></script>
+@endpush

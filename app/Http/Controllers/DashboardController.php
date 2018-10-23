@@ -14,12 +14,7 @@ class DashboardController extends Controller
     {
         $this->_global = new GlobalController;
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         switch (Auth::user()->user_type) {
