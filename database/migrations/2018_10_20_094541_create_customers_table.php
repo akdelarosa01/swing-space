@@ -17,7 +17,6 @@ class CreateCustomersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('customer_code');
-            $table->enum('gender',['Male','Female']);
             $table->string('phone')->default('N/A');
             $table->string('mobile')->default('N/A');
             $table->string('facebook')->default('N/A');
@@ -25,9 +24,11 @@ class CreateCustomersTable extends Migration
             $table->string('twitter')->default('N/A');
             $table->string('occupation')->default('N/A');
             $table->string('school')->default('N/A');
-            $table->string('workplace')->default('N/A');
+            $table->string('company')->default('N/A');
             $table->string('membership_type');
             $table->date('date_registered');
+            $table->integer('create_user');
+            $table->integer('update_user');
             $table->timestamps();
         });
     }

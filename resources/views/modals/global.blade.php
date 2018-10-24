@@ -18,3 +18,22 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="msg_modal" role="dialog" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="msg_title"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true" class="zmdi zmdi-close"></span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="msg_content"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-success" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>

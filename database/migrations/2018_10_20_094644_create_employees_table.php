@@ -18,7 +18,6 @@ class CreateEmployeesTable extends Migration
             $table->integer('user_id');
             $table->string('employee_id');
             $table->date('date_of_birth');
-            $table->enum('gender',['Male','Female']);
             $table->string('phone')->default('N/A');
             $table->string('mobile')->default('N/A');
             $table->string('street');
@@ -31,6 +30,8 @@ class CreateEmployeesTable extends Migration
             $table->string('philhealth');
             $table->string('pagibig');
             $table->date('date_hired');
+            $table->integer('create_user');
+            $table->integer('update_user');
             $table->timestamps();
         });
     }

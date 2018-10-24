@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('actual_password');
             $table->enum('user_type',['Owner','Employee','Customer','Administrator']);
+            $table->enum('gender',['Male','Female']);
             $table->integer('is_admin')->default(0);
             $table->integer('disabled')->default(0);
             $table->string('language')->default('en');

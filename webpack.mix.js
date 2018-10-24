@@ -30,6 +30,9 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
 
 
+    .js('resources/js/pages/customer/membership.js', 'public/js/pages/customer/')
+
+
 
 
 

@@ -9,7 +9,6 @@ class Customer extends Model
     protected $fillable = [
     	'user_id',
 		'customer_code',
-		'gender',
 		'phone',
 		'mobile',
 		'facebook',
@@ -17,9 +16,11 @@ class Customer extends Model
 		'twitter',
 		'occupation',
 		'school',
-		'workplace',
+		'company',
 		'membership_type',
-		'date_registered'
+		'date_registered',
+		'create_user',
+		'update_user'
     ];
 
     public function user()

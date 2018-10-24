@@ -31,7 +31,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
 
 Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('customer-list', 'Pages\CustomerController@index');
+    Route::get('customer-list/data-list', 'Pages\CustomerController@show');
+
     Route::get('membership', 'Pages\MembershipController@index');
+    Route::post('membership/save', 'Pages\MembershipController@save');
 
     Route::get('inventory-list', 'Pages\InventoryController@index');
     Route::get('receive-item', 'Pages\ReceiveItemController@index');

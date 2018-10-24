@@ -10,7 +10,6 @@ class Employee extends Model
     	'user_id',
 		'employee_id',
 		'date_of_birth',
-		'gender',
 		'phone',
 		'mobile',
 		'street',
@@ -22,7 +21,9 @@ class Employee extends Model
 		'tin',
 		'philhealth',
 		'pagibig',
-		'date_hired'
+		'date_hired',
+		'create_user',
+		'update_user'
     ];
 
     public function user()

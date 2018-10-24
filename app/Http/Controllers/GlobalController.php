@@ -13,7 +13,7 @@ class GlobalController extends Controller
     	$this->middleware('auth');
     }
 
-    public function userAccess()
+    public function UserAccess()
     {
     	$user_access = DB::table('modules as m')
     						->join('user_accesses as u','u.module_id','=','m.id')
