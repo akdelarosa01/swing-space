@@ -19,15 +19,15 @@ class DashboardController extends Controller
     {
         switch (Auth::user()->user_type) {
             case 'Owner':
-                return view('pages.dashboard_owner');
+                return view('pages.dashboard.owner');
                 break;
 
             case 'Employee':
-                return view('pages.dashboard_employee');
+                return view('pages.dashboard.employee');
                 break;
 
             case 'Customer':
-                return view('pages.dashboard_customer');
+                return view('pages.dashboard.customer');
                 break;
             
             default:

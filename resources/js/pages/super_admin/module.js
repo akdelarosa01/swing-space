@@ -56,6 +56,10 @@ $( function() {
 			console.log("complete");
 		});
 	});
+
+	$('#btn_cancel').on('click', function() {
+		clear();
+	});
 });
 
 function getModules(data) {
@@ -84,8 +88,7 @@ function ModulesDataTable(arr) {
     $('#tbl_modules').dataTable().fnDestroy();
     $('#tbl_modules').dataTable({
         data: arr,
-        searching: false,
-	    paging: false,
+        sorting: false,
 	    deferRender: true,
         columns: [
             {data:'module_code'},
@@ -95,12 +98,12 @@ function ModulesDataTable(arr) {
             	return '<i class="'+x.icon+'"></i>';
             }},
             {data: function(x) {
-            	return '<button class="btn btn-sm btn-info btn_edit" data-id="'+x.id+'"'+
+            	return '<div class="btn-group"><button class="btn btn-sm btn-info btn_edit" data-id="'+x.id+'"'+
 	            			'data-module_code="'+x.module_code+'" '+
 	            			'data-module_name="'+x.module_name+'" '+
 	            			'data-module_category="'+x.module_category+'" '+
-	            			'data-ic="'+x.icon+'">Edit</button>'+
-            			'<button class="btn btn-sm btn-danger btn_remove" data-id="'+x.id+'">Delete</button>';
+	            			'data-ic="'+x.icon+'"><i class="fa fa-edit"></i></button>'+
+            			'<button class="btn btn-sm btn-danger btn_remove" data-id="'+x.id+'"><i class="fa fa-trash"></i></button></div>';
             }, searchable: false, orderable: false},
         ]
     });

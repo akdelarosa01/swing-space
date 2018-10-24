@@ -42,6 +42,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/sass/icons/line-awesome.min.css',
 		'resources/sass/icons/dripicons.min.css',
 		'resources/sass/icons/material-design-iconic-font.min.css',
+		'resources/sass/icons/font-awesome.min.css',
 		'resources/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css',
 		'resources/sass/common/main.bundle.css',
 		'resources/sass/layouts/vertical/core/main.css',

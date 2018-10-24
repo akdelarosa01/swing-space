@@ -46,3 +46,7 @@ small, .small {
 .dataTables_processing {
     z-index: 1000;
 }
+
+.btn i, a:link.btn i {
+    color: #ffffff;
+}

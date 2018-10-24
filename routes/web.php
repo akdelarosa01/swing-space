@@ -28,3 +28,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
     Route::post('module/save','SuperAdmin\ModuleController@save');
     Route::post('module/delete','SuperAdmin\ModuleController@destroy');
 });
+
+Route::group(['middleware' => ['auth','no.back']], function() {
+    Route::get('customer-list', 'Pages\CustomerController@index');
+    Route::get('membership', 'Pages\MembershipController@index');
+
+    Route::get('inventory-list', 'Pages\InventoryController@index');
+    Route::get('receive-item', 'Pages\ReceiveItemController@index');
+    Route::get('update-inventory', 'Pages\UpdateInventoryController@index');
+});

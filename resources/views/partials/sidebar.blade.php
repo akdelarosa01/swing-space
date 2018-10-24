@@ -28,12 +28,12 @@
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('customer-list') ? ' active' : null }}">
-                                <a href="{{ route('customer-list') }}">
+                                <a href="{{ url('customer-list') }}">
                                     <span>Customer List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('membership') ? ' active' : null }}">
-                                <a href="{{ route('membership') }}">
+                                <a href="{{ url('membership') }}">
                                     <span>Membership</span>
                                 </a>
                             </li>
@@ -47,22 +47,22 @@
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('inventory-list') ? ' active' : null }}">
-                                <a href="{{ route('inventory-list') }}">
+                                <a href="{{ url('inventory-list') }}">
                                     <span>Inventory List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('summary-list') ? ' active' : null }}">
-                                <a href="{{ route('summary-list') }}">
+                                <a href="{{ url('summary-list') }}">
                                     <span>Summary List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('update-inventory') ? ' active' : null }}">
-                                <a href="{{ route('update-inventory') }}">
+                                <a href="{{ url('update-inventory') }}">
                                     <span>Update Inventory</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('receive-items') ? ' active' : null }}">
-                                <a href="{{ route('receive-items') }}">
+                                <a href="{{ url('receive-items') }}">
                                     <span>Receive Items</span>
                                 </a>
                             </li>
@@ -76,12 +76,12 @@
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('admin/employee-list') ? ' active' : null }}">
-                                <a href="{{ route('admin.employee-list') }}">
+                                <a href="{{ url('admin.employee-list') }}">
                                     <span>Employee List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('admin/add-employee') ? ' active' : null }}">
-                                <a href="{{ route('admin.add-employee') }}">
+                                <a href="{{ url('admin.add-employee') }}">
                                     <span>Add Employee</span>
                                 </a>
                             </li>
@@ -95,12 +95,12 @@
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('admin/products') ? ' active' : null }}">
-                                <a href="{{ route('admin.products') }}">
+                                <a href="{{ url('admin.products') }}">
                                     <span>Products List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('admin/add-products') ? ' active' : null }}">
-                                <a href="{{ route('admin.add-products') }}">
+                                <a href="{{ url('admin.add-products') }}">
                                     <span>Add Products</span>
                                 </a>
                             </li>
@@ -114,12 +114,12 @@
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('admin/general-settings') ? ' active' : null }}">
-                                <a href="{{ route('admin.general-settings') }}">
+                                <a href="{{ url('admin.general-settings') }}">
                                     <span>General Settings</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('admin/dropdown') ? ' active' : null }}">
-                                <a href="{{ route('admin.dropdown') }}">
+                                <a href="{{ url('admin.dropdown') }}">
                                     <span>Dropdown Settings</span>
                                 </a>
                             </li>
@@ -129,7 +129,7 @@
 
                 @if (Auth::check() and Auth::user()->user_type == 'Employee')
                     <li class="{{ Request::is('employee/pos') ? ' active' : null }}">
-                        <a class="has-arrow" href="{{ route('pos') }}" aria-expanded="false">
+                        <a class="has-arrow" href="{{ url('pos') }}" aria-expanded="false">
                             <i class="zmdi zmdi-menu zmdi-hc-fw"></i>
                             <span>POS Control</span>
                         </a>
@@ -141,12 +141,12 @@
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('customer-list') ? ' active' : null }}">
-                                <a href="{{ route('customer-list') }}">
+                                <a href="{{ url('customer-list') }}">
                                     <span>Customer List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('membership') ? ' active' : null }}">
-                                <a href="{{ route('membership') }}">
+                                <a href="{{ url('membership') }}">
                                     <span>Membership</span>
                                 </a>
                             </li>
@@ -159,17 +159,17 @@
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('inventory-list') ? ' active' : null }}">
-                                <a href="{{ route('inventory-list') }}">
+                                <a href="{{ url('inventory-list') }}">
                                     <span>Inventory List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('summary-list') ? ' active' : null }}">
-                                <a href="{{ route('summary-list') }}">
+                                <a href="{{ url('summary-list') }}">
                                     <span>Summary List</span>
                                 </a>
                             </li>
                             <li class="{{ Request::is('receive-items') ? ' active' : null }}">
-                                <a href="{{ route('receive-items') }}">
+                                <a href="{{ url('receive-items') }}">
                                     <span>Receive Items</span>
                                 </a>
                             </li>
@@ -182,7 +182,7 @@
                         </a>
                         <ul class="collapse nav-sub">
                             <li class="{{ Request::is('employee/sales-report') ? ' active' : null }}">
-                                <a href="{{ route('employee.sales-report') }}">
+                                <a href="{{ url('employee.sales-report') }}">
                                     <span>Sales Report</span>
                                 </a>
                             </li>
@@ -195,7 +195,7 @@
 
                 @if (Auth::check() and Auth::user()->user_type == 'Administrator')
                     <li class="{{ Request::is('admin/module') ? ' active' : null }}">
-                        <a class="has-arrow" href="/admin/module" aria-expanded="false">
+                        <a class="has-arrow" href="{{ url('/admin/module') }}" aria-expanded="false">
                             <i class="zmdi zmdi-menu zmdi-hc-fw"></i>
                             <span>Modules</span>
                         </a>
