@@ -60,55 +60,63 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 60);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 60:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(61);
+module.exports = __webpack_require__(43);
 
 
 /***/ }),
 
-/***/ 61:
+/***/ 43:
 /***/ (function(module, exports) {
 
-var customers_today = [{
-  id: 1,
-  name: 'John Doe',
-  time_spent: '01:30:25',
-  total_bill: '300.00'
-}, {
-  id: 2,
-  name: 'Juan Dela Cruz',
-  time_spent: '00:33:41',
-  total_bill: '200.00'
-}];
+var customers = [];
 
 $(function () {
-  customerTable(customers_today);
+    getCustomers();
 });
 
+function getCustomers() {
+    customers = [];
+    $.ajax({
+        url: 'customer-list/show',
+        type: 'GET',
+        dataType: 'JSON',
+        data: { _token: token }
+    }).done(function (data, textStatus, xhr) {
+        customers = data;
+        customerTable(customers);
+    }).fail(function (xhr, textStatus, errorThrown) {
+        msg(errorThrown, textStatus);
+    }).always(function () {
+        console.log("complete");
+    });
+}
+
 function customerTable(arr) {
-  $('#tbl_customer_today').dataTable().fnClearTable();
-  $('#tbl_customer_today').dataTable().fnDestroy();
-  $('#tbl_customer_today').dataTable({
-    data: arr,
-    bLengthChange: false,
-    searching: false,
-    ordering: false,
-    paging: false,
-    scrollY: "250px",
-    columns: [{ data: 'name' }, { data: 'time_spent' }, { data: 'total_bill' }, { data: function data(x) {
-        return '<button class="btn btn-sm btn-primary">Check Out</button>';
-      } }]
-    // fnInitComplete: function() {
-    //     $('.dataTables_scrollBody').slimscroll();
-    // },
-  });
+    $('#tbl_customers').dataTable().fnClearTable();
+    $('#tbl_customers').dataTable().fnDestroy();
+    $('#tbl_customers').dataTable({
+        data: arr,
+        bLengthChange: false,
+        searching: false,
+        ordering: false,
+        paging: false,
+        scrollY: "250px",
+        columns: [{ data: function data(x) {
+                return '<img src="' + x.photo + '" class="w-35 rounded-circle" alt="' + x.firstname + ' ' + x.lastname + '">';
+            } }, { data: 'customer_code' }, { data: function data(x) {
+                return x.firstname + ' ' + x.lastname;
+            } }, { data: 'gender' }, { data: function data(x) {
+                return '<div class="btn-group">' + '<a href="/membership/' + x.id + '/edit" class="btn btn-sm btn-info">Edit</a>' + '<button class="btn btn-sm btn-danger">Delete</button>' + '</button>';
+            } }]
+    });
 }
 
 /***/ })

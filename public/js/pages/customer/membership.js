@@ -60,23 +60,53 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 44);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 42:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(43);
+module.exports = __webpack_require__(45);
 
 
 /***/ }),
 
-/***/ 43:
+/***/ 45:
 /***/ (function(module, exports) {
 
-$(function () {});
+$(function () {
+	$('#phone').mask('(99)999-9999', { placeholder: '(__) ___-____' });
+	$('#mobile').mask('(+63)999-999-9999', { placeholder: '(+63)___-___-____' });
+
+	$('#frm_membership').on('submit', function (e) {
+		e.preventDefault();
+		$.ajax({
+			url: $(this).attr('action'),
+			type: 'POST',
+			dataType: 'JSON',
+			data: $(this).serialize()
+		}).done(function (data, textStatus, xhr) {
+			msg(data.msg, data.status);
+			clear();
+		}).fail(function (xhr, textStatus, errorThrown) {
+			var errors = xhr.responseJSON.errors;
+
+			if (errors == undefined) {
+				msg(errorThrown, textStatus);
+			} else {
+				showErrors(errors);
+			}
+		}).always(function () {
+			console.log("complete");
+		});
+	});
+});
+
+function clear() {
+	$('.clear').val('');
+}
 
 /***/ })
 

@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
-use App\Customer;
-use App\User;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -23,15 +22,32 @@ class CustomerController extends Controller
         return view('pages.customer.customer_list');
     }
 
-    public function save(Request $req)
-    {
-        //
-    }
-
     public function show()
     {
-        $users = new User;
-        return $users->customer;
+        $customers = DB::table('users as u')
+                        ->join('customers as c','u.id','=','c.user_id')
+                        ->orderBy('u.id')
+                        ->select(
+                            DB::raw('u.id as id'),
+                            DB::raw('u.photo as photo'),
+                            DB::raw('u.firstname as firstname'),
+                            DB::raw('u.lastname as lastname'),
+                            DB::raw('u.email as email'),
+                            DB::raw('u.gender as gender'),
+                            DB::raw('c.customer_code as customer_code'),
+                            DB::raw('c.phone as phone'),
+                            DB::raw('c.mobile as mobile'),
+                            DB::raw('c.facebook as facebook'),
+                            DB::raw('c.instagram as instagram'),
+                            DB::raw('c.twitter as twitter'),
+                            DB::raw('c.occupation as occupation'),
+                            DB::raw('c.company as company'),
+                            DB::raw('c.school as school'),
+                            DB::raw('c.membership_type as membership_type'),
+                            DB::raw('c.date_registered as date_registered')
+                        )
+                        ->get();
+        return response()->json($customers);
     }
 
     public function destroy(Request $req)

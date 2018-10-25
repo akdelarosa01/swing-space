@@ -22,6 +22,8 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/switchery-npm/index.js',
 		'resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
 		'resources/plugins/chartist/dist/chartist.js',
+		'resources/plugins/toast/jquery.toast.js',
+		'resources/plugins/jquery-mask/jquery.mask.min.js',
 		'resources/plugins/datatables.net/js/jquery.dataTables.js',
 		'resources/plugins/datatables.net-bs4/js/dataTables.bootstrap4.js',
 		'resources/js/scripts/app.js',
@@ -29,8 +31,9 @@ mix.js('resources/js/app.js', 'public/js')
     ], 'public/js/main.js')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
 
-
+    .js('resources/js/pages/customer/customer_list.js', 'public/js/pages/customer/')
     .js('resources/js/pages/customer/membership.js', 'public/js/pages/customer/')
+
 
 
 
@@ -46,6 +49,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/sass/icons/dripicons.min.css',
 		'resources/sass/icons/material-design-iconic-font.min.css',
 		'resources/sass/icons/font-awesome.min.css',
+		'resources/plugins/toast/jquery.toast.css',
 		'resources/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css',
 		'resources/sass/common/main.bundle.css',
 		'resources/sass/layouts/vertical/core/main.css',

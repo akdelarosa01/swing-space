@@ -86,3 +86,79 @@ function confirm(title,msg,value) {
 
 	$('#confirm_modal').modal('show');
 }
+
+function msg(msg_content,status) {
+    if (status == '') {
+        $.toast({
+            heading: 'Oops!',
+            text: msg_content,
+            position: 'top-right',
+            loaderBg: '#ff6849',
+            icon: 'warning',
+            hideAfter: 3000,
+            stack: 6
+        });
+    } else {
+        switch(status) {
+            case 'success':
+               $.toast({
+                    heading: jsUcfirst(status)+"!",
+                    text: msg_content,
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'success',
+                    hideAfter: 5000,
+                    stack: 6
+                });
+            break;
+
+            case 'failed':
+               $.toast({
+                    heading: jsUcfirst(status)+"!",
+                    text: msg_content,
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'warning',
+                    hideAfter: 5000,
+                    stack: 6
+                });
+            break;
+
+            case 'warning':
+               $.toast({
+                    heading: jsUcfirst(status)+"!",
+                    text: msg_content,
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'warning',
+                    hideAfter: 5000,
+                    stack: 6
+                });
+            break;
+
+            case 'error':
+               $.toast({
+                    heading: jsUcfirst(status)+"!",
+                    text: msg_content,
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'danger',
+                    hideAfter: 5000,
+                    stack: 6
+                });
+            break;
+
+            case 'notification':
+               $.toast({
+                    heading: jsUcfirst(status)+"!",
+                    text: msg_content,
+                    position: 'top-right',
+                    loaderBg: '#ff6849',
+                    icon: 'info',
+                    hideAfter: 5000,
+                    stack: 6
+                });
+            break;
+        }
+    }
+}
