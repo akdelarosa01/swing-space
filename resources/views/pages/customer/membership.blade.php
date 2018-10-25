@@ -13,7 +13,7 @@
                 <div class="form-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="hidden" name="id" id="id" value="@if(isset($c->id)) {{ $c->id }} @endif">
+                            <input type="hidden" name="id" id="id" value="@if(isset($id)) {{ $id }} @endif">
 
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">First Name</label>
@@ -159,6 +159,8 @@
             </div>
         </form>
     </div>
+
+    @include('modals.membership')
 @endsection
 
 @push('scripts')

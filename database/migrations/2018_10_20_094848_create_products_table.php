@@ -21,6 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('product_type');
             $table->string('variants');
             $table->double('unit_price',20,2);
+            $table->integer('create_user');
+            $table->integer('update_user');
             $table->timestamps();
         });
     }

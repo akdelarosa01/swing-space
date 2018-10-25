@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('membership', 'Pages\MembershipController@index');
     Route::get('membership/{id}/edit', 'Pages\MembershipController@edit');
+    Route::get('membership/show', 'Pages\MembershipController@show');
     Route::post('membership/save', 'Pages\MembershipController@save');
 
     Route::get('inventory-list', 'Pages\InventoryController@index');
