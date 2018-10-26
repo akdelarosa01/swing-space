@@ -200,6 +200,12 @@
                             <span>Modules</span>
                         </a>
                     </li>
+                    <li class="{{ Request::is('admin/transaction-codes') ? ' active' : null }}">
+                        <a class="has-arrow" href="{{ url('/admin/transaction-codes') }}" aria-expanded="false">
+                            <i class="zmdi zmdi-code zmdi-hc-fw"></i>
+                            <span>Transaction Codes</span>
+                        </a>
+                    </li>
                 @endif
                     
             </ul>

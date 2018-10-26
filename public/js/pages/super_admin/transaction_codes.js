@@ -60,27 +60,26 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ 	return __webpack_require__(__webpack_require__.s = 42);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 46:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(47);
+module.exports = __webpack_require__(43);
 
 
 /***/ }),
 
-/***/ 47:
+/***/ 43:
 /***/ (function(module, exports) {
 
 $(function () {
-	$('#phone').mask('(99)999-9999', { placeholder: '(__) ___-____' });
-	$('#mobile').mask('(+63)999-999-9999', { placeholder: '(+63)___-___-____' });
+	getTransactionCodes([]);
 
-	$('#frm_membership').on('submit', function (e) {
+	$('#frm_trans_code').on('submit', function (e) {
 		e.preventDefault();
 		$.ajax({
 			url: $(this).attr('action'),
@@ -88,82 +87,91 @@ $(function () {
 			dataType: 'JSON',
 			data: $(this).serialize()
 		}).done(function (data, textStatus, xhr) {
-			msg(data.msg, data.status);
-			assign_data_to_moodal(data.customer);
-			clear();
+			if (textStatus == 'success') {
+				msg(data.msg, data.status);
+				TransactionDataTable(data.trans);
+				clear();
+			}
 		}).fail(function (xhr, textStatus, errorThrown) {
 			var errors = xhr.responseJSON.errors;
-
-			if (errors == undefined) {
-				msg(errorThrown, textStatus);
-			} else {
-				showErrors(errors);
-			}
+			showErrors(errors);
 		}).always(function () {
 			console.log("complete");
 		});
 	});
 
-	display_customer($('#id').val());
-});
+	$('#tbl_transaction_body').on('click', '.btn_edit', function () {
+		$('#id').val($(this).attr('data-id'));
+		$('#code').val($(this).attr('data-code'));
+		$('#description').val($(this).attr('data-description'));
+		$('#prefix').val($(this).attr('data-prefix'));
+		$('#prefix_format').val($(this).attr('data-prefix_format'));
+		$('#next_no').val($(this).attr('data-next_no'));
+		$('#next_no_length').val($(this).attr('data-next_no_length'));
+	});
 
-function clear() {
-	$('.clear').val('');
-}
+	$('#tbl_transaction_body').on('click', '.btn_remove', function () {
+		confirm('Delete Transaction Code', 'Do you want to delete this transaction code?', $(this).attr('data-id'));
+	});
 
-function assign_data_to_moodal(cust) {
-	$('#customer_code_v').html(cust.customer_code);
-	$('#membership_type_v').html(cust.membership_type);
-	$('#date_registered_v').html(cust.date_registered);
-	$('#name_v').html(cust.firstname + ' ' + cust.lastname);
-	$('#email_v').html(cust.email);
-	$('#gender_v').html(cust.gender);
-	$('#phone_v').html(cust.phone);
-	$('#mobile_v').html(cust.mobile);
-	$('#facebook_v').html(cust.facebook);
-	$('#instagram_v').html(cust.instagram);
-	$('#twitter_v').html(cust.twitter);
-	$('#occupation_v').html(cust.occupation);
-	$('#company_v').html(cust.company);
-	$('#school_v').html(cust.school);
-
-	$('#membership_modal').modal('show');
-}
-
-function display_customer(id) {
-	if (id !== '') {
+	$('#btn_confirm').on('click', function () {
 		$.ajax({
-			url: '../../membership/show',
-			type: 'GET',
+			url: '/admin/transaction-codes/delete',
+			type: 'POST',
 			dataType: 'JSON',
 			data: {
 				_token: token,
-				id: id
+				id: $('#confirm_id').val()
 			}
 		}).done(function (data, textStatus, xhr) {
-			$('#firstname').val(data.firstname);
-			$('#lastname').val(data.lastname);
-			$('#email').val(data.email);
-			$('#gender').val(data.gender);
-			$('#phone').val(data.phone);
-			$('#mobile').val(data.mobile);
-			$('#facebook').val(data.facebook);
-			$('#instagram').val(data.instagram);
-			$('#twitter').val(data.twitter);
-			$('#occupation').val(data.occupation);
-			$('#company').val(data.company);
-			$('#school').val(data.school);
-			$('#membership_type').val(data.membership_type);
-
-			if (data.disable) {
-				$('#disable').prop('checked', true);
+			if (textStatus == 'success') {
+				$('#confirm_modal').modal('hide');
+				msg(data.msg, data.status);
+				TransactionDataTable(data.trans);
 			}
 		}).fail(function (xhr, textStatus, errorThrown) {
 			console.log("error");
 		}).always(function () {
 			console.log("complete");
 		});
+	});
+
+	$('#btn_cancel').on('click', function () {
+		clear();
+	});
+});
+
+function getTransactionCodes(data) {
+	if (data.length > 0) {
+		console.log(data);
+		TransactionDataTable(data);
+	} else {
+		$.ajax({
+			url: '/admin/transaction-codes/show',
+			type: 'GET',
+			dataType: 'JSON',
+			data: { _token: token }
+		}).done(function (data, textStatus, xhr) {
+			TransactionDataTable(data);
+		}).fail(function (xhr, textStatus, errorThrown) {
+			console.log("error");
+		}).always(function () {
+			console.log("complete");
+		});
 	}
+}
+
+function TransactionDataTable(arr) {
+	$('#tbl_transaction').dataTable().fnClearTable();
+	$('#tbl_transaction').dataTable().fnDestroy();
+	$('#tbl_transaction').dataTable({
+		data: arr,
+		sorting: false,
+		deferRender: true,
+		columns: [{ data: 'code' }, { data: 'description' }, { data: 'prefix' }, { data: 'prefix_format' }, { data: 'next_no' }, { data: 'next_no_length' }, { data: function data(x) {
+				return '<div class="btn-group"><button class="btn btn-sm btn-info btn_edit" data-id="' + x.id + '"' + ' data-code="' + x.code + '"' + ' data-description="' + x.description + '"' + ' data-prefix="' + x.prefix + '"' + ' data-prefix_format="' + x.prefix_format + '"' + ' data-next_no="' + x.next_no + '"' + ' data-next_no_length="' + x.next_no_length + '"><i class="fa fa-edit"></i></button>' + '<button class="btn btn-sm btn-danger btn_remove" data-id="' + x.id + '"><i class="fa fa-trash"></i></button></div>';
+			}, searchable: false, orderable: false }]
+	});
 }
 
 /***/ })

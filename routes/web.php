@@ -27,6 +27,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
     Route::get('module/show','SuperAdmin\ModuleController@show');
     Route::post('module/save','SuperAdmin\ModuleController@save');
     Route::post('module/delete','SuperAdmin\ModuleController@destroy');
+
+
+    Route::get('transaction-codes','SuperAdmin\TransactionCodesController@index');
+    Route::get('transaction-codes/show','SuperAdmin\TransactionCodesController@show');
+    Route::post('transaction-codes/save','SuperAdmin\TransactionCodesController@save');
+    Route::post('transaction-codes/delete','SuperAdmin\TransactionCodesController@destroy');
 });
 
 Route::group(['middleware' => ['auth','no.back']], function() {
