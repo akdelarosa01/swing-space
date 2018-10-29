@@ -20,7 +20,7 @@
                     </a>
                 </li>
 
-                @if (Auth::check() and Auth::user()->user_type == 'Owner')
+                @if (Auth::check() and (Auth::user()->user_type == 'Owner' or Auth::user()->user_type == 'Employee'))
                     <li class="nav-dropdown {{ Request::is('customer-list') || Request::is('membership') ? ' active' : null }}">
                         <a class="has-arrow" href="#" aria-expanded="false">
                             <i class="zmdi zmdi-accounts zmdi-hc-fw"></i>
@@ -69,20 +69,20 @@
                         </ul>
                     </li>
 
-                    <li class="nav-dropdown {{ Request::is('admin/employee-list') || Request::is('admin/add-employee') ? ' active' : null }}">
+                    <li class="nav-dropdown {{ Request::is('employee') ? ' active' : null }}">
                         <a class="has-arrow" href="#" aria-expanded="false">
                             <i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i>
                             <span>Employee</span>
                         </a>
                         <ul class="collapse nav-sub" aria-expanded="false">
                             <li class="{{ Request::is('admin/employee-list') ? ' active' : null }}">
-                                <a href="{{ url('admin.employee-list') }}">
+                                <a href="{{ url('employee-list') }}">
                                     <span>Employee List</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::is('admin/add-employee') ? ' active' : null }}">
-                                <a href="{{ url('admin.add-employee') }}">
-                                    <span>Add Employee</span>
+                            <li class="{{ Request::is('employee') ? ' active' : null }}">
+                                <a href="{{ url('employee') }}">
+                                    <span>Employee Registration</span>
                                 </a>
                             </li>
                         </ul>
@@ -118,8 +118,8 @@
                                     <span>General Settings</span>
                                 </a>
                             </li>
-                            <li class="{{ Request::is('admin/dropdown') ? ' active' : null }}">
-                                <a href="{{ url('admin.dropdown') }}">
+                            <li class="{{ Request::is('dropdown') ? ' active' : null }}">
+                                <a href="{{ url('dropdown') }}">
                                     <span>Dropdown Settings</span>
                                 </a>
                             </li>

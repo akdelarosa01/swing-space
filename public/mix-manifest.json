@@ -3,6 +3,7 @@
     "/css/app.css": "/css/app.css",
     "/js/pages/super_admin/transaction_codes.js": "/js/pages/super_admin/transaction_codes.js",
     "/js/pages/super_admin/module.js": "/js/pages/super_admin/module.js",
+    "/js/pages/settings/dropdown.js": "/js/pages/settings/dropdown.js",
     "/js/pages/customer/membership.js": "/js/pages/customer/membership.js",
     "/js/pages/customer/customer_list.js": "/js/pages/customer/customer_list.js",
     "/js/main.js": "/js/main.js",

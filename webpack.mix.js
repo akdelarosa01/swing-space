@@ -35,6 +35,8 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/customer/customer_list.js', 'public/js/pages/customer/')
     .js('resources/js/pages/customer/membership.js', 'public/js/pages/customer/')
 
+    .js('resources/js/pages/settings/dropdown.js', 'public/js/pages/settings/')
+
 
 
 

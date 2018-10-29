@@ -28,7 +28,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
     Route::post('module/save','SuperAdmin\ModuleController@save');
     Route::post('module/delete','SuperAdmin\ModuleController@destroy');
 
-
     Route::get('transaction-codes','SuperAdmin\TransactionCodesController@index');
     Route::get('transaction-codes/show','SuperAdmin\TransactionCodesController@show');
     Route::post('transaction-codes/save','SuperAdmin\TransactionCodesController@save');
@@ -44,7 +43,22 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('membership/show', 'Pages\MembershipController@show');
     Route::post('membership/save', 'Pages\MembershipController@save');
 
+    Route::get('employee-list', 'Pages\EmployeeController@index');
+    Route::get('employee-list/show', 'Pages\EmployeeController@show');
+
+    Route::get('employee', 'Pages\EmployeeController@registration');
+    Route::get('employee/{id}/edit', 'Pages\EmployeeController@edit');
+    Route::get('employee/show', 'Pages\EmployeeController@show');
+    Route::post('employee/save', 'Pages\EmployeeController@save');
+
     Route::get('inventory-list', 'Pages\InventoryController@index');
     Route::get('receive-item', 'Pages\ReceiveItemController@index');
     Route::get('update-inventory', 'Pages\UpdateInventoryController@index');
+
+    Route::get('dropdown','Pages\DropdownController@index');
+    Route::get('dropdown/show-name','Pages\DropdownController@show_name');
+    Route::get('dropdown/show-option','Pages\DropdownController@show_option');
+    Route::post('dropdown/save-name','Pages\DropdownController@save_name');
+    Route::post('dropdown/save-option','Pages\DropdownController@save_option');
+    Route::post('dropdown/delete','Pages\DropdownController@destroy');
 });

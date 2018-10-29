@@ -77,7 +77,7 @@
 
             <div class="content">
                 <div class="title">
-                    <img src="/img/swingspace_logo.png" alt="" class="img-fluid">
+                    <img src="/img/logo.png" alt="" class="img-fluid" height="300px">
                 </div>
 
                 <div class="links">
