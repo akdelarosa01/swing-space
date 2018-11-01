@@ -8,6 +8,7 @@ $( function() {
 
 	$('#frm_name').on('submit', function(e) {
 		e.preventDefault();
+		$('.loading').show();
 		$.ajax({
 			url: $(this).attr('action'),
 			type: 'POST',
@@ -23,13 +24,15 @@ $( function() {
 			var errors = xhr.responseJSON.errors;
 			showErrors(errors);
 		}).always(function() {
-			console.log("complete");
+			$('.loading').hide();
 		});
 	});
 
 	$('#tbl_name_body').on('click', '.btn_add_option', function() {
 		$('#dropdown_name').html($(this).attr('data-description'));
 		$('#dropdown_id').val($(this).attr('data-id'));
+		$('#option_description').prop('readonly', false);
+		getOption($(this).attr('data-id'));
 	});
 
 	$('#tbl_name_body').on('click', '.btn_edit_name', function() {
@@ -37,46 +40,31 @@ $( function() {
 		$('#description').val($(this).attr('data-description'));
 	});
 
-	$('#btn_add').on('click', function() {
-		if (options.length > 0) {
-			let same = false;
-			$.each(options, function(i, x) {
-				if (x.option_description !== undefined) {
-					if (x.option_description == $('#option_description').val()) {
-						msg("This option is already added.",'failed');
-						same = true;
-					}
-				}
-			});
-
-			if (same == false) {
-				let count = options.length+1;
-				options.push({
-					id: count,
-					count: count,
-					option_description: $('#option_description').val()
-				});
-
-				$('#option_description').val('');
-
-				DropdownOptionDataTable(options);
+	$('#frm_options').on('submit', function(e) {
+		e.preventDefault();
+		$('.loading').show();
+		$.ajax({
+			url: $(this).attr('action'),
+			type: 'POST',
+			dataType: 'JSON',
+			data: $(this).serialize(),
+		}).done(function(data, textStatus, xhr) {
+			if (textStatus == 'success') {
+				msg(data.msg,data.status);
+				clear();
+				DropdownOptionDataTable(data.option);
 			}
-		} else {
-			let count = options.length+1;
-			options.push({
-				id: count,
-				count: count,
-				option_description: $('#option_description').val()
-			});
-
-			$('#option_description').val('');
-
-			DropdownOptionDataTable(options);
-		}
+		}).fail(function(xhr, textStatus, errorThrown) {
+			var errors = xhr.responseJSON.errors;
+			showErrors(errors);
+		}).always(function() {
+			$('.loading').hide();
+		});
 	});
 
 	$('#tbl_option_body').on('click', '.btn_edit_option', function() {
-		$('#dropdown_id').val($(this).attr('data-id'));
+		$('#dropdown_id').val($(this).attr('data-dropdown_id'));
+		$('#option_id').val($(this).attr('data-id'));
 		$('#option_description').val($(this).attr('data-option_description'));
 	});
 });
@@ -99,7 +87,7 @@ function getName(data) {
 		}).fail(function(xhr, textStatus, errorThrown) {
 			console.log("error");
 		}).always(function() {
-			console.log("complete");
+			$('.loading').hide();
 		});
 	}
 }
@@ -119,7 +107,7 @@ function getOption(id) {
 	}).fail(function(xhr, textStatus, errorThrown) {
 		console.log("error");
 	}).always(function() {
-		console.log("complete");
+		$('.loading').hide();
 	});
 }
 
@@ -140,7 +128,7 @@ function DropdownNameDataTable(arr) {
             {data:'description'},
             {data: function(x) {
             	let edit = '';
-            	if (user_type == 'Owner') {
+            	if (user_type == 'Administrator') {
             		edit = '<button class="btn btn-sm btn-info btn_edit_name" data-id="'+x.id+'" '+
             				' data-description="'+x.description+'">'+
             					'<i class="fa fa-edit"></i>'+
@@ -168,15 +156,13 @@ function DropdownOptionDataTable(arr) {
         paging: false,
 	    deferRender: true,
         columns: [
-        	{data: function(x) {
-        		return '<input type="checkbox" class="check_item_option" data-count="'+x.count+'" value="'+x.id+'">';
-        	}},
             {data: function(x) {
             	return x.option_description+'<input type="hidden" name="option_description[]" value="'+x.option_description+'">';
             }},
             {data: function(x) {
             	return '<div class="btn-group">'+
             				'<button class="btn btn-sm btn-info btn_edit_option" data-id="'+x.id+'" '+
+            				' data-dropdown_id="'+x.dropdown_id+'" '+
             				' data-option_description="'+x.option_description+'">'+
             					'<i class="fa fa-edit"></i>'+
             				'</button>'+

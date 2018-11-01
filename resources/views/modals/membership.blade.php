@@ -12,54 +12,54 @@
 				<table class="table table-sm table-bordered">
 					<tbody>
 						<tr>
-							<td rowspan="3">Membership</td>
-							<td id="customer_code_v"></td>
+							<td width="30%" rowspan="3">Membership</td>
+							<td width="70%" id="customer_code_v"></td>
 						</tr>
 						<tr>
-							<td id="membership_type_v"></td>
+							<td width="70%" id="membership_type_v"></td>
 						</tr>
 						<tr>
-							<td id="date_registered_v"></td>
+							<td width="70%" id="date_registered_v"></td>
 						</tr>
 						<tr>
-							<td>Name</td>
-							<td id="name_v"></td>
+							<td width="30%">Name</td>
+							<td width="70%" id="name_v"></td>
 						</tr>
 						<tr>
-							<td>Email Address</td>
-							<td id="email_v"></td>
+							<td width="30%">Email Address</td>
+							<td width="70%" id="email_v"></td>
 						</tr>
 						<tr>
-							<td>Gender</td>
-							<td id="gender_v"></td>
+							<td width="30%">Gender</td>
+							<td width="70%" id="gender_v"></td>
 						</tr>
 						<tr>
-							<td rowspan="2">Contact numbers</td>
-							<td id="phone_v"></td>
+							<td width="30%" rowspan="2">Contact numbers</td>
+							<td width="70%" id="phone_v"></td>
 						</tr>
 						<tr>
-							<td id="mobile_v"></td>
+							<td width="70%" id="mobile_v"></td>
 						</tr>
 						<tr>
-							<td rowspan="3">Social Media</td>
-							<td id="facebook_v"></td>
+							<td width="30%" rowspan="3">Social Media</td>
+							<td width="70%" id="facebook_v"></td>
 						</tr>
 						<tr>
-							<td id="instagram_v"></td>
+							<td width="70%" id="instagram_v"></td>
 						</tr>
 						<tr>
-							<td id="twitter_v"></td>
+							<td width="70%" id="twitter_v"></td>
 						</tr>
 
 						<tr>
-							<td rowspan="3">Other Information</td>
-							<td id="occupation_v"></td>
+							<td width="30%" rowspan="3">Other Information</td>
+							<td width="70%" id="occupation_v"></td>
 						</tr>
 						<tr>
-							<td id="company_v"></td>
+							<td width="70%" id="company_v"></td>
 						</tr>
 						<tr>
-							<td id="school_v"></td>
+							<td width="70%" id="school_v"></td>
 						</tr>
 					</tbody>
 				</table>

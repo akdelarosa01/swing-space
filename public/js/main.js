@@ -48511,3 +48511,24 @@ function msg(msg_content,status) {
         }
     }
 }
+
+function get_dropdown_options(id,el) {
+    var opt = "<option value=''></option>";
+    $(el).html(opt);
+    $.ajax({
+        url: '../../dropdown/show-option',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token, 
+            dropdown_id:id
+        },
+    }).done(function(data, textStatus, xhr) {
+        $.each(data, function(i, x) {
+            opt = "<option value='"+x.option_description+"'>"+x.option_description+"</option>";
+            $(el).append(opt);
+        });
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Dropdown Option: '+errorThrown);
+    });
+}

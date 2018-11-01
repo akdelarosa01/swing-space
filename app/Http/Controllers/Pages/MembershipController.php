@@ -48,6 +48,7 @@ class MembershipController extends Controller
             $user->lastname = $req->lastname;
             $user->email = $req->email;
             $user->gender = $req->gender;
+            $user->user_type = 'Customer';
 
             if (isset($req->disable)) {
                 $user->disable = $req->disable;
@@ -92,6 +93,7 @@ class MembershipController extends Controller
             $user->password = Hash::make($req->lastname.date('ymd'));
             $user->actual_password = $req->lastname.date('ymd');
             $user->gender = $req->gender;
+            $user->user_type = 'Customer';
 
             if (isset($req->disable)) {
                 $user->disable = $req->disable;

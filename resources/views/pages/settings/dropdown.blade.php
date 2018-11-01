@@ -2,10 +2,11 @@
 
 @section('content')
     <div class="row">
+        <div class="loading"></div>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    @if(Auth::user()->user_type == 'Owner')
+                    @if(Auth::user()->user_type == 'Administrator')
                     <form action="../../dropdown/save-name" id="frm_name" method="post">
                         @csrf
                         <input type="hidden" id="id" name="id">
@@ -18,7 +19,7 @@
                                     <input type="text" class="form-control form-control-sm clear validate" id="description" name="description">
                                     <div id="description_feedback"></div>
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-sm btn-info" id="btn_add_name">Add</button>
+                                        <button type="submit" class="btn btn-sm btn-info" id="btn_add_name">save</button>
                                     </div>
                                 </div>
                             </div>
@@ -50,44 +51,40 @@
                 <div class="card-header" >
                     <span id="dropdown_name">Dropdown</span> Options
                 </div>
-                <form>
-                    <div class="card-body">
+                <div class="card-body">
+                    <form method="post" action="../../dropdown/save-option" id="frm_options">
+                        @csrf
                         <input type="hidden" id="dropdown_id" name="dropdown_id">
+                        <input type="hidden" id="option_id" name="option_id">
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Dropdown Option</span>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm clear validate" id="option_description" name="option_description">
+                                    <input type="text" class="form-control form-control-sm clear validate" id="option_description" name="option_description" readonly>
                                     <div id="option_description_feedback"></div>
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-sm btn-info" id="btn_add">Add</button>
+                                        <button type="submit" class="btn btn-sm btn-info">Add</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </form>
+                    
 
-                        <div class="table-responsive">
-                            <table class="table table-striped table-sm" id="tbl_option">
-                                <thead>
-                                    <tr>
-                                        <th width="5%">
-                                            <input type="checkbox" class="check_all_option">
-                                        </th>
-                                        <th width="85%">Options</th>
-                                        <th width="10%"></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbl_option_body"></tbody>
-                            </table>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm" id="tbl_option">
+                            <thead>
+                                <tr>
+                                    <th width="90%">Options</th>
+                                    <th width="10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl_option_body"></tbody>
+                        </table>
                     </div>
-                    <div class="card-footer bg-light">
-                        <button type="button" class="btn btn-sm btn-info">Save</button>
-                        <button type="button" class="btn btn-sm btn-secondary clear-form">Clear</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
 

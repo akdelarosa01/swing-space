@@ -85,60 +85,72 @@ class DropdownController extends Controller
     		'option' => ''
     	];
 
-        if (isset($req->id)) {
+        if (isset($req->option_id)) {
             $this->validate($req,[
                 'option_description' => 'required|max:50',
             ]);
 
-            $name = DropdownOption::where('dropdown_id',$req->dropdown_id)
-            						->delete();
+            $check = DropdownOption::where('dropdown_id',$req->dropdown_id)
+                                    ->where('option_description',$req->option_description)
+                                    ->count();
 
-            $option = [];
+            if ($check > 1) {
+                return response()->json(['errors' => ['option_description' => 'This option is already added.'] ], 422);
+            } else {
+                $option = DropdownOption::find($req->option_id);
 
-           	foreach ($req->ids as $key => $id) {
-           		array_push($option,[
-           			'dropdown_id' => $req->dropdown_id,
-           			'description' => $req->option_description,
-           			'create_user' => Auth::user()->id,
-           			'update_user' => Auth::user()->id,
-           		]);
-           	}
-            
-            $inserts = array_chunk($option, 1000);
-            foreach ($inserts as $batch) {
-                DropdownOption::insert($batch);
-                $data = [
-                    'msg' => "Options was successfully updated.",
-                    'status' => 'success',
-                    'option' => $this->getOption($req->dropdown_id)
-                ];
+                $option->option_description = $req->option_description;
+                $option->update_user = Auth::user()->id;
+
+
+                if ($option->update()) {
+                    $data = [
+                        'msg' => "Options was successfully updated.",
+                        'status' => 'success',
+                        'option' => $this->getOptions($req->dropdown_id)
+                    ];
+                } else {
+                    $data = [
+                        'msg' => "No changes made.",
+                        'status' => 'success',
+                        'option' => $this->getOptions($req->dropdown_id)
+                    ];
+                }
             }
 
             return response()->json($data);
         } else {
             $this->validate($req,[
-                'description' => 'required|max:50',
+                'option_description' => 'required|max:50',
             ]);
 
-            $option = [];
+            $check = DropdownOption::where('dropdown_id',$req->dropdown_id)
+                                    ->where('option_description',$req->option_description)
+                                    ->count();
 
-           	foreach ($req->ids as $key => $id) {
-           		array_push($option,[
-           			'dropdown_id' => $req->dropdown_id,
-           			'description' => $req->option_description,
-           			'create_user' => Auth::user()->id,
-           			'update_user' => Auth::user()->id,
-           		]);
-           	}
-            
-            $inserts = array_chunk($option, 1000);
-            foreach ($inserts as $batch) {
-                DropdownOption::insert($batch);
-                $data = [
-                    'msg' => "Options was successfully saved.",
-                    'status' => 'success',
-                    'option' => $this->getOption($req->dropdown_id)
-                ];
+            if ($check > 1) {
+                return response()->json(['errors' => ['option_description' => 'This option is already added.'] ], 422);
+            } else {
+                $option = new DropdownOption;
+
+                $option->dropdown_id = $req->dropdown_id;
+                $option->option_description = $req->option_description;
+                $option->create_user = Auth::user()->id;
+                $option->update_user = Auth::user()->id;
+
+                if ($option->save()) {
+                    $data = [
+                        'msg' => "Options was successfully added.",
+                        'status' => 'success',
+                        'option' => $this->getOptions($req->dropdown_id)
+                    ];
+                } else {
+                    $data = [
+                        'msg' => "Adding option failed.",
+                        'status' => 'failed',
+                        'option' => $this->getOptions($req->dropdown_id)
+                    ];
+                }
             }
 
             return response()->json($data);
@@ -153,7 +165,7 @@ class DropdownController extends Controller
 
     public function show_option(Request $req)
     {
-        $option = $this->getOptions($req->id);
+        $option = $this->getOptions($req->dropdown_id);
         return response()->json($option);
     }
 
@@ -182,7 +194,7 @@ class DropdownController extends Controller
                 $data = [
                     'msg' => "Data was successfully deleted.",
                     'status' => "success",
-                    'option' => $this->getOption($req->dropdown_id)
+                    'option' => $this->getOptions($req->dropdown_id)
                 ];
             }
         } else {
@@ -192,7 +204,7 @@ class DropdownController extends Controller
             $data = [
                 'msg' => "Data was successfully deleted.",
                 'status' => "success",
-                'option' => $this->getOption($req->dropdown_id)
+                'option' => $this->getOptions($req->dropdown_id)
             ];
         }
 
