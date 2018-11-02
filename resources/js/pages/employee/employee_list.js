@@ -1,5 +1,5 @@
 $( function() {
-
+	getEmployees();
 });
 
 function getEmployees() {
