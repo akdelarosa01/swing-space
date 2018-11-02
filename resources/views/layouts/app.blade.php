@@ -24,6 +24,7 @@
 
                 <div class="content">
                     <section class="page-content container-fluid">
+                        <div class="loading"></div>
                         @yield('content')
                     </section>
                 </div>

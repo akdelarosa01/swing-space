@@ -8,6 +8,13 @@ $( function() {
         var no_error = $(this).attr('id');
         hideErrors(no_error)
     });
+
+    $('.custom-file-input').on('change', function() {
+       let fileName = $(this).val().split('\\').pop();
+       $(this).next('.custom-file-label').addClass("selected").html(fileName);
+
+       readPhotoURL(this);
+    });
 });
 
 jQuery.fn.extend({
@@ -181,5 +188,88 @@ function get_dropdown_options(id,el) {
         });
     }).fail(function(xhr, textStatus, errorThrown) {
         msg('Dropdown Option: '+errorThrown);
+    });
+}
+
+function getProvince() {
+    var opt = "<option value=''>Select State/Province</option>";
+    $('#state').html(opt);
+    $.ajax({
+        url: '../../get-province',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+        },
+    }).done(function(data, textStatus, xhr) {
+        $.each(data, function(i, x) {
+            opt = "<option value='"+x.provCode+"'>"+x.provDesc+"</option>";
+            $('#state').append(opt);
+        });
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('State Option: '+errorThrown,textStatus);
+    });
+}
+
+function getCity(prov_code) {
+    var opt = "<option value=''>Select City</option>";
+    $('#city').html(opt);
+    $.ajax({
+        url: '../../get-city',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+            prov_code: prov_code
+        },
+    }).done(function(data, textStatus, xhr) {
+        $('#city').prop('disabled',false);
+        $.each(data, function(i, x) {
+            opt = "<option value='"+x.citymunDesc+"'>"+x.citymunDesc+"</option>";
+            $('#city').append(opt);
+        });
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('State Option: '+errorThrown,textStatus);
+    });
+}
+
+function getModules() {
+    $('.loading').show();
+    $.ajax({
+        url: '../../get-modules',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+        },
+    }).done(function(data, textStatus, xhr) {
+        ModulesDataTable(data);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Modules: '+errorThrown,textStatus);
+    }).always( function() {
+        $('.loading').hide();
+    });
+}
+
+function ModulesDataTable(arr) {
+    $('#tbl_modules').dataTable().fnClearTable();
+    $('#tbl_modules').dataTable().fnDestroy();
+    $('#tbl_modules').dataTable({
+        data: arr,
+        sorting: false,
+        searching: false,
+        paging: false,
+        deferRender: true,
+        columns: [
+            {data: 'module_name', searchable: false, orderable: false},
+
+            {data: function(x) {
+                return '<input type="checkbox" name="rw[]" value="'+x.module_code+'">';
+            }, searchable: false, orderable: false},
+
+            {data: function(x) {
+                return '<input type="checkbox" name="ro[]" value="'+x.module_code+'">';
+            }, searchable: false, orderable: false}
+        ]
     });
 }

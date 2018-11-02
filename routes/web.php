@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('membership/save', 'Pages\MembershipController@save');
 
     Route::get('employee-list', 'Pages\EmployeeController@index');
+    Route::get('employee-show-list', 'Pages\EmployeeController@show_list');
     Route::get('employee-list/show', 'Pages\EmployeeController@show');
 
     Route::get('employee', 'Pages\EmployeeController@registration');
@@ -61,4 +62,8 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('dropdown/save-name','Pages\DropdownController@save_name');
     Route::post('dropdown/save-option','Pages\DropdownController@save_option');
     Route::post('dropdown/delete','Pages\DropdownController@destroy');
+
+    Route::get('get-province', 'GlobalController@getProvince');
+    Route::get('get-city', 'GlobalController@getCity');
+    Route::get('get-modules', 'GlobalController@getModules');
 });
