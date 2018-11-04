@@ -39,7 +39,7 @@ class MembershipController extends Controller
                 'lastname' => 'required|string|max:25',
                 'email' => 'required|email|string',
                 'gender' => 'required|string',
-                'membership_type' => 'required'
+                'date_of_birth' => 'required',
             ]);
 
             $user = User::find($req->id);
@@ -56,18 +56,20 @@ class MembershipController extends Controller
 
             if ($user->update()) {
                 Customer::where('user_id',$req->id)->update([
-                                'phone' => $req->phone,
-                                'mobile' => $req->mobile,
-                                'facebook' => $req->facebook,
-                                'instagram' => $req->instagram,
-                                'twitter' => $req->twitter,
-                                'occupation' => $req->occupation,
-                                'company' => $req->company,
-                                'school' => $req->school,
-                                'membership_type' => $req->membership_type,
-                                'update_user' => Auth::user()->id,
-                                'updated_at' => date('Y-m-d h:i:s')
-                            ]);
+                    'date_of_birth' => $req->date_of_birth,
+                    'phone' => $req->phone,
+                    'mobile' => $req->mobile,
+                    'facebook' => $req->facebook,
+                    'instagram' => $req->instagram,
+                    'twitter' => $req->twitter,
+                    'occupation' => $req->occupation,
+                    'company' => $req->company,
+                    'school' => $req->school,
+                    'referrer' => $req->referrer,
+                    'membership_type' => (!isset($req->referrer) || $req->referrer == '' || $req->referrer == 0)? 'A' : 'B',
+                    'update_user' => Auth::user()->id,
+                    'updated_at' => date('Y-m-d h:i:s')
+                ]);
             }
 
             $data = [
@@ -82,16 +84,18 @@ class MembershipController extends Controller
                 'lastname' => 'required|string|max:25',
                 'email' => 'required|unique:users|email|string',
                 'gender' => 'required|string',
-                'membership_type' => 'required'
+                'date_of_birth' => 'required',
             ]);
+
+            $pass = $this->_global->convertDate($req->date_of_birth,'Ymd');
 
             $user = new User;
 
             $user->firstname = $req->firstname;
             $user->lastname = $req->lastname;
             $user->email = $req->email;
-            $user->password = Hash::make($req->lastname.date('ymd'));
-            $user->actual_password = $req->lastname.date('ymd');
+            $user->password = Hash::make($pass);
+            $user->actual_password = $pass;
             $user->gender = $req->gender;
             $user->user_type = 'Customer';
 
@@ -102,16 +106,18 @@ class MembershipController extends Controller
             if ($user->save()) {
                 Customer::create([
                     'user_id' => $user->id,
-                    'customer_code' => 'SS1810-00001'.$req->membership_type,
-                    'phone' => $req->phone,
-                    'mobile' => $req->mobile,
-                    'facebook' => $req->facebook,
-                    'instagram' => $req->instagram,
-                    'twitter' => $req->twitter,
-                    'occupation' => $req->occupation,
-                    'company' => $req->company,
-                    'school' => $req->school,
-                    'membership_type' => $req->membership_type,
+                    'date_of_birth' => $req->date_of_birth,
+                    'customer_code' => $this->_global->TransactionNo('CUS_CODE'),
+                    'phone' => ($req->phone == '' || $req->phone == null)? 'N/A' : $req->phone,
+                    'mobile' => ($req->mobile == '' || $req->mobile == null)? 'N/A' : $req->mobile,
+                    'facebook' => ($req->facebook == '' || $req->facebook == null)? 'N/A' : $req->facebook,
+                    'instagram' => ($req->instagram == '' || $req->instagram == null)? 'N/A' : $req->instagram,
+                    'twitter' => ($req->twitter == '' || $req->twitter == null)? 'N/A' : $req->twitter,
+                    'occupation' => ($req->occupation == '' || $req->occupation == null)? 'N/A' : $req->occupation,
+                    'company' => ($req->company == '' || $req->company == null)? 'N/A' : $req->company,
+                    'school' => ($req->school == '' || $req->school == null)? 'N/A' : $req->school,
+                    'referrer' => $req->referrer,
+                    'membership_type' => (!isset($req->referrer) || $req->referrer == '' || $req->referrer == 0)? 'A' : 'B',
                     'date_registered' => date('Y-m-d'),
                     'create_user' => Auth::user()->id,
                     'update_user' => Auth::user()->id,
@@ -149,6 +155,8 @@ class MembershipController extends Controller
                             DB::raw('c.occupation as occupation'),
                             DB::raw('c.company as company'),
                             DB::raw('c.school as school'),
+                            DB::raw('c.date_of_birth as date_of_birth'),
+                            DB::raw('c.referrer as referrer_id'),
                             DB::raw('c.membership_type as membership_type'),
                             DB::raw('c.date_registered as date_registered')
                         )
@@ -186,6 +194,8 @@ class MembershipController extends Controller
                             DB::raw('c.occupation as occupation'),
                             DB::raw('c.company as company'),
                             DB::raw('c.school as school'),
+                            DB::raw('c.date_of_birth as date_of_birth'),
+                            DB::raw('c.referrer as referrer_id'),
                             DB::raw('c.membership_type as membership_type'),
                             DB::raw('c.date_registered as date_registered')
                         )

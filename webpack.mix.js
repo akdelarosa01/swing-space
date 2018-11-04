@@ -26,6 +26,8 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/jquery-mask/jquery.mask.min.js',
 		'resources/plugins/datatables.net/js/jquery.dataTables.js',
 		'resources/plugins/datatables.net-bs4/js/dataTables.bootstrap4.js',
+		'resources/plugins/localize/jquery.localize.min.js',
+		'resources/plugins/select2/select2.min.js',
 		'resources/js/scripts/app.js',
 		'resources/js/global.js'
     ], 'public/js/main.js')
@@ -56,6 +58,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/sass/icons/material-design-iconic-font.min.css',
 		'resources/sass/icons/font-awesome.min.css',
 		'resources/plugins/toast/jquery.toast.css',
+		'resources/plugins/select2/select2.min.css',
 		'resources/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css',
 		'resources/sass/common/main.bundle.css',
 		'resources/sass/layouts/vertical/core/main.css',

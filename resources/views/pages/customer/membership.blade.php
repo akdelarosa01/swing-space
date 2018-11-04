@@ -48,6 +48,14 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Date of Birth</label>
+                                <div class="col-md-8">
+                                    <input type="date" class="form-control form-control-sm clear" id="date_of_birth" name="date_of_birth">
+                                    <div id="date_of_birth_feedback"></div>
+                                </div>
+                            </div>
+
                             <hr class="dashed ">
 
                             <div class="form-group row">
@@ -118,14 +126,10 @@
                             <hr class="dashed">
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Membership</label>
+                                <label class="control-label text-right col-md-3">Referrer</label>
                                 <div class="col-md-8">
-                                    <select class="form-control form-control-sm clear select-validate" name="membership_type" id="membership_type">
-                                        <option value=""></option>
-                                        <option @if(isset($c->membership_type) && $c->membership_type == 'A') {{ 'selected' }}@endif value="A">Level A</option>
-                                        <option @if(isset($c->membership_type) && $c->membership_type == 'B') {{ 'selected' }}@endif value="B">Level B</option>
-                                    </select>
-                                    <div id="membership_type_feedback"></div>
+                                    <select class="form-control form-control-sm clear select-validate select2" name="referrer" id="referrer"></select>
+                                    <div id="referrer_feedback"></div>
                                 </div>
                             </div>
 

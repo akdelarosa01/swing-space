@@ -2,15 +2,18 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">New Employee</div>
-        <form action="../../employee/save" id="frm_registration" method="post">
+        <div class="card-header">
+            Employee Registration
+            <a href="{{ url('/employee-list') }}" class="btn btn-sm btn-info pull-right">Employee List</a>
+        </div>
+        <form action="../../employee/save" id="frm_registration" enctype="multipart/form-data" method="post">
             @csrf
             <div class="card-body">
                 <div class="row">
 
                     <div class="col-md-6">
                         <div class="form-body">
-                            <input type="hidden" id="id" name="id">
+                            <input type="hidden" name="id" id="id" value="@if(isset($id)) {{ $id }} @endif">
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">First Name</label>
                                 <div class="col-md-8">
@@ -26,13 +29,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Email Address</label>
-                                <div class="col-md-8">
-                                    <input type="email" class="form-control form-control-sm" id="email" name="email">
-                                    <div id="email_feedback"></div>
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Gender</label>
                                 <div class="col-md-8">
@@ -65,11 +61,27 @@
 
                             <hr class="dashed ">
 
-                            <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Phone</label>
+                             <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Email Address</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm" id="phone" name="phone">
-                                    <div id="phone_feedback"></div>
+                                    <input type="email" class="form-control form-control-sm" id="email" name="email">
+                                    <div id="email_feedback"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control form-control-sm" id="password" name="password">
+                                    <div id="password_feedback"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-3">Confirm Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" class="form-control form-control-sm" id="password_confirmation" name="password_confirmation">
+                                    <div id="password_confirmation_feedback"></div>
                                 </div>
                             </div>
 
@@ -158,7 +170,7 @@
                     <div class="col-md-6">
                         <div class="row justify-content-center mb-5">
                             <div class="col-md-4">
-                                <img src="{{ asset('img/default-profile.png') }}" alt="Profile Photo" class="img-fluid photo" height="300px">
+                                <img src="{{ asset('img/default-profile.png') }}" alt="Profile Photo" class="img-fluid photo" height="300px" id="profile_photo">
                             </div>
                         </div>
 
@@ -199,7 +211,7 @@
                     <div class="row">
                         <div class="offset-sm-5 col-md-6">
                             <button type="submit" class="btn btn-info btn-rounded">Save</button>
-                            <button class="btn btn-secondary clear-form btn-rounded btn-outline">Cancel</button>
+                            <button class="btn btn-secondary clear-form btn-rounded btn-outline">Clear</button>
                         </div>
                     </div>
                 </div>

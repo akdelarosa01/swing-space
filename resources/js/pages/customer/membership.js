@@ -2,6 +2,8 @@ $( function() {
 	$('#phone').mask('(99)999-9999', {placeholder: '(__) ___-____'});
 	$('#mobile').mask('(+63)999-999-9999', {placeholder: '(+63)___-___-____'});
 
+	referrer('#referrer');
+
 	$('#frm_membership').on('submit', function(e) {
 		e.preventDefault();
 		$.ajax({
@@ -75,6 +77,8 @@ function display_customer(id) {
 			$('#occupation').val(data.occupation);
 			$('#company').val(data.company);
 			$('#school').val(data.school);
+			$('#referrer').val(data.referrer_id);
+			$('#date_of_birth').val(data.date_of_birth);
 			$('#membership_type').val(data.membership_type);
 
 			if (data.disable) {

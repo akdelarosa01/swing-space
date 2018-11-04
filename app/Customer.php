@@ -9,6 +9,7 @@ class Customer extends Model
     protected $fillable = [
     	'user_id',
 		'customer_code',
+		'date_of_birth',
 		'phone',
 		'mobile',
 		'facebook',
@@ -17,6 +18,7 @@ class Customer extends Model
 		'occupation',
 		'school',
 		'company',
+		'referrer',
 		'membership_type',
 		'date_registered',
 		'create_user',

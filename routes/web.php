@@ -66,4 +66,5 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('get-province', 'GlobalController@getProvince');
     Route::get('get-city', 'GlobalController@getCity');
     Route::get('get-modules', 'GlobalController@getModules');
+    Route::get('get-referrer', 'GlobalController@referrers');
 });

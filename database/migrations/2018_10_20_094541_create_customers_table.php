@@ -17,6 +17,7 @@ class CreateCustomersTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('customer_code');
+            $table->date('date_of_birth');
             $table->string('phone')->nullable()->default('N/A');
             $table->string('mobile')->nullable()->default('N/A');
             $table->string('facebook')->nullable()->default('N/A');
@@ -25,7 +26,8 @@ class CreateCustomersTable extends Migration
             $table->string('occupation')->nullable()->default('N/A');
             $table->string('school')->nullable()->default('N/A');
             $table->string('company')->nullable()->default('N/A');
-            $table->string('membership_type');
+            $table->integer('referrer')->nullable()->default(0);
+            $table->string('membership_type')->length(1)->default('A');
             $table->date('date_registered');
             $table->integer('create_user');
             $table->integer('update_user');

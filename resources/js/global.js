@@ -1,4 +1,6 @@
 $( function() {
+    $('.select2').select2();
+
     $('.validate').on('keyup', function(e) {
         var no_error = $(this).attr('id');
         hideErrors(no_error)
@@ -211,7 +213,7 @@ function getProvince() {
     });
 }
 
-function getCity(prov_code) {
+function getCity(prov_code,val) {
     var opt = "<option value=''>Select City</option>";
     $('#city').html(opt);
     $.ajax({
@@ -224,8 +226,13 @@ function getCity(prov_code) {
         },
     }).done(function(data, textStatus, xhr) {
         $('#city').prop('disabled',false);
+        
         $.each(data, function(i, x) {
-            opt = "<option value='"+x.citymunDesc+"'>"+x.citymunDesc+"</option>";
+            let same = '';
+            if (val == x.citymunDesc) {
+                same = 'selected';
+            }
+            opt = "<option value='"+x.citymunDesc+"' "+same+">"+x.citymunDesc+"</option>";
             $('#city').append(opt);
         });
     }).fail(function(xhr, textStatus, errorThrown) {
@@ -233,7 +240,7 @@ function getCity(prov_code) {
     });
 }
 
-function getModules() {
+function getModules(id) {
     $('.loading').show();
     $.ajax({
         url: '../../get-modules',
@@ -241,6 +248,7 @@ function getModules() {
         dataType: 'JSON',
         data: {
             _token: token,
+            id: id
         },
     }).done(function(data, textStatus, xhr) {
         ModulesDataTable(data);
@@ -264,12 +272,44 @@ function ModulesDataTable(arr) {
             {data: 'module_name', searchable: false, orderable: false},
 
             {data: function(x) {
-                return '<input type="checkbox" name="rw[]" value="'+x.module_code+'">';
+                var checked = '';
+                if (x.access == 1) {
+                    checked = 'checked';
+                }
+                return '<input type="checkbox" name="rw[]" value="'+x.id+'" '+checked+'>';
             }, searchable: false, orderable: false},
 
             {data: function(x) {
-                return '<input type="checkbox" name="ro[]" value="'+x.module_code+'">';
+                var checked = '';
+                if (x.access == 1) {
+                    checked = 'checked';
+                }
+                return '<input type="checkbox" name="ro[]" value="'+x.id+'" '+checked+'>';
             }, searchable: false, orderable: false}
         ]
+    });
+}
+
+function referrer(el,val) {
+    var opt = "<option value='0'></option>";
+    $(el).html(opt);
+    $.ajax({
+        url: '../../get-referrer',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token
+        },
+    }).done(function(data, textStatus, xhr) {
+        $.each(data, function(i, x) {
+            let same = '';
+            if (val == x.id) {
+                same = 'selected';
+            }
+            opt = "<option value='"+x.id+"' "+same+">"+x.text+"</option>";
+            $(el).append(opt);
+        });
+    }).fail(function(xhr, textStatus, errorThrown) {
+       msg('Referrer : '+errorThrown,textStatus);
     });
 }

@@ -122,10 +122,10 @@ function DropdownNameDataTable(arr) {
         paging: false,
 	    deferRender: true,
         columns: [
-        	{data: function(x) {
-        		return '<input type="checkbox" class="check_item_name">';
-        	}},
-            {data:'description'},
+        	// {data: function(x) {
+        	// 	return '<input type="checkbox" class="check_item_name">';
+        	// }},
+            {data:'description', searchable: false, orderable: false},
             {data: function(x) {
             	let edit = '';
             	if (user_type == 'Administrator') {

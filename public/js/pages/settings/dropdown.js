@@ -199,9 +199,11 @@ function DropdownNameDataTable(arr) {
 		searching: false,
 		paging: false,
 		deferRender: true,
-		columns: [{ data: function data(x) {
-				return '<input type="checkbox" class="check_item_name">';
-			} }, { data: 'description' }, { data: function data(x) {
+		columns: [
+		// {data: function(x) {
+		// 	return '<input type="checkbox" class="check_item_name">';
+		// }},
+		{ data: 'description', searchable: false, orderable: false }, { data: function data(x) {
 				var edit = '';
 				if (user_type == 'Administrator') {
 					edit = '<button class="btn btn-sm btn-info btn_edit_name" data-id="' + x.id + '" ' + ' data-description="' + x.description + '">' + '<i class="fa fa-edit"></i>' + '</button>';

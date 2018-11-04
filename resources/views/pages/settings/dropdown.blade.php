@@ -31,10 +31,10 @@
                         <table class="table table-striped table-sm" id="tbl_name">
                             <thead>
                                 <tr>
-                                    <th width="5%">
+                                    {{-- <th width="5%">
                                         <input type="checkbox" class="check_all_name">
-                                    </th>
-                                    <th width="75%">Dropdowns</th>
+                                    </th> --}}
+                                    <th width="80%">Dropdowns</th>
                                     <th width="20%"></th>
                                 </tr>
                             </thead>
@@ -65,7 +65,7 @@
                                     <input type="text" class="form-control form-control-sm clear validate" id="option_description" name="option_description" readonly>
                                     <div id="option_description_feedback"></div>
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-sm btn-info">Add</button>
+                                        <button type="submit" class="btn btn-sm btn-info">Save</button>
                                     </div>
                                 </div>
                             </div>

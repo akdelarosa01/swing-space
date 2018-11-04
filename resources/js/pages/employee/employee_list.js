@@ -35,14 +35,8 @@ function EmployeeList(data) {
 										'<div class="dropdown-header">'+
 											'Manage Employee'+
 										'</div>'+
-										'<a href="javascript:void(0)" class="dropdown-item">'+
-											'<i class="icon dripicons-view-list"></i> View'+
-										'</a>'+
-										'<a href="javascript:void(0)" class="dropdown-item">'+
+										'<a href="../../employee/'+x.id+'/edit" class="dropdown-item">'+
 											'<i class="icon dripicons-pencil"></i> Edit'+
-										'</a>'+
-										'<a href="javascript:void(0)" class="dropdown-item">'+
-											'<i class="icon dripicons-cloud-download"></i> Export'+
 										'</a>'+
 										'<a href="javascript:void(0)" class="dropdown-item">'+
 											'<i class="icon dripicons-trash"></i> Remove'+
@@ -59,7 +53,7 @@ function EmployeeList(data) {
 								'<div class="col-md-12 text-center">'+
 									'<h5 class="card-title">'+x.firstname+' '+x.lastname+'</h5>'+
 									'<small class="text-muted d-block">'+x.position+'</small>'+
-									'<small class="text-muted d-block">'+x.email+'</small>'+
+									'<small class="text-muted d-block">'+x.employee_id+'</small>'+
 								'</div>'+
 							'</div>'+
 						'</div>'+

@@ -42,7 +42,7 @@
 				<div class="dropdown-menu dropdown-menu-right dropdown-menu-accout">
 					<div class="dropdown-header pb-3">
 						<div class="media d-user">
-							<img class="align-self-center mr-3 w-40 rounded-circle" src="{{ asset('img/default-profile.png') }}" alt="{{ Auth::user()->firstname.' '.Auth::user()->lastname }}">
+							<img class="align-self-center mr-3 w-40 rounded-circle" src="{{ asset(Auth::user()->photo) }}" alt="{{ Auth::user()->firstname.' '.Auth::user()->lastname }}">
 							<div class="media-body">
 								<h5 class="mt-0 mb-0">{{ Auth::user()->firstname.' '.Auth::user()->lastname }}</h5>
 								<span>{{ Auth::user()->email }}</span>

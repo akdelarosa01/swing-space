@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Employee;
+use App\UserAccess;
 use App\User;
 use DB;
 use Hash;
@@ -55,7 +56,10 @@ class EmployeeController extends Controller
             $user->email = $req->email;
             $user->gender = $req->gender;
 
-            $this->_global->uploadPhoto($req->id,$req->photo,'employees');
+            if (isset($req->password)) {
+                $user->password = Hash::make($req->password);
+                $user->actual_password = $req->password;
+            }
 
             if (isset($req->disable)) {
                 $user->disable = $req->disable;
@@ -63,22 +67,29 @@ class EmployeeController extends Controller
 
             if ($user->update()) {
                 Employee::where('user_id',$req->id)->update([
-                                'date_of_birth' => $req->date_of_birth,
-                                'phone' => ($req->phone == '' || $req->phone == null)? 'N/A' : $req->phone,
-                                'mobile' => ($req->mobile == '' || $req->mobile == null)? 'N/A' : $req->mobile,
-                                'street' => ($req->street == '' || $req->street == null)? 'N/A' : $req->street,
-                                'state' => ($req->state == '' || $req->state == null)? 'N/A' : $req->state,
-                                'city' => ($req->city == '' || $req->city == null)? 'N/A' : $req->city,
-                                'zip' => ($req->zip == '' || $req->zip == null)? 'N/A' : $req->zip,
-                                'position' => $req->position,
-                                'sss' => ($req->sss == '' || $req->sss == null)? 'N/A' : $req->sss,
-                                'tin' => ($req->tin == '' || $req->tin == null)? 'N/A' : $req->tin,
-                                'philhealth' => ($req->philhealth == '' || $req->philhealth == null)? 'N/A' : $req->philhealth,
-                                'pagibig' => ($req->pagibig == '' || $req->pagibig == null)? 'N/A' : $req->pagibig,
-                                'update_user' => Auth::user()->id,
-                                'updated_at' => date('Y-m-d h:i:s')
-                            ]);
+                    'date_of_birth' => $req->date_of_birth,
+                    'phone' => ($req->phone == '' || $req->phone == null)? 'N/A' : $req->phone,
+                    'mobile' => ($req->mobile == '' || $req->mobile == null)? 'N/A' : $req->mobile,
+                    'street' => ($req->street == '' || $req->street == null)? 'N/A' : $req->street,
+                    'state' => ($req->state == '' || $req->state == null)? 'N/A' : $req->state,
+                    'city' => ($req->city == '' || $req->city == null)? 'N/A' : $req->city,
+                    'zip' => ($req->zip == '' || $req->zip == null)? 'N/A' : $req->zip,
+                    'position' => $req->position,
+                    'sss' => ($req->sss == '' || $req->sss == null)? 'N/A' : $req->sss,
+                    'tin' => ($req->tin == '' || $req->tin == null)? 'N/A' : $req->tin,
+                    'philhealth' => ($req->philhealth == '' || $req->philhealth == null)? 'N/A' : $req->philhealth,
+                    'pagibig' => ($req->pagibig == '' || $req->pagibig == null)? 'N/A' : $req->pagibig,
+                    'update_user' => Auth::user()->id,
+                    'updated_at' => date('Y-m-d h:i:s')
+                ]);
+
+                UserAccess::where('user_id',$req->id)->delete();
+                $this->give_acccess($req,$req->id);
         
+            }
+
+            if (isset($req->photo)) {
+                $this->_global->uploadPhoto($req->id,$req->photo,'employees');
             }
 
             $data = [
@@ -94,7 +105,8 @@ class EmployeeController extends Controller
                 'email' => 'required|unique:users|email|string',
                 'gender' => 'required|string',
                 'date_of_birth' => 'required',
-                'position' => 'required'
+                'position' => 'required',
+                'password' => 'required|min:5|max:16|confirmed'
             ]);
 
             $user = new User;
@@ -102,8 +114,8 @@ class EmployeeController extends Controller
             $user->firstname = $req->firstname;
             $user->lastname = $req->lastname;
             $user->email = $req->email;
-            $user->password = Hash::make($req->lastname.date('ymd'));
-            $user->actual_password = $req->lastname.date('ymd');
+            $user->password = Hash::make($req->password);
+            $user->actual_password = $req->password;
             $user->gender = $req->gender;
 
             if (isset($req->disable)) {
@@ -115,7 +127,7 @@ class EmployeeController extends Controller
 
                 Employee::create([
                     'user_id' => $user->id,
-                    'employee_id' => 'A00001',
+                    'employee_id' => $this->_global->TransactionNo('EMP_ID'),
                     'date_of_birth' => $req->date_of_birth,
                     'phone' => ($req->phone == '' || $req->phone == null)? 'N/A' : $req->phone,
                     'mobile' => ($req->mobile == '' || $req->mobile == null)? 'N/A' : $req->mobile,
@@ -132,6 +144,8 @@ class EmployeeController extends Controller
                     'create_user' => Auth::user()->id,
                     'update_user' => Auth::user()->id
                 ]);
+
+                $this->give_access($req,$user->id);
             }
 
             $data = [
@@ -142,6 +156,65 @@ class EmployeeController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    private function give_acccess($req,$id)
+    {
+        $accesses = [];
+
+        if (isset($req->rw)) {
+            foreach ($req->rw as $key => $rw) {
+                array_push($accesses, [
+                    'module_id' => $rw,
+                    'user_id' => $id,
+                    'access' => 1,
+                    'create_user' => Auth::user()->id,
+                    'update_user' => Auth::user()->id
+                ]);
+            }
+        }
+
+        if (isset($req->ro)) {
+            foreach ($req->ro as $key => $ro) {
+                if (in_array($ro, $req->rw)) {
+                    
+                } else {
+                    array_push($accesses, [
+                        'module_id' => $ro,
+                        'user_id' => $id,
+                        'access' => 2,
+                        'create_user' => Auth::user()->id,
+                        'update_user' => Auth::user()->id
+                    ]);
+                }
+            }
+        }
+
+        $sort = [];
+        $user_accesses = [];
+        foreach ($accesses as $key => $row) {
+            $sort[$key] = $row['module_id'];
+        }
+
+        array_multisort($sort, SORT_ASC, $accesses);
+
+        foreach ($accesses as $key => $row) {
+            array_push($user_accesses,[
+                'module_id' => $row['module_id'],
+                'user_id' => $row['user_id'],
+                'access' => $row['access'],
+                'create_user' => $row['create_user'],
+                'update_user' => $row['update_user'],
+            ]);
+        }
+
+        array_unique($user_accesses,SORT_REGULAR);
+
+        $allowAccess = array_chunk($user_accesses, 1000);
+
+        foreach ($allowAccess as $access) {
+            UserAccess::insert($access);
+        }
     }
 
     public function edit($id)
@@ -175,7 +248,8 @@ class EmployeeController extends Controller
                             DB::raw('e.tin as tin'),
                             DB::raw('e.philhealth as philhealth'),
                             DB::raw('e.pagibig as pagibig'),
-                            DB::raw('e.date_hired as date_hired')
+                            DB::raw('e.date_hired as date_hired'),
+                            DB::raw('e.employee_id as employee_id')
                         )->get();
 
         return response()->json($employee);
@@ -210,7 +284,8 @@ class EmployeeController extends Controller
                             DB::raw('e.tin as tin'),
                             DB::raw('e.philhealth as philhealth'),
                             DB::raw('e.pagibig as pagibig'),
-                            DB::raw('e.date_hired as date_hired')
+                            DB::raw('e.date_hired as date_hired'),
+                            DB::raw('e.employee_id as employee_id')
                         )
                         ->first();
         return $employee;
