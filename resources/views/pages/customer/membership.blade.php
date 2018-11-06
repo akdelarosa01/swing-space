@@ -3,8 +3,8 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Membership
-            <a href="{{ url('/customer-list') }}" class="btn btn-sm btn-danger pull-right">Back</a>
+            <span data-localize="title">Membership</span>
+            <a href="{{ url('/customer-list') }}" class="btn btn-sm btn-danger pull-right" data-localize="back">Back</a>
         </div>
 
         <form action="../../membership/save" method="post" class="form-horizontal" id="frm_membership">
@@ -16,40 +16,40 @@
                             <input type="hidden" name="id" id="id" value="@if(isset($id)) {{ $id }} @endif">
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">First Name</label>
+                                <label class="control-label text-right col-md-3" data-localize="firstname">First Name</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="firstname" class="form-control form-control-sm clear validate" id="firstname" value="@if(isset($c->firstname)) {{ $c->firstname }} @endif">
+                                    <input type="text" name="firstname" class="form-control form-control-sm clear validate" id="firstname">
                                     <div id="firstname_feedback"></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Last Name</label>
+                                <label class="control-label text-right col-md-3" data-localize="lastname">Last Name</label>
                                 <div class="col-md-8">
-                                    <input type="text" name="lastname" class="form-control form-control-sm clear validate" id="lastname" value="@if(isset($c->lastname)) {{ $c->lastname }} @endif">
+                                    <input type="text" name="lastname" class="form-control form-control-sm clear validate" id="lastname">
                                     <div id="lastname_feedback"></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Email Address</label>
+                                <label class="control-label text-right col-md-3" data-localize="email">Email Address</label>
                                 <div class="col-md-8">
-                                    <input type="email" name="email" class="form-control form-control-sm clear validate" id="email" value="@if(isset($c->email)) {{ $c->email }} @endif">
+                                    <input type="email" name="email" class="form-control form-control-sm clear validate" id="email">
                                     <div id="email_feedback"></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Gender</label>
+                                <label class="control-label text-right col-md-3" data-localize="gender">Gender</label>
                                 <div class="col-md-8">
                                     <select class="form-control form-control-sm clear select-validate" name="gender" id="gender">
                                         <option value=""></option>
-                                        <option value="Male" @if(isset($c->gender) && $c->gender == 'Male') {{ 'selected' }} @endif>Male</option>
-                                        <option value="Female" @if(isset($c->gender) && $c->gender == 'Female') {{ 'selected' }} @endif>Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
                                     <div id="gender_feedback"></div>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Date of Birth</label>
+                                <label class="control-label text-right col-md-3" data-localize="date_of_birth">Date of Birth</label>
                                 <div class="col-md-8">
                                     <input type="date" class="form-control form-control-sm clear" id="date_of_birth" name="date_of_birth">
                                     <div id="date_of_birth_feedback"></div>
@@ -59,17 +59,17 @@
                             <hr class="dashed ">
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Phone</label>
+                                <label class="control-label text-right col-md-3" data-localize="phone">Phone</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="phone" id="phone" value="@if(isset($c->phone)) {{ $c->phone }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="phone" id="phone">
                                     <div id="phone_feedback"></div>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Mobile</label>
+                                <label class="control-label text-right col-md-3" data-localize="mobile">Mobile</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="mobile" id="mobile" value="@if(isset($c->mobile)) {{ $c->mobile }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="mobile" id="mobile">
                                     <div id="mobile_feedback"></div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Facebook</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="facebook" id="facebook" value="@if(isset($c->facebook)) {{ $c->facebook }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="facebook" id="facebook">
                                     <div id="facebook_feedback"></div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Instagram</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="instagram" id="instagram" value="@if(isset($c->instagram)) {{ $c->instagram }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="instagram" id="instagram">
                                     <div id="instagram_feedback"></div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Twitter</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="twitter" id="twitter" value="@if(isset($c->twitter)) {{ $c->twitter }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="twitter" id="twitter">
                                     <div id="twitter_feedback"></div>
                                 </div>
                             </div>
@@ -103,41 +103,42 @@
 
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Occupation</label>
+                                <label class="control-label text-right col-md-3" data-localize="occupation">Occupation</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="occupation" id="occupation" value="@if(isset($c->occupation)) {{ $c->occupation }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="occupation" id="occupation">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Company</label>
+                                <label class="control-label text-right col-md-3" data-localize="company">Company</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="company" id="company" value="@if(isset($c->company)) {{ $c->phone }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="company" id="company">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">School</label>
+                                <label class="control-label text-right col-md-3" data-localize="school">School</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control form-control-sm clear validate" name="school" id="school" value="@if(isset($c->school)) {{ $c->school }} @endif">
+                                    <input type="text" class="form-control form-control-sm clear validate" name="school" id="school">
                                 </div>
                             </div>
 
                             <hr class="dashed">
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Referrer</label>
+                                <label class="control-label text-right col-md-3" data-localize="referrer">Referrer</label>
                                 <div class="col-md-8">
-                                    <select class="form-control form-control-sm clear select-validate select2" name="referrer" id="referrer"></select>
+                                    <select class="form-control form-control-sm clear select-validate select2" name="referrer" id="referrer">
+                                    </select>
                                     <div id="referrer_feedback"></div>
                                 </div>
                             </div>
 
                             @if (Auth::user()->user_type == "Administrator" || Auth::user()->user_type == "Owner")
                                 <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Disable</label>
+                                    <label class="control-label text-right col-md-3" data-localize="disable">Disable</label>
                                     <div class="col-md-8">
-                                        <input class="tgl tgl-light tgl-primary" id="disable" @if(isset($c->disable) && $c->disable == 1) {{ 'checked' }}@endif name="disable" type="checkbox">
+                                        <input class="tgl tgl-light tgl-primary" id="disable" name="disable" type="checkbox">
                                         <label class="tgl-btn" for="disable"></label>
                                     </div>
                                 </div>
@@ -170,6 +171,7 @@
 @push('scripts')
     <script type="text/javascript">
         var token = $('meta[name="csrf-token"]').attr('content');
+
     </script>
     <script type="text/javascript" src="{{ asset('/js/pages/customer/membership.js') }}"></script>
 @endpush

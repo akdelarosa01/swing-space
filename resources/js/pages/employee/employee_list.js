@@ -18,10 +18,39 @@ function getEmployees() {
 	}).always(function() {
 		$('.loading').hide();
 	});
+
+	$('#employee_list').on('click', '.delete-employee', function() {
+		confirm('Remove Employee','Do you want to remove this employee?',$(this).attr('data-id'));
+	});
+
+	$('#btn_confirm').on('click', function() {
+		$('.loading').show();
+		$.ajax({
+			url: '../../employee/delete',
+			type: 'POST',
+			dataType: 'JSON',
+			data: {
+				_token: token,
+				id: $('#confirm_id').val()
+			},
+		}).done(function(data, textStatus, xhr) {
+			if (textStatus == 'success') {
+				$('#confirm_modal').modal('hide');
+				msg(data.msg,data.status);
+				EmployeeList(data.employee);
+			}
+			
+		}).fail(function(xhr, textStatus, errorThrown) {
+			msg('Remove Employee: '+errorThrown,textStatus);
+		}).always(function() {
+			$('.loading').hide();
+		});
+	});
 }
 
 function EmployeeList(data) {
 	let list = '';
+	$('#employee_list').html(list);
 	$.each(data, function(i, x) {
 		list = '<div class="col-md-6 col-lg-4 col-xxl-3">'+
 					'<div class="card contact-item">'+
@@ -38,7 +67,7 @@ function EmployeeList(data) {
 										'<a href="../../employee/'+x.id+'/edit" class="dropdown-item">'+
 											'<i class="icon dripicons-pencil"></i> Edit'+
 										'</a>'+
-										'<a href="javascript:void(0)" class="dropdown-item">'+
+										'<a href="javascript:void(0)" class="dropdown-item delete-employee" data-id="'+x.id+'">'+
 											'<i class="icon dripicons-trash"></i> Remove'+
 										'</a>'+
 									'</div>'+

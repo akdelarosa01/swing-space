@@ -51,7 +51,9 @@ class MembershipController extends Controller
             $user->user_type = 'Customer';
 
             if (isset($req->disable)) {
-                $user->disable = $req->disable;
+                $user->disable = 1;
+            } else {
+                $user->disable = 0;
             }
 
             if ($user->update()) {
@@ -100,7 +102,9 @@ class MembershipController extends Controller
             $user->user_type = 'Customer';
 
             if (isset($req->disable)) {
-                $user->disable = $req->disable;
+                $user->disable = 1;
+            } else {
+                $user->disable = 0;
             }
 
             if ($user->save()) {

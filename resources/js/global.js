@@ -1,3 +1,11 @@
+jQuery.fn.extend({
+    live: function (event, callback) {
+       if (this.selector) {
+            jQuery(document).on(event, this.selector, callback);
+        }
+    }
+});
+
 $( function() {
     $('.select2').select2();
 
@@ -17,15 +25,12 @@ $( function() {
 
        readPhotoURL(this);
     });
+
+    $('#translate_language').on('click', function() {
+        translateLanguage($(this).attr('data-language'));
+    });
 });
 
-jQuery.fn.extend({
-    live: function (event, callback) {
-       if (this.selector) {
-            jQuery(document).on(event, this.selector, callback);
-        }
-    }
-});
 
 function readPhotoURL(input) {
 	if (input.files && input.files[0]) {
@@ -281,7 +286,7 @@ function ModulesDataTable(arr) {
 
             {data: function(x) {
                 var checked = '';
-                if (x.access == 1) {
+                if (x.access == 2) {
                     checked = 'checked';
                 }
                 return '<input type="checkbox" name="ro[]" value="'+x.id+'" '+checked+'>';
@@ -311,5 +316,38 @@ function referrer(el,val) {
         });
     }).fail(function(xhr, textStatus, errorThrown) {
        msg('Referrer : '+errorThrown,textStatus);
+    });
+}
+
+function getLanguage(page) {
+    $.ajax({
+        url: '../../get-language',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token
+        },
+    }).done(function(data, textStatus, xhr) {
+        if (data.language !== 'en') {
+            $("[data-localize]").localize(page, data);
+        }
+    }).fail(function(xhr, textStatus, errorThrown) {
+       msg('Langauage : '+errorThrown,textStatus);
+    });
+}
+
+function translateLanguage(language,page) {
+    $.ajax({
+        url: '../../translate-language',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+            language: language
+        },
+    }).done(function(data, textStatus, xhr) {
+        location.reload();
+    }).fail(function(xhr, textStatus, errorThrown) {
+       msg('Langauage : '+errorThrown,textStatus);
     });
 }

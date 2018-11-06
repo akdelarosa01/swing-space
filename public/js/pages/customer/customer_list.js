@@ -80,6 +80,33 @@ var customers = [];
 
 $(function () {
     getCustomers();
+
+    $('#tbl_customers_body').on('click', '.delete-customer', function () {
+        confirm('Delete Customer', 'Do you want to delete this customer?', $(this).attr('data-id'));
+    });
+
+    $('#btn_confirm').on('click', function () {
+        $('.loading').show();
+        $.ajax({
+            url: '../../customer-list/delete',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: token,
+                id: $('#confirm_id').val()
+            }
+        }).done(function (data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                $('#confirm_modal').modal('hide');
+                msg(data.msg, data.status);
+                customerTable(data.customers);
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            msg('Delete Customer: ' + errorThrown, textStatus);
+        }).always(function () {
+            $('.loading').hide();
+        });
+    });
 });
 
 function getCustomers() {
@@ -104,18 +131,18 @@ function customerTable(arr) {
     $('#tbl_customers').dataTable().fnDestroy();
     $('#tbl_customers').dataTable({
         data: arr,
-        bLengthChange: false,
-        searching: false,
-        ordering: false,
-        paging: false,
-        scrollY: "250px",
+        //    bLengthChange : false,
+        //    searching: false,
+        //    ordering: false,
+        // paging: false,
+        // scrollY: "250px",
         columns: [{ data: function data(x) {
                 return '<img src="' + x.photo + '" class="w-35 rounded-circle" alt="' + x.firstname + ' ' + x.lastname + '">';
-            } }, { data: 'customer_code' }, { data: function data(x) {
+            }, searchable: false, orderable: false }, { data: 'customer_code' }, { data: function data(x) {
                 return x.firstname + ' ' + x.lastname;
             } }, { data: 'gender' }, { data: function data(x) {
-                return '<div class="btn-group">' + '<a href="/membership/' + x.id + '/edit" class="btn btn-sm btn-info">Edit</a>' + '<button class="btn btn-sm btn-danger">Delete</button>' + '</button>';
-            } }]
+                return '<div class="btn-group">' + '<a href="/membership/' + x.id + '/edit" class="btn btn-sm btn-info">Edit</a>' + '<button class="btn btn-sm btn-danger delete-customer" data-id="' + x.id + '">Delete</button>' + '</button>';
+            }, searchable: false, orderable: false }]
     });
 }
 

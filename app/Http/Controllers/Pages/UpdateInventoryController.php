@@ -4,17 +4,28 @@ namespace App\Http\Controllers\Pages;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\GlobalController;
+use DB;
 
 class UpdateInventoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $_global;
+
+    public function __construct()
+    {
+        $this->_global = new GlobalController;
+    }
+
     public function index()
     {
-        //
+        if ($this->_global->checkAccess('UPD_INV')) {
+            return view('pages.inventory.update_inventory',[
+                'user_access' => $this->_global->UserAccess()
+            ]);
+        } else {
+            return redirect('/dashboard');
+        }
     }
 
     /**

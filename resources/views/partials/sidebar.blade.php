@@ -20,177 +20,221 @@
                     </a>
                 </li>
 
-                @if (Auth::check() and (Auth::user()->user_type == 'Owner' or Auth::user()->user_type == 'Employee'))
-                    <li class="nav-dropdown {{ Request::is('customer-list') || Request::is('membership') ? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-accounts zmdi-hc-fw"></i>
-                            <span>Customers</span>
-                        </a>
-                        <ul class="collapse nav-sub" aria-expanded="false">
-                            <li class="{{ Request::is('customer-list') ? ' active' : null }}">
-                                <a href="{{ url('customer-list') }}">
-                                    <span>Customer List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('membership') ? ' active' : null }}">
-                                <a href="{{ url('membership') }}">
-                                    <span>Membership</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                <?php
+                    $json = json_encode($user_access);
+                    $array = json_decode($json, true);
+                    $category = array_column($array, 'module_category');
+                    $mod_code = array_column($array, 'module_code');
+                    $url = '';
+                ?>
 
-                    <li class="nav-dropdown {{ Request::is('receive-items') || Request::is('inventory-list') || Request::is('update-inventory') || Request::is('summary-list')? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-label zmdi-hc-fw"></i>
-                            <span>Inventories</span>
-                        </a>
-                        <ul class="collapse nav-sub" aria-expanded="false">
-                            <li class="{{ Request::is('inventory-list') ? ' active' : null }}">
-                                <a href="{{ url('inventory-list') }}">
-                                    <span>Inventory List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('summary-list') ? ' active' : null }}">
-                                <a href="{{ url('summary-list') }}">
-                                    <span>Summary List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('update-inventory') ? ' active' : null }}">
-                                <a href="{{ url('update-inventory') }}">
-                                    <span>Update Inventory</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('receive-items') ? ' active' : null }}">
-                                <a href="{{ url('receive-items') }}">
-                                    <span>Receive Items</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                @if (Auth::check() and (Auth::user()->user_type == 'Owner' or Auth::user()->user_type == 'Employee' or Auth::user()->user_type == 'Administrator'))
 
-                    <li class="nav-dropdown {{ Request::is('employee') ? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i>
-                            <span>Employee</span>
-                        </a>
-                        <ul class="collapse nav-sub" aria-expanded="false">
-                            <li class="{{ Request::is('admin/employee-list') ? ' active' : null }}">
-                                <a href="{{ url('employee-list') }}">
-                                    <span>Employee List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('employee') ? ' active' : null }}">
-                                <a href="{{ url('employee') }}">
-                                    <span>Employee Registration</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    @if(in_array('POS', $category))
+                        @foreach ($user_access as $key => $access)
+                            @if($access->module_code == 'POS_CTRL')
+                                <?php
+                                    $url = 'pos';
+                                ?>
+                                <li class="{{ Request::is($url) ? ' active' : null }}">
+                                    <a class="has-arrow" href="{{ url($url) }}" aria-expanded="false">
+                                        <i class="{{ $access->icon }}"></i>
+                                        <span>{{ $access->module_name }}</span>
+                                    </a>
+                                </li>
+                            @endif
+                        @endforeach
+                    @endif
 
-                    <li class="nav-dropdown {{ Request::is('admin/products') || Request::is('admin/add-products') ? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-shopping-basket zmdi-hc-fw"></i>
-                            <span>Products</span>
-                        </a>
-                        <ul class="collapse nav-sub" aria-expanded="false">
-                            <li class="{{ Request::is('admin/products') ? ' active' : null }}">
-                                <a href="{{ url('admin.products') }}">
-                                    <span>Products List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('admin/add-products') ? ' active' : null }}">
-                                <a href="{{ url('admin.add-products') }}">
-                                    <span>Add Products</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
 
-                    <li class="nav-dropdown {{ Request::is('admin/general-settings') || Request::is('admin/dropdown') ? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-settings zmdi-hc-fw"></i>
-                            <span>Settings</span>
-                        </a>
-                        <ul class="collapse nav-sub" aria-expanded="false">
-                            <li class="{{ Request::is('admin/general-settings') ? ' active' : null }}">
-                                <a href="{{ url('admin.general-settings') }}">
-                                    <span>General Settings</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('dropdown') ? ' active' : null }}">
-                                <a href="{{ url('dropdown') }}">
-                                    <span>Dropdown Settings</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
+                    @if(in_array('Customers', $category))
+                        <li class="nav-dropdown {{ Request::is('customer-list') || Request::is('membership') ? ' active' : null }}">
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="zmdi zmdi-accounts zmdi-hc-fw"></i>
+                                <span>Customers</span>
+                            </a>
+                            <ul class="collapse nav-sub" aria-expanded="false">
+                                @foreach ($user_access as $key => $access)
+                                    @if($access->module_code == 'CUS_LST')
+                                        <?php
+                                            $url = 'customer-list';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'CUS_MEM')
+                                        <?php
+                                            $url = 'membership';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
 
-                @if (Auth::check() and Auth::user()->user_type == 'Employee')
-                    <li class="{{ Request::is('employee/pos') ? ' active' : null }}">
-                        <a class="has-arrow" href="{{ url('pos') }}" aria-expanded="false">
-                            <i class="zmdi zmdi-menu zmdi-hc-fw"></i>
-                            <span>POS Control</span>
-                        </a>
-                    </li>
-                    <li class="nav-dropdown {{ Request::is('customer-list') || Request::is('membership') ? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-accounts zmdi-hc-fw"></i>
-                            <span>Customers</span>
-                        </a>
-                        <ul class="collapse nav-sub" aria-expanded="false">
-                            <li class="{{ Request::is('customer-list') ? ' active' : null }}">
-                                <a href="{{ url('customer-list') }}">
-                                    <span>Customer List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('membership') ? ' active' : null }}">
-                                <a href="{{ url('membership') }}">
-                                    <span>Membership</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-dropdown {{ Request::is('receive-items') || Request::is('inventory-list') ? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-label zmdi-hc-fw"></i>
-                            <span>Inventories</span>
-                        </a>
-                        <ul class="collapse nav-sub" aria-expanded="false">
-                            <li class="{{ Request::is('inventory-list') ? ' active' : null }}">
-                                <a href="{{ url('inventory-list') }}">
-                                    <span>Inventory List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('summary-list') ? ' active' : null }}">
-                                <a href="{{ url('summary-list') }}">
-                                    <span>Summary List</span>
-                                </a>
-                            </li>
-                            <li class="{{ Request::is('receive-items') ? ' active' : null }}">
-                                <a href="{{ url('receive-items') }}">
-                                    <span>Receive Items</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-dropdown {{ Request::is('employee/sales-report') ? ' active' : null }}">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <i class="zmdi zmdi-file zmdi-hc-fw"></i>
-                            <span>Reports</span>
-                        </a>
-                        <ul class="collapse nav-sub">
-                            <li class="{{ Request::is('employee/sales-report') ? ' active' : null }}">
-                                <a href="{{ url('employee.sales-report') }}">
-                                    <span>Sales Report</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
 
-                @if (Auth::check() and Auth::user()->user_type == 'Customer')
+                    @if(in_array('Inventory', $category))
+                        <li class="nav-dropdown {{ Request::is('receive-items') || Request::is('inventory-list') || Request::is('update-inventory') || Request::is('summary-list')? ' active' : null }}">
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="zmdi zmdi-label zmdi-hc-fw"></i>
+                                <span>Inventories</span>
+                            </a>
+                            <ul class="collapse nav-sub" aria-expanded="false">
+                                @foreach ($user_access as $key => $access)
+                                    @if($access->module_code == 'INV_LST')
+                                        <?php
+                                            $url = 'inventory-list';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'SUM_LST')
+                                        <?php
+                                            $url = 'summary-list';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'RCV_ITM')
+                                        <?php
+                                            $url = 'receive-items';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'UPD_INV')
+                                        <?php
+                                            $url = 'update-inventory';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
+
+
+                    @if(in_array('Employee', $category))
+                        <li class="nav-dropdown {{ Request::is('employee') ? ' active' : null }}">
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i>
+                                <span>Employees</span>
+                            </a>
+                            <ul class="collapse nav-sub" aria-expanded="false">
+                                @foreach ($user_access as $key => $access)
+                                    @if($access->module_code == 'EMP_LST')
+                                        <?php
+                                            $url = 'employee-list';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'EMP_REG')
+                                        <?php
+                                            $url = 'employee';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
+
+
+                    @if(in_array('Product', $category))
+                        <li class="nav-dropdown {{ Request::is('products') || Request::is('add-products') ? ' active' : null }}">
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="zmdi zmdi-shopping-basket zmdi-hc-fw"></i>
+                                <span>Products</span>
+                            </a>
+                            <ul class="collapse nav-sub" aria-expanded="false">
+                                @foreach ($user_access as $key => $access)
+                                    @if($access->module_code == 'PRD_LST')
+                                        <?php
+                                            $url = 'products';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'PRD_REG')
+                                        <?php
+                                            $url = 'add-products';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
+
+
+                    @if(in_array('Settings', $category))
+                        <li class="nav-dropdown {{ Request::is('general-settings') || Request::is('dropdown') ? ' active' : null }}">
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="zmdi zmdi-settings zmdi-hc-fw"></i>
+                                <span>Settings</span>
+                            </a>
+                            <ul class="collapse nav-sub" aria-expanded="false">
+                                @foreach ($user_access as $key => $access)
+                                    @if($access->module_code == 'PRD_LST')
+                                        <?php
+                                            $url = 'general-settings';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'PRD_REG')
+                                        <?php
+                                            $url = 'dropdown';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
                 @endif
 
                 @if (Auth::check() and Auth::user()->user_type == 'Administrator')

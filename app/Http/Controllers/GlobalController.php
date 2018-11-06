@@ -21,18 +21,52 @@ class GlobalController extends Controller
 
     public function UserAccess()
     {
-    	$user_access = DB::table('modules as m')
-    						->join('user_accesses as u','u.module_id','=','m.id')
-    						->where('u.user_id',Auth::user()->id)
-    						->select(
-    							DB::raw('m.module_code as module_code'),
-    							DB::raw('m.module_name as module_name'),
-    							DB::raw('m.module_category as module_category'),
-    							DB::raw('m.icon as icon'),
-    							DB::raw('u.access as access')
-    						)
-    						->get();
-    	return $user_access;
+        $modules = DB::table('modules as m')
+                    ->join('user_accesses as u','u.module_id','=','m.id')
+                    ->where('u.user_id',Auth::user()->id)
+                    ->select(
+                        DB::raw('m.module_category as module_category'),
+                        DB::raw('m.module_code as module_code'),
+                        DB::raw('m.module_name as module_name'),
+                        DB::raw('m.icon as icon')
+                    )
+                    ->get();
+        return $modules;
+    }
+
+    public function checkAccess($code)
+    {
+        $access = DB::table('modules as m')
+                    ->join('user_accesses as u','m.id','=','u.module_id')
+                    ->where([
+                        ['m.module_code', $code],
+                        ['u.user_id', Auth::user()->id]
+                    ])->count();
+        return $access;
+    }
+
+    public function getLanguage()
+    {
+        $user = User::find(Auth::user()->id);
+
+        $data = [
+            'language' => $user->language
+        ];
+        return response()->json($data);
+    }
+
+    public function translateLanguage(Request $req)
+    {
+        $user = User::find(Auth::user()->id);
+
+        $user->language = $req->language;
+
+        if ($user->update()) {
+            $data = [
+                'language' => $user->language
+            ];
+            return response()->json($data);
+        }
     }
 
     public function getModules(Request $req)
@@ -46,7 +80,7 @@ class GlobalController extends Controller
                         })
                         ->select(
                             DB::raw("mod.id as id"),
-                            DB::raw("mod.module_name as code"),
+                            DB::raw("mod.module_name as module_name"),
                             DB::raw("IFNULL(acc.access,0) as access")
                         )->get();
         }

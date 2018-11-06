@@ -20,7 +20,13 @@ class DropdownController extends Controller
 
     public function index()
     {
-        return view('pages.settings.dropdown',['user_access' => $this->_global->UserAccess()]);
+        if (Auth::user()->user_type == 'Administrator' || Auth::user()->user_type == 'Owner') {
+            return view('pages.settings.dropdown',[
+                'user_access' => $this->_global->UserAccess()
+            ]);
+        } else {
+            return redirect('/dashboard');
+        }
     }
 
     public function save_name(Request $req)

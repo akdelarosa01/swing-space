@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
 Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('customer-list', 'Pages\CustomerController@index');
     Route::get('customer-list/show', 'Pages\CustomerController@show');
+    Route::post('customer-list/delete', 'Pages\CustomerController@destroy');
 
     Route::get('membership', 'Pages\MembershipController@index');
     Route::get('membership/{id}/edit', 'Pages\MembershipController@edit');
@@ -51,9 +52,10 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('employee/{id}/edit', 'Pages\EmployeeController@edit');
     Route::get('employee/show', 'Pages\EmployeeController@show');
     Route::post('employee/save', 'Pages\EmployeeController@save');
+    Route::post('employee/delete', 'Pages\EmployeeController@destroy');
 
     Route::get('inventory-list', 'Pages\InventoryController@index');
-    Route::get('receive-item', 'Pages\ReceiveItemController@index');
+    Route::get('receive-items', 'Pages\ReceiveItemController@index');
     Route::get('update-inventory', 'Pages\UpdateInventoryController@index');
 
     Route::get('dropdown','Pages\DropdownController@index');
@@ -67,4 +69,6 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('get-city', 'GlobalController@getCity');
     Route::get('get-modules', 'GlobalController@getModules');
     Route::get('get-referrer', 'GlobalController@referrers');
+    Route::get('get-language', 'GlobalController@getLanguage');
+    Route::post('translate-language', 'GlobalController@translateLanguage');
 });

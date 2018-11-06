@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Customer');
     }
+
+    public function findForPassport($identifier)
+    {
+        return User::orWhere('email',$identifier)->where('disabled',0)->first();
+    }
 }

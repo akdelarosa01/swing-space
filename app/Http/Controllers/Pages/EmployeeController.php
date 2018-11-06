@@ -84,7 +84,7 @@ class EmployeeController extends Controller
                 ]);
 
                 UserAccess::where('user_id',$req->id)->delete();
-                $this->give_acccess($req,$req->id);
+                $this->give_access($req,$req->id);
         
             }
 
@@ -158,7 +158,7 @@ class EmployeeController extends Controller
         return response()->json($data);
     }
 
-    private function give_acccess($req,$id)
+    private function give_access($req,$id)
     {
         $accesses = [];
 
@@ -169,7 +169,9 @@ class EmployeeController extends Controller
                     'user_id' => $id,
                     'access' => 1,
                     'create_user' => Auth::user()->id,
-                    'update_user' => Auth::user()->id
+                    'update_user' => Auth::user()->id,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
                 ]);
             }
         }
@@ -184,7 +186,9 @@ class EmployeeController extends Controller
                         'user_id' => $id,
                         'access' => 2,
                         'create_user' => Auth::user()->id,
-                        'update_user' => Auth::user()->id
+                        'update_user' => Auth::user()->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s')
                     ]);
                 }
             }
@@ -205,6 +209,8 @@ class EmployeeController extends Controller
                 'access' => $row['access'],
                 'create_user' => $row['create_user'],
                 'update_user' => $row['update_user'],
+                'created_at' => $row['created_at'],
+                'updated_at' => $row['updated_at'],
             ]);
         }
 
@@ -229,6 +235,7 @@ class EmployeeController extends Controller
     {
         $employee = DB::table('users as u')
                         ->join('employees as e','u.id','=','e.user_id')
+                        ->where('u.disabled',0)
                         ->select(
                             DB::raw('u.id as id'),
                             DB::raw('u.photo as photo'),
@@ -291,7 +298,7 @@ class EmployeeController extends Controller
         return $employee;
     }
 
-    public function destroy($id)
+    public function destroy(Request $req)
     {
         $data = [
             'msg' => 'Deleting failed.',
@@ -299,13 +306,39 @@ class EmployeeController extends Controller
             'employee' => ''
         ];
 
-        if (isset($id)) {
-            $employee = Employee::find($id);
-            if ($employee->delete()) {
+        if (isset($req->id)) {
+            $user = User::find($req->id);
+            $user->disabled = 1;
+            if ($user->update()) {
+                $employee = DB::table('users as u')
+                        ->join('employees as e','u.id','=','e.user_id')
+                        ->where('u.disabled',0)
+                        ->select(
+                            DB::raw('u.id as id'),
+                            DB::raw('u.photo as photo'),
+                            DB::raw('u.firstname as firstname'),
+                            DB::raw('u.lastname as lastname'),
+                            DB::raw('u.email as email'),
+                            DB::raw('u.gender as gender'),
+                            DB::raw('e.date_of_birth as date_of_birth'),
+                            DB::raw('e.phone as phone'),
+                            DB::raw('e.mobile as mobile'),
+                            DB::raw('e.street as street'),
+                            DB::raw('e.state as state'),
+                            DB::raw('e.city as city'),
+                            DB::raw('e.zip as zip'),
+                            DB::raw('e.position as position'),
+                            DB::raw('e.sss as sss'),
+                            DB::raw('e.tin as tin'),
+                            DB::raw('e.philhealth as philhealth'),
+                            DB::raw('e.pagibig as pagibig'),
+                            DB::raw('e.date_hired as date_hired'),
+                            DB::raw('e.employee_id as employee_id')
+                        )->get();
                 $data = [
                     'msg' => 'Successfully deleted.',
                     'status' => 'success',
-                    'employee' => $this->employee($id)
+                    'employee' => $employee
                 ];
             }
         }

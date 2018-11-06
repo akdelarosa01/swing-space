@@ -19,19 +19,27 @@ class DashboardController extends Controller
     {
         switch (Auth::user()->user_type) {
             case 'Owner':
-                return view('pages.dashboard.owner');
+                return view('pages.dashboard.owner',[
+                    'user_access' => $this->_global->UserAccess()
+                ]);
                 break;
 
             case 'Employee':
-                return view('pages.dashboard.employee');
+                return view('pages.dashboard.employee',[
+                    'user_access' => $this->_global->UserAccess()
+                ]);
                 break;
 
             case 'Customer':
-                return view('pages.dashboard.customer');
+                return view('pages.dashboard.customer',[
+                    'user_access' => $this->_global->UserAccess()
+                ]);
                 break;
             
             default:
-                return view('super_admin.dashboard');
+                return view('super_admin.dashboard',[
+                    'user_access' => $this->_global->UserAccess()
+                ]);
                 break;
         }
     }

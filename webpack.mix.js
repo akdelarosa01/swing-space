@@ -42,6 +42,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/employee/employee_list.js', 'public/js/pages/employee/')
     .js('resources/js/pages/employee/registration.js', 'public/js/pages/employee/')
 
+    .js('resources/js/pages/inventory/receive_items.js', 'public/js/pages/inventory/')
 
 
 
