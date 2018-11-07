@@ -9,6 +9,7 @@ use App\Http\Controllers\GlobalController;
 use App\Customer;
 use App\User;
 use DB;
+use App;
 use Hash;
 
 class MembershipController extends Controller

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">Add Product</div>
+                <div class="card-header" data-localize="add_product.title">Add Product</div>
                 <form>
                     <div class="card-body">
                         <div class="form-group">

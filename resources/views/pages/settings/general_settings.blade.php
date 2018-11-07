@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 col-sm-10 col-xs-12">
             <div class="card">
-                <div class="card-header">General Settings</div>
+                <div class="card-header" data-localize="gen_set.title">General Settings</div>
                 <div class="card-body">
                     <form action="#" class="form-horizontal">
                         <div class="form-body">

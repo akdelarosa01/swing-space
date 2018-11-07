@@ -14,7 +14,7 @@
                             <div class="col-sm-12">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Dropdown Name</span>
+                                        <span class="input-group-text" data-localize="dropdown.title">Dropdown Name</span>
                                     </div>
                                     <input type="text" class="form-control form-control-sm clear validate" id="description" name="description">
                                     <div id="description_feedback"></div>

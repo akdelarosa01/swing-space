@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-5">
             <div class="card">
-                <div class="card-header">Receive Items</div>
+                <div class="card-header" data-localize="receive_items.title">Receive Items</div>
                 <form action="../../receive-items/save" method="post" class="form-horizontal" id="frm_items">
                     <div class="card-body">
                         <div class="form-group row">

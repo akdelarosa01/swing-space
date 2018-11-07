@@ -6,7 +6,7 @@ jQuery.fn.extend({
     }
 });
 
-$( function() {
+$(document).ready( function() {
     getLanguage();
     $('.select2').select2();
 

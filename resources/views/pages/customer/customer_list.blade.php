@@ -3,8 +3,10 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <span data-localize="customer_title">Customers List</span>
-            <a href="{{ url('/membership') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">Apply Membership</a>
+            <span data-localize="customer.title">@lang('customer.title')</span>
+            <a href="{{ url('/membership') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
+                <span data-localize="membership.title">@lang('membership.title')</span>
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -12,9 +14,9 @@
                     <thead>
                         <tr>
                             <th width="5%"></th>
-                            <th width="30%" data-localize="customer_code">Customer Code</th>
-                            <th width="30%" data-localize="customer_name">Name</th>
-                            <th width="30%" data-localize="customer_gender">Gender</th>
+                            <th width="30%">@lang('customer.code')</th>
+                            <th width="30%">@lang('customer.name')</th>
+                            <th width="30%">@lang('customer.gender')</th>
                             <th width="5%"></th>
                         </tr>
                     </thead>

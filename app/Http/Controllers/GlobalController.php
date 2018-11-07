@@ -10,6 +10,8 @@ use App\Module;
 use App\User;
 use App\TransactionCode;
 use App\Customer;
+use Session;
+use App;
 use DB;
 
 class GlobalController extends Controller
@@ -62,8 +64,10 @@ class GlobalController extends Controller
         $user->language = $req->language;
 
         if ($user->update()) {
+            App::setLocale($req->language);
+            session(['locale', $req->language]);
             $data = [
-                'language' => $user->language
+                'language' => session('locale')
             ];
             return response()->json($data);
         }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Update Inventory
+            <span data-localize="update_inventory.title">Update Inventory</span>
         </div>
         <div class="card-body">
             <form class="form-inline">

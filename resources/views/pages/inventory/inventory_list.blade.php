@@ -3,11 +3,11 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Inventories
+            <span data-localize="inventory.title">Inventories</span>
             <ul class="actions top-right">
                 <li>
                     <a href="{{ url('/receive-items') }}" class="btn btn-sm btn-info btn-rounded btn-outline">
-                        Receive Items
+                        <span data-localize="receive_items.title">Receive Items</span>
                     </a>
                 </li>
             </ul>

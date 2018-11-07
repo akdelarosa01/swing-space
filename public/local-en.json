@@ -1,51 +1,82 @@
 {
-	"header_profile": "Profile",
-	"header_signout": "Sign Out",
+	"header": {
+		"profile": "轮廓",
+		"signout": "登出",
+	},
+	
+	"sidebar": {
+		"dashboard": "仪表板",
+		"pos_control": "POS控制",
+		"customers": "顾客",
+		"inventories": "库存",
+		"employees": "雇员",
+		"products": "制品",
+		"settings": "选项",
+	},
 
-	"sidebar_dashboard": "Dashboard",
-	"sidebar_pos_control": "POS Control",
-	"sidebar_customers": "Customers",
-	"sidebar_inventories": "Inventories",
-	"sidebar_employees": "Employees",
-	"sidebar_products": "Products",
-	"sidebar_settings": "Settings",
+	"customer": {
+		"title": "客户名单",
+		"code": "客户代码",
+		"name": "顾客姓名",
+		"gender": "客户性别",
+	},
 
-	"customer_title": "Customer List",
-	"customer_code": "Code",
-	"customer_name": "Name",
-	"customer_gender": "Gender",
+	"membership": {
+		"title": "Membership",
+		"back": "Back",
+		"firstname": "First Name",
+		"lastname": "Last Name",
+		"email": "Email Address",
+		"gender": "Gender",
+		"date_of_birth": "Date of Birth",
+		"phone": "Phone",
+		"mobile": "Mobile",
+		"occupation": "Occupation",
+		"company": "Company",
+		"school": "School",
+		"referrer": "Referrer",
+		"disable": "Disable",
+		"apply": "Apply",
+		"cancel": "Cancel",
+	},
 
-	"membership_title": "Membership",
-	"membership_back": "Back",
-	"membership_firstname": "First Name",
-	"membership_lastname": "Last Name",
-	"membership_email": "Email Address",
-	"membership_gender": "Gender",
-	"membership_date_of_birth": "Date of Birth",
-	"membership_phone": "Phone",
-	"membership_mobile": "Mobile",
-	"membership_occupation": "Occupation",
-	"membership_company": "Company",
-	"membership_school": "School",
-	"membership_referrer": "Referrer",
-	"membership_disable": "Disable",
-	"membership_apply": "Apply",
-	"membership_cancel": "Cancel",
+	"employee": {
+		"title": "员工名单",
+	},
 
-	"employee_title": "Employee List",
-	"registration_title": "Employee Registration",
+	"registration": {
+		"title": "员工注册",
+	},
 
-	"product_title": "Product List",
-	"add_product_title": "Add Product",
+	"product": {
+		"title": "产品列表",
+	},
 
-	"genset_title": "General Settings",
-	"dropdown_title": "Dropdown Settings",
+	"add_product": {
+		"title": "添加产品",
+	},
 
-	"inventory_title": "Inventory List",
+	"gen_set": {
+		"title": "常规设置",
+	},
 
-	"summary_title": "Summary List",
+	"dropdown": {
+		"title": "下拉设置",
+	},
 
-	"receive_items_title": "Receive Items",
+	"inventory": {
+		"title": "存货",
+	},
 
-	"update_inventory_title": "Update Inventory",
+	"summary": {
+		"title": "摘要清单",
+	},
+
+	"receive_items": {
+		"title": "收到物品",
+	},
+
+	"update_inventory": {
+		"title": "更新库存",
+	},
 }

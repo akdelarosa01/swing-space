@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Products
+            <span data-localize="product.title">Products</span>
             <ul class="actions top-right">
                 <li>
                     <a href="{{ url('/add-products') }}" class="btn btn-sm btn-info btn-rounded btn-outline">Add Products</a>
