@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            Customers
+            <span data-localize="customer_title">Customers List</span>
             <a href="{{ url('/membership') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">Apply Membership</a>
         </div>
         <div class="card-body">
@@ -12,9 +12,9 @@
                     <thead>
                         <tr>
                             <th width="5%"></th>
-                            <th width="30%">Customer Code</th>
-                            <th width="30%">Name</th>
-                            <th width="30%">Gender</th>
+                            <th width="30%" data-localize="customer_code">Customer Code</th>
+                            <th width="30%" data-localize="customer_name">Name</th>
+                            <th width="30%" data-localize="customer_gender">Gender</th>
                             <th width="5%"></th>
                         </tr>
                     </thead>

@@ -1,0 +1,51 @@
+{
+	"header_profile": "轮廓",
+	"header_signout": "登出",
+
+	"sidebar_dashboard": "仪表板",
+	"sidebar_pos_control": "POS控制",
+	"sidebar_customers": "顾客",
+	"sidebar_inventories": "库存",
+	"sidebar_employees": "雇员",
+	"sidebar_products": "制品",
+	"sidebar_settings": "选项",
+
+	"customer_title": "客户名单",
+	"customer_code": "客户代码",
+	"customer_name": "顾客姓名",
+	"customer_gender": "客户性别",
+
+	"membership_title": "会籍",
+	"membership_back": "背部",
+	"membership_firstname": "名字",
+	"membership_lastname": "姓",
+	"membership_email": "电邮位置",
+	"membership_gender": "性别",
+	"membership_date_of_birth": "出生日期",
+	"membership_phone": "电话",
+	"membership_mobile": "手机号码",
+	"membership_occupation": "占用",
+	"membership_company": "公司",
+	"membership_school": "学校",
+	"membership_referrer": "引用",
+	"membership_disable": "作不用的",
+	"membership_apply": "寄存器",
+	"membership_cancel": "取消",
+
+	"employee_title": "员工名单",
+	"registration_title": "员工注册",
+
+	"product_title": "产品列表",
+	"add_product_title": "添加产品",
+
+	"genset_title": "常规设置",
+	"dropdown_title": "下拉设置",
+
+	"inventory_title": "存货",
+
+	"summary_title": "摘要清单",
+
+	"receive_items_title": "收到物品",
+
+	"update_inventory_title": "更新库存",
+}

@@ -51,3 +51,8 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+        var token = $('meta[name="csrf-token"]').attr('content');
+    </script>
+@endpush

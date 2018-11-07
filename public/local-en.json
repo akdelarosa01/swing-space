@@ -1,0 +1,51 @@
+{
+	"header_profile": "Profile",
+	"header_signout": "Sign Out",
+
+	"sidebar_dashboard": "Dashboard",
+	"sidebar_pos_control": "POS Control",
+	"sidebar_customers": "Customers",
+	"sidebar_inventories": "Inventories",
+	"sidebar_employees": "Employees",
+	"sidebar_products": "Products",
+	"sidebar_settings": "Settings",
+
+	"customer_title": "Customer List",
+	"customer_code": "Code",
+	"customer_name": "Name",
+	"customer_gender": "Gender",
+
+	"membership_title": "Membership",
+	"membership_back": "Back",
+	"membership_firstname": "First Name",
+	"membership_lastname": "Last Name",
+	"membership_email": "Email Address",
+	"membership_gender": "Gender",
+	"membership_date_of_birth": "Date of Birth",
+	"membership_phone": "Phone",
+	"membership_mobile": "Mobile",
+	"membership_occupation": "Occupation",
+	"membership_company": "Company",
+	"membership_school": "School",
+	"membership_referrer": "Referrer",
+	"membership_disable": "Disable",
+	"membership_apply": "Apply",
+	"membership_cancel": "Cancel",
+
+	"employee_title": "Employee List",
+	"registration_title": "Employee Registration",
+
+	"product_title": "Product List",
+	"add_product_title": "Add Product",
+
+	"genset_title": "General Settings",
+	"dropdown_title": "Dropdown Settings",
+
+	"inventory_title": "Inventory List",
+
+	"summary_title": "Summary List",
+
+	"receive_items_title": "Receive Items",
+
+	"update_inventory_title": "Update Inventory",
+}

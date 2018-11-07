@@ -7,6 +7,7 @@ jQuery.fn.extend({
 });
 
 $( function() {
+    getLanguage();
     $('.select2').select2();
 
     $('.validate').on('keyup', function(e) {
@@ -319,24 +320,22 @@ function referrer(el,val) {
     });
 }
 
-function getLanguage(page) {
+function getLanguage() {
     $.ajax({
         url: '../../get-language',
         type: 'GET',
         dataType: 'JSON',
-        data: {
-            _token: token
-        },
     }).done(function(data, textStatus, xhr) {
-        if (data.language !== 'en') {
-            $("[data-localize]").localize(page, data);
-        }
+        // if (data.language !== 'en') {
+        //     console.log(data);
+            $("[data-localize]").localize('local', data);
+        // }
     }).fail(function(xhr, textStatus, errorThrown) {
        msg('Langauage : '+errorThrown,textStatus);
     });
 }
 
-function translateLanguage(language,page) {
+function translateLanguage(language) {
     $.ajax({
         url: '../../translate-language',
         type: 'POST',
