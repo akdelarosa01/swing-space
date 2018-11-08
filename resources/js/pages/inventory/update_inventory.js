@@ -14,29 +14,34 @@ $( function() {
 
     $('#frm_update').on('submit', function(e) {
         e.preventDefault();
-        $('.loading').show();
 
-        $.ajax({
-            url: $(this).attr('action'),
-            type: 'POST',
-            dataType: 'JSON',
-            data: $(this).serialize(),
-        }).done(function(data, textStatus, xhr) {
-            if (textStatus == 'success') {
-                msg(data.msg,data.status)
-                searchItems(data.item_type);
-            }
-        }).fail(function(xhr, textStatus, errorThrown) {
-            var errors = xhr.responseJSON.errors;
+        if (items.length > 0) {
+            $('.loading').show();
 
-            if (errors == undefined) {
-                msg('Received Items: '+errorThrown,textStatus);
-            } else {
-                showErrors(errors);
-            }
-        }).always( function() {
-            $('.loading').hide();
-        });
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                dataType: 'JSON',
+                data: $(this).serialize(),
+            }).done(function(data, textStatus, xhr) {
+                if (textStatus == 'success') {
+                    msg(data.msg,data.status)
+                    searchItems(data.item_type);
+                }
+            }).fail(function(xhr, textStatus, errorThrown) {
+                var errors = xhr.responseJSON.errors;
+
+                if (errors == undefined) {
+                    msg('Received Items: '+errorThrown,textStatus);
+                } else {
+                    showErrors(errors);
+                }
+            }).always( function() {
+                $('.loading').hide();
+            });
+        } else {
+            msg('Please search an item type first.','failed');
+        }
     });
 });
 
@@ -74,7 +79,7 @@ function inventoryTable(arr) {
             { data: 'minimum_stock' },
             { data: 'uom' },
             { data: function(x) {
-                return '<input type="text" class="form-control form-control-sm" name="new_qty[]">'+
+                return '<input type="number" class="form-control form-control-sm" name="new_qty[]" maxlength="3" min="1" required>'+
                         '<input type="hidden" name="id[]" value="'+x.id+'">'+
                         '<input type="hidden" name="item_code[]" value="'+x.item_code+'">'+
                         '<input type="hidden" name="item_name[]" value="'+x.item_name+'">'+

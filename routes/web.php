@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('item-output', 'Pages\ItemOutputController@index');
     Route::get('item-output/search-item', 'Pages\ItemOutputController@search_items');
+    Route::post('item-output/save-selected', 'Pages\ItemOutputController@save_selected');
 
     Route::get('dropdown','Pages\DropdownController@index');
     Route::get('dropdown/show-name','Pages\DropdownController@show_name');

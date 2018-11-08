@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Inventory;
 use App\ItemInput;
+use App\ItemOutput;
 use DB;
 
 class UpdateInventoryController extends Controller
@@ -59,60 +60,92 @@ class UpdateInventoryController extends Controller
 
         if (is_array($req->id)) {
             foreach ($req->id as $key => $id) {
-                if ($req->quantity[$key] < $req->new_qty[$key]) {
-                    $inv = Inventory::find($id);
-                    $inv->quantity = $req->new_qty[$key];
+                if ($req->new_qty[$key] == 0 || $req->new_qty[$key] == '0') {
+                    $data = [
+                        'msg' => 'Please input a valid value.',
+                        'status' => 'failed',
+                        'item_type' => $req->item_type[$key]
+                    ];
+                }
 
-                    if ($inv->update()) {
-                        $new_qty = $req->new_qty[$key] - $req->quantity[$key]; 
-                        $item = ItemInput::create([
-                            'item_code' => $req->item_code[$key],
-                            'item_name' => $req->item_name[$key],
-                            'item_type' => $req->item_type[$key],
-                            'quantity' => $new_qty,
-                            'uom' => $req->uom[$key],
-                            'remarks' => 'N/A',
-                            'transaction_type' => 'Adjustment',
-                            'date_received' => date('Y-m-d'),
-                            'create_user' => Auth::user()->id,
-                            'update_user' => Auth::user()->id,
-                        ]);
+                if ($req->new_qty[$key] == '') {
+                    $data = [
+                        'msg' => 'Please input a valid value.',
+                        'status' => 'failed',
+                        'item_type' => $req->item_type[$key]
+                    ];
+                }
 
-                        if ($item) {
-                            $data = [
-                                'msg' => 'Successfully updated.',
-                                'status' => 'success',
-                                'item_type' => $req->item_type[$key]
-                            ];
-                        } 
+                if (!is_numeric($req->new_qty[$key])) {
+                    $data = [
+                        'msg' => 'Please input a valid value.',
+                        'status' => 'failed',
+                        'item_type' => $req->item_type[$key]
+                    ];
+                }
+
+                if (isset($req->new_qty[$key])) {
+                    if ($req->quantity[$key] < $req->new_qty[$key]) {
+                        $inv = Inventory::find($id);
+                        $inv->quantity = $req->new_qty[$key];
+
+                        if ($inv->update()) {
+                            $new_qty = $req->new_qty[$key] - $req->quantity[$key]; 
+                            $item = ItemInput::create([
+                                'item_code' => $req->item_code[$key],
+                                'item_name' => $req->item_name[$key],
+                                'item_type' => $req->item_type[$key],
+                                'quantity' => $new_qty,
+                                'uom' => $req->uom[$key],
+                                'remarks' => 'N/A',
+                                'transaction_type' => 'Adjustment',
+                                'date_received' => date('Y-m-d'),
+                                'create_user' => Auth::user()->id,
+                                'update_user' => Auth::user()->id,
+                            ]);
+
+                            if ($item) {
+                                $data = [
+                                    'msg' => 'Successfully updated.',
+                                    'status' => 'success',
+                                    'item_type' => $req->item_type[$key]
+                                ];
+                            } 
+                        }
+                    } 
+
+                    if ($req->quantity[$key] > $req->new_qty[$key]) {
+                        $inv = Inventory::find($id);
+                        $inv->quantity = $req->new_qty[$key];
+
+                        if ($inv->update()) {
+                            $new_qty =  $req->quantity[$key] - $req->new_qty[$key]; 
+                            $item = ItemOutput::create([
+                                'item_code' => $req->item_code[$key],
+                                'item_type' => $req->item_type[$key],
+                                'quantity' => $new_qty,
+                                'uom' => $req->uom[$key],
+                                'remarks' => 'N/A',
+                                'transaction_type' => 'Adjustment',
+                                'create_user' => Auth::user()->id,
+                                'update_user' => Auth::user()->id,
+                            ]);
+
+                            if ($item) {
+                                $data = [
+                                    'msg' => 'Successfully updated.',
+                                    'status' => 'success',
+                                    'item_type' => $req->item_type[$key]
+                                ];
+                            } 
+                        }
                     }
-                } 
-
-                if ($req->quantity[$key] > $req->new_qty[$key]) {
-                    $inv = Inventory::find($id);
-                    $inv->quantity = $req->new_qty[$key];
-
-                    if ($inv->update()) {
-                        $new_qty =  $req->quantity[$key] - $req->new_qty[$key]; 
-                        $item = ItemOutput::create([
-                            'item_code' => $req->item_code[$key],
-                            'item_type' => $req->item_type[$key],
-                            'quantity' => $new_qty,
-                            'uom' => $req->uom[$key],
-                            'remarks' => 'N/A',
-                            'transaction_type' => 'Adjustment',
-                            'create_user' => Auth::user()->id,
-                            'update_user' => Auth::user()->id,
-                        ]);
-
-                        if ($item) {
-                            $data = [
-                                'msg' => 'Successfully updated.',
-                                'status' => 'success',
-                                'item_type' => $req->item_type[$key]
-                            ];
-                        } 
-                    }
+                } else {
+                    $data = [
+                        'msg' => 'Please input a valid value.',
+                        'status' => 'failed',
+                        'item_type' => $req->item_type[$key]
+                    ];
                 }
             }
         }
