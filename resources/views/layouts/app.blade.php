@@ -37,5 +37,8 @@
 
     <script src="{{ mix('/js/main.js') }}"></script>
     @stack('scripts')
+    <script type="text/javascript">
+        getLanguage();
+    </script>
 </body>
 </html>

@@ -19,7 +19,9 @@ class ModuleController extends Controller
 
     public function index()
     {
-        return view('super_admin.module');
+        return view('super_admin.module',[
+                'user_access' => $this->_global->UserAccess()
+            ]);
     }
 
     public function save(Request $req)

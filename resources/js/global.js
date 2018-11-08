@@ -7,7 +7,7 @@ jQuery.fn.extend({
 });
 
 $(document).ready( function() {
-    getLanguage();
+    // getLanguage();
     $('.select2').select2();
 
     $('.validate').on('keyup', function(e) {

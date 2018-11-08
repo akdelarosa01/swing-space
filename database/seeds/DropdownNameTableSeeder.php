@@ -29,5 +29,10 @@ class DropdownNameTableSeeder extends Seeder
 			'create_user' => 1,
 			'update_user' => 1,
         ]);
+        DropdownName::create([
+            'description' => 'Unit of Measurement',
+            'create_user' => 1,
+            'update_user' => 1,
+        ]);
     }
 }

@@ -4,7 +4,9 @@
     <div class="card">
         <div class="card-header">
             <span data-localize="registration.title">Employee Registration</span>
-            <a href="{{ url('/employee-list') }}" class="btn btn-sm btn-info pull-right">Employee List</a>
+            <a href="{{ url('/employee-list') }}" class="btn btn-sm btn-info btn-rounded btn-outline">
+                Employee List
+            </a>
         </div>
         <form action="../../employee/save" id="frm_registration" enctype="multipart/form-data" method="post">
             @csrf

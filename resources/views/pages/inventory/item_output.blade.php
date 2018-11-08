@@ -5,10 +5,7 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="card-header">
-                    <span data-localize="receive_items.title">Receive Items</span>
-                    <button type="button" class="btn btn-sm btn-success pull-right" id="btn_add_items" data-localize="receive_items.add">
-                        Add New Item
-                    </button>
+                    <span data-localize="item_output.title">Item Output</span>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
@@ -19,7 +16,7 @@
                             <select class="form-control form-control-sm" id="item_type_srch"></select>
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-sm btn-info" id="btn_search_type">
-                                    <span data-localize="receive_items.search">Search</span>
+                                    <span data-localize="item_output.search">Search</span>
                                 </button>
                             </div>
                         </div>
@@ -42,22 +39,7 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-body">
-                    <form enctype="multipart/form-data" method="post" action="/" id="upload_inventory">
-                        @csrf
-                        <div class="form-group row">
-                            <div class="col-md-9">
-                                <div class="custom-file mb-1">
-                                    <input type="file" class="custom-file-input form-control-sm" id="inventory_file">
-                                    <label class="custom-file-label" for="inventory_file">Choose xlsx file</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="submit" class="btn btn-info btn-sm btn-block mb-3">Upload</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <form action="../../receive-items/save-selected" method="post" id="frm_selected">
+                    <form action="../../item-output/save-selected" method="post" id="frm_selected">
                         @csrf
                         <div class="table-responsive">
                             <table class="table table-striped table-sm" id="tbl_selected">
@@ -84,13 +66,11 @@
             </div>
         </div>
     </div>
-
-    @include('modals.receive_items')
 @endsection
 
 @push('scripts')
     <script type="text/javascript">
         var token = $('meta[name="csrf-token"]').attr('content');
     </script>
-    <script type="text/javascript" src="{{ asset('/js/pages/inventory/receive_items.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/pages/inventory/item_output.js') }}"></script>
 @endpush

@@ -73,7 +73,7 @@ function customerTable(arr) {
             	return '<div class="btn-group">'+
                             '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info">Edit</a>'+
                             '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'">Delete</button>'+
-                        '</button>';
+                        '</div>';
             }, searchable: false, orderable: false},
         ]
     });

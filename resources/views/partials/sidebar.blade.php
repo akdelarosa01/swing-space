@@ -85,7 +85,7 @@
 
 
                     @if(in_array('Inventory', $category))
-                        <li class="nav-dropdown {{ Request::is('receive-items') || Request::is('inventory-list') || Request::is('update-inventory') || Request::is('summary-list')? ' active' : null }}">
+                        <li class="nav-dropdown {{ Request::is('receive-items') || Request::is('inventory-list') || Request::is('update-inventory') || Request::is('summary-list') || Request::is('item-output')? ' active' : null }}">
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="zmdi zmdi-label zmdi-hc-fw"></i>
                                 <span data-localize="sidebar.inventories">@lang('sidebar.inventories')</span>
@@ -129,6 +129,17 @@
                                         <?php
                                             $url = 'update-inventory';
                                             $local = 'data-localize="update_inventory.title"';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if($access->module_code == 'ITM_OUT')
+                                        <?php
+                                            $url = 'item-output';
+                                            $local = 'data-localize="item_output.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">

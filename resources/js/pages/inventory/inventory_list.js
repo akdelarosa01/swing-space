@@ -1,61 +1,57 @@
-var items = [{
-	id: 1,
-	item_code: 'BC10001',
-	item_name: 'Brewed Coffee',
-	quantity: 50,
-    package: 'Box',
-    package_qty: 5,
-    remarks: 'No damaged found.',
-    date_received: '09/24/2018'
-},{
-    id: 2,
-    item_code: 'CM10001',
-    item_name: 'Chocolate Mix',
-    quantity: 10,
-    package: 'Box',
-    package_qty: 2,
-    remarks: 'No damaged found.',
-    date_received: '09/24/2018'
-}];
+var items = [];
 
 $( function() {
-	itemsTable(items);
+    get_dropdown_options(2,'#item_type');
+	inventoryTable(items);
+
+    $('#btn_search_type').on('click', function() {
+        if ($('#item_type').val() == '') {
+            msg('please select an item type.','failed');
+        } else {
+            searchItems($('#item_type').val());
+        }
+    });
 });
 
-function itemsTable(arr) {
+function searchItems(item_type) {
+    $('.loading').show();
+    $.ajax({
+        url: '../../inventory-list/search-items',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+            item_type: item_type
+        },
+    }).done(function(data, textStatus, xhr) {
+        items = data;
+        inventoryTable(data);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Inventories: '+errorThrown,textStatus);
+    }).always(function() {
+        $('.loading').hide();
+    });
+    
+}
+
+function inventoryTable(arr) {
 	$('#tbl_items').dataTable().fnClearTable();
     $('#tbl_items').dataTable().fnDestroy();
     $('#tbl_items').dataTable({
         data: arr,
-        bLengthChange : false,
-        searching: false,
-        ordering: false,
-	    paging: false,
-	    scrollY: "250px",
         columns: [
-            {data: function(x) {
-                return '<input type="checkbox" class="">';
-            }},
             { data: 'item_code' },
             { data: 'item_name' },
+            { data: 'item_type' },
             { data: 'quantity' },
-            { data: 'package' },
-            { data: 'package_qty' },
-            { data: 'remarks' },
-            { data: 'date_received' },
-            {data: function(x) {
-                return '<div class="btn-group">'+
-                            '<button type="button" class="btn btn-sm btn-info">'+
-                                'Edit'+
-                            '</button>'+
-                            '<button type="button" class="btn btn-sm btn-danger">'+
-                                'remove'+
-                            '</button>'+
-                        '</div>';
-            }},
+            { data: 'minimum_stock' },
+            { data: 'uom' }
         ],
-        // fnInitComplete: function() {
-        //     $('.dataTables_scrollBody').slimscroll();
-        // },
+        createdRow: function (row, data, dataIndex) {
+            if (data.quantity <= data.minimum_stock) {
+                $(row).css('background-color', '#ff6266');
+                $(row).css('color', '#fff');
+            }
+        }
     });
 }

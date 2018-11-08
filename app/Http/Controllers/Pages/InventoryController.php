@@ -28,69 +28,22 @@ class InventoryController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function search_items(Request $req)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $items = DB::table('inventories as inv')
+                    ->where('inv.item_type',$req->item_type)
+                    ->where('inv.deleted',0)
+                    ->select(
+                        DB::raw("inv.id as id"),
+                        DB::raw("inv.item_code as item_code"),
+                        DB::raw("(SELECT itm.item_name FROM item_inputs as itm
+                                    WHERE itm.item_code = inv.item_code LIMIT 1) as item_name"),
+                        DB::raw("inv.item_type as item_type"),
+                        DB::raw("inv.quantity as quantity"),
+                        DB::raw("inv.minimum_stock as minimum_stock"),
+                        DB::raw("inv.uom as uom")
+                    )
+                    ->get();
+        return response()->json($items);
     }
 }

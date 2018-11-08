@@ -19,7 +19,9 @@ class TransactionCodesController extends Controller
 
     public function index()
     {
-        return view('super_admin.transaction_codes');
+        return view('super_admin.transaction_codes',[
+                'user_access' => $this->_global->UserAccess()
+            ]);
     }
 
     public function save(Request $req)

@@ -60,89 +60,98 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ 	return __webpack_require__(__webpack_require__.s = 58);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 44:
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(45);
+module.exports = __webpack_require__(59);
 
 
 /***/ }),
 
-/***/ 45:
+/***/ 59:
 /***/ (function(module, exports) {
 
-var customers = [];
+var items = [];
 
 $(function () {
-    getCustomers();
+    get_dropdown_options(2, '#item_type');
+    inventoryTable(items);
 
-    $('#tbl_customers_body').on('click', '.delete-customer', function () {
-        confirm('Delete Customer', 'Do you want to delete this customer?', $(this).attr('data-id'));
+    $('#btn_search_type').on('click', function () {
+        if ($('#item_type').val() == '') {
+            msg('please select an item type.', 'failed');
+        } else {
+            searchItems($('#item_type').val());
+        }
     });
 
-    $('#btn_confirm').on('click', function () {
+    $('#frm_update').on('submit', function (e) {
+        e.preventDefault();
         $('.loading').show();
+
         $.ajax({
-            url: '../../customer-list/delete',
+            url: $(this).attr('action'),
             type: 'POST',
             dataType: 'JSON',
-            data: {
-                _token: token,
-                id: $('#confirm_id').val()
-            }
+            data: $(this).serialize()
         }).done(function (data, textStatus, xhr) {
             if (textStatus == 'success') {
-                $('#confirm_modal').modal('hide');
                 msg(data.msg, data.status);
-                customerTable(data.customers);
+                searchItems(data.item_type);
             }
         }).fail(function (xhr, textStatus, errorThrown) {
-            msg('Delete Customer: ' + errorThrown, textStatus);
+            var errors = xhr.responseJSON.errors;
+
+            if (errors == undefined) {
+                msg('Received Items: ' + errorThrown, textStatus);
+            } else {
+                showErrors(errors);
+            }
         }).always(function () {
             $('.loading').hide();
         });
     });
 });
 
-function getCustomers() {
-    customers = [];
+function searchItems(item_type) {
+    $('.loading').show();
     $.ajax({
-        url: 'customer-list/show',
+        url: '../../update-inventory/search-items',
         type: 'GET',
         dataType: 'JSON',
-        data: { _token: token }
+        data: {
+            _token: token,
+            item_type: item_type
+        }
     }).done(function (data, textStatus, xhr) {
-        customers = data;
-        customerTable(customers);
+        items = data;
+        inventoryTable(data);
     }).fail(function (xhr, textStatus, errorThrown) {
-        msg(errorThrown, textStatus);
+        msg('Inventories: ' + errorThrown, textStatus);
     }).always(function () {
-        console.log("complete");
+        $('.loading').hide();
     });
 }
 
-function customerTable(arr) {
-    $('#tbl_customers').dataTable().fnClearTable();
-    $('#tbl_customers').dataTable().fnDestroy();
-    $('#tbl_customers').dataTable({
+function inventoryTable(arr) {
+    $('#tbl_items').dataTable().fnClearTable();
+    $('#tbl_items').dataTable().fnDestroy();
+    $('#tbl_items').dataTable({
         data: arr,
-        //    bLengthChange : false,
-        //    searching: false,
-        //    ordering: false,
-        // paging: false,
-        // scrollY: "250px",
-        columns: [{ data: function data(x) {
-                return '<img src="' + x.photo + '" class="w-35 rounded-circle" alt="' + x.firstname + ' ' + x.lastname + '">';
-            }, searchable: false, orderable: false }, { data: 'customer_code' }, { data: function data(x) {
-                return x.firstname + ' ' + x.lastname;
-            } }, { data: 'gender' }, { data: function data(x) {
-                return '<div class="btn-group">' + '<a href="/membership/' + x.id + '/edit" class="btn btn-sm btn-info">Edit</a>' + '<button class="btn btn-sm btn-danger delete-customer" data-id="' + x.id + '">Delete</button>' + '</div>';
-            }, searchable: false, orderable: false }]
+        columns: [{ data: 'item_code' }, { data: 'item_name' }, { data: 'item_type' }, { data: 'quantity' }, { data: 'minimum_stock' }, { data: 'uom' }, { data: function data(x) {
+                return '<input type="text" class="form-control form-control-sm" name="new_qty[]">' + '<input type="hidden" name="id[]" value="' + x.id + '">' + '<input type="hidden" name="item_code[]" value="' + x.item_code + '">' + '<input type="hidden" name="item_name[]" value="' + x.item_name + '">' + '<input type="hidden" name="item_type[]" value="' + x.item_type + '">' + '<input type="hidden" name="quantity[]" value="' + x.quantity + '">' + '<input type="hidden" name="minimum_stock[]" value="' + x.minimum_stock + '">' + '<input type="hidden" name="uom[]" value="' + x.uom + '">';
+            } }],
+        createdRow: function createdRow(row, data, dataIndex) {
+            if (data.quantity <= data.minimum_stock) {
+                $(row).css('background-color', '#ff6266');
+                $(row).css('color', '#fff');
+            }
+        }
     });
 }
 

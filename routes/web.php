@@ -55,8 +55,19 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('employee/delete', 'Pages\EmployeeController@destroy');
 
     Route::get('inventory-list', 'Pages\InventoryController@index');
+    Route::get('inventory-list/search-items', 'Pages\InventoryController@search_items');
+
     Route::get('receive-items', 'Pages\ReceiveItemController@index');
+    Route::post('receive-items/save', 'Pages\ReceiveItemController@save');
+    Route::get('receive-items/search-item', 'Pages\ReceiveItemController@search_items');
+    Route::post('receive-items/save-selected', 'Pages\ReceiveItemController@save_selected');
+
     Route::get('update-inventory', 'Pages\UpdateInventoryController@index');
+    Route::get('update-inventory/search-items', 'Pages\UpdateInventoryController@search_items');
+    Route::post('update-inventory/save', 'Pages\UpdateInventoryController@save');
+
+    Route::get('item-output', 'Pages\ItemOutputController@index');
+    Route::get('item-output/search-item', 'Pages\ItemOutputController@search_items');
 
     Route::get('dropdown','Pages\DropdownController@index');
     Route::get('dropdown/show-name','Pages\DropdownController@show_name');

@@ -4,7 +4,9 @@
     <div class="card">
         <div class="card-header">
             <span data-localize="membership.title">@lang('membership.title')</span>
-            <a href="{{ url('/customer-list') }}" class="btn btn-sm btn-danger pull-right" data-localize="membership.back">@lang('membership.back')</a>
+            <a href="{{ url('/customer-list') }}" class="btn btn-sm btn-danger btn-rounded btn-outline pull-right" data-localize="membership.back">
+                @lang('membership.back')
+            </a>
         </div>
 
         <form action="../../membership/save" method="post" class="form-horizontal" id="frm_membership">

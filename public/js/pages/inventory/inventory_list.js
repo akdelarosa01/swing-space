@@ -60,89 +60,69 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 44);
+/******/ 	return __webpack_require__(__webpack_require__.s = 54);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 44:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(45);
+module.exports = __webpack_require__(55);
 
 
 /***/ }),
 
-/***/ 45:
+/***/ 55:
 /***/ (function(module, exports) {
 
-var customers = [];
+var items = [];
 
 $(function () {
-    getCustomers();
+    get_dropdown_options(2, '#item_type');
+    inventoryTable(items);
 
-    $('#tbl_customers_body').on('click', '.delete-customer', function () {
-        confirm('Delete Customer', 'Do you want to delete this customer?', $(this).attr('data-id'));
-    });
-
-    $('#btn_confirm').on('click', function () {
-        $('.loading').show();
-        $.ajax({
-            url: '../../customer-list/delete',
-            type: 'POST',
-            dataType: 'JSON',
-            data: {
-                _token: token,
-                id: $('#confirm_id').val()
-            }
-        }).done(function (data, textStatus, xhr) {
-            if (textStatus == 'success') {
-                $('#confirm_modal').modal('hide');
-                msg(data.msg, data.status);
-                customerTable(data.customers);
-            }
-        }).fail(function (xhr, textStatus, errorThrown) {
-            msg('Delete Customer: ' + errorThrown, textStatus);
-        }).always(function () {
-            $('.loading').hide();
-        });
+    $('#btn_search_type').on('click', function () {
+        if ($('#item_type').val() == '') {
+            msg('please select an item type.', 'failed');
+        } else {
+            searchItems($('#item_type').val());
+        }
     });
 });
 
-function getCustomers() {
-    customers = [];
+function searchItems(item_type) {
+    $('.loading').show();
     $.ajax({
-        url: 'customer-list/show',
+        url: '../../inventory-list/search-items',
         type: 'GET',
         dataType: 'JSON',
-        data: { _token: token }
+        data: {
+            _token: token,
+            item_type: item_type
+        }
     }).done(function (data, textStatus, xhr) {
-        customers = data;
-        customerTable(customers);
+        items = data;
+        inventoryTable(data);
     }).fail(function (xhr, textStatus, errorThrown) {
-        msg(errorThrown, textStatus);
+        msg('Inventories: ' + errorThrown, textStatus);
     }).always(function () {
-        console.log("complete");
+        $('.loading').hide();
     });
 }
 
-function customerTable(arr) {
-    $('#tbl_customers').dataTable().fnClearTable();
-    $('#tbl_customers').dataTable().fnDestroy();
-    $('#tbl_customers').dataTable({
+function inventoryTable(arr) {
+    $('#tbl_items').dataTable().fnClearTable();
+    $('#tbl_items').dataTable().fnDestroy();
+    $('#tbl_items').dataTable({
         data: arr,
-        //    bLengthChange : false,
-        //    searching: false,
-        //    ordering: false,
-        // paging: false,
-        // scrollY: "250px",
-        columns: [{ data: function data(x) {
-                return '<img src="' + x.photo + '" class="w-35 rounded-circle" alt="' + x.firstname + ' ' + x.lastname + '">';
-            }, searchable: false, orderable: false }, { data: 'customer_code' }, { data: function data(x) {
-                return x.firstname + ' ' + x.lastname;
-            } }, { data: 'gender' }, { data: function data(x) {
-                return '<div class="btn-group">' + '<a href="/membership/' + x.id + '/edit" class="btn btn-sm btn-info">Edit</a>' + '<button class="btn btn-sm btn-danger delete-customer" data-id="' + x.id + '">Delete</button>' + '</div>';
-            }, searchable: false, orderable: false }]
+        columns: [{ data: 'item_code' }, { data: 'item_name' }, { data: 'item_type' }, { data: 'quantity' }, { data: 'minimum_stock' }, { data: 'uom' }],
+        createdRow: function createdRow(row, data, dataIndex) {
+            if (data.quantity <= data.minimum_stock) {
+                $(row).css('background-color', '#ff6266');
+                $(row).css('color', '#fff');
+            }
+        }
     });
 }
 

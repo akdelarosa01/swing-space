@@ -90,7 +90,7 @@ function clear() {
 
 function searchItems(item_type) {
     $.ajax({
-        url: '../../receive-items/search-item',
+        url: '../../item-output/search-item',
         type: 'GET',
         dataType: 'JSON',
         data: {
