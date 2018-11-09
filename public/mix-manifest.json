@@ -5,6 +5,7 @@
     "/js/pages/super_admin/module.js": "/js/pages/super_admin/module.js",
     "/js/pages/settings/dropdown.js": "/js/pages/settings/dropdown.js",
     "/js/pages/inventory/update_inventory.js": "/js/pages/inventory/update_inventory.js",
+    "/js/pages/inventory/summary_list.js": "/js/pages/inventory/summary_list.js",
     "/js/pages/inventory/receive_items.js": "/js/pages/inventory/receive_items.js",
     "/js/pages/inventory/item_output.js": "/js/pages/inventory/item_output.js",
     "/js/pages/inventory/inventory_list.js": "/js/pages/inventory/inventory_list.js",

@@ -49,6 +49,7 @@ class ItemOutputController extends Controller
             foreach ($req->selected_code as $key => $selected_code) {
                 $item = ItemOutput::create([
                         'item_code' => $selected_code,
+                        'item_name' => $req->selected_name[$key],
                         'item_type' => $req->selected_type[$key],
                         'quantity' => $req->selected_quantity[$key],
                         'uom' => $req->selected_uom[$key],
@@ -64,7 +65,7 @@ class ItemOutputController extends Controller
             $data = [
                 'msg' => 'Items are successfully out from the inventory.',
                 'status' => 'success',
-                'inventory' => ''
+                'item_type' => $req->selected_type[0]
             ];
         }
 
@@ -79,8 +80,9 @@ class ItemOutputController extends Controller
                     ->select(
                         DB::raw("inv.id as id"),
                         DB::raw("inv.item_code as item_code"),
-                        DB::raw("(SELECT itm.item_name FROM item_inputs as itm
+                        DB::raw("(SELECT itm.item_name FROM item_outputs as itm
                                     WHERE itm.item_code = inv.item_code LIMIT 1) as item_name"),
+                        DB::raw("inv.quantity as quantity"),
                         DB::raw("inv.item_type as item_type"),
                         DB::raw("inv.uom as uom")
                     )

@@ -75,6 +75,7 @@ $( function() {
                 msg(data.msg,data.status)
                 selected_items = []
                 makeSelectedItemsDataTable(selected_items);
+                searchItems(data.item_type);
             }
         }).fail(function(xhr, textStatus, errorThrown) {
             msg('Received Items: '+errorThrown,textStatus);
@@ -115,11 +116,13 @@ function makeItemsDataTable(arr) {
         columns: [
             {data: 'item_code'},
             {data: 'item_name'},
+            {data: 'quantity'},
             {data: 'uom'},
             {data: function(x) {
                 return '<button class="btn btn-sm btn-info add_item" data-id="'+x.id+'" '+
                         ' data-item_code="'+x.item_code+'" '+
                         ' data-item_name="'+x.item_name+'" '+
+                        ' data-quantity="'+x.quantity+'" '+
                         ' data-item_type="'+x.item_type+'" '+
                         ' data-uom="'+x.uom+'">'+
                             '<i class="fa fa-plus"></i>'+

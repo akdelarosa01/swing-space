@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <span data-localize="inventory.title">Inventories</span>
+            <span data-localize="summary_list.title">Summary List</span>
             <a href="{{ url('/item-output') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
                 <span data-localize="item_output.title">Item Ouput</span>
             </a>
@@ -30,12 +30,14 @@
                 <table class="table table-striped table-sm" id="tbl_items">
                     <thead>
                         <tr>
+                            <th scope="col">Transaction</th>
                             <th scope="col">Item Code</th>
                             <th scope="col">Item Name</th>
                             <th scope="col">Item Type</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Minimum Stock</th>
                             <th scope="col">UoM</th>
+                            <th scope="col">Transaction Date</th>
+                            <th scope="col">Transacted By</th>
                         </tr>
                     </thead>
                     <tbody id="tbl_items_body"></tbody>
@@ -50,5 +52,5 @@
     <script type="text/javascript">
         var token = $('meta[name="csrf-token"]').attr('content');
     </script>
-    <script type="text/javascript" src="{{ asset('/js/pages/inventory/inventory_list.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/pages/inventory/summary_list.js') }}"></script>
 @endpush

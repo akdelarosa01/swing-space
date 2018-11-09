@@ -16,6 +16,7 @@ class CreateItemOutputsTable extends Migration
         Schema::create('item_outputs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('item_code');
+            $table->string('item_name');
             $table->string('item_type');
             $table->double('quantity')->length(10,2)->nullable()->default('0.00');
             $table->string('uom');

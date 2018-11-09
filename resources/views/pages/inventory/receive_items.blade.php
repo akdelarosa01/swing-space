@@ -27,8 +27,9 @@
                     <table class="table table-sm table-bordered table-striped" id="tbl_items">
                         <thead>
                             <tr>
-                                <th width="30%">Item Code</th>
-                                <th width="40%">Item Name</th>
+                                <th width="20%">Item Code</th>
+                                <th width="30%">Item Name</th>
+                                <th width="20%">Avail. Qty.</th>
                                 <th width="20%">UoM</th>
                                 <th width="10%"></th>
                             </tr>

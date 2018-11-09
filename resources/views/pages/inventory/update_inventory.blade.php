@@ -7,7 +7,7 @@
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <div class="input-group input-group-sm col-md-6">
+                <div class="input-group input-group-sm offset-md-6 col-md-6">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Item Type</span>
                     </div>
@@ -40,8 +40,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-info btn-block">Save</button>
+                    <div class="offset-md-10 col-md-2">
+                        <button type="submit" class="btn btn-info btn-sm btn-block">Save</button>
                     </div>
                 </div>
             </form>

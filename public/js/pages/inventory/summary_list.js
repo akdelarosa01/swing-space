@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 54);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 54:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(55);
+module.exports = __webpack_require__(57);
 
 
 /***/ }),
 
-/***/ 55:
+/***/ 57:
 /***/ (function(module, exports) {
 
 var items = [];
@@ -94,7 +94,7 @@ $(function () {
 function searchItems(item_type) {
     $('.loading').show();
     $.ajax({
-        url: '../../inventory-list/search-items',
+        url: '../../summary-list/search-items',
         type: 'GET',
         dataType: 'JSON',
         data: {
@@ -116,13 +116,8 @@ function inventoryTable(arr) {
     $('#tbl_items').dataTable().fnDestroy();
     $('#tbl_items').dataTable({
         data: arr,
-        columns: [{ data: 'item_code' }, { data: 'item_name' }, { data: 'item_type' }, { data: 'quantity' }, { data: 'minimum_stock' }, { data: 'uom' }],
-        createdRow: function createdRow(row, data, dataIndex) {
-            if (data.quantity <= data.minimum_stock) {
-                $(row).css('background-color', '#ff6266');
-                $(row).css('color', '#fff');
-            }
-        }
+        ordering: false,
+        columns: [{ data: 'transaction_type' }, { data: 'item_code' }, { data: 'item_name' }, { data: 'item_type' }, { data: 'quantity' }, { data: 'uom' }, { data: 'trans_date' }, { data: 'create_user' }]
     });
 }
 

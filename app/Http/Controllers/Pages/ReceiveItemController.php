@@ -118,7 +118,7 @@ class ReceiveItemController extends Controller
             $data = [
                 'msg' => 'Items are successfully saved.',
                 'status' => 'success',
-                'inventory' => ''
+                'item_type' => $req->selected_type[0]
             ];
         }
 
@@ -135,6 +135,7 @@ class ReceiveItemController extends Controller
                         DB::raw("inv.item_code as item_code"),
                         DB::raw("(SELECT itm.item_name FROM item_inputs as itm
                                     WHERE itm.item_code = inv.item_code LIMIT 1) as item_name"),
+                        DB::raw("inv.quantity as quantity"),
                         DB::raw("inv.item_type as item_type"),
                         DB::raw("inv.uom as uom")
                     )

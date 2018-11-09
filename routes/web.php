@@ -57,6 +57,9 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('inventory-list', 'Pages\InventoryController@index');
     Route::get('inventory-list/search-items', 'Pages\InventoryController@search_items');
 
+    Route::get('summary-list', 'Pages\InventoryController@summary_list');
+    Route::get('summary-list/search-items', 'Pages\InventoryController@search_summary_items');
+
     Route::get('receive-items', 'Pages\ReceiveItemController@index');
     Route::post('receive-items/save', 'Pages\ReceiveItemController@save');
     Route::get('receive-items/search-item', 'Pages\ReceiveItemController@search_items');

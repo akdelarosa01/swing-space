@@ -46,4 +46,47 @@ class InventoryController extends Controller
                     ->get();
         return response()->json($items);
     }
+
+    public function search_summary_items(Request $req)
+    {
+        $inventories = DB::select(
+                            "SELECT i.transaction_type,
+                                i.item_code, 
+                                i.item_name, 
+                                i.item_type,
+                                i.quantity,
+                                i.uom,
+                                DATE_FORMAT(i.created_at, '%Y/%m/%d %H:%i %p') as trans_date,
+                                (SELECT CONCAT(u.firstname,' ',u.lastname) FROM users as u
+                                WHERE u.id = i.create_user LIMIT 1) as create_user
+                            FROM item_inputs as i
+                            where i.item_type = '".$req->item_type."' and i.deleted = 0
+                            union 
+                            SELECT o.transaction_type,
+                                o.item_code, 
+                                o.item_name, 
+                                o.item_type,
+                                o.quantity,
+                                o.uom,
+                                DATE_FORMAT(o.created_at, '%Y/%m/%d %H:%i %p') as trans_date,
+                                (SELECT CONCAT(u.firstname,' ',u.lastname) FROM users as u
+                                WHERE u.id = o.create_user LIMIT 1) as create_user
+                            FROM item_outputs as o
+                            where o.item_type='".$req->item_type."' and o.deleted = 0
+                            order by trans_date desc"
+                        );
+
+        return response()->json($inventories);
+    }
+
+    public function summary_list()
+    {
+        if ($this->_global->checkAccess('SUM_LST')) {
+            return view('pages.inventory.summary_list',[
+                'user_access' => $this->_global->UserAccess()
+            ]);
+        } else {
+            return redirect('/dashboard');
+        }
+    }
 }
