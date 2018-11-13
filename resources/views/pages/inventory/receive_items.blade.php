@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <span data-localize="receive_items.title">Receive Items</span>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <form enctype="multipart/form-data" method="post" action="/" id="upload_inventory">
@@ -67,7 +67,8 @@
                                         <th width="20%">Item Code</th>
                                         <th width="40%">Item Name</th>
                                         <th width="20%">Item Type</th>
-                                        <th width="20%">Quantity</th>
+                                        <th width="10%">Quantity</th>
+                                        <th width="10%">Quantity</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbl_selected_body"></tbody>

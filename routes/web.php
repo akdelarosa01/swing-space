@@ -32,9 +32,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
     Route::get('transaction-codes/show','SuperAdmin\TransactionCodesController@show');
     Route::post('transaction-codes/save','SuperAdmin\TransactionCodesController@save');
     Route::post('transaction-codes/delete','SuperAdmin\TransactionCodesController@destroy');
+
+    Route::get('user-master','SuperAdmin\UserMasterController@index');
+    Route::get('user-master/show','SuperAdmin\UserMasterController@show');
+    Route::post('user-master/save','SuperAdmin\UserMasterController@save');
+    Route::post('user-master/delete','SuperAdmin\UserMasterController@destroy');
 });
 
 Route::group(['middleware' => ['auth','no.back']], function() {
+    Route::get('pos-control', 'Pages\POSControlController@index');
+
     Route::get('customer-list', 'Pages\CustomerController@index');
     Route::get('customer-list/show', 'Pages\CustomerController@show');
     Route::post('customer-list/delete', 'Pages\CustomerController@destroy');
@@ -56,6 +63,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('inventory-list', 'Pages\InventoryController@index');
     Route::get('inventory-list/search-items', 'Pages\InventoryController@search_items');
+    Route::get('inventory-files', 'Pages\InventoryController@export_files');
 
     Route::get('summary-list', 'Pages\InventoryController@summary_list');
     Route::get('summary-list/search-items', 'Pages\InventoryController@search_summary_items');
@@ -72,6 +80,9 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('item-output', 'Pages\ItemOutputController@index');
     Route::get('item-output/search-item', 'Pages\ItemOutputController@search_items');
     Route::post('item-output/save-selected', 'Pages\ItemOutputController@save_selected');
+
+    Route::get('product-list', 'Pages\ProductController@index');
+    Route::get('add-products', 'Pages\ProductController@add_products');
 
     Route::get('dropdown','Pages\DropdownController@index');
     Route::get('dropdown/show-name','Pages\DropdownController@show_name');

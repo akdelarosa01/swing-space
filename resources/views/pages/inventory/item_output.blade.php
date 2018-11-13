@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <span data-localize="item_output.title">Item Output</span>
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
                     <form action="../../item-output/save-selected" method="post" id="frm_selected">
@@ -49,7 +49,8 @@
                                         <th width="20%">Item Code</th>
                                         <th width="40%">Item Name</th>
                                         <th width="20%">Item Type</th>
-                                        <th width="20%">Quantity</th>
+                                        <th width="10%">Quantity</th>
+                                        <th width="10%"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbl_selected_body"></tbody>

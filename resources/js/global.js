@@ -328,7 +328,7 @@ function getLanguage() {
     }).done(function(data, textStatus, xhr) {
         // if (data.language !== 'en') {
         //     console.log(data);
-            $("[data-localize]").localize('local', data);
+            $("[data-localize]").localize('../../local', data);
         // }
     }).fail(function(xhr, textStatus, errorThrown) {
        msg('Langauage : '+errorThrown,textStatus);

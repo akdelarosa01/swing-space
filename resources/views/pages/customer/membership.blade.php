@@ -53,7 +53,7 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3" data-localize="membership.date_of_birth">@lang('membership.date_of_birth')</label>
                                 <div class="col-md-8">
-                                    <input type="date" class="form-control form-control-sm clear" id="date_of_birth" name="date_of_birth">
+                                    <input type="date" class="form-control form-control-sm clear" id="date_of_birth" name="date_of_birth" maxlength="10">
                                     <div id="date_of_birth_feedback"></div>
                                 </div>
                             </div>

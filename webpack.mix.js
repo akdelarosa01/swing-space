@@ -31,6 +31,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/js/scripts/app.js',
 		'resources/js/global.js'
     ], 'public/js/main.js')
+    .js('resources/js/pages/super_admin/user_master.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/transaction_codes.js', 'public/js/pages/super_admin/')
 

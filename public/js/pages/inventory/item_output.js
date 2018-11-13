@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 62);
+/******/ 	return __webpack_require__(__webpack_require__.s = 64);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 62:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(63);
+module.exports = __webpack_require__(65);
 
 
 /***/ }),
 
-/***/ 63:
+/***/ 65:
 /***/ (function(module, exports) {
 
 var items = [];
@@ -127,13 +127,27 @@ $(function () {
     });
 
     $('#tbl_items_body').on('click', '.add_item', function () {
+        var index = selected_items.length;
+
         selected_items.push({
+            index: index,
             id: $(this).attr('data-id'),
             item_code: $(this).attr('data-item_code'),
             item_name: $(this).attr('data-item_name'),
             item_type: $(this).attr('data-item_type'),
             uom: $(this).attr('data-uom'),
             quantity: ''
+        });
+
+        makeSelectedItemsDataTable(selected_items);
+    });
+
+    $('#tbl_selected_body').on('click', '.remove_item', function () {
+        selected_items.splice($(this).attr('data-index'), 1);
+
+        count = 0;
+        $.each(selected_items, function (i, x) {
+            x.index = count++;
         });
 
         makeSelectedItemsDataTable(selected_items);
@@ -208,6 +222,8 @@ function makeSelectedItemsDataTable(arr) {
         paging: false,
         columns: [{ data: 'item_code', searchable: false, orderable: false }, { data: 'item_name', searchable: false, orderable: false }, { data: 'item_type', searchable: false, orderable: false }, { data: function data(x) {
                 return '<input type="hidden" name="id[]" value="' + x.id + '">' + '<input type="hidden" name="selected_code[]" value="' + x.item_code + '">' + '<input type="hidden" name="selected_name[]" value="' + x.item_name + '">' + '<input type="hidden" name="selected_type[]" value="' + x.item_type + '">' + '<input type="hidden" name="selected_uom[]" value="' + x.uom + '">' + '<input type="text" class="form-control form-control-sm quantity" name="selected_quantity[]">';
+            }, searchable: false, orderable: false }, { data: function data(x) {
+                return '<button class="btn btn-sm btn-danger remove_item" data-index="' + x.index + '">' + '<i class="fa fa-times"></i>' + '</button>';
             }, searchable: false, orderable: false }]
     });
 

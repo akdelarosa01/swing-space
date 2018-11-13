@@ -2,6 +2,7 @@ var items = [];
 
 $( function() {
     get_dropdown_options(2,'#item_type');
+    get_dropdown_options(2,'#item_type_export');
 	inventoryTable(items);
 
     $('#btn_search_type').on('click', function() {
@@ -10,6 +11,10 @@ $( function() {
         } else {
             searchItems($('#item_type').val());
         }
+    });
+
+    $('#btn_export').on('click', function() {
+        $('#export_modal').modal('show');
     });
 });
 

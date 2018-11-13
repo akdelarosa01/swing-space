@@ -55,6 +55,7 @@ class EmployeeController extends Controller
             $user->lastname = $req->lastname;
             $user->email = $req->email;
             $user->gender = $req->gender;
+            $user->user_type = 'Employee';
 
             if (isset($req->password)) {
                 $user->password = Hash::make($req->password);
@@ -117,6 +118,7 @@ class EmployeeController extends Controller
             $user->password = Hash::make($req->password);
             $user->actual_password = $req->password;
             $user->gender = $req->gender;
+            $user->user_type = 'Employee';
 
             if (isset($req->disable)) {
                 $user->disable = $req->disable;

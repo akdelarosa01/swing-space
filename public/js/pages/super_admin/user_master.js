@@ -60,70 +60,98 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 56);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 56:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(57);
+module.exports = __webpack_require__(41);
 
 
 /***/ }),
 
-/***/ 57:
+/***/ 41:
 /***/ (function(module, exports) {
 
-var items = [];
-
+var users = [];
 $(function () {
-    get_dropdown_options(2, '#item_type');
-    get_dropdown_options(2, '#item_type_export');
-    inventoryTable(items);
+    checkAllCheckboxesInTable('.check_all_users', '.check_user');
+    getUsers();
 
-    $('#btn_search_type').on('click', function () {
-        if ($('#item_type').val() == '') {
-            msg('please select an item type.', 'failed');
-        } else {
-            searchItems($('#item_type').val());
-        }
-    });
+    $('#frm_users').on('submit', function (e) {
+        e.preventDefault();
+        $('.loading').show();
 
-    $('#btn_export').on('click', function () {
-        $('#export_modal').modal('show');
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            dataType: 'JSON',
+            data: $(this).serialize()
+        }).done(function (data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                msg(data.msg, data.status);
+                makeUserDataTable(data.users);
+                clear();
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            var errors = xhr.responseJSON.errors;
+
+            if (errors == undefined) {
+                msg('Users: ' + errorThrown, textStatus);
+            } else {
+                showErrors(errors);
+            }
+        }).always(function () {
+            $('.loading').hide();
+            clear();
+        });
     });
 });
 
-function searchItems(item_type) {
+function clear() {
+    $('.clear').val('');
+}
+
+function getUsers() {
     $('.loading').show();
     $.ajax({
-        url: '../../inventory-list/search-items',
+        url: '../../admin/user-master/show',
         type: 'GET',
         dataType: 'JSON',
         data: {
-            _token: token,
-            item_type: item_type
+            _token: token
         }
     }).done(function (data, textStatus, xhr) {
-        items = data;
-        inventoryTable(items);
+        users = data;
+        makeUserDataTable(users);
     }).fail(function (xhr, textStatus, errorThrown) {
-        msg('Inventories: ' + errorThrown, textStatus);
+        msg('Langauage : ' + errorThrown, textStatus);
     }).always(function () {
         $('.loading').hide();
     });
 }
 
-function inventoryTable(arr) {
-    $('#tbl_items').dataTable().fnClearTable();
-    $('#tbl_items').dataTable().fnDestroy();
-    $('#tbl_items').dataTable({
+function makeUserDataTable(arr) {
+    $('#tbl_users').dataTable().fnClearTable();
+    $('#tbl_users').dataTable().fnDestroy();
+    $('#tbl_users').dataTable({
         data: arr,
-        columns: [{ data: 'item_code' }, { data: 'item_name' }, { data: 'item_type' }, { data: 'quantity' }, { data: 'minimum_stock' }, { data: 'uom' }],
+        columns: [{ data: function data(x) {
+                return '<input type="checkbox" class="check_user" value="' + x.id + '">';
+            }, searchable: false, orderable: false }, { data: 'user_type' }, { data: 'firstname' }, { data: 'lastname' }, { data: 'email' }, { data: 'actual_password' }, { data: function data(x) {
+                var page_button = '';
+
+                if (x.user_type !== 'Customer') {
+                    page_button = '<button class="btn btn-sm btn-success assign-page" data-id="' + x.id + '">' + '<i class="fa fa-list"></i>' + '</button>';
+                }
+
+                return '<div class="btn-group">' + '<button class="btn btn-sm btn-info edit" data-id="' + x.id + '">' + '<i class="fa fa-edit"></i>' + '</button>' + page_button + '</div>';
+            }, searchable: false, orderable: false }],
         createdRow: function createdRow(row, data, dataIndex) {
-            if (data.quantity <= data.minimum_stock) {
+            if (data.disabled > 0) {
                 $(row).css('background-color', '#ff6266');
                 $(row).css('color', '#fff');
             }

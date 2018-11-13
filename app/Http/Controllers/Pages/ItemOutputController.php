@@ -80,7 +80,7 @@ class ItemOutputController extends Controller
                     ->select(
                         DB::raw("inv.id as id"),
                         DB::raw("inv.item_code as item_code"),
-                        DB::raw("(SELECT itm.item_name FROM item_outputs as itm
+                        DB::raw("(SELECT itm.item_name FROM item_inputs as itm
                                     WHERE itm.item_code = inv.item_code LIMIT 1) as item_name"),
                         DB::raw("inv.quantity as quantity"),
                         DB::raw("inv.item_type as item_type"),

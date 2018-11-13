@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">
             <span data-localize="registration.title">Employee Registration</span>
-            <a href="{{ url('/employee-list') }}" class="btn btn-sm btn-info btn-rounded btn-outline">
+            <a href="{{ url('/employee-list') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
                 Employee List
             </a>
         </div>
@@ -46,7 +46,7 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3">Date of Birth</label>
                                 <div class="col-md-8">
-                                    <input type="date" class="form-control form-control-sm" id="date_of_birth" name="date_of_birth">
+                                    <input type="date" class="form-control form-control-sm" id="date_of_birth" name="date_of_birth" maxlength="10">
                                     <div id="date_of_birth_feedback"></div>
                                 </div>
                             </div>

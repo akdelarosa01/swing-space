@@ -42,8 +42,15 @@
                 </table>
             </div>
 
+            <div class="row">
+                <div class="offset-md-10 col-md-2">
+                    <button class="btn btn-sm btn-success btn-block" id="btn_export">Export Excel</button>
+                </div>
+            </div>
+
         </div>
     </div>
+    @include('modals.inventory_list')
 @endsection
 
 @push('scripts')

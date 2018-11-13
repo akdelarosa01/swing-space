@@ -49,13 +49,28 @@ $( function() {
     });
 
     $('#tbl_items_body').on('click', '.add_item', function() {
+        let index = selected_items.length;
+
         selected_items.push({
+            index: index,
             id: $(this).attr('data-id'),
             item_code: $(this).attr('data-item_code'),
             item_name: $(this).attr('data-item_name'),
             item_type: $(this).attr('data-item_type'),
             uom: $(this).attr('data-uom'),
             quantity: '',
+        });
+
+        makeSelectedItemsDataTable(selected_items);
+    });
+
+    $('#tbl_selected_body').on('click', '.remove_item', function() {
+        selected_items.splice($(this).attr('data-index'), 1);
+
+        count = 0;
+        $.each(selected_items, function(i, x) {
+            x.index = 
+            count++;
         });
 
         makeSelectedItemsDataTable(selected_items);
@@ -152,6 +167,11 @@ function makeSelectedItemsDataTable(arr) {
                         '<input type="hidden" name="selected_type[]" value="'+x.item_type+'">'+
                         '<input type="hidden" name="selected_uom[]" value="'+x.uom+'">'+
                         '<input type="text" class="form-control form-control-sm quantity" name="selected_quantity[]">';
+            }, searchable: false, orderable: false},
+            {data: function(x) {
+                return '<button class="btn btn-sm btn-danger remove_item" data-index="'+x.index+'">'+
+                            '<i class="fa fa-times"></i>'+
+                        '</button>';
             }, searchable: false, orderable: false},
         ]
     });

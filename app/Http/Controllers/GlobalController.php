@@ -64,10 +64,8 @@ class GlobalController extends Controller
         $user->language = $req->language;
 
         if ($user->update()) {
-            App::setLocale($req->language);
-            // session(['locale', $req->language]);
             $data = [
-                'language' => session('locale')
+                'language' => $req->language
             ];
             return response()->json($data);
         }

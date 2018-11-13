@@ -34,7 +34,7 @@
                         @foreach ($user_access as $key => $access)
                             @if($access->module_code == 'POS_CTRL')
                                 <?php
-                                    $url = 'pos';
+                                    $url = 'pos-control';
                                     $local = 'data-localize="sidebar.pos_control"';
                                 ?>
                                 <li class="{{ Request::is($url) ? ' active' : null }}">
@@ -199,7 +199,7 @@
                                 @foreach ($user_access as $key => $access)
                                     @if($access->module_code == 'PRD_LST')
                                         <?php
-                                            $url = 'products';
+                                            $url = 'product-list';
                                             $local = 'data-localize="product.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
@@ -262,17 +262,28 @@
                 @endif
 
                 @if (Auth::check() and Auth::user()->user_type == 'Administrator')
-                    <li class="{{ Request::is('admin/module') ? ' active' : null }}">
-                        <a class="has-arrow" href="{{ url('/admin/module') }}" aria-expanded="false">
-                            <i class="zmdi zmdi-menu zmdi-hc-fw"></i>
-                            <span>Modules</span>
-                        </a>
-                    </li>
-                    <li class="{{ Request::is('admin/transaction-codes') ? ' active' : null }}">
-                        <a class="has-arrow" href="{{ url('/admin/transaction-codes') }}" aria-expanded="false">
+                    <li class="nav-dropdown {{ Request::is('admin/user-master') || Request::is('admin/module') || Request::is('admin/transaction-codes') ? ' active' : null }}">
+                        <a class="has-arrow" href="#" aria-expanded="false">
                             <i class="zmdi zmdi-code zmdi-hc-fw"></i>
-                            <span>Transaction Codes</span>
+                            <span>Admin Panel</span>
                         </a>
+                        <ul class="collapse nav-sub" aria-expanded="false">
+                            <li class="{{ Request::is('admin/user-master') ? ' active' : null }}">
+                                <a href="{{ url('/admin/user-master') }}">
+                                    <span>User Master</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::is('admin/module') ? ' active' : null }}">
+                                <a href="{{ url('/admin/module') }}">
+                                    <span>Modules</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::is('admin/transaction-codes') ? ' active' : null }}">
+                                <a href="{{ url('/admin/transaction-codes') }}">
+                                    <span>Transaction Codes</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 @endif
                     
