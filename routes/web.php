@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
     Route::get('user-master/show','SuperAdmin\UserMasterController@show');
     Route::post('user-master/save','SuperAdmin\UserMasterController@save');
     Route::post('user-master/delete','SuperAdmin\UserMasterController@destroy');
+    Route::post('user-master/assign-access','SuperAdmin\UserMasterController@assign_access');
 });
 
 Route::group(['middleware' => ['auth','no.back']], function() {
@@ -82,7 +83,12 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('item-output/save-selected', 'Pages\ItemOutputController@save_selected');
 
     Route::get('product-list', 'Pages\ProductController@index');
+    Route::get('product-list/show', 'Pages\ProductController@show');
     Route::get('add-products', 'Pages\ProductController@add_products');
+    Route::get('add-products/show', 'Pages\ProductController@show');
+    Route::get('add-products/search', 'Pages\ProductController@search_products');
+    Route::post('add-products/save', 'Pages\ProductController@save');
+    Route::post('add-products/set-qty', 'Pages\ProductController@set_qty');
 
     Route::get('dropdown','Pages\DropdownController@index');
     Route::get('dropdown/show-name','Pages\DropdownController@show_name');

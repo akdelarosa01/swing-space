@@ -60,74 +60,53 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 56);
+/******/ 	return __webpack_require__(__webpack_require__.s = 66);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 56:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(57);
+module.exports = __webpack_require__(73);
 
 
 /***/ }),
 
-/***/ 57:
+/***/ 73:
 /***/ (function(module, exports) {
 
-var items = [];
+var products = [];
 
 $(function () {
-    get_dropdown_options(2, '#item_type');
-    get_dropdown_options(2, '#item_type_export');
-    inventoryTable(items);
-
-    $('#btn_search_type').on('click', function () {
-        if ($('#item_type').val() == '') {
-            msg('please select an item type.', 'failed');
-        } else {
-            searchItems($('#item_type').val());
-        }
-    });
-
-    $('#btn_export').on('click', function () {
-        $('#export_modal').modal('show');
-    });
+    getProducts();
 });
 
-function searchItems(item_type) {
+function getProducts() {
     $('.loading').show();
     $.ajax({
-        url: '../../inventory-list/search-items',
+        url: '../../product-list/show',
         type: 'GET',
         dataType: 'JSON',
         data: {
-            _token: token,
-            item_type: item_type
+            _token: token
         }
     }).done(function (data, textStatus, xhr) {
-        items = data;
-        inventoryTable(items);
+        products = data;
+        makeProductsDataTable(products);
     }).fail(function (xhr, textStatus, errorThrown) {
-        msg('Inventories: ' + errorThrown, textStatus);
+        msg('Products : ' + errorThrown, textStatus);
     }).always(function () {
         $('.loading').hide();
     });
 }
 
-function inventoryTable(arr) {
-    $('#tbl_items').dataTable().fnClearTable();
-    $('#tbl_items').dataTable().fnDestroy();
-    $('#tbl_items').dataTable({
+function makeProductsDataTable(arr) {
+    $('#tbl_products').dataTable().fnClearTable();
+    $('#tbl_products').dataTable().fnDestroy();
+    $('#tbl_products').dataTable({
         data: arr,
-        columns: [{ data: 'item_code' }, { data: 'item_name' }, { data: 'item_type' }, { data: 'quantity' }, { data: 'minimum_stock' }, { data: 'uom' }],
-        createdRow: function createdRow(row, data, dataIndex) {
-            if (data.quantity <= data.minimum_stock) {
-                $(row).css('background-color', '#ff6266');
-                $(row).css('color', '#fff');
-            }
-        }
+        columns: [{ data: 'prod_code' }, { data: 'prod_name' }, { data: 'description' }, { data: 'prod_type' }, { data: 'price' }, { data: 'variants' }, { data: 'target_qty' }, { data: 'quantity' }]
     });
 }
 

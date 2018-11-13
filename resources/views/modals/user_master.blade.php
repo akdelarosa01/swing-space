@@ -1,5 +1,5 @@
 <div class="modal fade" id="user_master_modal" role="dialog" aria-hidden="true" data-backdrop="static">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">
@@ -9,11 +9,12 @@
 					<span aria-hidden="true" class="zmdi zmdi-close"></span>
 				</button>
 			</div>
-			<form action="../../user-master/assign-access" method="post" class="form-horizontal" id="frm_access">
+			<form action="../../admin/user-master/assign-access" method="post" class="form-horizontal" id="frm_access">
 				@csrf
+                <input type="hidden" id="user_id" name="user_id">
                 <div class="modal-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-sm" id="tbl_modules">
+                        <table class="table table-striped table-sm" id="tbl_modules" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>Page</th>

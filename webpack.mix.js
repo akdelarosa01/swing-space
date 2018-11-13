@@ -49,6 +49,9 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/inventory/update_inventory.js', 'public/js/pages/inventory/')
     .js('resources/js/pages/inventory/item_output.js', 'public/js/pages/inventory/')
 
+    .js('resources/js/pages/products/product_list.js', 'public/js/pages/products/')
+    .js('resources/js/pages/products/add_products.js', 'public/js/pages/products/')
+
 
 
 

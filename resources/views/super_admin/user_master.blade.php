@@ -7,7 +7,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <form method="post" id="frm_users" action="/admin/user-master/save">
+                    <form method="post" id="frm_users" action="../../admin/user-master/save">
                         @csrf
                         <input type="hidden" id="id" name="id" class="clear">
 
@@ -52,6 +52,7 @@
                                     <option value="Owner">Owner</option>
                                     <option value="Employee">Employee</option>
                                     <option value="Customer">Customer</option>
+                                    <option value="Administrator">Administrator</option>
                                 </select>
                                 <div id="user_type_feedback"></div>
                             </div>
@@ -106,8 +107,18 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="offset-md-10 col-md-2">
+                    <button class="btn btn-sm btn-block btn-danger" id="btn_delete">
+                        <i class="fa fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
+    @include('modals.user_master')
+    @include('modals.global')
 @endsection
 @push('scripts')
     <script type="text/javascript">

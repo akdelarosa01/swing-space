@@ -17,9 +17,12 @@
                         <tr>
                             <th scope="col">Code</th>
                             <th scope="col">Product Name</th>
+                            <th scope="col">Description</th>
                             <th scope="col">Product Type</th>
                             <th scope="col">Price</th>
-                            <th scope="col"></th>
+                            <th scope="col">Variants</th>
+                            <th scope="col">Target Qty.</th>
+                            <th scope="col">Avail. Qty.</th>
                         </tr>
                     </thead>
                     <tbody id="tbl_products_body"></tbody>
@@ -33,5 +36,5 @@
     <script type="text/javascript">
         var token = $('meta[name="csrf-token"]').attr('content');
     </script>
-    <script type="text/javascript" src="{{ asset('/js/pages/products.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/pages/products/product_list.js') }}"></script>
 @endpush

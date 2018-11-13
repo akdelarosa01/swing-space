@@ -63,7 +63,9 @@ class EmployeeController extends Controller
             }
 
             if (isset($req->disable)) {
-                $user->disable = $req->disable;
+                $user->disabled = $req->disable;
+            } else {
+                $user->disabled = 0;
             }
 
             if ($user->update()) {

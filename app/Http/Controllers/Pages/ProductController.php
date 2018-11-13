@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Product;
+use App\AvailableProduct;
+use DB;
 
 class ProductController extends Controller
 {
@@ -38,69 +41,334 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show()
     {
-        //
+        $products = $this->products();
+        return response()->json($products);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function save(Request $req)
     {
-        //
+        $data = [
+            'msg' => 'Saving failed.',
+            'status' => 'failed',
+            'products' => ''
+        ];
+
+        if (isset($req->id)) {
+            $this->validate($req,[
+                'prod_name' => 'required|string|max:60',
+                'prod_type' => 'required',
+                'price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+            ]);
+
+            $prod = Product::find($req->id);
+
+            $prod->prod_name = $req->prod_name;
+            $prod->description = $req->description;
+            $prod->prod_type = $req->prod_type;
+            $prod->variants = $req->variants;
+            $prod->price = $req->price;
+            $prod->create_user = Auth::user()->id;
+            $prod->update_user = Auth::user()->id;
+
+            if ($prod->update()) {
+
+                $data = [
+                    'msg' => 'Product is successfully updated.',
+                    'status' => 'success',
+                    'products' => $this->products()
+                ];
+            }
+        } else {
+            $this->validate($req,[
+                'prod_name' => 'required|string|max:60',
+                'prod_type' => 'required',
+                'price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+            ]);
+
+            $prod = new Product;
+
+            $prod->prod_code = $this->_global->TransactionNo('PRD_CODE');
+            $prod->prod_name = $req->prod_name;
+            $prod->description = $req->description;
+            $prod->prod_type = $req->prod_type;
+            $prod->variants = $req->variants;
+            $prod->price = $req->price;
+            $prod->create_user = Auth::user()->id;
+            $prod->update_user = Auth::user()->id;
+
+            if ($prod->save()) {
+
+                $data = [
+                    'msg' => 'Product is successfully saved.',
+                    'status' => 'success',
+                    'products' => $this->products()
+                ];
+            }
+        } 
+
+        return response()->json($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function set_qty(Request $req)
     {
-        //
+        $queried = false;
+
+        $data = [
+            'msg' => 'Saving failed.',
+            'status' => 'failed',
+            'products' => ''
+        ];
+
+        if (isset($req->ids)) {
+            if (is_array($req->ids)) {
+                foreach ($req->ids as $key => $id) {
+                    $count = AvailableProduct::where('prod_id',$id)->count();
+
+                    if ($count > 0) {
+                        AvailableProduct::where('prod_id',$id)
+                                        ->update([
+                                            'target_qty' => $req->target_qty[$key],
+                                            'quantity' => $req->quantity[$key],
+                                            'update_user' => Auth::user()->id,
+                                            'updated_at' => date('Y-m-d H:i:s')
+                                        ]);
+                    } else {
+                        AvailableProduct::create([
+                            'prod_id' => $id,
+                            'target_qty' => $req->target_qty[$key],
+                            'quantity' => $req->quantity[$key],
+                            'create_user' => Auth::user()->id,
+                            'update_user' => Auth::user()->id,
+                        ]);
+                    }
+
+                    $queried = true;
+                }
+            }
+        }
+
+        if ($queried) {
+            $data = [
+                'msg' => 'Successfully saved.',
+                'status' => 'success',
+                'products' => $this->products()
+            ];
+        }
+
+        return response()->json($data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function products($type = '')
     {
-        //
+        if ($type == '') {
+            $products = DB::select("SELECT p.id as id,
+                                        p.prod_code as prod_code,
+                                        p.prod_name as prod_name,
+                                        p.prod_type as prod_type,
+                                        p.price as price,
+                                        p.variants as variants,
+                                        p.description as `description`,
+                                        CASE
+                                            when (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as target_qty,
+                                        CASE
+                                            when (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as quantity
+                                from products as p");
+        } else {
+            $products = DB::select("SELECT p.id as id,
+                                        p.prod_code as prod_code,
+                                        p.prod_name as prod_name,
+                                        p.prod_type as prod_type,
+                                        p.price as price,
+                                        p.variants as variants,
+                                        p.description as `description`,
+                                        CASE
+                                            when (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as target_qty,
+                                        CASE
+                                            when (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as quantity
+                                where prod_type = '".$req->type."'
+                                from products as p");
+        }
+        
+        return $products;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function search_products()
     {
-        //
+        $products = $this->products();
+        return response()->json($products);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Request $req)
     {
-        //
+        $data = [
+            'msg' => "Deleting failed",
+            'status' => "warning"
+        ];
+
+        if (is_array($req->id)) {
+            foreach ($req->id as $key => $id) {
+                $prod = Product::find($id);
+                $prod->delete();
+
+                $data = [
+                    'msg' => "Product was successfully deleted.",
+                    'status' => "success",
+                    'products' => $this->products()
+                ];
+            }
+        } else {
+            $prod = Product::find($req->id);
+            $prod->delete();
+
+            $data = [
+                'msg' => "Product was successfully deleted.",
+                'status' => "success",
+                'products' => $this->products()
+            ];
+        }
+        return response()->json($data);
     }
+
+    // public function export_files(Request $req)
+    // {
+    //     $type_cond = '';
+
+    //     if(empty($req->item_type))
+    //     {
+    //         $type_cond = '';
+    //     } else {
+    //         $type_cond = " AND item_type = '" . $req->item_type . "'";
+    //     }
+
+    //     $data = DB::table('inventories as inv')
+    //                 ->whereRaw("deleted=0".$type_cond)
+    //                 ->select(
+    //                     DB::raw("inv.id as id"),
+    //                     DB::raw("inv.item_code as item_code"),
+    //                     DB::raw("(SELECT itm.item_name FROM item_inputs as itm
+    //                                 WHERE itm.item_code = inv.item_code LIMIT 1) as item_name"),
+    //                     DB::raw("inv.item_type as item_type"),
+    //                     DB::raw("inv.quantity as quantity"),
+    //                     DB::raw("inv.minimum_stock as minimum_stock"),
+    //                     DB::raw("inv.uom as uom")
+    //                 )
+    //                 ->get();
+
+    //     switch ($req->file_type) {
+    //         case 'Excel':
+    //             $this->excelfile($data);
+    //             break;
+            
+    //         default:
+    //             # code...
+    //             break;
+    //     }
+    // }
+
+    // public function excelfile($data)
+    // {
+    //     $date = date('Ymd');
+
+    //     Excel::create('Inventory_List_'.$date, function($excel) use($data)
+    //     {
+    //         $excel->sheet('Report', function($sheet) use($data)
+    //         {
+    //             $sheet->setHeight(1, 15);
+    //             $sheet->mergeCells('A1:F1');
+    //             $sheet->cells('A1:F1', function($cells) {
+    //                 $cells->setAlignment('center');
+    //                 $cells->setFont([
+    //                     'family'     => 'Calibri',
+    //                     'size'       => '14',
+    //                     'bold'       =>  true,
+    //                 ]);
+    //             });
+    //             $sheet->cell('A1'," SWING SPACE");
+
+    //             $sheet->setHeight(2, 15);
+    //             $sheet->mergeCells('A2:F2');
+    //             $sheet->cells('A2:F2', function($cells) {
+    //                 $cells->setAlignment('center');
+    //             });
+    //             $sheet->cell('A2',"Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., Loyola Heights Katipunan, Quezon City");
+
+    //             $sheet->setHeight(4, 20);
+    //             $sheet->mergeCells('A4:F4');
+    //             $sheet->cells('A4:F4', function($cells) {
+    //                 $cells->setAlignment('center');
+    //                 $cells->setFont([
+    //                     'family'     => 'Calibri',
+    //                     'size'       => '14',
+    //                     'bold'       =>  true,
+    //                     'underline'  =>  true
+    //                 ]);
+    //             });
+    //             $sheet->cell('A4',"INVENTORY LIST");
+
+    //             $sheet->setHeight(6, 15);
+    //             $sheet->cells('A6:F6', function($cells) {
+    //                 $cells->setFont([
+    //                     'family'     => 'Calibri',
+    //                     'size'       => '11',
+    //                     'bold'       =>  true,
+    //                 ]);
+    //                 // Set all borders (top, right, bottom, left)
+    //                 $cells->setBorder('solid', 'solid', 'solid', 'solid');
+    //             });
+    //             $sheet->cell('A6', "ITEM CODE");
+    //             $sheet->cell('B6', "ITEM NAME");
+    //             $sheet->cell('C6', "ITEM TYPE");
+    //             $sheet->cell('D6', "QUANTITY");
+    //             $sheet->cell('E6', "MINIMUM STOCK");
+    //             $sheet->cell('F6', "UOM");
+
+    //             $row = 7;
+
+    //             foreach ($data as $key => $dt) {
+    //                 $sheet->setHeight($row, 15);
+    //                 $sheet->cell('A'.$row, $dt->item_code);
+    //                 $sheet->cell('B'.$row, $dt->item_name);
+    //                 $sheet->cell('C'.$row, $dt->item_type);
+    //                 $sheet->cell('D'.$row, $dt->quantity);
+    //                 $sheet->cell('E'.$row, $dt->minimum_stock);
+    //                 $sheet->cell('F'.$row, $dt->uom);
+    //                 $row++;
+    //             }
+                
+    //             $sheet->cells('A6:F'.$row, function($cells) {
+    //                 $cells->setBorder('solid', 'solid', 'solid', 'solid');
+    //             });
+    //         });
+    //     })->download('xlsx');
+    // }
 }
