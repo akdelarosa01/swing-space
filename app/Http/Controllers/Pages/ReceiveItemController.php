@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\ItemInput;
 use App\Inventory;
+use App\DropdownOption;
+use Excel;
 use DB;
 
 class ReceiveItemController extends Controller
@@ -178,5 +180,109 @@ class ReceiveItemController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function upload_inventory(Request $req)
+    {
+        $file = $req->file('inventory_file');
+        $fields;
+
+        $data = [
+            'msg' => "Uploading Failed.",
+            'status' => 'failed'
+        ];
+
+        Excel::load($file, function($reader) use(&$fields){
+            $fields = $reader->toArray();
+            $data = [
+                'msg' => "Data was successfully saved.",
+                'status' => 'success'
+            ];
+        });
+
+        foreach ($fields as $key => $field) {
+            if (isset($field['item_name']) || 
+                isset($field['item_type']) || 
+                isset($field['quantity']) || 
+                isset($field['minimum_stock']) || 
+                isset($field['uom'])) {
+
+                $checkType = DropdownOption::where('dropdown_id',2)
+                                        ->where('option_description',$field['item_type'])
+                                        ->count();
+                if ($checkType == 0) {
+                    DropdownOption::create([
+                        'dropdown_id' => 2,
+                        'option_description' => $field['item_type'],
+                        'create_user' => Auth::user()->id,
+                        'update_user' => Auth::user()->id,
+                    ]);
+                 }
+
+                $checkUOM = DropdownOption::where('dropdown_id',4)
+                                        ->where('option_description',$field['uom'])
+                                        ->count();
+                if ($checkUOM == 0) {
+                    DropdownOption::create([
+                        'dropdown_id' => 2,
+                        'option_description' => $field['uom'],
+                        'create_user' => Auth::user()->id,
+                        'update_user' => Auth::user()->id,
+                    ]);
+                 }
+
+                $item = new ItemInput;
+
+                $item->item_code = $this->_global->TransactionNo('ITM_CODE');
+                $item->item_name = $field['item_name'];
+                $item->item_type = $field['item_type'];
+                $item->quantity = $field['quantity'];
+                $item->uom = $field['uom'];
+                $item->remarks = (!isset($field['remarks']) || $field['remarks'] == null || $field['remarks'] == '')? 'N/A': $field['remarks'];
+                $item->transaction_type = 'Input';
+                $item->create_user = Auth::user()->id;
+                $item->update_user = Auth::user()->id;
+                $item->date_received = date('Y-m-d');
+
+                if ($item->save()) {
+                    $inv = new Inventory;
+
+                    $inv->item_code = $item->item_code;
+                    $inv->item_type = $field['item_type'];
+                    $inv->quantity = $field['quantity'];
+                    $inv->minimum_stock = $field['minimum_stock'];
+                    $inv->uom = $field['uom'];
+                    $inv->create_user = Auth::user()->id;
+                    $inv->update_user = Auth::user()->id;
+
+                    $inv->save();
+
+                    $data = [
+                        'msg' => 'Items are successfully uploaded.',
+                        'status' => 'success',
+                        'inventory' => ''
+                    ];
+                }
+            }
+        }
+
+        return json_encode($data);
+    }
+
+    public function download_upload_format()
+    {
+        Excel::create('inventory_upload_format', function($excel)
+        {
+            $excel->sheet('Report', function($sheet)
+            {
+                $sheet->setHeight(1, 15);
+                $sheet->cell('A1', "item_name");
+                $sheet->cell('B1', "item_type");
+                $sheet->cell('C1', "quantity");
+                $sheet->cell('D1', "minimum_stock");
+                $sheet->cell('E1', "UOM");
+                $sheet->cell('F1', "remarks");
+            });
+        })->download('xlsx');
     }
 }

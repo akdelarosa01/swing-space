@@ -1,7 +1,12 @@
 var products = [];
 
 $( function() {
+    get_dropdown_options(3,'#prod_type_export');
 	getProducts();
+
+    $('#btn_export').on('click', function() {
+        $('#export_modal').modal('show');
+    });
 });
 
 function getProducts() {
@@ -37,6 +42,7 @@ function makeProductsDataTable(arr) {
             { data: 'variants' },
             { data: 'target_qty' },
             { data: 'quantity' },
+            { data: 'updated_at' },
         ]
     });
 }

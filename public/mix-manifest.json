@@ -5,6 +5,7 @@
     "/js/pages/super_admin/transaction_codes.js": "/js/pages/super_admin/transaction_codes.js",
     "/js/pages/super_admin/module.js": "/js/pages/super_admin/module.js",
     "/js/pages/settings/dropdown.js": "/js/pages/settings/dropdown.js",
+    "/js/pages/products/product_list.js": "/js/pages/products/product_list.js",
     "/js/pages/products/add_products.js": "/js/pages/products/add_products.js",
     "/js/pages/inventory/update_inventory.js": "/js/pages/inventory/update_inventory.js",
     "/js/pages/inventory/summary_list.js": "/js/pages/inventory/summary_list.js",
@@ -15,7 +16,6 @@
     "/js/pages/employee/employee_list.js": "/js/pages/employee/employee_list.js",
     "/js/pages/customer/membership.js": "/js/pages/customer/membership.js",
     "/js/pages/customer/customer_list.js": "/js/pages/customer/customer_list.js",
-    "/js/pages/products/product_list.js": "/js/pages/products/product_list.js",
     "/js/main.js": "/js/main.js",
     "/css/main.css": "/css/main.css"
 }

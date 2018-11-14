@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
-use App\Product;
 use App\AvailableProduct;
+use App\Product;
+use Excel;
 use DB;
 
 class ProductController extends Controller
@@ -187,8 +188,18 @@ class ProductController extends Controller
                                                     FROM available_products as a
                                                     where a.prod_id = p.id limit 1)
                                             else 0
-                                        END  as quantity
-                                from products as p");
+                                        END  as quantity,
+                                        CASE
+                                            when (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as updated_at
+                                from products as p
+                                order by updated_at desc");
         } else {
             $products = DB::select("SELECT p.id as id,
                                         p.prod_code as prod_code,
@@ -214,9 +225,19 @@ class ProductController extends Controller
                                                     FROM available_products as a
                                                     where a.prod_id = p.id limit 1)
                                             else 0
-                                        END  as quantity
-                                where prod_type = '".$req->type."'
-                                from products as p");
+                                        END  as quantity,
+                                        CASE
+                                            when (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as updated_at
+                                from products as p
+                                where prod_type = '".$type."'
+                                order by updated_at desc");
         }
         
         return $products;
@@ -259,116 +280,135 @@ class ProductController extends Controller
         return response()->json($data);
     }
 
-    // public function export_files(Request $req)
-    // {
-    //     $type_cond = '';
+    public function export_files(Request $req)
+    {
+        $data;
 
-    //     if(empty($req->item_type))
-    //     {
-    //         $type_cond = '';
-    //     } else {
-    //         $type_cond = " AND item_type = '" . $req->item_type . "'";
-    //     }
+        if(empty($req->prod_type))
+        {
+            $data = $this->products();
+        } else {
+            $data = $this->products($req->prod_type);
+        }
 
-    //     $data = DB::table('inventories as inv')
-    //                 ->whereRaw("deleted=0".$type_cond)
-    //                 ->select(
-    //                     DB::raw("inv.id as id"),
-    //                     DB::raw("inv.item_code as item_code"),
-    //                     DB::raw("(SELECT itm.item_name FROM item_inputs as itm
-    //                                 WHERE itm.item_code = inv.item_code LIMIT 1) as item_name"),
-    //                     DB::raw("inv.item_type as item_type"),
-    //                     DB::raw("inv.quantity as quantity"),
-    //                     DB::raw("inv.minimum_stock as minimum_stock"),
-    //                     DB::raw("inv.uom as uom")
-    //                 )
-    //                 ->get();
-
-    //     switch ($req->file_type) {
-    //         case 'Excel':
-    //             $this->excelfile($data);
-    //             break;
+        switch ($req->file_type) {
+            case 'Excel':
+                $this->excelfile($data);
+                break;
             
-    //         default:
-    //             # code...
-    //             break;
-    //     }
-    // }
+            default:
+                # code...
+                break;
+        }
+    }
 
-    // public function excelfile($data)
-    // {
-    //     $date = date('Ymd');
+    public function excelfile($data)
+    {
+        $date = date('Ymd');
 
-    //     Excel::create('Inventory_List_'.$date, function($excel) use($data)
-    //     {
-    //         $excel->sheet('Report', function($sheet) use($data)
-    //         {
-    //             $sheet->setHeight(1, 15);
-    //             $sheet->mergeCells('A1:F1');
-    //             $sheet->cells('A1:F1', function($cells) {
-    //                 $cells->setAlignment('center');
-    //                 $cells->setFont([
-    //                     'family'     => 'Calibri',
-    //                     'size'       => '14',
-    //                     'bold'       =>  true,
-    //                 ]);
-    //             });
-    //             $sheet->cell('A1'," SWING SPACE");
+        Excel::create('Product_List_'.$date, function($excel) use($data)
+        {
+            $excel->sheet('Report', function($sheet) use($data)
+            {
+                $sheet->setHeight(1, 15);
+                $sheet->mergeCells('A1:I1');
+                $sheet->cells('A1:I1', function($cells) {
+                    $cells->setAlignment('center');
+                    $cells->setFont([
+                        'family'     => 'Calibri',
+                        'size'       => '14',
+                        'bold'       =>  true,
+                    ]);
+                });
+                $sheet->cell('A1'," SWING SPACE");
 
-    //             $sheet->setHeight(2, 15);
-    //             $sheet->mergeCells('A2:F2');
-    //             $sheet->cells('A2:F2', function($cells) {
-    //                 $cells->setAlignment('center');
-    //             });
-    //             $sheet->cell('A2',"Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., Loyola Heights Katipunan, Quezon City");
+                $sheet->setHeight(2, 15);
+                $sheet->mergeCells('A2:I2');
+                $sheet->cells('A2:I2', function($cells) {
+                    $cells->setAlignment('center');
+                });
+                $sheet->cell('A2',"Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., Loyola Heights Katipunan, Quezon City");
 
-    //             $sheet->setHeight(4, 20);
-    //             $sheet->mergeCells('A4:F4');
-    //             $sheet->cells('A4:F4', function($cells) {
-    //                 $cells->setAlignment('center');
-    //                 $cells->setFont([
-    //                     'family'     => 'Calibri',
-    //                     'size'       => '14',
-    //                     'bold'       =>  true,
-    //                     'underline'  =>  true
-    //                 ]);
-    //             });
-    //             $sheet->cell('A4',"INVENTORY LIST");
+                $sheet->setHeight(4, 20);
+                $sheet->mergeCells('A4:I4');
+                $sheet->cells('A4:I4', function($cells) {
+                    $cells->setAlignment('center');
+                    $cells->setFont([
+                        'family'     => 'Calibri',
+                        'size'       => '14',
+                        'bold'       =>  true,
+                        'underline'  =>  true
+                    ]);
+                });
+                $sheet->cell('A4',"PRODUCT LIST");
 
-    //             $sheet->setHeight(6, 15);
-    //             $sheet->cells('A6:F6', function($cells) {
-    //                 $cells->setFont([
-    //                     'family'     => 'Calibri',
-    //                     'size'       => '11',
-    //                     'bold'       =>  true,
-    //                 ]);
-    //                 // Set all borders (top, right, bottom, left)
-    //                 $cells->setBorder('solid', 'solid', 'solid', 'solid');
-    //             });
-    //             $sheet->cell('A6', "ITEM CODE");
-    //             $sheet->cell('B6', "ITEM NAME");
-    //             $sheet->cell('C6', "ITEM TYPE");
-    //             $sheet->cell('D6', "QUANTITY");
-    //             $sheet->cell('E6', "MINIMUM STOCK");
-    //             $sheet->cell('F6', "UOM");
+                $sheet->setHeight(6, 15);
+                $sheet->cells('A6:I6', function($cells) {
+                    $cells->setFont([
+                        'family'     => 'Calibri',
+                        'size'       => '11',
+                        'bold'       =>  true,
+                    ]);
+                    // Set all borders (top, right, bottom, left)
+                    $cells->setBorder('thin','thin','thin','thin');
+                });
+                $sheet->cell('A6', "PRODUCT CODE");
+                $sheet->cell('B6', "PRODUCT NAME");
+                $sheet->cell('C6', "DESCRIPTION");
+                $sheet->cell('D6', "PRODUCT TYPE");
+                $sheet->cell('E6', "PRICE");
+                $sheet->cell('F6', "VARIANT");
+                $sheet->cell('G6', "TARGET QTY.");
+                $sheet->cell('H6', "AVAILABLE QTY");
+                $sheet->cell('I6', "UPDATED AT");
 
-    //             $row = 7;
+                $row = 7;
 
-    //             foreach ($data as $key => $dt) {
-    //                 $sheet->setHeight($row, 15);
-    //                 $sheet->cell('A'.$row, $dt->item_code);
-    //                 $sheet->cell('B'.$row, $dt->item_name);
-    //                 $sheet->cell('C'.$row, $dt->item_type);
-    //                 $sheet->cell('D'.$row, $dt->quantity);
-    //                 $sheet->cell('E'.$row, $dt->minimum_stock);
-    //                 $sheet->cell('F'.$row, $dt->uom);
-    //                 $row++;
-    //             }
+                foreach ($data as $key => $dt) {
+                    $sheet->setHeight($row, 15);
+                    $sheet->cell('A'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->prod_code);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('B'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->prod_name);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('C'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->description);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('D'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->prod_type);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('E'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->price);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('F'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->variants);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('G'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->target_qty);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('H'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->quantity);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $sheet->cell('I'.$row, function($cell) use($dt) {
+                        $cell->setValue($dt->updated_at);
+                        $cell->setBorder('thin','thin','thin','thin');
+                    });
+                    $row++;
+                }
                 
-    //             $sheet->cells('A6:F'.$row, function($cells) {
-    //                 $cells->setBorder('solid', 'solid', 'solid', 'solid');
-    //             });
-    //         });
-    //     })->download('xlsx');
-    // }
+                $sheet->cells('A6:I'.$row, function($cells) {
+                    $cells->setBorder('solid', 'solid', 'solid', 'solid');
+                });
+            });
+        })->download('xlsx');
+    }
 }

@@ -175,6 +175,50 @@ $(function () {
             $('.loading').hide();
         });
     });
+
+    $('#frm_upload_inventory').on('submit', function (e) {
+        var formObj = $('#frm_upload_inventory');
+        var formURL = formObj.attr("action");
+        var formData = new FormData(this);
+        var fileName = $("#inventory_file").val();
+        var ext = fileName.split('.').pop();
+
+        e.preventDefault();
+
+        if ($("#inventory_file").val() == '') {
+            msg("No File selected.", "failed");
+        } else {
+            if (fileName != '') {
+                if (ext == 'xls' || ext == 'xlsx' || ext == 'XLS' || ext == 'XLSX' || ext == 'Xls') {
+                    $('.loading').show();
+
+                    $.ajax({
+                        url: formURL,
+                        type: 'POST',
+                        data: formData,
+                        mimeType: "multipart/form-data",
+                        contentType: false,
+                        cache: false,
+                        processData: false
+                    }).done(function (data, textStatus, xhr) {
+                        console.log(data);
+                    }).fail(function (xhr, textStatus, errorThrown) {
+                        $('.loading').hide();
+                        msg('Upload Items: ' + errorThrown, textStatus);
+                    }).always(function () {
+                        $('.loading').hide();
+                    });
+                } else {
+                    $('.loading').hide();
+                    msg("File Format not supported.", "warning");
+                }
+            }
+        }
+    });
+
+    $('#btn_download_format').on('click', function () {
+        window.location.href = '../../receive-items/download-format';
+    });
 });
 
 function clear() {

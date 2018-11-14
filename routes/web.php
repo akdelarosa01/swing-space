@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('receive-items/save', 'Pages\ReceiveItemController@save');
     Route::get('receive-items/search-item', 'Pages\ReceiveItemController@search_items');
     Route::post('receive-items/save-selected', 'Pages\ReceiveItemController@save_selected');
+    Route::post('receive-items/upload-inventory', 'Pages\ReceiveItemController@upload_inventory');
+    Route::get('receive-items/download-format', 'Pages\ReceiveItemController@download_upload_format');
 
     Route::get('update-inventory', 'Pages\UpdateInventoryController@index');
     Route::get('update-inventory/search-items', 'Pages\UpdateInventoryController@search_items');
@@ -84,6 +86,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('product-list', 'Pages\ProductController@index');
     Route::get('product-list/show', 'Pages\ProductController@show');
+    Route::get('product-files', 'Pages\ProductController@export_files');
     Route::get('add-products', 'Pages\ProductController@add_products');
     Route::get('add-products/show', 'Pages\ProductController@show');
     Route::get('add-products/search', 'Pages\ProductController@search_products');

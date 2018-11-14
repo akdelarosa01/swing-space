@@ -68,18 +68,23 @@
 /***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(73);
+module.exports = __webpack_require__(67);
 
 
 /***/ }),
 
-/***/ 73:
+/***/ 67:
 /***/ (function(module, exports) {
 
 var products = [];
 
 $(function () {
+    get_dropdown_options(3, '#prod_type_export');
     getProducts();
+
+    $('#btn_export').on('click', function () {
+        $('#export_modal').modal('show');
+    });
 });
 
 function getProducts() {
@@ -106,7 +111,7 @@ function makeProductsDataTable(arr) {
     $('#tbl_products').dataTable().fnDestroy();
     $('#tbl_products').dataTable({
         data: arr,
-        columns: [{ data: 'prod_code' }, { data: 'prod_name' }, { data: 'description' }, { data: 'prod_type' }, { data: 'price' }, { data: 'variants' }, { data: 'target_qty' }, { data: 'quantity' }]
+        columns: [{ data: 'prod_code' }, { data: 'prod_name' }, { data: 'description' }, { data: 'prod_type' }, { data: 'price' }, { data: 'variants' }, { data: 'target_qty' }, { data: 'quantity' }, { data: 'updated_at' }]
     });
 }
 

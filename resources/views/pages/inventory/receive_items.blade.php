@@ -43,12 +43,12 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form enctype="multipart/form-data" method="post" action="/" id="upload_inventory">
+                    {{-- <form enctype="multipart/form-data" method="post" action="../../receive-items/upload-inventory" id="frm_upload_inventory">
                         @csrf
                         <div class="form-group row">
                             <div class="col-md-9">
                                 <div class="custom-file mb-1">
-                                    <input type="file" class="custom-file-input form-control-sm" id="inventory_file">
+                                    <input type="file" class="custom-file-input form-control-sm" id="inventory_file" name="inventory_file">
                                     <label class="custom-file-label" for="inventory_file">Choose xlsx file</label>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                 <button type="submit" class="btn btn-info btn-sm btn-block mb-3">Upload</button>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
 
                     <form action="../../receive-items/save-selected" method="post" id="frm_selected">
                         @csrf
@@ -68,7 +68,7 @@
                                         <th width="40%">Item Name</th>
                                         <th width="20%">Item Type</th>
                                         <th width="10%">Quantity</th>
-                                        <th width="10%">Quantity</th>
+                                        <th width="10%"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbl_selected_body"></tbody>
@@ -78,6 +78,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-info btn-sm pull-right">Save</button>
+                                {{-- <button type="button" class="btn btn-success btn-sm" id="btn_download_format">Download Upload Format</button> --}}
                             </div>
                         </div>
                     </form>
