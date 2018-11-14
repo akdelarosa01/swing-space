@@ -20,7 +20,7 @@ class DropdownController extends Controller
 
     public function index()
     {
-        if (Auth::user()->user_type == 'Administrator' || Auth::user()->user_type == 'Owner') {
+        if ($this->_global->checkAccess('DRP_SET')) {
             return view('pages.settings.dropdown',[
                 'user_access' => $this->_global->UserAccess()
             ]);

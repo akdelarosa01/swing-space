@@ -9,7 +9,7 @@
                     <form action="#" class="form-horizontal">
                         <div class="form-body">
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-5">Points for Membership</label>
+                                <label class="control-label text-right col-md-5">Start up Points</label>
                                 <div class="col-md-6">
                                     <div class="input-group input-group-sm">
                                 		<input type="text" class="form-control form-control-sm" value="0">
@@ -22,7 +22,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-5">Points For Invite</label>
+                                <label class="control-label text-right col-md-5">Points per Invite</label>
                                 <div class="col-md-6">
                                     <div class="input-group input-group-sm">
                                 		<input type="text" class="form-control form-control-sm" value="0">
@@ -31,19 +31,6 @@
                                 		</div>
                                 	</div>
                                     <small class="form-text text-muted">Points when customer has 1 invited guest</small>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="control-label text-right col-md-5">Points For Complete Invite</label>
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-sm">
-                                		<input type="text" class="form-control form-control-sm" value="0">
-                                		<div class="input-group-append">
-                                			<span class="input-group-text">Pts.</span>
-                                		</div>
-                                	</div>
-                                    <small class="form-text text-muted">Points when customer has matching guest</small>
                                 </div>
                             </div>
 
