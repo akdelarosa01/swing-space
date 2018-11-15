@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use App\Employee;
 use App\UserAccess;
 use App\User;
@@ -15,10 +16,12 @@ use Hash;
 class EmployeeController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -88,7 +91,8 @@ class EmployeeController extends Controller
 
                 UserAccess::where('user_id',$req->id)->delete();
                 $this->give_access($req,$req->id);
-        
+
+
             }
 
             if (isset($req->photo)) {
@@ -100,6 +104,12 @@ class EmployeeController extends Controller
                 'status' => 'success',
                 'employee' => $this->employee($req->id)
             ];
+
+            $this->_userlog->log([
+                'module' => 'Employee Registration',
+                'action' => 'Updated Employee user ID '.$req->id.', Name '.$user->firstname.' '.$user->lastname,
+                'user_id' => Auth::user()->id
+            ]);
             
         } else {
             $this->validate($req,[
@@ -151,6 +161,12 @@ class EmployeeController extends Controller
 
                 $this->give_access($req,$user->id);
             }
+
+            $this->_userlog->log([
+                'module' => 'Employee Registration',
+                'action' => 'Added Employee user ID '.$user->id.', Name '.$user->firstname.' '.$user->lastname,
+                'user_id' => Auth::user()->id
+            ]);
 
             $data = [
                 'msg' => 'Successfully saved.',
@@ -344,6 +360,12 @@ class EmployeeController extends Controller
                     'status' => 'success',
                     'employee' => $employee
                 ];
+
+                $this->_userlog->log([
+                    'module' => 'Employee Registration',
+                    'action' => 'Deleted Employee user ID '.$req->id,
+                    'user_id' => Auth::user()->id
+                ]);
             }
         }
 

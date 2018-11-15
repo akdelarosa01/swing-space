@@ -11,6 +11,9 @@
 |
 */
 
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -109,3 +112,5 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('get-language', 'GlobalController@getLanguage');
     Route::post('translate-language', 'GlobalController@translateLanguage');
 });
+
+Route::get('/logs', 'UserLogsController@getLogs')->name('logs');

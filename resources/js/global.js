@@ -1,3 +1,10 @@
+Echo.channel('user_log')
+    .listen('UserLogs', (e) => {
+        console.log(e.log);
+        getUserLogs();
+    });
+
+
 jQuery.fn.extend({
     live: function (event, callback) {
        if (this.selector) {
@@ -351,3 +358,35 @@ function translateLanguage(language) {
        msg('Langauage : '+errorThrown,textStatus);
     });
 }
+
+function getUserLogs() {
+    $.ajax({
+        url: '../../../logs',
+        type: 'GET',
+        dataType: 'JSON',
+    }).done(function(data, textStatus, xhr) {
+        user_log = [];
+        user_log = data;
+        // makeUserLogTable(user_log);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        console.log(xhr+' '+errorThrown);
+    });
+}
+
+// function makeUserLogTable(arr) {
+//     $('#tbl_audit').dataTable().fnClearTable();
+//     $('#tbl_audit').dataTable().fnDestroy();
+//     $('#tbl_audit').dataTable({
+//         data: arr,
+//         bLengthChange : false,
+//         bDestroy: true,
+//         order: [[ 0, "desc" ]],
+//         columns: [
+//             { data: 'id', orderable: false},
+//             { data: 'module', orderable: false},
+//             { data: 'action', orderable: false},
+//             { data: 'user', orderable: false},
+//             { data: 'created_at', orderable: false}
+//         ]
+//     });
+// }

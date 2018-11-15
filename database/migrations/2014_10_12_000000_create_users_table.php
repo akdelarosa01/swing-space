@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->integer('disabled')->default(0);
             $table->string('language')->default('en');
             $table->string('photo')->default('/img/default-profile.png');
+            $table->double('points',12,2)->default(0.00);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -40,7 +41,8 @@ class CreateUsersTable extends Migration
             'actual_password' => 'akdelarosa',
             'user_type' => 'Administrator',
             'gender' => 'Male',
-            'is_admin' => 1
+            'is_admin' => 1,
+            'points' => 100.00
         ]);
     }
 

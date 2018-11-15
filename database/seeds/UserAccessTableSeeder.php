@@ -19,7 +19,7 @@ class UserAccessTableSeeder extends Seeder
     	foreach ($modules as $key => $mod) {
     		UserAccess::create([
 	        	'module_id' => $mod->id,
-				'user_id' => 2,
+				'user_id' => 1,
 				'access' => 1,
 				'create_user' => 1,
 				'update_user' => 1

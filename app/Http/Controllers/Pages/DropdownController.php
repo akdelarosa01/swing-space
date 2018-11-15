@@ -6,16 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use App\DropdownName;
 use App\DropdownOption;
 
 class DropdownController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -60,6 +63,12 @@ class DropdownController extends Controller
 		    		'name' => $this->getName()
 		    	];
             }
+
+            $this->_userlog->log([
+                'module' => 'Dropdown Settings',
+                'action' => 'Updated Dropdown name '.$name->description,
+                'user_id' => Auth::user()->id
+            ]);
         } else {
             $this->validate($req,[
                 'description' => 'required|unique:dropdown_names|max:50',
@@ -77,6 +86,12 @@ class DropdownController extends Controller
 		    		'status' => 'success',
 		    		'name' => $this->getName()
 		    	];
+
+                $this->_userlog->log([
+                    'module' => 'Dropdown Settings',
+                    'action' => 'Added Dropdown name '.$name->description,
+                    'user_id' => Auth::user()->id
+                ]);
             }
         }
 
@@ -115,6 +130,12 @@ class DropdownController extends Controller
                         'status' => 'success',
                         'option' => $this->getOptions($req->dropdown_id)
                     ];
+
+                    $this->_userlog->log([
+                        'module' => 'Dropdown Settings',
+                        'action' => 'Updated Dropdown option '.$option->option_description,
+                        'user_id' => Auth::user()->id
+                    ]);
                 } else {
                     $data = [
                         'msg' => "No changes made.",
@@ -150,6 +171,12 @@ class DropdownController extends Controller
                         'status' => 'success',
                         'option' => $this->getOptions($req->dropdown_id)
                     ];
+
+                    $this->_userlog->log([
+                        'module' => 'Dropdown Settings',
+                        'action' => 'Added Dropdown option '.$option->option_description,
+                        'user_id' => Auth::user()->id
+                    ]);
                 } else {
                     $data = [
                         'msg' => "Adding option failed.",
@@ -180,6 +207,12 @@ class DropdownController extends Controller
         $name = DropdownName::find($req->id);
         $name->delete();
 
+        $this->_userlog->log([
+            'module' => 'Dropdown Settings',
+            'action' => 'Deleted Dropdown name ID '.$req->id,
+            'user_id' => Auth::user()->id
+        ]);
+
         $name = DropdownName::orderBy('id','desc')->get();
         return response()->json($name);
     }
@@ -203,6 +236,12 @@ class DropdownController extends Controller
                     'option' => $this->getOptions($req->dropdown_id)
                 ];
             }
+            $ids = implode(',', $req->ids);
+            $this->_userlog->log([
+                'module' => 'Dropdown Settings',
+                'action' => 'Deleted Dropdown options ID '.$ids,
+                'user_id' => Auth::user()->id
+            ]);
         } else {
             $option = DropdownOption::find($req->ids);
             $option->delete();
@@ -212,6 +251,12 @@ class DropdownController extends Controller
                 'status' => "success",
                 'option' => $this->getOptions($req->dropdown_id)
             ];
+
+            $this->_userlog->log([
+                'module' => 'Dropdown Settings',
+                'action' => 'Deleted Dropdown option ID '.$req->ids,
+                'user_id' => Auth::user()->id
+            ]);
         }
 
         return response()->json($data);

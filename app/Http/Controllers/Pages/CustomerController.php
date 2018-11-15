@@ -6,16 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use App\User;
 use DB;
 
 class CustomerController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -100,6 +103,12 @@ class CustomerController extends Controller
                     'status' => 'success',
                     'customers' => $customers
                 ];
+
+                $this->_userlog->log([
+                    'module' => 'Customer List',
+                    'action' => 'Delete customer ID '.$req->id,
+                    'user_id' => Auth::user()->id
+                ]);
             }
         }
 
