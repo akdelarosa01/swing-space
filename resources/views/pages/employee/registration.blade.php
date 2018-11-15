@@ -3,9 +3,9 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <span data-localize="registration.title">Employee Registration</span>
+            <span class="trn">Employee Registration</span>
             <a href="{{ url('/employee-list') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
-                Employee List
+                <span class="trn">Employee List</span>
             </a>
         </div>
         <form action="../../employee/save" id="frm_registration" enctype="multipart/form-data" method="post">
@@ -17,14 +17,14 @@
                         <div class="form-body">
                             <input type="hidden" name="id" id="id" value="@if(isset($id)) {{ $id }} @endif">
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">First Name</label>
+                                <label class="control-label text-right col-md-3 trn">First Name</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control form-control-sm" id="firstname" name="firstname">
                                     <div id="firstname_feedback"></div>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Last Name</label>
+                                <label class="control-label text-right col-md-3 trn">Last Name</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control form-control-sm" id="lastname" name="lastname">
                                     <div id="lastname_feedback"></div>
@@ -32,7 +32,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Gender</label>
+                                <label class="control-label text-right col-md-3 trn">Gender</label>
                                 <div class="col-md-8">
                                     <select class="form-control form-control-sm clear select-validate" name="gender" id="gender">
                                         <option value=""></option>
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Date of Birth</label>
+                                <label class="control-label text-right col-md-3 trn">Date of Birth</label>
                                 <div class="col-md-8">
                                     <input type="date" class="form-control form-control-sm" id="date_of_birth" name="date_of_birth" maxlength="10">
                                     <div id="date_of_birth_feedback"></div>
@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Position</label>
+                                <label class="control-label text-right col-md-3 trn">Position</label>
                                 <div class="col-md-8">
                                     <select class="form-control form-control-sm" id="position" name="position">
                                         <option value="">Select Employee position.</option>
@@ -64,7 +64,7 @@
                             <hr class="dashed ">
 
                              <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Email Address</label>
+                                <label class="control-label text-right col-md-3 trn">Email Address</label>
                                 <div class="col-md-8">
                                     <input type="email" class="form-control form-control-sm" id="email" name="email">
                                     <div id="email_feedback"></div>
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Password</label>
+                                <label class="control-label text-right col-md-3 trn">Password</label>
                                 <div class="col-md-8">
                                     <input type="password" class="form-control form-control-sm" id="password" name="password">
                                     <div id="password_feedback"></div>
@@ -80,7 +80,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Confirm Password</label>
+                                <label class="control-label text-right col-md-3 trn">Confirm Password</label>
                                 <div class="col-md-8">
                                     <input type="password" class="form-control form-control-sm" id="password_confirmation" name="password_confirmation">
                                     <div id="password_confirmation_feedback"></div>
@@ -88,7 +88,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Mobile</label>
+                                <label class="control-label text-right col-md-3 trn">Mobile</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control form-control-sm" id="mobile" name="mobile">
                                     <div id="mobile_feedback"></div>
@@ -98,7 +98,7 @@
                             <hr class="dashed ">
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Street</label>
+                                <label class="control-label text-right col-md-3 trn">Street</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control form-control-sm" id="street" name="street">
                                     <div id="street_feedback"></div>
@@ -106,17 +106,19 @@
                             </div>
                             
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">State</label>
+                                <label class="control-label text-right col-md-3 trn">State</label>
                                 <div class="col-md-8">
                                     <select class="form-control form-control-sm" id="state" name="state">
-                                        <option value="">Please select a province.</option>
+                                        <option value="">
+                                            <span class="trn">Please select a province.</span>
+                                        </option>
                                     </select>
                                     <div id="state_feedback"></div>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">City</label>
+                                <label class="control-label text-right col-md-3 trn">City</label>
                                 <div class="col-md-8">
                                     <select class="form-control form-control-sm" id="city" name="city" disabled>
                                         <option value=""></option>
@@ -126,7 +128,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Zip</label>
+                                <label class="control-label text-right col-md-3 trn">Zip</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control form-control-sm" id="zip" name="zip" maxlength="4">
                                     <div id="zip_feedback"></div>
@@ -136,7 +138,7 @@
                             <hr class="dashed">
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">TIN #</label>
+                                <label class="control-label text-right col-md-3 trn">TIN #</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control form-control-sm" id="tin" name="tin">
                                     <div id="tin_feedback"></div>
@@ -144,7 +146,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">SSS #</label>
+                                <label class="control-label text-right col-md-3 trn">SSS #</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control form-control-sm" id="sss" name="sss">
                                     <div id="sss_feedback"></div>
@@ -152,7 +154,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">Philhealth #</label>
+                                <label class="control-label text-right col-md-3 trn">Philhealth #</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control form-control-sm" id="philhealth" name="philhealth">
                                     <div id="philhealth_feedback"></div>
@@ -160,7 +162,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label text-right col-md-3">PAG-IBIG #</label>
+                                <label class="control-label text-right col-md-3 trn">PAG-IBIG #</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control form-control-sm" id="pagibig" name="pagibig">
                                     <div id="pagibig_feedback"></div>
@@ -180,7 +182,7 @@
                             <div class="col-md-6">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="photo" name="photo">
-                                    <label class="custom-file-label" for="photo">Choose Photo</label>
+                                    <label class="custom-file-label trn" for="photo">Choose Photo</label>
                                  </div>
                             </div>
                         </div>
@@ -189,14 +191,14 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <h4>Employee Access</h4>
+                                <h4><span class="trn">Employee Access</span></h4>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-sm" id="tbl_modules">
                                         <thead>
                                             <tr>
-                                                <th>Page</th>
-                                                <th>Read / Write</th>
-                                                <th>Read</th>
+                                                <th class="trn">Page</th>
+                                                <th class="trn">Read / Write</th>
+                                                <th class="trn">Read</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tbl_modules_body"></tbody>
@@ -212,8 +214,12 @@
                 <div class="form-actions">
                     <div class="row">
                         <div class="offset-sm-5 col-md-6">
-                            <button type="submit" class="btn btn-info btn-rounded">Save</button>
-                            <button class="btn btn-secondary clear-form btn-rounded btn-outline">Clear</button>
+                            <button type="submit" class="btn btn-info btn-rounded">
+                                <span class="trn">Save</span>
+                            </button>
+                            <button class="btn btn-secondary clear-form btn-rounded btn-outline">
+                                <span class="trn">Clear</span>
+                            </button>
                         </div>
                     </div>
                 </div>

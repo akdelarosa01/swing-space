@@ -28,7 +28,7 @@
 		<ul class="navbar-nav nav-left">
 			<li class="nav-item nav-text dropdown dropdown-menu-md">
 				<a href="javascript:void(0)">
-					<span>
+					<span class="trn">
 						{{ Auth::user()->user_type }}
 					</span>
 				</a>
@@ -50,7 +50,7 @@
 						</div>
 					</div>
 					<a class="dropdown-item" href="{{ url('profile') }}">
-						<i class="icon dripicons-user"></i> <span data-localize="header.profile">@lang('header.profile')</span>
+						<i class="icon dripicons-user"></i> <span class="trn">Profile</span>
 					</a>
 					<a class="dropdown-item" id="translate_language" href="javascript:;" data-language="@if(Auth::user()->language == 'en') {{'ch'}} @else {{'en'}} @endif">
 						<i class="icon dripicons-conversation"></i> 
@@ -62,7 +62,7 @@
 					</a>
 					<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                 		document.getElementById('logout-form').submit();">
-                		<i class="icon dripicons-lock-open"></i> <span data-localize="header.signout">@lang('header.signout')</span>
+                		<i class="icon dripicons-lock-open"></i> <span class="trn">Sign Out</span>
                 	</a>
                 	<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 		                @csrf

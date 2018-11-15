@@ -3,24 +3,24 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <span data-localize="summary_list.title">Summary List</span>
+            <span class="trn">Summary List</span>
             <a href="{{ url('/item-output') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
-                <span data-localize="item_output.title">Item Ouput</span>
+                <span class="trn">Item Ouput</span>
             </a>
             <a href="{{ url('/receive-items') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
-                <span data-localize="receive_items.title">Receive Items</span>
+                <span class="trn">Receive Item</span>
             </a>
         </div>
         <div class="card-body">
             <div class="form-group row">
                 <div class="input-group input-group-sm offset-md-6 col-md-6">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Item Type</span>
+                        <span class="input-group-text trn">Item Type</span>
                     </div>
                     <select class="form-control form-control-sm" id="item_type"></select>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-sm btn-info" id="btn_search_type">
-                            <span data-localize="inventory_list.search">Search</span>
+                            <span class="trn">Search</span>
                         </button>
                     </div>
                 </div>
@@ -30,14 +30,14 @@
                 <table class="table table-striped table-sm" id="tbl_items">
                     <thead>
                         <tr>
-                            <th scope="col">Transaction</th>
-                            <th scope="col">Item Code</th>
-                            <th scope="col">Item Name</th>
-                            <th scope="col">Item Type</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">UoM</th>
-                            <th scope="col">Transaction Date</th>
-                            <th scope="col">Transacted By</th>
+                            <th scope="col" class="trn">Transaction</th>
+                            <th scope="col" class="trn">Item Code</th>
+                            <th scope="col" class="trn">Item Name</th>
+                            <th scope="col" class="trn">Item Type</th>
+                            <th scope="col" class="trn">Quantity</th>
+                            <th scope="col" class="trn">UoM</th>
+                            <th scope="col" class="trn">Transaction Date</th>
+                            <th scope="col" class="trn">Transacted By</th>
                         </tr>
                     </thead>
                     <tbody id="tbl_items_body"></tbody>

@@ -62,13 +62,13 @@ function EmployeeList(data) {
 									'</a>'+
 									'<div class="dropdown-menu dropdown-menu-right">'+
 										'<div class="dropdown-header">'+
-											'Manage Employee'+
+											'<span class="trn">Manage Employee</span>'+
 										'</div>'+
 										'<a href="../../employee/'+x.id+'/edit" class="dropdown-item">'+
-											'<i class="icon dripicons-pencil"></i> Edit'+
+											'<i class="icon dripicons-pencil"></i> <span class="trn">Edit</span>'+
 										'</a>'+
 										'<a href="javascript:void(0)" class="dropdown-item delete-employee" data-id="'+x.id+'">'+
-											'<i class="icon dripicons-trash"></i> Remove'+
+											'<i class="icon dripicons-trash"></i> <span class="trn">Remove</span>'+
 										'</a>'+
 									'</div>'+
 								'</li>'+
@@ -90,4 +90,6 @@ function EmployeeList(data) {
 				'</div>';
 		$('#employee_list').append(list);
 	});
+
+	getLanguage(dict);
 }

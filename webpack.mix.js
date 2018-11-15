@@ -26,7 +26,8 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/jquery-mask/jquery.mask.min.js',
 		'resources/plugins/datatables.net/js/jquery.dataTables.js',
 		'resources/plugins/datatables.net-bs4/js/dataTables.bootstrap4.js',
-		'resources/plugins/localize/jquery.localize.min.js',
+		// 'resources/plugins/localize/jquery.localize.min.js',
+		'resources/plugins/translate/jquery.translate.js',
 		'resources/plugins/select2/select2.min.js',
 		'resources/js/scripts/app.js',
 		'resources/js/global.js'
@@ -35,25 +36,67 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/transaction_codes.js', 'public/js/pages/super_admin/')
 
-    .js('resources/js/pages/customer/customer_list.js', 'public/js/pages/customer/')
-    .js('resources/js/pages/customer/membership.js', 'public/js/pages/customer/')
+    
 
-    .js('resources/js/pages/settings/dropdown.js', 'public/js/pages/settings/')
+    .scripts([
+    	'resources/js/page_translation/customer/customer_list.js',
+		'resources/js/pages/customer/customer_list.js',
+	], 'public/js/pages/customer/customer_list.js')
 
-    .js('resources/js/pages/employee/employee_list.js', 'public/js/pages/employee/')
-    .js('resources/js/pages/employee/registration.js', 'public/js/pages/employee/')
+	.scripts([
+    	'resources/js/page_translation/customer/membership.js',
+		'resources/js/pages/customer/membership.js',
+	], 'public/js/pages/customer/membership.js')
 
-    .js('resources/js/pages/inventory/inventory_list.js', 'public/js/pages/inventory/')
-    .js('resources/js/pages/inventory/summary_list.js', 'public/js/pages/inventory/')
-    .js('resources/js/pages/inventory/receive_items.js', 'public/js/pages/inventory/')
-    .js('resources/js/pages/inventory/update_inventory.js', 'public/js/pages/inventory/')
-    .js('resources/js/pages/inventory/item_output.js', 'public/js/pages/inventory/')
+    .scripts([
+    	'resources/js/page_translation/employee/employee_list.js',
+		'resources/js/pages/employee/employee_list.js',
+	], 'public/js/pages/employee/employee_list.js')
 
-    .js('resources/js/pages/products/product_list.js', 'public/js/pages/products/')
-    .js('resources/js/pages/products/add_products.js', 'public/js/pages/products/')
+	.scripts([
+    	'resources/js/page_translation/employee/registration.js',
+		'resources/js/pages/employee/registration.js',
+	], 'public/js/pages/employee/registration.js')
 
+    .scripts([
+    	'resources/js/page_translation/inventory/inventory_list.js',
+		'resources/js/pages/inventory/inventory_list.js',
+	], 'public/js/pages/inventory/inventory_list.js')
 
+	.scripts([
+    	'resources/js/page_translation/inventory/summary_list.js',
+		'resources/js/pages/inventory/summary_list.js',
+	], 'public/js/pages/inventory/summary_list.js')
 
+	.scripts([
+    	'resources/js/page_translation/inventory/receive_items.js',
+		'resources/js/pages/inventory/receive_items.js',
+	], 'public/js/pages/inventory/receive_items.js')
+
+	.scripts([
+    	'resources/js/page_translation/inventory/update_inventory.js',
+		'resources/js/pages/inventory/update_inventory.js',
+	], 'public/js/pages/inventory/update_inventory.js')
+
+	.scripts([
+    	'resources/js/page_translation/inventory/item_output.js',
+		'resources/js/pages/inventory/item_output.js',
+	], 'public/js/pages/inventory/item_output.js')
+
+	.scripts([
+    	'resources/js/page_translation/products/product_list.js',
+		'resources/js/pages/products/product_list.js',
+	], 'public/js/pages/products/product_list.js')
+
+	.scripts([
+    	'resources/js/page_translation/products/add_products.js',
+		'resources/js/pages/products/add_products.js',
+	], 'public/js/pages/products/add_products.js')
+
+	.scripts([
+    	'resources/js/page_translation/settings/dropdown.js',
+		'resources/js/pages/settings/dropdown.js',
+	], 'public/js/pages/settings/dropdown.js')
 
 
     .sass('resources/sass/app.scss', 'public/css')

@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <span>Add Products</span>
+                    <span class="trn">Add New Product</span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="zmdi zmdi-close"></span>
@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label for="prod_name" class="control-label text-right col-md-3">Name</label>
+                                <label for="prod_name" class="control-label text-right col-md-3 trn">Product Name</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control form-control-sm clear validate" id="prod_name" name="prod_name">
                                     <div id="prod_name_feedback"></div>
@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="prod_type" class="control-label text-right col-md-3">Type</label>
+                                <label for="prod_type" class="control-label text-right col-md-3 trn">Product Type</label>
                                 <div class="col-md-9">
                                     <select class="form-control form-control-sm clear validate-select" id="prod_type" name="prod_type"></select>
                                     <div id="prod_type_feedback"></div>
@@ -32,7 +32,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="variants" class="control-label text-right col-md-3">Variant</label>
+                                <label for="variants" class="control-label text-right col-md-3 trn">Variants</label>
                                 <div class="col-md-9">
                                     <select class="form-control form-control-sm clear validate-select" id="variants" name="variants"></select>
                                     <div id="variants_feedback"></div>
@@ -42,7 +42,7 @@
 
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label for="price" class="control-label text-right col-md-3">Price</label>
+                                <label for="price" class="control-label text-right col-md-3 trn">Price</label>
                                 <div class="col-md-9">
                                     <div class="input-group input-group-sm">
                                         <div class="input-group-prepend">
@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="prod_type" class="control-label text-right col-md-3">Description</label>
+                                <label for="prod_type" class="control-label text-right col-md-3 trn">Description</label>
                                 <div class="col-md-9">
                                     <textarea class="form-control form-control-sm clear" id="description" name="description"></textarea>
                                 </div>
@@ -73,13 +73,13 @@
                                             <th width="5%">
                                                 <input type="checkbox" class="check_all_products">
                                             </th>
-                                            <th width="15%">Code</th>
-                                            <th width="15%">Name</th>
-                                            <th width="15%">Type</th>
-                                            <th width="15%">Variant</th>
-                                            <th width="10%">Price</th>
-                                            <th width="20%">Description</th>
-                                            <th width="10%"></th>
+                                            <th width="15%" class="trn">Product Code</th>
+                                            <th width="15%" class="trn">Product Name</th>
+                                            <th width="15%" class="trn">Product Type</th>
+                                            <th width="15%" class="trn">Variants</th>
+                                            <th width="10%" class="trn">Price</th>
+                                            <th width="20%" class="trn">Description</th>
+                                            <th width="10%" class="trn"></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbl_products_body"></tbody>
@@ -89,8 +89,12 @@
                     </div>        
                 </div>
                 <div class="modal-footer bg-light">
-                    <button type="submit" class="btn btn-info btn-sm">Save</button>
-                    <button type="button" class="btn btn-danger btn-sm" id="btn_delete">Delete</button>
+                    <button type="submit" class="btn btn-info btn-sm">
+                        <span class="trn">Save</span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" id="btn_delete">
+                        <span class="trn">Delete</span>
+                    </button>
                 </div>
             </form>
         </div>

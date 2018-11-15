@@ -3,18 +3,18 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <span data-localize="update_inventory.title">Update Inventory</span>
+            <span class="trn">Update Inventory</span>
         </div>
         <div class="card-body">
             <div class="form-group row">
                 <div class="input-group input-group-sm offset-md-6 col-md-6">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Item Type</span>
+                        <span class="input-group-text trn">Item Type</span>
                     </div>
                     <select class="form-control form-control-sm" id="item_type"></select>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-sm btn-info" id="btn_search_type">
-                            <span data-localize="inventory_list.search">Search</span>
+                            <span class="trn">Search</span>
                         </button>
                     </div>
                 </div>
@@ -26,13 +26,13 @@
                     <table class="table table-striped table-sm" id="tbl_items">
                         <thead>
                             <tr>
-                                <th width="15%">Item Code</th>
-                                <th width="25%">Item Name</th>
-                                <th width="20%">Item Type</th>
-                                <th width="10%">Quantity</th>
-                                <th width="10%">Minimum Stock</th>
-                                <th width="10%">UoM</th>
-                                <th width="10%">New Qty</th>
+                                <th width="15%" class="trn">Item Code</th>
+                                <th width="25%" class="trn">Item Name</th>
+                                <th width="20%" class="trn">Item Type</th>
+                                <th width="10%" class="trn">Quantity</th>
+                                <th width="10%" class="trn">Minimum Stock</th>
+                                <th width="10%" class="trn">UoM</th>
+                                <th width="10%" class="trn">New Qty</th>
                             </tr>
                         </thead>
                         <tbody id="tbl_items_body"></tbody>
@@ -41,7 +41,9 @@
 
                 <div class="row">
                     <div class="offset-md-10 col-md-2">
-                        <button type="submit" class="btn btn-info btn-sm btn-block">Save</button>
+                        <button type="submit" class="btn btn-info btn-sm btn-block">
+                            <span class="trn">Save</span>
+                        </button>
                     </div>
                 </div>
             </form>

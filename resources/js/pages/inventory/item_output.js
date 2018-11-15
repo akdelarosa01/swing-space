@@ -156,10 +156,11 @@ function makeSelectedItemsDataTable(arr) {
         scrollY: "300px",
         searching: false,
         paging: false,
+        sorting: false,
         columns: [
-            {data: 'item_code', searchable: false, orderable: false},
-            {data: 'item_name', searchable: false, orderable: false},
-            {data: 'item_type', searchable: false, orderable: false},
+            {data: 'item_code'},
+            {data: 'item_name'},
+            {data: 'item_type'},
             {data: function(x) {
                 return '<input type="hidden" name="id[]" value="'+x.id+'">'+
                         '<input type="hidden" name="selected_code[]" value="'+x.item_code+'">'+

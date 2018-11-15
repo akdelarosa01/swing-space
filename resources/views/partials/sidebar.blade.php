@@ -16,7 +16,7 @@
                 <li class="{{ Request::is('dashboard') ? ' active' : null }}">
                     <a class="has-arrow" href="/dashboard" aria-expanded="false">
                         <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i>
-                        <span data-localize="sidebar.dashboard">@lang('sidebar.dashboard')</span>
+                        <span class="trn">Dashboard</span>
                     </a>
                 </li>
 
@@ -35,12 +35,11 @@
                             @if($access->module_code == 'POS_CTRL')
                                 <?php
                                     $url = 'pos-control';
-                                    $local = 'data-localize="sidebar.pos_control"';
                                 ?>
                                 <li class="{{ Request::is($url) ? ' active' : null }}">
                                     <a class="has-arrow" href="{{ url($url) }}" aria-expanded="false">
                                         <i class="{{ $access->icon }}"></i>
-                                        <span <?php echo $local; ?>>@lang('sidebar.pos_control')</span>
+                                        <span class="trn">POS Control</span>
                                     </a>
                                 </li>
                             @endif
@@ -52,29 +51,27 @@
                         <li class="nav-dropdown {{ Request::is('customer-list') || Request::is('membership') ? ' active' : null }}">
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="zmdi zmdi-accounts zmdi-hc-fw"></i>
-                                <span data-localize="sidebar.customers">@lang('sidebar.customers')</span>
+                                <span class="trn">Customers</span>
                             </a>
                             <ul class="collapse nav-sub" aria-expanded="false">
                                 @foreach ($user_access as $key => $access)
                                     @if($access->module_code == 'CUS_LST')
                                         <?php
                                             $url = 'customer-list';
-                                            $local = 'data-localize="customer.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>@lang('customer.title')</span>
+                                                <span class="trn">Customer List</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'CUS_MEM')
                                         <?php
                                             $url = 'membership';
-                                            $local = 'data-localize="membership.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>@lang('membership.title')</span>
+                                                <span class="trn">Membership</span>
                                             </a>
                                         </li>
                                     @endif
@@ -88,62 +85,57 @@
                         <li class="nav-dropdown {{ Request::is('receive-items') || Request::is('inventory-list') || Request::is('update-inventory') || Request::is('summary-list') || Request::is('item-output')? ' active' : null }}">
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="zmdi zmdi-label zmdi-hc-fw"></i>
-                                <span data-localize="sidebar.inventories">@lang('sidebar.inventories')</span>
+                                <span class="trn">Inventories</span>
                             </a>
                             <ul class="collapse nav-sub" aria-expanded="false">
                                 @foreach ($user_access as $key => $access)
                                     @if($access->module_code == 'INV_LST')
                                         <?php
                                             $url = 'inventory-list';
-                                            $local = 'data-localize="inventory.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'SUM_LST')
                                         <?php
                                             $url = 'summary-list';
-                                            $local = 'data-localize="summary.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'RCV_ITM')
                                         <?php
                                             $url = 'receive-items';
-                                            $local = 'data-localize="receive_items.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'UPD_INV')
                                         <?php
                                             $url = 'update-inventory';
-                                            $local = 'data-localize="update_inventory.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'ITM_OUT')
                                         <?php
                                             $url = 'item-output';
-                                            $local = 'data-localize="item_output.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
@@ -157,29 +149,27 @@
                         <li class="nav-dropdown {{ Request::is('employee') ? ' active' : null }}">
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="zmdi zmdi-accounts-list zmdi-hc-fw"></i>
-                                <span data-localize="sidebar.employees">@lang('sidebar.employees')</span>
+                                <span class="trn">Employees</span>
                             </a>
                             <ul class="collapse nav-sub" aria-expanded="false">
                                 @foreach ($user_access as $key => $access)
                                     @if($access->module_code == 'EMP_LST')
                                         <?php
                                             $url = 'employee-list';
-                                            $local = 'data-localize="employee.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'EMP_REG')
                                         <?php
                                             $url = 'employee';
-                                            $local = 'data-localize="registration.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
@@ -193,29 +183,27 @@
                         <li class="nav-dropdown {{ Request::is('products') || Request::is('add-products') ? ' active' : null }}">
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="zmdi zmdi-shopping-basket zmdi-hc-fw"></i>
-                                <span data-localize="sidebar.products">@lang('sidebar.products')</span>
+                                <span class="trn">Products</span>
                             </a>
                             <ul class="collapse nav-sub" aria-expanded="false">
                                 @foreach ($user_access as $key => $access)
                                     @if($access->module_code == 'PRD_LST')
                                         <?php
                                             $url = 'product-list';
-                                            $local = 'data-localize="product.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'PRD_REG')
                                         <?php
                                             $url = 'add-products';
-                                            $local = 'data-localize="add_product.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
@@ -229,29 +217,27 @@
                         <li class="nav-dropdown {{ Request::is('general-settings') || Request::is('dropdown') ? ' active' : null }}">
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="zmdi zmdi-settings zmdi-hc-fw"></i>
-                                <span data-localize="sidebar.settings">@lang('sidebar.settings')</span>
+                                <span class="trn">Settings</span>
                             </a>
                             <ul class="collapse nav-sub" aria-expanded="false">
                                 @foreach ($user_access as $key => $access)
                                     @if($access->module_code == 'GEN_SET')
                                         <?php
                                             $url = 'general-settings';
-                                            $local = 'data-localize="genset.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif
                                     @if($access->module_code == 'DRP_SET')
                                         <?php
                                             $url = 'dropdown';
-                                            $local = 'data-localize="dropdown.title"';
                                         ?>
                                         <li class="{{ Request::is($url) ? ' active' : null }}">
                                             <a href="{{ url($url) }}">
-                                                <span <?php echo $local; ?>>{{ $access->module_name }}</span>
+                                                <span class="trn">{{ $access->module_name }}</span>
                                             </a>
                                         </li>
                                     @endif

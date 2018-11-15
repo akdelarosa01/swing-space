@@ -5,18 +5,18 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <span data-localize="item_output.title">Item Output</span>
+                    <span class="trn">Item Output</span>
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="input-group input-group-sm col-md-12">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Item Type</span>
+                                <span class="input-group-text trn">Item Type</span>
                             </div>
                             <select class="form-control form-control-sm" id="item_type_srch"></select>
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-sm btn-info" id="btn_search_type">
-                                    <span data-localize="item_output.search">Search</span>
+                                    <span class="trn">Search</span>
                                 </button>
                             </div>
                         </div>
@@ -24,11 +24,11 @@
                     <table class="table table-sm table-bordered table-striped" id="tbl_items">
                         <thead>
                             <tr>
-                                <th width="20%">Item Code</th>
-                                <th width="30%">Item Name</th>
-                                <th width="20%">Avail. Qty.</th>
-                                <th width="20%">UoM</th>
-                                <th width="10%"></th>
+                                <th width="20%" class="trn">Item Code</th>
+                                <th width="30%" class="trn">Item Name</th>
+                                <th width="20%" class="trn">Avail. Qty.</th>
+                                <th width="20%" class="trn">UoM</th>
+                                <th width="10%" class="trn"></th>
                             </tr>
                         </thead>
                         <tbody id="tbl_items_body"></tbody>
@@ -43,14 +43,14 @@
                     <form action="../../item-output/save-selected" method="post" id="frm_selected">
                         @csrf
                         <div class="table-responsive">
-                            <table class="table table-striped table-sm" id="tbl_selected">
+                            <table class="table table-striped table-sm table-bordered" id="tbl_selected">
                                 <thead>
                                     <tr>
-                                        <th width="20%">Item Code</th>
-                                        <th width="40%">Item Name</th>
-                                        <th width="20%">Item Type</th>
-                                        <th width="10%">Quantity</th>
-                                        <th width="10%"></th>
+                                        <th width="20%" class="trn">Item Code</th>
+                                        <th width="40%" class="trn">Item Name</th>
+                                        <th width="20%" class="trn">Item Type</th>
+                                        <th width="10%" class="trn">Quantity</th>
+                                        <th width="10%" class="trn"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbl_selected_body"></tbody>

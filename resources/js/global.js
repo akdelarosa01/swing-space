@@ -320,15 +320,16 @@ function referrer(el,val) {
     });
 }
 
-function getLanguage() {
+function getLanguage(dict) {
     $.ajax({
         url: '../../get-language',
         type: 'GET',
         dataType: 'JSON',
     }).done(function(data, textStatus, xhr) {
+        $('body').translate({lang: data.language, t: dict});
         // if (data.language !== 'en') {
         //     console.log(data);
-            $("[data-localize]").localize('../../local', data);
+        //     $("[data-localize]").localize('../../local', data);
         // }
     }).fail(function(xhr, textStatus, errorThrown) {
        msg('Langauage : '+errorThrown,textStatus);

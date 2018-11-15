@@ -3,7 +3,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">
-					<span>Product List</span>
+					<span class="trn">Product List</span>
 				</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true" class="zmdi zmdi-close"></span>
@@ -15,7 +15,7 @@
                     <div class="form-group row">
                         <div class="input-group input-group-sm col-md-12">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Product Type</span>
+                                <span class="input-group-text trn">Product Type</span>
                             </div>
                             <select class="form-control form-control-sm" id="prod_type_export" name="prod_type"></select>
                         </div>
@@ -24,7 +24,7 @@
                     <div class="form-group row">
                         <div class="input-group input-group-sm col-md-12">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">File Type</span>
+                                <span class="input-group-text trn">File Type</span>
                             </div>
                             <select class="form-control form-control-sm" id="file_type" name="file_type">
                                 <option value=""></option>
@@ -35,8 +35,12 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-light">
-                    <button type="submit" class="btn btn-info btn-sm">Export</button>
-                    <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-info btn-sm">
+                        <span class="trn">Export</span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
+                        <span class="trn">Cancel</span>
+                    </button>
                 </div>
             </form>
 		</div>

@@ -14,12 +14,14 @@
                             <div class="col-sm-12">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" data-localize="dropdown.title">Dropdown Name</span>
+                                        <span class="input-group-text trn">Dropdown Name</span>
                                     </div>
                                     <input type="text" class="form-control form-control-sm clear validate" id="description" name="description">
                                     <div id="description_feedback"></div>
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-sm btn-info" id="btn_add_name">save</button>
+                                        <button type="submit" class="btn btn-sm btn-info" id="btn_add_name">
+                                            <span class="trn">Save</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -34,7 +36,7 @@
                                     {{-- <th width="5%">
                                         <input type="checkbox" class="check_all_name">
                                     </th> --}}
-                                    <th width="80%">Dropdowns</th>
+                                    <th width="80%" class="trn">Dropdowns</th>
                                     <th width="20%"></th>
                                 </tr>
                             </thead>
@@ -49,7 +51,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header" >
-                    <span id="dropdown_name">Dropdown</span> Options
+                    <span id="dropdown_name">Dropdown</span> <span class="trn">Option</span>
                 </div>
                 <div class="card-body">
                     <form method="post" action="../../dropdown/save-option" id="frm_options">
@@ -60,12 +62,14 @@
                             <div class="col-sm-12">
                                 <div class="input-group input-group-sm">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Dropdown Option</span>
+                                        <span class="input-group-text trn">Option</span>
                                     </div>
                                     <input type="text" class="form-control form-control-sm clear validate" id="option_description" name="option_description" readonly>
                                     <div id="option_description_feedback"></div>
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-sm btn-info">Save</button>
+                                        <button type="submit" class="btn btn-sm btn-info">
+                                            <span class="trn">Save</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +81,7 @@
                         <table class="table table-striped table-sm" id="tbl_option">
                             <thead>
                                 <tr>
-                                    <th width="90%">Options</th>
+                                    <th width="90%" class="trn">Option</th>
                                     <th width="10%"></th>
                                 </tr>
                             </thead>

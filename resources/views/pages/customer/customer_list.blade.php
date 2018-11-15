@@ -3,9 +3,9 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <span data-localize="customer.title">@lang('customer.title')</span>
+            <span class="trn">Customer List</span>
             <a href="{{ url('/membership') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
-                <span data-localize="membership.title">@lang('membership.title')</span>
+                <span class="trn">Membership</span>
             </a>
         </div>
         <div class="card-body">
@@ -14,9 +14,9 @@
                     <thead>
                         <tr>
                             <th width="5%"></th>
-                            <th width="30%">@lang('customer.code')</th>
-                            <th width="30%">@lang('customer.name')</th>
-                            <th width="30%">@lang('customer.gender')</th>
+                            <th width="30%" class="trn">Code</th>
+                            <th width="30%" class="trn">Name</th>
+                            <th width="30%" class="trn">Gender</th>
                             <th width="5%"></th>
                         </tr>
                     </thead>

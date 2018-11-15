@@ -5,9 +5,9 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <span data-localize="add_product.title">Products</span>
-                    <button type="button" class="btn btn-sm btn-success pull-right" id="btn_add_products" data-localize="add_product.add">
-                        Add New Product
+                    <span class="trn">Products</span>
+                    <button type="button" class="btn btn-sm btn-success pull-right" id="btn_add_products" class="trn">
+                        <span class="trn">Add New Product</span>
                     </button>
                 </div>
                 <div class="card-body">
@@ -16,12 +16,12 @@
                         <table class="table table-striped table-sm" id="tbl_availables">
                             <thead>
                                 <tr>
-                                    <th scope="col">Code</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Variant</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Target Qty</th>
-                                    <th scope="col">Avail. Qty</th>
+                                    <th scope="col" class="trn">Code</th>
+                                    <th scope="col" class="trn">Product Name</th>
+                                    <th scope="col" class="trn">Variants</th>
+                                    <th scope="col" class="trn">Price</th>
+                                    <th scope="col" class="trn">Target Qty.</th>
+                                    <th scope="col" class="trn">Avail. Qty.</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -35,7 +35,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <span data-localize="add_product.title">Set New Available Quantity</span>
+                    <span class="trn">Set New Available Quantity</span>
                 </div>
                 <div class="card-body">
                     <form action="../../add-products/set-qty" id="frm_set_qty" method="post">
@@ -44,13 +44,13 @@
                             <table class="table table-striped table-sm" id="tbl_selected">
                                 <thead>
                                     <tr>
-                                        <th width="10%">Code</th>
-                                        <th width="20%">Name</th>
-                                        <th width="20%">Variant</th>
-                                        <th width="10%">Price</th>
-                                        <th width="15%">Target Qty</th>
-                                        <th width="15%">Avail. Qty</th>
-                                        <th width="10%"></th>
+                                        <th width="10%" class="trn">Code</th>
+                                        <th width="20%" class="trn">Product Name</th>
+                                        <th width="20%" class="trn">Variants</th>
+                                        <th width="10%" class="trn">Price</th>
+                                        <th width="15%" class="trn">Target Qty.</th>
+                                        <th width="15%" class="trn">Avail. Qty.</th>
+                                        <th width="10%" class="trn"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbl_selected_body"></tbody>
@@ -59,7 +59,9 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-sm btn-info pull-right">Save</button>
+                                <button type="submit" class="btn btn-sm btn-info pull-right">
+                                    <span class="trn">Save</span>
+                                </button>
                             </div>
                         </div>
                     </form>

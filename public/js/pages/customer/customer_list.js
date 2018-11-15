@@ -1,91 +1,142 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 46);
-/******/ })
-/************************************************************************/
-/******/ ({
+var dict = {
+	"Profile": {
+        ch: "轮廓",
+        en: "Profile"
+    },
 
-/***/ 46:
-/***/ (function(module, exports, __webpack_require__) {
+    "Sign Out": {
+        ch: "登出",
+        en: "Sign Out"
+    },
+	
+	"Dashboard": {
+        ch: "仪表盘",
+        en: "Dashboard"
+    },
 
-module.exports = __webpack_require__(47);
+    "POS Control": {
+        ch: "POS控制",
+        en: "POS Control"
+    },
+
+    "Customers": {
+        ch: "顾客",
+        en: "Customers"
+    },
+
+    "Customer List": {
+        ch: "客户名单",
+        en: "Customer List"
+    },
+
+    "Membership": {
+        ch: "会籍",
+        en: "Membership"
+    },
+
+    "Inventories": {
+        ch: "存货",
+        en: "Inventories"
+    },
+
+    "Inventory List": {
+        ch: "库存清单",
+        en: "Inventory List"
+    },
+
+    "Summary List": {
+        ch: "摘要清单",
+        en: "Summary List"
+    },
+
+    "Receive Item": {
+        ch: "收到物品",
+        en: "Receive Item"
+    },
+
+    "Update Inventory": {
+        ch: "更新库存",
+        en: "Update Inventory"
+    },
+
+    "Item Output": {
+        ch: "项目输出",
+        en: "Item Output"
+    },
+
+    "Employees": {
+        ch: "雇员",
+        en: "Employees"
+    },
+
+    "Employee List": {
+        ch: "员工名单",
+        en: "Employee List"
+    },
+
+    "Employee Registration": {
+        ch: "员工注册",
+        en: "Employee Registration"
+    },
+
+    "Products": {
+        ch: "制品",
+        en: "Products"
+    },
+
+    "Product List": {
+        ch: "产品列表",
+        en: "Product List"
+    },
+
+    "Product Registration": {
+        ch: "产品注册",
+        en: "Product Registration"
+    },
+
+    "Settings": {
+        ch: "组态",
+        en: "Settings"
+    },
+
+    "General Settings": {
+        ch: "常规设置",
+        en: "General Settings"
+    },
+
+    "Dropdown Settings": {
+        ch: "下拉设置",
+        en: "Dropdown Settings"
+    },
 
 
-/***/ }),
 
-/***/ 47:
-/***/ (function(module, exports) {
 
+
+    "Code": {
+    	ch: "码",
+        en: "Code"
+    },
+    "Name": {
+        ch: "全名",
+        en: "Name"
+    },
+    "Gender": {
+        ch: "性别",
+        en: "Gender"
+    }
+
+};
 var customers = [];
 
-$(function () {
-    getCustomers();
+$( function() {
+	getCustomers();
 
-    $('#tbl_customers_body').on('click', '.delete-customer', function () {
-        confirm('Delete Customer', 'Do you want to delete this customer?', $(this).attr('data-id'));
+    $('#tbl_customers_body').on('click', '.delete-customer', function() {
+        confirm('Delete Customer','Do you want to delete this customer?',$(this).attr('data-id'));
     });
 
-    $('#btn_confirm').on('click', function () {
+    $('#btn_confirm').on('click', function() {
         $('.loading').show();
         $.ajax({
             url: '../../customer-list/delete',
@@ -94,16 +145,17 @@ $(function () {
             data: {
                 _token: token,
                 id: $('#confirm_id').val()
-            }
-        }).done(function (data, textStatus, xhr) {
+            },
+        }).done(function(data, textStatus, xhr) {
             if (textStatus == 'success') {
                 $('#confirm_modal').modal('hide');
-                msg(data.msg, data.status);
+                msg(data.msg,data.status)
                 customerTable(data.customers);
             }
-        }).fail(function (xhr, textStatus, errorThrown) {
-            msg('Delete Customer: ' + errorThrown, textStatus);
-        }).always(function () {
+            
+        }).fail(function(xhr, textStatus, errorThrown) {
+            msg('Delete Customer: '+errorThrown,textStatus);
+        }).always(function() {
             $('.loading').hide();
         });
     });
@@ -115,37 +167,45 @@ function getCustomers() {
         url: 'customer-list/show',
         type: 'GET',
         dataType: 'JSON',
-        data: { _token: token }
-    }).done(function (data, textStatus, xhr) {
+        data: {_token: token},
+    }).done(function(data, textStatus, xhr) {
         customers = data;
         customerTable(customers);
-    }).fail(function (xhr, textStatus, errorThrown) {
-        msg(errorThrown, textStatus);
-    }).always(function () {
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg(errorThrown,textStatus);
+    }).always(function() {
         console.log("complete");
     });
+    
 }
 
 function customerTable(arr) {
-    $('#tbl_customers').dataTable().fnClearTable();
+	$('#tbl_customers').dataTable().fnClearTable();
     $('#tbl_customers').dataTable().fnDestroy();
     $('#tbl_customers').dataTable({
         data: arr,
-        //    bLengthChange : false,
-        //    searching: false,
-        //    ordering: false,
-        // paging: false,
-        // scrollY: "250px",
-        columns: [{ data: function data(x) {
-                return '<img src="' + x.photo + '" class="w-35 rounded-circle" alt="' + x.firstname + ' ' + x.lastname + '">';
-            }, searchable: false, orderable: false }, { data: 'customer_code' }, { data: function data(x) {
-                return x.firstname + ' ' + x.lastname;
-            } }, { data: 'gender' }, { data: function data(x) {
-                return '<div class="btn-group">' + '<a href="/membership/' + x.id + '/edit" class="btn btn-sm btn-info">Edit</a>' + '<button class="btn btn-sm btn-danger delete-customer" data-id="' + x.id + '">Delete</button>' + '</div>';
-            }, searchable: false, orderable: false }]
+     //    bLengthChange : false,
+     //    searching: false,
+     //    ordering: false,
+	    // paging: false,
+	    // scrollY: "250px",
+        columns: [
+        	{data: function(x) {
+            	return '<img src="'+x.photo+'" class="w-35 rounded-circle" alt="'+x.firstname+' '+x.lastname+'">';
+            }, searchable: false, orderable: false},
+            {data:'customer_code'},
+            {data: function(x) {
+                return x.firstname+' '+x.lastname;
+            }},
+            {data:'gender'},
+            {data: function(x) {
+            	return '<div class="btn-group">'+
+                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info"><span class="trn">Edit</span></a>'+
+                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'"><span class="trn">Delete</span></button>'+
+                        '</div>';
+            }, searchable: false, orderable: false},
+        ]
     });
+
+    getLanguage(dict);
 }
-
-/***/ })
-
-/******/ });

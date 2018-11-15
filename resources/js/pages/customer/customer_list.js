@@ -71,10 +71,12 @@ function customerTable(arr) {
             {data:'gender'},
             {data: function(x) {
             	return '<div class="btn-group">'+
-                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info">Edit</a>'+
-                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'">Delete</button>'+
+                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info"><span class="trn">Edit</span></a>'+
+                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'"><span class="trn">Delete</span></button>'+
                         '</div>';
             }, searchable: false, orderable: false},
         ]
     });
+
+    getLanguage(dict);
 }

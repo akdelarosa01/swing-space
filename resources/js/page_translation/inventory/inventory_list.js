@@ -110,44 +110,39 @@ var dict = {
     },
 
 
-    "Code": {
-        ch: "码",
-        en: "Code"
+
+
+
+    "Item Type": {
+    	ch: "物品种类",
+        en: "Item Type"
     },
-    "Product Name": {
-        ch: "产品名称",
-        en: "Product Name"
+    "Search": {
+    	ch: "搜索",
+        en: "Search"
     },
-    "Description": {
-        ch: "描述",
-        en: "Description"
+    "Item Code": {
+    	ch: "项目代码",
+        en: "Item Code"
     },
-    "Product Type": {
-        ch: "产品类别",
-        en: "Product Type"
+    "Item Name": {
+    	ch: "项目名称",
+        en: "Item Name"
     },
-    "Price": {
-        ch: "价钱",
-        en: "Price"
+    "Quantity": {
+    	ch: "数量",
+        en: "Quantity"
     },
-    "Variants": {
-        ch: "变种",
-        en: "Variants"
+    "Minimum Stock": {
+    	ch: "最低库存",
+        en: "Minimum Stock"
     },
-    "Target Qty.": {
-        ch: "目标数量",
-        en: "Target Qty."
-    },
-    "Update Date": {
-        ch: "更新日期",
-        en: "Update Date"
-    },
-    "Avail. Qty.": {
-        ch: "可用数量",
-        en: "Avail. Qty."
+    "UoM": {
+    	ch: "测量单位",
+        en: "UoM"
     },
     "Export Files": {
-        ch: "导出文件",
+    	ch: "导出文件",
         en: "Export Files"
     },
 
@@ -167,53 +162,5 @@ var dict = {
 };
 
 $( function() {
-    getLanguage(dict);
+	getLanguage(dict);
 });
-var products = [];
-
-$( function() {
-    get_dropdown_options(3,'#prod_type_export');
-	getProducts();
-
-    $('#btn_export').on('click', function() {
-        $('#export_modal').modal('show');
-    });
-});
-
-function getProducts() {
-    $('.loading').show();
-    $.ajax({
-        url: '../../product-list/show',
-        type: 'GET',
-        dataType: 'JSON',
-        data: {
-            _token: token
-        },
-    }).done(function(data, textStatus, xhr) {
-        products = data;
-        makeProductsDataTable(products);
-    }).fail(function(xhr, textStatus, errorThrown) {
-        msg('Products : '+errorThrown,textStatus);
-    }).always(function() {
-        $('.loading').hide();
-    }); 
-}
-
-function makeProductsDataTable(arr) {
-    $('#tbl_products').dataTable().fnClearTable();
-    $('#tbl_products').dataTable().fnDestroy();
-    $('#tbl_products').dataTable({
-        data: arr,
-        columns: [
-            { data: 'prod_code' },
-            { data: 'prod_name' },
-            { data: 'description' },
-            { data: 'prod_type' },
-            { data: 'price' },
-            { data: 'variants' },
-            { data: 'target_qty' },
-            { data: 'quantity' },
-            { data: 'updated_at' },
-        ]
-    });
-}
