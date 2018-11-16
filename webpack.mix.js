@@ -98,6 +98,34 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/js/pages/settings/dropdown.js',
 	], 'public/js/pages/settings/dropdown.js')
 
+	.scripts([
+    	'resources/js/page_translation/settings/general_settings.js',
+		'resources/js/pages/settings/general_settings.js',
+	], 'public/js/pages/settings/general_settings.js')
+
+	.scripts([
+    	'resources/js/page_translation/dashboard/dashboard.js',
+		'resources/js/pages/dashboard/dashboard.js',
+	], 'public/js/pages/dashboard/dashboard.js')
+
+
+
+
+	.scripts([
+    	'resources/js/page_translation/profile/owner.js',
+		'resources/js/pages/profile/owner.js',
+	], 'public/js/pages/profile/owner.js')
+
+	.scripts([
+    	'resources/js/page_translation/profile/employee.js',
+		'resources/js/pages/profile/employee.js',
+	], 'public/js/pages/profile/employee.js')
+
+	.scripts([
+    	'resources/js/page_translation/profile/customer.js',
+		'resources/js/pages/profile/customer.js',
+	], 'public/js/pages/profile/customer.js')
+
 
     .sass('resources/sass/app.scss', 'public/css')
     .styles([

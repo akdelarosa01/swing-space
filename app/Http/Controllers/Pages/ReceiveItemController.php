@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use App\ItemInput;
 use App\Inventory;
 use App\DropdownOption;
@@ -15,10 +16,12 @@ use DB;
 class ReceiveItemController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -74,6 +77,12 @@ class ReceiveItemController extends Controller
 
             $inv->save();
 
+            $this->_userlog->log([
+                'module' => 'Receive Item',
+                'action' => 'Received Item '.$req->item_name.' as '.$req->item_type,
+                'user_id' => Auth::user()->id
+            ]);
+
             $data = [
                 'msg' => 'Item is successfully saved.',
                 'status' => 'success',
@@ -117,6 +126,19 @@ class ReceiveItemController extends Controller
         }
 
         if ($item) {
+            $item_names = implode(',', $req->selected_name);
+            $item_count = count($req->selected_name);
+            $noun = 'this item';
+            if ($item_count > 1) {
+                $noun = 'these items';
+            }
+
+            $this->_userlog->log([
+                'module' => 'Receive Item',
+                'action' => 'Received '.$noun.' '.$item_names,
+                'user_id' => Auth::user()->id
+            ]);
+
             $data = [
                 'msg' => 'Items are successfully saved.',
                 'status' => 'success',
@@ -166,8 +188,22 @@ class ReceiveItemController extends Controller
                     ];
                 }
             }
+
+            $item_id = implode(',', $req->id);
+            $item_count = count($req->id);
+            $noun = 'this item ID';
+            if ($item_count > 1) {
+                $noun = 'these items ID';
+            }
+
+            $this->_userlog->log([
+                'module' => 'Receive Item',
+                'action' => 'Deleted '.$noun.' '.$item_id,
+                'user_id' => Auth::user()->id
+            ]);
+
         } else {
-            $item = ItemInput::find($id);
+            $item = ItemInput::find($req->id);
             $item->deleted = 1;
 
             if ($item->update()) {

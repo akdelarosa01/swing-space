@@ -1,5 +1,5 @@
 var dict = {
-	"Profile": {
+    "Profile": {
         ch: "轮廓",
         en: "Profile"
     },
@@ -8,8 +8,8 @@ var dict = {
         ch: "登出",
         en: "Sign Out"
     },
-	
-	"Dashboard": {
+    
+    "Dashboard": {
         ch: "仪表盘",
         en: "Dashboard"
     },
@@ -112,59 +112,101 @@ var dict = {
 
 
 
+    "First Name": {
+        ch: "名字",
+        en: "First Name"
+    },
+    "Last Name": {
+        ch: "姓",
+        en: "Last Name"
+    },
+    "Gender": {
+        ch: "性别",
+        en: "Gender"
+    },
+    "Date of Birth": {
+        ch: "出生日期",
+        en: "Date of Birth"
+    },
+    "Position": {
+        ch: "地位",
+        en: "Position"
+    },
+    "Email Address": {
+        ch: "电邮位置",
+        en: "Email Address"
+    },
+    "Password": {
+        ch: "密码",
+        en: "Password"
+    },
+    "Confirm Password": {
+        ch: "确认密码",
+        en: "Confirm Password"
+    },
+    "Mobile": {
+        ch: "手机号码",
+        en: "Mobile"
+    },
+    "Street": {
+        ch: "街",
+        en: "Street"
+    },
+    "State": {
+        ch: "州",
+        en: "State"
+    },
+    "City": {
+        ch: "市",
+        en: "City"
+    },
+    "Zip": {
+        ch: "邮政编码",
+        en: "Zip"
+    },
 
-    "Add New Incentive": {
-    	ch: "添加新目标",
-        en: "Add New Incentive"
+    "Choose Photo": {
+        ch: "选择照片",
+        en: "Choose Photo"
     },
-    "Add New Reward": {
-        ch: "添加新奖励",
-        en: "Add New Reward"
+    "Browse": {
+        ch: "浏览",
+        en: "Browse"
     },
-    "Code": {
-        ch: "码",
-        en: "Code"
+    "Upload": {
+        ch: "上载",
+        en: "Upload"
     },
-    "Name": {
-        ch: "名称",
-        en: "Name"
+
+    "Product Code": {
+        ch: "产品代码",
+        en: "Product Code"
     },
-    "Points": {
-        ch: "奖励分数",
-        en: "Points"
-    },
-    "Hours": {
-        ch: "小时",
-        en: "Hours"
-    },
-    "Days": {
-        ch: "天",
-        en: "Days"
-    },
-    "Space": {
-        ch: "空间",
-        en: "Space"
+    "Product Name": {
+        ch: "产品名称",
+        en: "Product Name"
     },
     "Description": {
         ch: "描述",
         en: "Description"
     },
-    "Employee discount": {
-        ch: "员工折扣",
-        en: "Employee discount"
+    "Product Type": {
+        ch: "产品类别",
+        en: "Product Type"
     },
-    "Senior discount": {
-        ch: "老年人折扣",
-        en: "Senior discount"
+    "Price": {
+        ch: "价钱",
+        en: "Price"
     },
-    "Set": {
-        ch: "定",
-        en: "Set"
+    "Variants": {
+        ch: "变种",
+        en: "Variants"
     },
-    "Cancel": {
-        ch: "取消",
-        en: "Cancel"
+    "Date": {
+        ch: "日期",
+        en: "Date"
     }
+
 
 };
 

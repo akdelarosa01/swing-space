@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use App\Inventory;
 use App\ItemInput;
 use App\ItemOutput;
@@ -14,10 +15,12 @@ use DB;
 class UpdateInventoryController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -92,19 +95,25 @@ class UpdateInventoryController extends Controller
                         if ($inv->update()) {
                             $new_qty = $req->new_qty[$key] - $req->quantity[$key]; 
                             $item = ItemInput::create([
-                                'item_code' => $req->item_code[$key],
-                                'item_name' => $req->item_name[$key],
-                                'item_type' => $req->item_type[$key],
-                                'quantity' => $new_qty,
-                                'uom' => $req->uom[$key],
-                                'remarks' => 'N/A',
-                                'transaction_type' => 'Adjustment',
-                                'date_received' => date('Y-m-d'),
-                                'create_user' => Auth::user()->id,
-                                'update_user' => Auth::user()->id,
-                            ]);
+                                        'item_code' => $req->item_code[$key],
+                                        'item_name' => $req->item_name[$key],
+                                        'item_type' => $req->item_type[$key],
+                                        'quantity' => $new_qty,
+                                        'uom' => $req->uom[$key],
+                                        'remarks' => 'N/A',
+                                        'transaction_type' => 'Adjustment',
+                                        'date_received' => date('Y-m-d'),
+                                        'create_user' => Auth::user()->id,
+                                        'update_user' => Auth::user()->id,
+                                    ]);
 
                             if ($item) {
+                                $this->_userlog->log([
+                                    'module' => 'Update Inventory',
+                                    'action' => 'Adjusted to increase quantity of this '.$req->item_name[$key],
+                                    'user_id' => Auth::user()->id
+                                ]);
+
                                 $data = [
                                     'msg' => 'Successfully updated.',
                                     'status' => 'success',
@@ -132,6 +141,12 @@ class UpdateInventoryController extends Controller
                             ]);
 
                             if ($item) {
+                                $this->_userlog->log([
+                                    'module' => 'Update Inventory',
+                                    'action' => 'Adjusted to decrease quantity of this '.$req->item_name[$key],
+                                    'user_id' => Auth::user()->id
+                                ]);
+
                                 $data = [
                                     'msg' => 'Successfully updated.',
                                     'status' => 'success',

@@ -6,16 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use Excel;
 use DB;
 
 class InventoryController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -130,6 +133,12 @@ class InventoryController extends Controller
     public function excelfile($data)
     {
         $date = date('Ymd');
+
+        $this->_userlog->log([
+            'module' => 'Inventory List',
+            'action' => 'Donwloaded an inventory list excel file dated '.date('Y-m-d'),
+            'user_id' => Auth::user()->id
+        ]);
 
         Excel::create('Inventory_List_'.$date, function($excel) use($data)
         {

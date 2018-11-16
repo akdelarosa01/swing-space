@@ -17,5 +17,10 @@
     "/js/pages/products/product_list.js": "/js/pages/products/product_list.js",
     "/js/pages/products/add_products.js": "/js/pages/products/add_products.js",
     "/js/pages/settings/dropdown.js": "/js/pages/settings/dropdown.js",
+    "/js/pages/settings/general_settings.js": "/js/pages/settings/general_settings.js",
+    "/js/pages/dashboard/dashboard.js": "/js/pages/dashboard/dashboard.js",
+    "/js/pages/profile/owner.js": "/js/pages/profile/owner.js",
+    "/js/pages/profile/employee.js": "/js/pages/profile/employee.js",
+    "/js/pages/profile/customer.js": "/js/pages/profile/customer.js",
     "/css/main.css": "/css/main.css"
 }

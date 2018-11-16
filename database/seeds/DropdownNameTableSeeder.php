@@ -41,5 +41,11 @@ class DropdownNameTableSeeder extends Seeder
             'create_user' => 1,
             'update_user' => 1,
         ]);
+
+        DropdownName::create([
+            'description' => 'Space',
+            'create_user' => 1,
+            'update_user' => 1,
+        ]);
     }
 }

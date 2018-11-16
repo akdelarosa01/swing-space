@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use App\Customer;
 use App\User;
 use DB;
@@ -15,10 +16,12 @@ use Hash;
 class MembershipController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -101,6 +104,12 @@ class MembershipController extends Controller
                     'status' => 'success',
                     'customer' => $this->customer($req->id)
                 ];
+
+                $this->_userlog->log([
+                    'module' => 'Customer Membership',
+                    'action' => 'Updated Customer user ID '.$req->id.', Name '.$user->firstname.' '.$user->lastname,
+                    'user_id' => Auth::user()->id
+                ]);
             }
         } else {
             $this->validate($req,[
@@ -164,6 +173,12 @@ class MembershipController extends Controller
                         'update_user' => Auth::user()->id,
                     ]);
                 }
+
+                $this->_userlog->log([
+                    'module' => 'Customer Membership',
+                    'action' => 'Added Customer user ID '.$user->id.', Name '.$user->firstname.' '.$user->lastname,
+                    'user_id' => Auth::user()->id
+                ]);
 
                 $data = [
                     'msg' => 'Successfully saved.',

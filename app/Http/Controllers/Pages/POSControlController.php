@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 
 class POSControlController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()

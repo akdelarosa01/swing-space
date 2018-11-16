@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserLogsController;
 use App\ItemOutput;
 use App\Inventory;
 use DB;
@@ -13,10 +14,12 @@ use DB;
 class ItemOutputController extends Controller
 {
     protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -59,6 +62,19 @@ class ItemOutputController extends Controller
                         'update_user' => Auth::user()->id,
                     ]);
             }
+
+            $item_names = implode(',', $req->selected_name);
+            $item_count = count($req->selected_name);
+            $noun = 'this item';
+            if ($item_count > 1) {
+                $noun = 'these items';
+            }
+
+            $this->_userlog->log([
+                'module' => 'Item Output',
+                'action' => 'Output '.$noun.' '.$item_names,
+                'user_id' => Auth::user()->id
+            ]);
         }
 
         if ($item) {
@@ -111,11 +127,30 @@ class ItemOutputController extends Controller
                     ];
                 }
             }
+
+            $item_id = implode(',', $req->id);
+            $item_count = count($req->id);
+            $noun = 'this item ID';
+            if ($item_count > 1) {
+                $noun = 'these items ID';
+            }
+
+            $this->_userlog->log([
+                'module' => 'Item Output',
+                'action' => 'Deleted '.$noun.' '.$item_id,
+                'user_id' => Auth::user()->id
+            ]);
         } else {
-            $item = ItemOutput::find($id);
+            $item = ItemOutput::find($req->id);
             $item->deleted = 1;
 
             if ($item->update()) {
+                $this->_userlog->log([
+                    'module' => 'Item Output',
+                    'action' => 'Deleted this item ID '.$req->id,
+                    'user_id' => Auth::user()->id
+                ]);
+
                 $data = [
                     'msg' => 'Items are successfully deleted.',
                     'status' => 'success',

@@ -152,4 +152,5 @@
     <script type="text/javascript">
         var token = $('meta[name="csrf-token"]').attr('content');
     </script>
+    <script type="text/javascript" src="{{ asset('/js/pages/dashboard/dashboard.js') }}"></script>
 @endpush

@@ -104,6 +104,10 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('dropdown/delete','Pages\DropdownController@destroy');
 
     Route::get('general-settings','Pages\GeneralSettingsController@index');
+    Route::post('general-settings/save-incentive','Pages\GeneralSettingsController@save_incentive');
+    Route::get('general-settings/incentives','Pages\GeneralSettingsController@incentives');
+    Route::post('general-settings/save-reward','Pages\GeneralSettingsController@save_reward');
+    Route::get('general-settings/rewards','Pages\GeneralSettingsController@rewards');
 
     Route::get('get-province', 'GlobalController@getProvince');
     Route::get('get-city', 'GlobalController@getCity');
