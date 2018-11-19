@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Employee;
+use App\Customer;
 
 class ProfileController extends Controller
 {
@@ -25,14 +27,18 @@ class ProfileController extends Controller
                 break;
 
             case 'Employee':
+                $emp = $this->employee(Auth::user()->id);
                 return view('pages.profile.employee',[
-                    'user_access' => $this->_global->UserAccess()
+                    'user_access' => $this->_global->UserAccess(),
+                    'emp' => $emp
                 ]);
                 break;
 
             case 'Customer':
+                $cust = $this->customer(Auth::user()->id);
                 return view('pages.profile.customer',[
-                    'user_access' => $this->_global->UserAccess()
+                    'user_access' => $this->_global->UserAccess(),
+                    'cust' => $cust
                 ]);
                 break;
             
@@ -42,5 +48,17 @@ class ProfileController extends Controller
                 ]);
                 break;
         }
+    }
+
+    public function employee($id)
+    {
+        $emp = Employee::where('user_id',$id)->first();
+        return $emp;
+    }
+
+    public function customer($id)
+    {
+        $cust = Customer::where('user_id',$id)->first();
+        return $cust;
     }
 }

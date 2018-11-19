@@ -38,11 +38,11 @@
 									</tr>
 									<tr>
 										<th width="50%" class="border-none trn">Date of Birth</th>
-										<td class="border-none">10/20/1994</td>
+										<td class="border-none">{{ $cust->date_of_birth }}</td>
 									</tr>
 									<tr>
 										<th width="50%" class="border-none trn">Mobile</th>
-										<td class="border-none">+639053669091</td>
+										<td class="border-none">{{ $cust->mobile }}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -52,20 +52,20 @@
         					<table class="table table-sm">
 								<tbody>
 									<tr>
-										<th width="50%" class="border-none trn">Street</th>
-										<td class="border-none">68 Dr. Sixto Ave.</td>
+										<th width="50%" class="border-none trn">Facebook</th>
+										<td class="border-none">{{ $cust->facebook }}</td>
 									</tr>
 									<tr>
-										<th width="50%" class="border-none trn">City</th>
-										<td class="border-none">Pasig City</td>
+										<th width="50%" class="border-none trn">Instagram</th>
+										<td class="border-none">{{ $cust->instagram }}</td>
 									</tr>
 									<tr>
-										<th width="50%" class="border-none trn">State</th>
-										<td class="border-none">Metro Manila</td>
+										<th width="50%" class="border-none trn">Twitter</th>
+										<td class="border-none">{{ $cust->twitter }}</td>
 									</tr>
 									<tr>
-										<th width="50%" class="border-none trn">Zip</th>
-										<td class="border-none">N/A</td>
+										<th width="50%" class="border-none trn">Membership Date</th>
+										<td class="border-none">{{ $cust->date_registered }}</td>
 									</tr>
 								</tbody>
 							</table>

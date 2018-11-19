@@ -30,7 +30,8 @@ class GlobalController extends Controller
                         DB::raw('m.module_category as module_category'),
                         DB::raw('m.module_code as module_code'),
                         DB::raw('m.module_name as module_name'),
-                        DB::raw('m.icon as icon')
+                        DB::raw('m.icon as icon'),
+                        DB::raw('u.access as access')
                     )
                     ->get();
         return $modules;

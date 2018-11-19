@@ -27,11 +27,11 @@
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">Date of Birth</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->date_of_birth }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">Mobile</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->mobile }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -42,19 +42,19 @@
                                 <tbody>
                                     <tr>
                                         <th class="border-none trn">Street</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->street }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">State</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->state }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">City</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->city }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">Zip</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->zip }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -67,19 +67,19 @@
                                 <tbody>
                                     <tr>
                                         <th class="border-none trn">TIN #</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->tin }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">SSS #</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->sss }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">PhilHealth #</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->philhealth }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border-none trn">PAG-IBIG #</th>
-                                        <td class="border-none"></td>
+                                        <td class="border-none">{{ $emp->pagibig }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -96,6 +96,19 @@
                                             <th class="trn">Read</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        @foreach($user_access as $access)
+                                            <tr>
+                                                <td>{{ $access->module_name }}</td>
+                                                <td>
+                                                    <input type="checkbox" readonly @if($access->access == 1){{'checked'}}@endif>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" readonly @if($access->access == 2){{'checked'}}@endif>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
