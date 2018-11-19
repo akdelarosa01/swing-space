@@ -10602,3 +10602,9 @@ small, .small {
                 50% 50%
                 no-repeat;
 }
+
+.btn.btn-lg, a:link.btn.btn-lg {
+    padding: 25px 0px !important;
+    height: 100px;
+    word-wrap: break-word;
+}

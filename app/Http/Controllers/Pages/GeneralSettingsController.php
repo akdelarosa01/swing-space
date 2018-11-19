@@ -9,6 +9,7 @@ use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserLogsController;
 use App\Incentive;
 use App\Reward;
+use App\Discount;
 
 class GeneralSettingsController extends Controller
 {
@@ -202,5 +203,77 @@ class GeneralSettingsController extends Controller
     {
         $rwd = Reward::all();
         return response()->json($rwd);
+    }
+
+    public function save_discount(Request $req)
+    {
+        $data = [
+            'msg' => 'Saving failed',
+            'status' => 'failed',
+            'discounts' => ''
+        ];
+
+        if ($req->discount_id) {
+            $this->validate($req,[
+                'description' => 'required',
+                'percentage' => 'required'
+            ]);
+
+            $dis = Discount::where('id',$req->discount_id)
+                            ->update([
+                                'description' => $req->description,
+                                'percentage' => $req->percentage/100,
+                                'update_user' => Auth::user()->id,
+                                'updated_at' => date('Y-m-d H:i:s')
+                            ]);
+
+            if ($dis) {
+                $this->_userlog->log([
+                    'module' => 'General Settings',
+                    'action' => 'Updated discount setting '.$req->description,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                $data = [
+                    'msg' => 'Discounts were uccessfully updated',
+                    'status' => 'success',
+                    'discounts' => ''
+                ];
+            }
+        } else {
+            $this->validate($req,[
+                'description' => 'required',
+                'percentage' => 'required'
+            ]);
+
+            $dis = Discount::create([
+                        'description' => $req->description,
+                        'percentage' => $req->percentage/100,
+                        'create_user' => Auth::user()->id,
+                        'update_user' => Auth::user()->id
+                    ]);
+
+            if ($dis) {
+                $this->_userlog->log([
+                    'module' => 'General Settings',
+                    'action' => 'Added discount setting '.$req->description,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                $data = [
+                    'msg' => 'Discounts were uccessfully saved',
+                    'status' => 'success',
+                    'discounts' => ''
+                ];
+            }
+        }
+
+        return response()->json($data);
+    }
+
+    public function discounts()
+    {
+        $dis = Discount::all();
+        return response()->json($dis);
     }
 }

@@ -26,6 +26,7 @@ $( function() {
             if (textStatus == 'success') {
                 msg(data.msg,data.status)
                 makeProductsDataTable(data.products);
+                makeAvailablesDataTable(data.products);
                 clear();
             }
         }).fail(function(xhr, textStatus, errorThrown) {

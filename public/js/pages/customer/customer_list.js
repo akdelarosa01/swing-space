@@ -176,7 +176,6 @@ function getCustomers() {
     }).always(function() {
         console.log("complete");
     });
-    
 }
 
 function customerTable(arr) {

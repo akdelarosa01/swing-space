@@ -33,38 +33,22 @@
 										<th class="border-none trn">Mobile</th>
 										<td class="border-none"></td>
 									</tr>
-								</tbody>
-							</table>
-        				</div>
-
-        				<div class="col-md-6">
-        					<table class="table table-sm">
-								<tbody>
-									<tr>
-										<th class="border-none trn">Street</th>
-										<td class="border-none"></td>
-									</tr>
-									<tr>
-										<th class="border-none trn">State</th>
-										<td class="border-none"></td>
-									</tr>
-									<tr>
-										<th class="border-none trn">City</th>
-										<td class="border-none"></td>
-									</tr>
-									<tr>
-										<th class="border-none trn">Zip</th>
-										<td class="border-none"></td>
-									</tr>
-								</tbody>
-							</table>
-        				</div>
-					</div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <table class="table table-sm">
-                                <tbody>
+                                    <tr>
+                                        <th class="border-none trn">Street</th>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-none trn">State</th>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-none trn">City</th>
+                                        <td class="border-none"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="border-none trn">Zip</th>
+                                        <td class="border-none"></td>
+                                    </tr>
                                     <tr>
                                         <th class="border-none trn">TIN #</th>
                                         <td class="border-none"></td>
@@ -81,9 +65,9 @@
                                         <th class="border-none trn">PAG-IBIG #</th>
                                         <td class="border-none"></td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
+								</tbody>
+							</table>
+        				</div>
 
                         <div class="col-md-6">
                             <h4>Page Access</h4>
@@ -96,10 +80,23 @@
                                             <th class="trn">Read</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        @foreach($user_access as $access)
+                                            <tr>
+                                                <td>{{ $access->module_name }}</td>
+                                                <td>
+                                                    <input type="checkbox" disabled @if($access->access == 1){{'checked'}}@endif>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" disabled @if($access->access == 2){{'checked'}}@endif>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
+					</div>
 
 					<div class="row">
         				<div class="col-md-12">

@@ -36,7 +36,10 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/transaction_codes.js', 'public/js/pages/super_admin/')
 
-    
+    .scripts([
+    	'resources/js/page_translation/pos_control.js',
+		'resources/js/pages/pos_control.js',
+	], 'public/js/pages/pos_control.js')
 
     .scripts([
     	'resources/js/page_translation/customer/customer_list.js',

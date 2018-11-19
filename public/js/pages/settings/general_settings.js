@@ -172,11 +172,13 @@ $( function() {
     getLanguage(dict);
 });
 $( function() {
+    get_dropdown_options(7,'#discount');
 	get_dropdown_options(6,'#inc_space');
     get_dropdown_options(6,'#rwd_space');
 
     incentives();
     rewards();
+    discounts();
 
 	$('#btn_add_itcentive').on('click', function() {
 		$('#incentive_modal').modal('show');
@@ -242,6 +244,34 @@ $( function() {
         });
     });
 
+    $('#frm_discount').on('submit', function(e) {
+        e.preventDefault();
+        $('.loading').show();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            dataType: 'JSON',
+            data: $(this).serialize(),
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                msg(data.msg,data.status)
+                discounts();
+            }
+        }).fail(function(xhr, textStatus, errorThrown) {
+            var errors = xhr.responseJSON.errors;
+
+            if (errors == undefined) {
+                msg('Discount Settings: '+errorThrown,textStatus);
+            } else {
+                showErrors(errors);
+            }
+        }).always( function() {
+            $('.loading').hide();
+            clear();
+        });
+    });
+
     $('#tbl_incentive').on('click', '.edit_incentive', function() {
     	$('#inc_id').val($(this).attr('data-inc_id'));
     	$('#inc_code').val($(this).attr('data-inc_code'));
@@ -268,6 +298,13 @@ $( function() {
     	$('#rwd_token').val(token);
 
     	$('#rewards_modal').modal('show');
+    });
+
+    $('#tbl_discount').on('click', '.edit_discount', function() {
+        $('#discount_id').val($(this).attr('data-id'));
+        $('#discount').val($(this).attr('data-description'));
+        $('#percentage').val($(this).attr('data-percentage'));
+        $('#dis_token').val(token);
     });
 });
 
@@ -360,6 +397,46 @@ function makeRewardDataTable(arr) {
 	                        ' data-rwd_days="'+x.rwd_days+'" '+
 	                        ' data-rwd_space="'+x.rwd_space+'" '+
 	                        ' data-rwd_description="'+x.rwd_description+'">'+
+                            '<i class="fa fa-edit"></i>'+
+                        '</button>';
+            }, searchable: false, orderable: false},
+        ]
+    });
+}
+
+function discounts() {
+    $.ajax({
+        url: '../../general-settings/discounts',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+        },
+    }).done(function(data, textStatus, xhr) {
+        makeDiscountDataTable(data);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Discount Settings: '+errorThrown,textStatus);
+    });
+}
+
+function makeDiscountDataTable(arr) {
+    $('#tbl_discount').dataTable().fnClearTable();
+    $('#tbl_discount').dataTable().fnDestroy();
+    $('#tbl_discount').dataTable({
+        data: arr,
+        searching: false,
+        ordering: false,
+        paging: false,
+        columns: [
+            {data: 'description', searchable: false, orderable: false },
+            {data: function(x) {
+                return (x.percentage * 100).toFixed(2) + '%';
+            }, searchable: false, orderable: false },
+            {data: function(x) {
+                var percentage = (x.percentage * 100).toFixed(2) + '%';
+                return '<button class="btn btn-sm btn-info edit_discount" data-id="'+x.id+'" '+
+                            ' data-description="'+x.description+'" '+
+                            ' data-percentage="'+percentage+'">'+
                             '<i class="fa fa-edit"></i>'+
                         '</button>';
             }, searchable: false, orderable: false},

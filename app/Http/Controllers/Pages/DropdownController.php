@@ -225,25 +225,29 @@ class DropdownController extends Controller
             'option' => ''
         ];
 
-        if (is_array($req->ids)) {
-            foreach ($req->ids as $key => $id) {
-                $option = DropdownOption::find($id);
-                $option->delete();
+        $ids = explode(',',$req->id);
 
+        if (is_array($ids)) {
+
+            $option = DropdownOption::whereIn('id',$ids)->delete();
+
+            if ($option) {
                 $data = [
                     'msg' => "Data was successfully deleted.",
                     'status' => "success",
                     'option' => $this->getOptions($req->dropdown_id)
                 ];
+
+                $ids = implode(',', $req->id);
+                $this->_userlog->log([
+                    'module' => 'Dropdown Settings',
+                    'action' => 'Deleted Dropdown options ID '.$ids,
+                    'user_id' => Auth::user()->id
+                ]);
             }
-            $ids = implode(',', $req->ids);
-            $this->_userlog->log([
-                'module' => 'Dropdown Settings',
-                'action' => 'Deleted Dropdown options ID '.$ids,
-                'user_id' => Auth::user()->id
-            ]);
+                
         } else {
-            $option = DropdownOption::find($req->ids);
+            $option = DropdownOption::find($req->id);
             $option->delete();
 
             $data = [
@@ -254,7 +258,7 @@ class DropdownController extends Controller
 
             $this->_userlog->log([
                 'module' => 'Dropdown Settings',
-                'action' => 'Deleted Dropdown option ID '.$req->ids,
+                'action' => 'Deleted Dropdown option ID '.$req->id,
                 'user_id' => Auth::user()->id
             ]);
         }

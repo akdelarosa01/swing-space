@@ -30,7 +30,7 @@
                         
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-striped table-sm" id="tbl_name">
+                        <table class="table table-striped table-sm" id="tbl_name" width="100%">
                             <thead>
                                 <tr>
                                     {{-- <th width="5%">
@@ -81,12 +81,21 @@
                         <table class="table table-striped table-sm" id="tbl_option">
                             <thead>
                                 <tr>
-                                    <th width="90%" class="trn">Option</th>
+                                    <th width="5%">
+                                        <input type="checkbox" class="check_all_options" width="100%">
+                                    </th>
+                                    <th width="85%" class="trn">Option</th>
                                     <th width="10%"></th>
                                 </tr>
                             </thead>
                             <tbody id="tbl_option_body"></tbody>
                         </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="offset-md-10 col-md-2">
+                            <button type="button" class="btn btn-sm btn-block btn-danger" id="btn_delete">Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>

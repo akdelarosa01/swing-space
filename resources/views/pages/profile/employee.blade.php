@@ -33,13 +33,6 @@
                                         <th class="border-none trn">Mobile</th>
                                         <td class="border-none">{{ $emp->mobile }}</td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="col-md-6">
-                            <table class="table table-sm">
-                                <tbody>
                                     <tr>
                                         <th class="border-none trn">Street</th>
                                         <td class="border-none">{{ $emp->street }}</td>
@@ -56,15 +49,6 @@
                                         <th class="border-none trn">Zip</th>
                                         <td class="border-none">{{ $emp->zip }}</td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <table class="table table-sm">
-                                <tbody>
                                     <tr>
                                         <th class="border-none trn">TIN #</th>
                                         <td class="border-none">{{ $emp->tin }}</td>
@@ -101,10 +85,10 @@
                                             <tr>
                                                 <td>{{ $access->module_name }}</td>
                                                 <td>
-                                                    <input type="checkbox" readonly @if($access->access == 1){{'checked'}}@endif>
+                                                    <input type="checkbox" disabled @if($access->access == 1){{'checked'}}@endif>
                                                 </td>
                                                 <td>
-                                                    <input type="checkbox" readonly @if($access->access == 2){{'checked'}}@endif>
+                                                    <input type="checkbox" disabled @if($access->access == 2){{'checked'}}@endif>
                                                 </td>
                                             </tr>
                                         @endforeach

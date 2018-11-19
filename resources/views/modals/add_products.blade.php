@@ -11,7 +11,7 @@
             </div>
             <form action="../../add-products/save" method="get" class="form-horizontal" id="frm_products">
                 @csrf
-                <input type="hidden" id="id" name="id">
+                <input type="hidden" id="id" class="clear" name="id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">

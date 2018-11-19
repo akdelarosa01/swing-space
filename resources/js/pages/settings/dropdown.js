@@ -4,7 +4,8 @@ $( function() {
 	getName('');
 	getOption(0);
 
-	checkAllCheckboxesInTable('.check_all_name','.check_item_name')
+	checkAllCheckboxesInTable('.check_all_name','.check_item_name');
+	checkAllCheckboxesInTable('.check_all_options','.check_option');
 
 	$('#frm_name').on('submit', function(e) {
 		e.preventDefault();
@@ -67,6 +68,46 @@ $( function() {
 		$('#option_id').val($(this).attr('data-id'));
 		$('#option_description').val($(this).attr('data-option_description'));
 	});
+
+	$('#btn_delete').on('click', function() {
+        var chkArray = [];
+        $(".check_option:checked").each(function() {
+            chkArray.push($(this).val());
+        });
+
+        if (chkArray.length > 0) {
+            confirm('Delete Option','Do you want to delete this Option/s?',chkArray);
+        } else {
+            msg("Please select at least 1 item.",'failed');
+        }
+
+        $('.check_all_options').prop('checked',false);
+    });
+
+    $('#btn_confirm').on('click', function() {
+    	$('#loading').show();
+        $.ajax({
+            url: '../../dropdown/delete-option',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: token,
+                id: $('#confirm_id').val(),
+                dropdown_id: $('#dropdown_id').val()
+            },
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                $('#confirm_modal').modal('hide');
+                msg(data.msg,data.status);
+                DropdownOptionDataTable(data.option);
+            }
+            
+        }).fail(function(xhr, textStatus, errorThrown) {
+            msg('Dropdown Option: '+errorThrown,textStatus);
+        }).always(function() {
+            $('#loading').hide();
+        });
+    });
 });
 
 function clear() {
@@ -156,6 +197,9 @@ function DropdownOptionDataTable(arr) {
         paging: false,
 	    deferRender: true,
         columns: [
+        	{data: function(x) {
+            	return '<input type="checkbox" class="check_option" value="'+x.id+'">';
+            }, searchable: false, orderable: false},
             {data: function(x) {
             	return x.option_description+'<input type="hidden" name="option_description[]" value="'+x.option_description+'">';
             }},

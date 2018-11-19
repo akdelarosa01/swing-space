@@ -8,7 +8,7 @@ class DropdownOption extends Model
 {
     protected $fillable = [
     	'dropdown_id',
-		'description',
+		'option_description',
 		'create_user',
 		'update_user'
     ];

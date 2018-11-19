@@ -162,7 +162,7 @@ var dict = {
     },
     "Delete": {
         ch: "删除",
-        en: "Save"
+        en: "Delete"
     }
 
 };

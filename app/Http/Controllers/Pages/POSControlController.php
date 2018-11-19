@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserLogsController;
+use App\Product;
+use App\DropdownOption;
+use DB;
+
 
 class POSControlController extends Controller
 {
@@ -30,69 +34,97 @@ class POSControlController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show_products(Request $req)
     {
-        //
+        $prods = $this->products($req->product_type);
+        return response()->json($prods);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    private function products($type = '')
     {
-        //
+        if ($type == '') {
+            $products = DB::select("SELECT p.id as id,
+                                        p.prod_code as prod_code,
+                                        p.prod_name as prod_name,
+                                        p.prod_type as prod_type,
+                                        p.price as price,
+                                        p.variants as variants,
+                                        p.description as `description`,
+                                        CASE
+                                            when (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as target_qty,
+                                        CASE
+                                            when (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as quantity,
+                                        CASE
+                                            when (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as updated_at
+                                from products as p
+                                order by updated_at desc");
+        } else {
+            $products = DB::select("SELECT p.id as id,
+                                        p.prod_code as prod_code,
+                                        p.prod_name as prod_name,
+                                        p.prod_type as prod_type,
+                                        p.price as price,
+                                        p.variants as variants,
+                                        p.description as `description`,
+                                        CASE
+                                            when (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.target_qty
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as target_qty,
+                                        CASE
+                                            when (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT a.quantity
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as quantity,
+                                        CASE
+                                            when (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1) is not null
+                                            then (SELECT DATE_FORMAT(a.updated_at, '%Y/%m/%d %H:%i %p') as updated_at
+                                                    FROM available_products as a
+                                                    where a.prod_id = p.id limit 1)
+                                            else 0
+                                        END  as updated_at
+                                from products as p
+                                where prod_type = '".$type."'
+                                order by updated_at desc");
+        }
+        
+        return $products;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function product_types()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $types = DropdownOption::where('dropdown_id',3)->get();
+        return response()->json($types);
     }
 }

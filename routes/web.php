@@ -45,6 +45,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
 
 Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('pos-control', 'Pages\POSControlController@index');
+    Route::get('pos-control/product-types', 'Pages\POSControlController@product_types');
+    Route::get('pos-control/products', 'Pages\POSControlController@show_products');
 
     Route::get('customer-list', 'Pages\CustomerController@index');
     Route::get('customer-list/show', 'Pages\CustomerController@show');
@@ -101,13 +103,17 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('dropdown/show-option','Pages\DropdownController@show_option');
     Route::post('dropdown/save-name','Pages\DropdownController@save_name');
     Route::post('dropdown/save-option','Pages\DropdownController@save_option');
-    Route::post('dropdown/delete','Pages\DropdownController@destroy');
+    Route::post('dropdown/delete-option','Pages\DropdownController@destroy_option');
 
     Route::get('general-settings','Pages\GeneralSettingsController@index');
     Route::post('general-settings/save-incentive','Pages\GeneralSettingsController@save_incentive');
     Route::get('general-settings/incentives','Pages\GeneralSettingsController@incentives');
+
     Route::post('general-settings/save-reward','Pages\GeneralSettingsController@save_reward');
     Route::get('general-settings/rewards','Pages\GeneralSettingsController@rewards');
+
+    Route::post('general-settings/save-discount','Pages\GeneralSettingsController@save_discount');
+    Route::get('general-settings/discounts','Pages\GeneralSettingsController@discounts');
 
     Route::get('get-province', 'GlobalController@getProvince');
     Route::get('get-city', 'GlobalController@getCity');
