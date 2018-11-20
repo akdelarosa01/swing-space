@@ -4,6 +4,12 @@ Echo.channel('user_log')
         getUserLogs();
     });
 
+Echo.channel('pos')
+    .listen('POS', (e) => {
+        console.log(e.pos);
+        ordersCustomerViewTable(e.pos);
+    });
+
 
 jQuery.fn.extend({
     live: function (event, callback) {
@@ -373,20 +379,132 @@ function getUserLogs() {
     });
 }
 
-// function makeUserLogTable(arr) {
-//     $('#tbl_audit').dataTable().fnClearTable();
-//     $('#tbl_audit').dataTable().fnDestroy();
-//     $('#tbl_audit').dataTable({
-//         data: arr,
-//         bLengthChange : false,
-//         bDestroy: true,
-//         order: [[ 0, "desc" ]],
-//         columns: [
-//             { data: 'id', orderable: false},
-//             { data: 'module', orderable: false},
-//             { data: 'action', orderable: false},
-//             { data: 'user', orderable: false},
-//             { data: 'created_at', orderable: false}
-//         ]
-//     });
-// }
+function checkTimeSpent(timein) {
+    var myTimer = setInterval(function() {
+        console.log('idle');
+    }, 1000);
+
+    clearInterval(myTimer);
+    document.getElementById("time_spent").innerHTML = '';
+
+    var timeSpent = function() {
+        document.getElementById("time_spent").innerHTML = '';
+        var startTime = new Date(timein).getTime();
+        var now = new Date().getTime();
+
+        var distance = now - startTime;
+
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("time_spent").innerHTML = hours + "h "
+        + minutes + "m " + seconds + "s ";
+    };
+    myTimer = setInterval(timeSpent, 1000);
+}
+
+// POS CONTROL
+
+function ordersTable(arr) {
+    $('#tbl_orders').dataTable().fnClearTable();
+    $('#tbl_orders').dataTable().fnDestroy();
+    $('#tbl_orders').dataTable({
+        data: arr,
+        sorting: false,
+        searching: false,
+        paging: false,
+        deferRender: true,
+        scrollY: "250px",
+        bInfo : false,
+        columns: [
+            {data: function(x) {
+                return x.prod_name+'<input type="hidden" name="prod_name[]" value="'+x.prod_name+'">';
+            }, searchable: false, orderable: false},
+            {data: function(x) {
+                return '<input type="number" name="quantity[]" class="form-control form-control-sm quantity" '+
+                        'data-cust_id="'+x.cust_id+'" '+
+                        'data-prod_id="'+x.prod_id+'" '+
+                        'data-price="'+x.price+'" '+
+                        'data-unit_price="'+x.unit_price+'" '+
+                        'value="'+x.quantity+'">';
+            }, searchable: false, orderable: false},
+            {data: function(x) {
+                return (x.price).toFixed(2)+'<input type="hidden" name="price[]" value="'+(x.price).toFixed(2)+'">';
+            }, searchable: false, orderable: false},
+            {data: function(x) {
+                return '<div class="btn-group">'+
+                            '<button class="btn btn-sm btn-danger remove" data-cust_id="'+x.cust_id+'" '+
+                                'data-prod_id="'+x.prod_id+'">'+
+                                '<i class="fa fa-times"></i>'+
+                            '</button>'+
+                        '</div>';
+            }, searchable: false, orderable: false},
+        ],
+        language : {
+            zeroRecords: " "
+        },
+    });
+}
+
+function ordersCustomerViewTable(arr) {
+    $('#tbl_custview').dataTable().fnClearTable();
+    $('#tbl_custview').dataTable().fnDestroy();
+    $('#tbl_custview').dataTable({
+        data: arr,
+        sorting: false,
+        searching: false,
+        paging: false,
+        deferRender: true,
+        scrollY: "250px",
+        bInfo : false,
+        columns: [
+            {data: 'prod_name', searchable: false, orderable: false},
+            {data: 'quantity', searchable: false, orderable: false},
+            {data: function(x) {
+                return (x.price).toFixed(2);
+            }, searchable: false, orderable: false},
+        ],
+        language : {
+            zeroRecords: " "
+        },
+    });
+}
+
+function calculateSubTotal(data) {
+    var total = 0;
+    $.each(data, function(i,x) {
+        total = parseFloat(total) + parseFloat(x.price);
+    });
+
+    return total.toFixed(2);
+}
+
+function calculateTotal(data,discounts) {
+    var total = 0;
+    $.each(data, function(i,x) {
+        total = parseFloat(total) + parseFloat(x.price);
+    });
+
+    total = parseFloat(total) - parseFloat(discounts);
+
+    return total.toFixed(2);
+}
+
+function showCurrentBill(cust_id) {
+    $.ajax({
+        url: '../../pos-control/show-current-bill',
+        type: 'POST',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+            cust_id: cust_id
+        },
+    }).done(function(data, textStatus, xhr) {
+        ordersTable(data);
+        $('#sub_total').html(calculateSubTotal(data));
+        $('#total_amount').html(calculateTotal(data,$('#discount_val').val()));
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Current Customers: '+errorThrown,textStatus);
+    });
+}

@@ -70,3 +70,11 @@ small, .small {
     height: 100px;
     word-wrap: break-word;
 }
+
+footer {
+    position: fixed;
+    /*left: 0;*/
+    bottom: 0;
+    width: 100%;
+    margin-left: 140px: 
+}

@@ -29,7 +29,7 @@
                     </section>
                 </div>
 
-                @include('partials.footer')
+                @stack('footer')
                 @include('modals.global')
             </div>
         </div>

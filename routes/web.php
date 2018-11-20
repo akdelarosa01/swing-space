@@ -47,6 +47,20 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('pos-control', 'Pages\POSControlController@index');
     Route::get('pos-control/product-types', 'Pages\POSControlController@product_types');
     Route::get('pos-control/products', 'Pages\POSControlController@show_products');
+    Route::post('pos-control/current-customer', 'Pages\POSControlController@save_currentCustomer');
+    Route::get('pos-control/check-in-member', 'Pages\POSControlController@check_in_member');
+    Route::get('pos-control/show-customer', 'Pages\POSControlController@show_currentCustomer');
+    Route::get('pos-control/show-discounts', 'Pages\POSControlController@show_discounts');
+    Route::get('pos-control/show-rewards', 'Pages\POSControlController@show_rewards');
+
+    Route::post('pos-control/save-current-bill', 'Pages\POSControlController@save_currentBill');
+    Route::post('pos-control/show-current-bill', 'Pages\POSControlController@show_currentBill');
+    Route::post('pos-control/delete-current-item', 'Pages\POSControlController@delete_currentItemBill');
+    Route::post('pos-control/update-current-item', 'Pages\POSControlController@update_currentItemBill');
+
+    Route::get('pos-control/customer-view', function() {
+        return view('pages.pos.customer_view');
+    });
 
     Route::get('customer-list', 'Pages\CustomerController@index');
     Route::get('customer-list/show', 'Pages\CustomerController@show');

@@ -21,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserLogs' => [
             'App\Listeners\UserLogsListener',
         ],
+
+        'App\Events\POS' => [
+            'App\Listeners\POSListener',
+        ],
     ];
 
     /**

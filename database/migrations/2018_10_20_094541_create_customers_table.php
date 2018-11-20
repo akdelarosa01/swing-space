@@ -28,6 +28,7 @@ class CreateCustomersTable extends Migration
             $table->string('company')->nullable()->default('N/A');
             $table->integer('referrer')->nullable()->default(0);
             $table->string('membership_type')->length(1)->default('A');
+            $table->double('points',12,2)->default(0.00);
             $table->date('date_registered');
             $table->integer('create_user');
             $table->integer('update_user');
