@@ -21,6 +21,7 @@ class Customer extends Model
 		'referrer',
 		'membership_type',
 		'date_registered',
+		'points',
 		'create_user',
 		'update_user'
     ];

@@ -11,6 +11,7 @@ class Incentive extends Model
     	'inc_name',
     	'inc_points',
     	'inc_hrs',
+        'inc_days',
     	'inc_space',
     	'inc_description',
     	'create_user',

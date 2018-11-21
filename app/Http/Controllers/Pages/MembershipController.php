@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserLogsController;
 use App\Customer;
+use App\Incentive;
 use App\User;
 use DB;
 use App;
@@ -52,65 +53,71 @@ class MembershipController extends Controller
                 'date_of_birth' => 'required',
             ]);
 
-            $check = User::where([
-                        ['firstname', '=', $req->firstname],
-                        ['lastname', '=', $req->lastname],
-                        ['user_type', '=', 'Customer'],
-                        ['disabled', '=', 0]
-                    ])->count();
+            $user = User::find($req->id);
 
-            if ($check > 0) {
-                return response()->json([
-                    'errors' => [
-                        'firstname' => 'This customer is already registered.',
-                        'lastname' => 'This customer is already registered.'
-                    ]
-                ], 422);
+            $user->firstname = $req->firstname;
+            $user->lastname = $req->lastname;
+            $user->email = $req->email;
+            $user->gender = $req->gender;
+            $user->user_type = 'Customer';
+
+            if (isset($req->disabled)) {
+                $user->disabled = 1;
             } else {
-                $user = User::find($req->id);
-
-                $user->firstname = $req->firstname;
-                $user->lastname = $req->lastname;
-                $user->email = $req->email;
-                $user->gender = $req->gender;
-                $user->user_type = 'Customer';
-
-                if (isset($req->disable)) {
-                    $user->disable = 1;
-                } else {
-                    $user->disable = 0;
-                }
-
-                if ($user->update()) {
-                    Customer::where('user_id',$req->id)->update([
-                        'date_of_birth' => $req->date_of_birth,
-                        'phone' => $req->phone,
-                        'mobile' => $req->mobile,
-                        'facebook' => $req->facebook,
-                        'instagram' => $req->instagram,
-                        'twitter' => $req->twitter,
-                        'occupation' => $req->occupation,
-                        'company' => $req->company,
-                        'school' => $req->school,
-                        'referrer' => $req->referrer,
-                        'membership_type' => (!isset($req->referrer) || $req->referrer == '' || $req->referrer == 0)? 'A' : 'B',
-                        'update_user' => Auth::user()->id,
-                        'updated_at' => date('Y-m-d h:i:s')
-                    ]);
-                }
-
-                $data = [
-                    'msg' => 'Successfully saved.',
-                    'status' => 'success',
-                    'customer' => $this->customer($req->id)
-                ];
-
-                $this->_userlog->log([
-                    'module' => 'Customer Membership',
-                    'action' => 'Updated Customer user ID '.$req->id.', Name '.$user->firstname.' '.$user->lastname,
-                    'user_id' => Auth::user()->id
-                ]);
+                $user->disabled = 0;
             }
+
+            if ($user->update()) {
+                Customer::where('user_id',$req->id)->update([
+                    'date_of_birth' => $req->date_of_birth,
+                    'phone' => $req->phone,
+                    'mobile' => $req->mobile,
+                    'facebook' => $req->facebook,
+                    'instagram' => $req->instagram,
+                    'twitter' => $req->twitter,
+                    'occupation' => $req->occupation,
+                    'company' => $req->company,
+                    'school' => $req->school,
+                    'referrer' => $req->referrer,
+                    'membership_type' => (!isset($req->referrer) || $req->referrer == '' || $req->referrer == 0)? 'A' : 'B',
+                    'update_user' => Auth::user()->id,
+                    'updated_at' => date('Y-m-d h:i:s')
+                ]);
+
+                $checkRefferer = Customer::where('user_id',$req->id)
+                                        ->select('referrer')->first();
+
+                if ($checkRefferer->referrer == $req->referrer) {
+                    # code...
+                } else {
+                    // $inc = Incentive::where([
+                    //         ['inc_hrs',0],
+                    //         ['inc_days',0]
+                    //     ])
+                    //     ->select('inc_points')->first();
+
+                    // Customer::where('user_id',$req->referrer)->increment(
+                    //     'points', $inc->inc_points,[
+                    //         'update_user' => Auth::user()->id,
+                    //         'updated_at' => date('Y-m-d h:i:s')
+                    //     ]
+                    // );
+                }
+
+                
+            }
+
+            $data = [
+                'msg' => 'Successfully saved.',
+                'status' => 'success',
+                'customer' => $this->customer($req->id)
+            ];
+
+            $this->_userlog->log([
+                'module' => 'Customer Membership',
+                'action' => 'Updated Customer user ID '.$req->id.', Name '.$user->firstname.' '.$user->lastname,
+                'user_id' => Auth::user()->id
+            ]);
         } else {
             $this->validate($req,[
                 'firstname' => 'required|string|max:25',
@@ -147,10 +154,10 @@ class MembershipController extends Controller
                 $user->gender = $req->gender;
                 $user->user_type = 'Customer';
 
-                if (isset($req->disable)) {
-                    $user->disable = 1;
+                if (isset($req->disabled)) {
+                    $user->disabled = 1;
                 } else {
-                    $user->disable = 0;
+                    $user->disabled = 0;
                 }
 
                 if ($user->save()) {
@@ -172,6 +179,19 @@ class MembershipController extends Controller
                         'create_user' => Auth::user()->id,
                         'update_user' => Auth::user()->id,
                     ]);
+
+                    $inc = Incentive::where([
+                                ['inc_hrs',0],
+                                ['inc_days',0]
+                            ])
+                            ->select('inc_points')->first();
+
+                    Customer::where('user_id',$req->referrer)->increment(
+                        'points', $inc->inc_points,[
+                            'update_user' => Auth::user()->id,
+                            'updated_at' => date('Y-m-d h:i:s')
+                        ]
+                    );
                 }
 
                 $this->_userlog->log([

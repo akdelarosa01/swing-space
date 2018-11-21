@@ -130,7 +130,7 @@
                             <div class="form-group row">
                                 <label class="control-label text-right col-md-3 trn">Referrer</label>
                                 <div class="col-md-8">
-                                    <select class="form-control form-control-sm clear select-validate select2" name="referrer" id="referrer">
+                                    <select class="form-control form-control-sm clear select-validate" name="referrer" id="referrer">
                                     </select>
                                     <div id="referrer_feedback"></div>
                                 </div>
@@ -140,8 +140,8 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-3 trn">Disable</label>
                                     <div class="col-md-8">
-                                        <input class="tgl tgl-light tgl-primary" id="disable" name="disable" type="checkbox">
-                                        <label class="tgl-btn" for="disable"></label>
+                                        <input class="tgl tgl-light tgl-primary" id="disabled" name="disabled" type="checkbox">
+                                        <label class="tgl-btn" for="disabled"></label>
                                     </div>
                                 </div>
                             @endif
