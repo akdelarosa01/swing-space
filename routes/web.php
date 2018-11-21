@@ -121,12 +121,15 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('general-settings','Pages\GeneralSettingsController@index');
     Route::post('general-settings/save-incentive','Pages\GeneralSettingsController@save_incentive');
+    Route::post('general-settings/delete-incentive','Pages\GeneralSettingsController@delete_incentive');
     Route::get('general-settings/incentives','Pages\GeneralSettingsController@incentives');
 
     Route::post('general-settings/save-reward','Pages\GeneralSettingsController@save_reward');
+    Route::post('general-settings/delete-reward','Pages\GeneralSettingsController@delete_reward');
     Route::get('general-settings/rewards','Pages\GeneralSettingsController@rewards');
 
     Route::post('general-settings/save-discount','Pages\GeneralSettingsController@save_discount');
+    Route::post('general-settings/delete-discount','Pages\GeneralSettingsController@delete_discount');
     Route::get('general-settings/discounts','Pages\GeneralSettingsController@discounts');
 
     Route::get('get-province', 'GlobalController@getProvince');

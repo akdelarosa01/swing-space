@@ -99,7 +99,7 @@ function clear() {
 	$('.clear').val('');
 }
 
-function confirm(title,msg,value) {
+function confirm(title,msg,value,delete_type) {
 	let confirm_id;
 
 	if (Array.isArray(value)) {
@@ -111,6 +111,7 @@ function confirm(title,msg,value) {
 	$('#confirm_title').html(title);
 	$('#confirm_msg').html(msg);
 	$('#confirm_id').val(confirm_id);
+    $('#confirm_type').val(delete_type);
 
 	$('#confirm_modal').modal('show');
 }
@@ -415,7 +416,7 @@ function ordersTable(arr) {
         searching: false,
         paging: false,
         deferRender: true,
-        scrollY: "250px",
+        scrollY: "200px",
         bInfo : false,
         columns: [
             {data: function(x) {
@@ -486,6 +487,9 @@ function calculateTotal(data,discounts) {
         total = parseFloat(total) + parseFloat(x.price);
     });
 
+    console.log(total);
+    console.log(discounts);
+
     total = parseFloat(total) - parseFloat(discounts);
 
     return total.toFixed(2);
@@ -503,7 +507,7 @@ function showCurrentBill(cust_id) {
     }).done(function(data, textStatus, xhr) {
         ordersTable(data);
         $('#sub_total').html(calculateSubTotal(data));
-        $('#total_amount').html(calculateTotal(data,$('#discount_val').val()));
+        $('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
     }).fail(function(xhr, textStatus, errorThrown) {
         msg('Current Customers: '+errorThrown,textStatus);
     });

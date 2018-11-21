@@ -113,6 +113,25 @@ class GeneralSettingsController extends Controller
         return response()->json($data);
     }
 
+    public function delete_incentive(Request $req)
+    {
+        $data = [
+            'msg' => 'Deleting failed.',
+            'status' => 'failed'
+        ];
+
+        $inc = Incentive::find($req->id);
+
+        if ($inc->delete()) {
+            $data = [
+                'msg' => 'Successfully deleted.',
+                'status' => 'success'
+            ];
+        }
+
+        return response()->json($data);
+    }
+
     public function incentives()
     {
         $inc = Incentive::all();
@@ -133,7 +152,8 @@ class GeneralSettingsController extends Controller
                 'rwd_points' => 'required',
                 'rwd_hrs' => 'required',
                 'rwd_days' => 'required',
-                'rwd_space' => 'required'
+                'rwd_space' => 'required',
+                'rwd_price' => 'required'
             ]);
 
             $rewards = Reward::where('id',$req->rwd_id)->update([
@@ -142,6 +162,7 @@ class GeneralSettingsController extends Controller
                             'rwd_hrs' => ($req->rwd_hrs == '' || $req->rwd_hrs == 0)? 0 : $req->rwd_hrs,
                             'rwd_days' => ($req->rwd_days == '' || $req->rwd_days == 0)? 0 : $req->rwd_days,
                             'rwd_space' => $req->rwd_space,
+                            'rwd_price' => ($req->rwd_price == '' || $req->rwd_price == 0)? 0 : $req->rwd_price,
                             'rwd_description' => $req->rwd_description,
                             'update_user' => Auth::user()->id,
                             'updated_at' => date('Y-m-d H:i:s')
@@ -176,6 +197,7 @@ class GeneralSettingsController extends Controller
                             'rwd_hrs' => ($req->rwd_hrs == '' || $req->rwd_hrs == 0)? 0 : $req->rwd_hrs,
                             'rwd_days' => ($req->rwd_days == '' || $req->rwd_days == 0)? 0 : $req->rwd_days,
                             'rwd_space' => $req->rwd_space,
+                            'rwd_price' => ($req->rwd_price == '' || $req->rwd_price == 0)? 0 : $req->rwd_price,
                             'rwd_description' => $req->rwd_description,
                             'create_user' => Auth::user()->id,
                             'update_user' => Auth::user()->id,
@@ -194,6 +216,25 @@ class GeneralSettingsController extends Controller
                     'rewards' => $this->rewards()
                 ];
             }
+        }
+
+        return response()->json($data);
+    }
+
+    public function delete_reward(Request $req)
+    {
+        $data = [
+            'msg' => 'Deleting failed.',
+            'status' => 'failed'
+        ];
+
+        $rwd = Reward::find($req->id);
+
+        if ($rwd->delete()) {
+            $data = [
+                'msg' => 'Successfully deleted.',
+                'status' => 'success'
+            ];
         }
 
         return response()->json($data);
@@ -266,6 +307,25 @@ class GeneralSettingsController extends Controller
                     'discounts' => ''
                 ];
             }
+        }
+
+        return response()->json($data);
+    }
+
+    public function delete_discount(Request $req)
+    {
+        $data = [
+            'msg' => 'Deleting failed.',
+            'status' => 'failed'
+        ];
+
+        $dis = Discount::find($req->id);
+
+        if ($dis->delete()) {
+            $data = [
+                'msg' => 'Successfully deleted.',
+                'status' => 'success'
+            ];
         }
 
         return response()->json($data);

@@ -21,6 +21,7 @@ class CreateRewardsTable extends Migration
             $table->integer('rwd_hrs')->default(0);
             $table->integer('rwd_days')->default(0);
             $table->string('rwd_space');
+            $table->double('rwd_price',12,2)->default(0.00);
             $table->text('rwd_description');
             $table->integer('create_user');
             $table->integer('update_user');

@@ -20,51 +20,43 @@
 	</div>
 
 	<div id="pos_control">
-		<div class="row no-gutters" id="product_types"></div>
-	    <hr/>
-
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-8">
+				<div class="row no-gutters" id="product_types"></div>
+				<hr/>
 				<div class="row no-gutters" id="products"></div>
 			</div>
 
-			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-12">
-						<table class="table table-sm" id="tbl_orders" width="100%">
-							<thead>
-								<td width="60%">Name</td>
-								<td width="20%">Qty/Hrs</td>
-								<td width="15%">Amount</td>
-								<td width="5%"></td>
-							</thead>
-							<tbody id="tbl_orders_body"></tbody>
-						</table>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-12">
-						<table class="table table-sm" id="tbl_subs" width="100%">
-							<thead>
-								<td width="70%">Sub Total</td>
-								<td width="30%" id="sub_total"></td>
-							</thead>
-						</table>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-12">
-						<table class="table table-sm" id="tbl_discountView" width="100%">
-							<thead>
-								<td width="70%">Discount</td>
-								<td width="30%"></td>
-							</thead>
-							<tbody id="tbl_discountView_body"></tbody>
-						</table>
-					</div>
-				</div>
+			<div class="col-md-4">
+				<table class="table table-sm" id="tbl_orders" width="100%">
+					<thead>
+						<td width="60%">Name</td>
+						<td width="20%">Qty/Hrs</td>
+						<td width="15%">Amount</td>
+						<td width="5%"></td>
+					</thead>
+					<tbody id="tbl_orders_body"></tbody>
+				</table>
+				<table class="table table-sm" id="tbl_subs" width="100%">
+					<thead>
+						<td width="70%">Sub Total</td>
+						<td width="30%" id="sub_total"></td>
+					</thead>
+				</table>
+				<table class="table table-sm" id="tbl_discountView" width="100%">
+					<thead>
+						<td width="70%">Discount</td>
+						<td width="30%"></td>
+					</thead>
+					<tbody id="tbl_discountView_body"></tbody>
+				</table>
+				<table class="table table-sm" id="tbl_rewardsView" width="100%">
+					<thead>
+						<td width="70%">Rewards</td>
+						<td width="30%"></td>
+					</thead>
+					<tbody id="tbl_rewardsView_body"></tbody>
+				</table>
 				
 			</div>
 		</div>

@@ -195,7 +195,7 @@ $( function() {
             if (textStatus == 'success') {
             	ordersTable(data);
             	$('#sub_total').html(calculateSubTotal(data));
-            	$('#total_amount').html(calculateTotal(data,$('#discount_val').val()));
+            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
             }
         }).fail(function(xhr, textStatus, errorThrown) {
 			console.log("error");
@@ -216,7 +216,7 @@ $( function() {
             if (textStatus == 'success') {
             	ordersTable(data);
             	$('#sub_total').html(calculateSubTotal(data));
-            	$('#total_amount').html(calculateTotal(data,$('#discount_val').val()));
+            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
             }
         }).fail(function(xhr, textStatus, errorThrown) {
 			console.log("error");
@@ -240,7 +240,7 @@ $( function() {
 	            if (textStatus == 'success') {
 	            	ordersTable(data);
 	            	$('#sub_total').html(calculateSubTotal(data));
-	            	$('#total_amount').html(calculateTotal(data,$('#discount_val').val()));
+	            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
 	            }
 	        }).fail(function(xhr, textStatus, errorThrown) {
 				console.log("error");
@@ -292,7 +292,7 @@ function productTypeButton(data) {
 	var cards = '';
 	$('#product_types').html(cards);
 	$.each(data, function(i, x) {
-		cards = '<div class="col-md-1 ml-1 mb-1">'+
+		cards = '<div class="col-md-2 ml-1 mb-1">'+
 					'<button type="button" class="btn btn-lg btn-block btn-accent type" '+
 						'data-product_type="'+x.option_description+'" style="font-size:12px">'+
 						x.option_description+
@@ -326,7 +326,7 @@ function productButton(data) {
 	$.each(data, function(i, x) {
 		cards = '<div class="col-md-3 ml-1">'+
 					'<div class="card card-info">'+
-						'<div class="card-body product text-center" style="font-size:12px;height: 100px;"'+
+						'<div class="card-body product text-center" style="font-size:12px;height: 80px;"'+
 						'data-prod_id="'+x.id+'" '+
 						'data-prod_code="'+x.prod_code+'" '+
 						'data-prod_name="'+x.prod_name+'" '+
@@ -411,7 +411,7 @@ function customers(data) {
 			type = 'btn-success';
 		}
 
-		cards = '<div class="col-md-3 ml-1 mb-1">'+
+		cards = '<div class="col-md-2 ml-1 mb-1">'+
 					'<div class="btn btn-lg btn-block '+type+' current_customer btn-outline" '+
 					'data-cust_id="'+x.id+'" '+
 					'data-cust_code="'+x.cust_code+'" '+

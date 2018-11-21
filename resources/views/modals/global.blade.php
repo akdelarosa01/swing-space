@@ -10,6 +10,7 @@
 			<div class="modal-body">
 				<p id="confirm_msg"></p>
 				<input type="hidden" id="confirm_id" name="confirm_id">
+				<input type="hidden" id="confirm_type" name="confirm_type">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">No</button>

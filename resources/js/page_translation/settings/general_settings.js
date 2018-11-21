@@ -113,9 +113,17 @@ var dict = {
 
 
 
-    "Add New Incentive": {
+    "Add New Goal": {
     	ch: "添加新目标",
-        en: "Add New Incentive"
+        en: "Add New Goal"
+    },
+    "Goal Settings": {
+        ch: "目标设置",
+        en: "Goal Settings"
+    },
+    "Reward Settings": {
+        ch: "奖励设置",
+        en: "Reward Settings"
     },
     "Add New Reward": {
         ch: "添加新奖励",
@@ -149,6 +157,35 @@ var dict = {
         ch: "描述",
         en: "Description"
     },
+
+    "Discount": {
+        ch: "折扣",
+        en: "Discount"
+    },
+
+    "Percent": {
+        ch: "百分",
+        en: "Percent"
+    },
+
+    "Hours Required": {
+        ch: "需要几个小时",
+        en: "Hours Required"
+    },
+    "Days Required": {
+        ch: "需要几天",
+        en: "Days Required"
+    },
+    "Space Required": {
+        ch: "需要空间",
+        en: "Space Required"
+    },
+
+    "Discount Settings": {
+        ch: "折扣设置",
+        en: "Discount Settings"
+    },
+
     "Employee discount": {
         ch: "员工折扣",
         en: "Employee discount"
@@ -157,7 +194,11 @@ var dict = {
         ch: "老年人折扣",
         en: "Senior discount"
     },
-    "Set": {
+    "Save": {
+        ch: "储",
+        en: "Save"
+    },
+     "Set": {
         ch: "定",
         en: "Set"
     },

@@ -3,7 +3,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">
-					<span class="trn">Incentive Settings</span>
+					<span class="trn">Goal Settings</span>
 				</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true" class="zmdi zmdi-close"></span>
@@ -69,9 +69,6 @@
 	</div>
 </div>
 
-
-
-
 <div class="modal fade" id="rewards_modal" role="dialog" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -120,6 +117,13 @@
                         <div class="col-md-9">
                             <select class="form-control form-control-sm clear" id="rwd_space" name="rwd_space"></select>
                             <div id="rwd_space_feedback"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="rwd_price" class="control-label text-right col-md-3 trn">Price Discount</label>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control form-control-sm clear" id="rwd_price" name="rwd_price" min="1" step="any">
+                            <div id="rwd_price_feedback"></div>
                         </div>
                     </div>
                     <div class="form-group row">

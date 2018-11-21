@@ -13917,9 +13917,9 @@ window.Popper = __webpack_require__(3).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(4);
+    window.$ = window.jQuery = __webpack_require__(4);
 
-  __webpack_require__(16);
+    __webpack_require__(16);
 } catch (e) {}
 
 /**
@@ -13941,9 +13941,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -13957,10 +13957,10 @@ if (token) {
 window.Pusher = __webpack_require__(37);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-  broadcaster: 'pusher',
-  key: "53acfdc5fb11d97e0910",
-  cluster: "ap1",
-  encrypted: true
+    broadcaster: 'pusher',
+    key: "",
+    cluster: "mt1",
+    encrypted: true
 });
 
 /***/ }),
@@ -58326,7 +58326,7 @@ function clear() {
 	$('.clear').val('');
 }
 
-function confirm(title,msg,value) {
+function confirm(title,msg,value,delete_type) {
 	let confirm_id;
 
 	if (Array.isArray(value)) {
@@ -58338,6 +58338,7 @@ function confirm(title,msg,value) {
 	$('#confirm_title').html(title);
 	$('#confirm_msg').html(msg);
 	$('#confirm_id').val(confirm_id);
+    $('#confirm_type').val(delete_type);
 
 	$('#confirm_modal').modal('show');
 }
@@ -58642,7 +58643,7 @@ function ordersTable(arr) {
         searching: false,
         paging: false,
         deferRender: true,
-        scrollY: "250px",
+        scrollY: "200px",
         bInfo : false,
         columns: [
             {data: function(x) {
@@ -58713,6 +58714,9 @@ function calculateTotal(data,discounts) {
         total = parseFloat(total) + parseFloat(x.price);
     });
 
+    console.log(total);
+    console.log(discounts);
+
     total = parseFloat(total) - parseFloat(discounts);
 
     return total.toFixed(2);
@@ -58730,7 +58734,7 @@ function showCurrentBill(cust_id) {
     }).done(function(data, textStatus, xhr) {
         ordersTable(data);
         $('#sub_total').html(calculateSubTotal(data));
-        $('#total_amount').html(calculateTotal(data,$('#discount_val').val()));
+        $('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
     }).fail(function(xhr, textStatus, errorThrown) {
         msg('Current Customers: '+errorThrown,textStatus);
     });

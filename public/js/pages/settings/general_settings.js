@@ -113,9 +113,17 @@ var dict = {
 
 
 
-    "Add New Incentive": {
+    "Add New Goal": {
     	ch: "添加新目标",
-        en: "Add New Incentive"
+        en: "Add New Goal"
+    },
+    "Goal Settings": {
+        ch: "目标设置",
+        en: "Goal Settings"
+    },
+    "Reward Settings": {
+        ch: "奖励设置",
+        en: "Reward Settings"
     },
     "Add New Reward": {
         ch: "添加新奖励",
@@ -149,6 +157,35 @@ var dict = {
         ch: "描述",
         en: "Description"
     },
+
+    "Discount": {
+        ch: "折扣",
+        en: "Discount"
+    },
+
+    "Percent": {
+        ch: "百分",
+        en: "Percent"
+    },
+
+    "Hours Required": {
+        ch: "需要几个小时",
+        en: "Hours Required"
+    },
+    "Days Required": {
+        ch: "需要几天",
+        en: "Days Required"
+    },
+    "Space Required": {
+        ch: "需要空间",
+        en: "Space Required"
+    },
+
+    "Discount Settings": {
+        ch: "折扣设置",
+        en: "Discount Settings"
+    },
+
     "Employee discount": {
         ch: "员工折扣",
         en: "Employee discount"
@@ -157,7 +194,11 @@ var dict = {
         ch: "老年人折扣",
         en: "Senior discount"
     },
-    "Set": {
+    "Save": {
+        ch: "储",
+        en: "Save"
+    },
+     "Set": {
         ch: "定",
         en: "Set"
     },
@@ -306,6 +347,65 @@ $( function() {
         $('#percentage').val($(this).attr('data-percentage'));
         $('#dis_token').val(token);
     });
+
+    $('#tbl_discount_body').on('click', '.delete_discount', function() {
+        confirm('Delete Discount','Do you want to delete this discount?',$(this).attr('data-id'),'discount');
+    });
+
+    $('#tbl_incentive_body').on('click', '.delete_incentive', function() {
+        confirm('Delete goal','Do you want to delete this goal?',$(this).attr('data-inc_id'),'incentive');
+    });
+
+    $('#tbl_reward_body').on('click', '.delete_reward', function() {
+        confirm('Delete reward','Do you want to delete this reward?',$(this).attr('data-rwd_id'),'reward');
+    });
+
+    $('#btn_confirm').on('click', function() {
+        var deleteURL = '';
+
+        if ($('#confirm_type').val() == 'discount') {
+            deleteURL = '../../general-settings/delete-discount';
+        }
+
+        if ($('#confirm_type').val() == 'incentive') {
+            deleteURL = '../../general-settings/delete-incentive';
+        }
+
+        if ($('#confirm_type').val() == 'reward') {
+            deleteURL = '../../general-settings/delete-reward';
+        }
+
+        $.ajax({
+            url: deleteURL,
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: token,
+                id: $('#confirm_id').val()
+            },
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                $('#confirm_modal').modal('hide');
+                msg(data.msg,data.status);
+
+                if ($('#confirm_type').val() == 'discount') {
+                    discounts();
+                }
+
+                if ($('#confirm_type').val() == 'incentive') {
+                    incentives();
+                }
+
+                if ($('#confirm_type').val() == 'reward') {
+                    rewards();
+                }
+            }
+        }).fail(function(xhr, textStatus, errorThrown) {
+            console.log("error");
+        }).always(function() {
+            console.log("complete");
+        });
+    });
 });
 
 function clear() {
@@ -352,6 +452,9 @@ function makeIncentiveDataTable(arr) {
 	                        ' data-inc_space="'+x.inc_space+'" '+
 	                        ' data-inc_description="'+x.inc_description+'">'+
                             '<i class="fa fa-edit"></i>'+
+                        '</button>'+
+                        '<button class="btn btn-sm btn-danger delete_incentive" data-inc_id="'+x.id+'">'+
+                            '<i class="fa fa-times"></i>'+
                         '</button>';
             }, searchable: false, orderable: false},
         ]
@@ -387,6 +490,7 @@ function makeRewardDataTable(arr) {
             {data: 'rwd_hrs' },
             {data: 'rwd_days' },
             {data: 'rwd_space' },
+            {data: 'rwd_price' },
             {data: 'rwd_description' },
             {data: function(x) {
                 return '<button class="btn btn-sm btn-info edit_reward" data-rwd_id="'+x.id+'" '+
@@ -396,8 +500,12 @@ function makeRewardDataTable(arr) {
 	                        ' data-rwd_hrs="'+x.rwd_hrs+'" '+
 	                        ' data-rwd_days="'+x.rwd_days+'" '+
 	                        ' data-rwd_space="'+x.rwd_space+'" '+
+                            ' data-rwd_price="'+x.rwd_price+'" '+
 	                        ' data-rwd_description="'+x.rwd_description+'">'+
                             '<i class="fa fa-edit"></i>'+
+                        '</button>'+
+                        '<button class="btn btn-sm btn-danger delete_reward" data-rwd_id="'+x.id+'">'+
+                            '<i class="fa fa-times"></i>'+
                         '</button>';
             }, searchable: false, orderable: false},
         ]
@@ -438,6 +546,9 @@ function makeDiscountDataTable(arr) {
                             ' data-description="'+x.description+'" '+
                             ' data-percentage="'+percentage+'">'+
                             '<i class="fa fa-edit"></i>'+
+                        '</button>'+
+                        '<button class="btn btn-sm btn-danger delete_discount" data-id="'+x.id+'">'+
+                            '<i class="fa fa-times"></i>'+
                         '</button>';
             }, searchable: false, orderable: false},
         ]

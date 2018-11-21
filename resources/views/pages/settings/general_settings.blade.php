@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
 
-        <div class="col-md-6">
+        {{-- <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <span class="trn">Hour Rate Settings</span>
@@ -47,7 +47,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-md-6">
             <div class="card">
@@ -77,7 +77,7 @@
                         </div>
                         <div class="row">
                             <div class="offset-md-8 col-md-4">
-                                <button type="submit" class="btn btn-sm btn-info btn-block">Set</button>
+                                <button type="submit" class="btn btn-sm btn-info btn-block trn">Set</button>
                             </div>
                         </div>
                     </form>
@@ -97,9 +97,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <span class="trn">Incentive Settings</span>
+                    <span class="trn">Goal Settings</span>
                     <button type="button" class="btn btn-sm btn-success pull-right" id="btn_add_itcentive">
-                        <span class="trn">Add New Incentive</span>
+                        <span class="trn">Add New Goal</span>
                     </button>
                 </div>
                 <div class="card-body">
@@ -137,6 +137,7 @@
                             <th class="trn">Hours</th>
                             <th class="trn">Days</th>
                             <th class="trn">Space</th>
+                            <th class="trn">Discount</th>
                             <th class="trn">Description</th>
                             <th></th>
                         </thead>
@@ -149,6 +150,7 @@
 
     </div>
     @include('modals.general_settings')
+    @include('modals.global')
 @endsection
 
 @push('scripts')
