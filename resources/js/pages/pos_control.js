@@ -102,6 +102,8 @@ $( function() {
 							'</span><br>'+
 							'<input type="hidden" id="current_cust_id" value="'+$(this).attr('data-cust_id')+'">'+
 							'<input type="hidden" id="discount_value" name="discount_value" value="0">'+
+							'<input type="hidden" id="reward_price" name="reward_price" value="0">'+
+							'<input type="hidden" id="reward_points" name="reward_points" value="0">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -122,7 +124,8 @@ $( function() {
 					'</div>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
-					'<button class="btn btn-lg btn-info btn-block btn-outline rewards" style="height: 120px;">'+
+					'<button class="btn btn-lg btn-info btn-block btn-outline rewards" '+
+						'data-available_points="'+$(this).attr('data-points')+'" style="height: 120px;">'+
 						'<span class="trn">Rewards</span>'+
 					'</button>'+
 				'</div>'+
@@ -136,7 +139,7 @@ $( function() {
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
 							'<span style="word-wrap: break-word;">Payment: </span><br>'+
-							'<input type="number" class="form-control form-control-sm" min="1" step="any">'+
+							'<input type="number" id="order_payment" class="form-control form-control-sm" min="1" step="any">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -149,7 +152,8 @@ $( function() {
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
 							'<span style="word-wrap: break-word;">Total Amount: </span><br>'+
-							'<span id="total_amount" style="font-size:18px">0.00</span>'
+							'<span id="total_amount" style="font-size:18px">0.00</span>'+
+							'<input type="hidden" id="order_total_amount">'+
 						'</div>'+
 					'</div>'+
 				'</div>';
@@ -158,6 +162,7 @@ $( function() {
 	});
 
 	$('#control').on('click', '.rewards', function() {
+		rewards($(this).attr('data-available_points'));
 		$('#rewards_modal').modal('show');
 	});
 
@@ -170,6 +175,17 @@ $( function() {
 		$('#customers').show();
 		$('#pos_control').hide();
 		$('#control').hide();
+	});
+
+	$('#control').on('click', '.pay_now', function() {
+		var order_payment = parseFloat($('#order_payment').val());
+		var order_total_amount = parseFloat($('#order_total_amount').val());
+		var order_change = order_payment - order_total_amount;
+
+		$('#order_change').val((order_change).toFixed(2));
+		$('#change_view').html((order_change).toFixed(2));
+
+		$('#change_modal').modal('show');
 	});
 
 	$('#product_types').on('click', '.type', function() {
@@ -195,7 +211,9 @@ $( function() {
             if (textStatus == 'success') {
             	ordersTable(data);
             	$('#sub_total').html(calculateSubTotal(data));
-            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
+            	$('#total_amount').html(
+            		calculateTotal(data,$('#discount_value').val(),$('#reward_price').val())
+            	);
             }
         }).fail(function(xhr, textStatus, errorThrown) {
 			console.log("error");
@@ -216,7 +234,7 @@ $( function() {
             if (textStatus == 'success') {
             	ordersTable(data);
             	$('#sub_total').html(calculateSubTotal(data));
-            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
+            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val(),$('#reward_price').val()));
             }
         }).fail(function(xhr, textStatus, errorThrown) {
 			console.log("error");
@@ -240,7 +258,7 @@ $( function() {
 	            if (textStatus == 'success') {
 	            	ordersTable(data);
 	            	$('#sub_total').html(calculateSubTotal(data));
-	            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
+	            	$('#total_amount').html(calculateTotal(data,$('#discount_value').val(),$('#reward_price').val()));
 	            }
 	        }).fail(function(xhr, textStatus, errorThrown) {
 				console.log("error");
@@ -264,10 +282,30 @@ $( function() {
 
     	discount_viewTable = '<tr>'+
     							'<td>'+$(this).attr('data-description')+'</td>'+
-    							'<td>'+(discount).toFixed(2)+'</td>'+
+    							'<td>'+'-'+(discount).toFixed(2)+'</td>'+
     						'</tr>';
 
     	$('#tbl_discountView_body').html(discount_viewTable);
+
+    	showCurrentBill($('#current_cust_id').val());
+    });
+
+    $('#tbl_rewards_body').on('click', '.select_reward', function() {
+    	var reward_viewTable = '';
+    	$('#tbl_rewardView_body').html(reward_viewTable);
+
+    	var discount = parseFloat($('#reward_price').val()) + parseFloat($(this).attr('data-rwd_price'));
+    	var deducted_points = parseFloat($('#reward_points').val()) + parseFloat($(this).attr('data-rwd_points'));
+    	
+    	$('#reward_price').val((discount).toFixed(2));
+    	$('#reward_points').val(deducted_points);
+
+    	reward_viewTable = '<tr>'+
+    							'<td>'+$(this).attr('data-rwd_name')+'</td>'+
+    							'<td>'+'-'+(discount).toFixed(2)+'</td>'+
+    						'</tr>';
+
+    	$('#tbl_rewardView_body').html(reward_viewTable);
 
     	showCurrentBill($('#current_cust_id').val());
     });
@@ -461,7 +499,50 @@ function discountTable(arr) {
                 			'data-description="'+x.description+'"'+
                 			'data-percentage="'+x.percentage+'"'+
                 			'>'+
-                        	'<i class="fa fa-pencil"></i>'+
+                        	'<i class="fa fa-plus"></i>'+
+                        '</button>';
+            }, searchable: false, orderable: false},
+        ]
+    });
+}
+
+function rewards(available_points) {
+	$.ajax({
+		url: '../../pos-control/show-rewards',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {
+			_token: token,
+			available_points: available_points
+		},
+	}).done(function(data, textStatus, xhr) {
+		rewardsTable(data);
+	}).fail(function(xhr, textStatus, errorThrown) {
+		msg('Discounts: '+errorThrown,textStatus);
+	});
+}
+
+function rewardsTable(arr) {
+	$('#tbl_rewards').dataTable().fnClearTable();
+    $('#tbl_rewards').dataTable().fnDestroy();
+    $('#tbl_rewards').dataTable({
+        data: arr,
+        searching: false,
+        ordering: false,
+        columns: [
+            {data: function(x) {
+            	return x.rwd_name+'<input type="hidden" name="rwd_name[]" value="'+x.rwd_name+'">';
+            }},
+            {data: function(x) {
+            	return x.rwd_points+'<input type="hidden" name="rwd_points[]" value="'+x.rwd_points+'">';
+            }},
+            {data: function(x) {
+                return '<button type="button" class="btn btn-info btn-sm select_reward" '+
+                			'data-rwd_name="'+x.rwd_name+'"'+
+                			'data-rwd_points="'+x.rwd_points+'"'+
+                			'data-rwd_price="'+x.rwd_price+'"'+
+                			'>'+
+                        	'<i class="fa fa-plus"></i>'+
                         '</button>';
             }, searchable: false, orderable: false},
         ]

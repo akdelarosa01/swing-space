@@ -13917,9 +13917,9 @@ window.Popper = __webpack_require__(3).default;
  */
 
 try {
-    window.$ = window.jQuery = __webpack_require__(4);
+  window.$ = window.jQuery = __webpack_require__(4);
 
-    __webpack_require__(16);
+  __webpack_require__(16);
 } catch (e) {}
 
 /**
@@ -13941,9 +13941,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -13957,10 +13957,10 @@ if (token) {
 window.Pusher = __webpack_require__(37);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-    broadcaster: 'pusher',
-    key: "",
-    cluster: "mt1",
-    encrypted: true
+  broadcaster: 'pusher',
+  key: "53acfdc5fb11d97e0910",
+  cluster: "ap1",
+  encrypted: true
 });
 
 /***/ }),
@@ -58647,10 +58647,10 @@ function ordersTable(arr) {
         bInfo : false,
         columns: [
             {data: function(x) {
-                return x.prod_name+'<input type="hidden" name="prod_name[]" value="'+x.prod_name+'">';
+                return x.prod_name+'<input type="hidden" name="order_prod_name[]" value="'+x.prod_name+'">';
             }, searchable: false, orderable: false},
             {data: function(x) {
-                return '<input type="number" name="quantity[]" class="form-control form-control-sm quantity" '+
+                return '<input type="number" name="order_quantity[]" class="form-control form-control-sm quantity" '+
                         'data-cust_id="'+x.cust_id+'" '+
                         'data-prod_id="'+x.prod_id+'" '+
                         'data-price="'+x.price+'" '+
@@ -58658,7 +58658,7 @@ function ordersTable(arr) {
                         'value="'+x.quantity+'">';
             }, searchable: false, orderable: false},
             {data: function(x) {
-                return (x.price).toFixed(2)+'<input type="hidden" name="price[]" value="'+(x.price).toFixed(2)+'">';
+                return (x.price).toFixed(2)+'<input type="hidden" name="order_price[]" value="'+(x.price).toFixed(2)+'">';
             }, searchable: false, orderable: false},
             {data: function(x) {
                 return '<div class="btn-group">'+
@@ -58708,16 +58708,15 @@ function calculateSubTotal(data) {
     return total.toFixed(2);
 }
 
-function calculateTotal(data,discounts) {
+function calculateTotal(data,discounts,rewards) {
     var total = 0;
     $.each(data, function(i,x) {
         total = parseFloat(total) + parseFloat(x.price);
     });
 
-    console.log(total);
-    console.log(discounts);
+    total = parseFloat(total) - parseFloat(discounts) - parseFloat(rewards);
 
-    total = parseFloat(total) - parseFloat(discounts);
+    $('#order_total_amount').val(total);
 
     return total.toFixed(2);
 }
@@ -58734,8 +58733,8 @@ function showCurrentBill(cust_id) {
     }).done(function(data, textStatus, xhr) {
         ordersTable(data);
         $('#sub_total').html(calculateSubTotal(data));
-        $('#total_amount').html(calculateTotal(data,$('#discount_value').val()));
+        $('#total_amount').html(calculateTotal(data,$('#discount_value').val(),$('#reward_price').val()));
     }).fail(function(xhr, textStatus, errorThrown) {
-        msg('Current Customers: '+errorThrown,textStatus);
+        msg('Current Bill: '+errorThrown,textStatus);
     });
 }

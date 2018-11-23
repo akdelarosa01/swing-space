@@ -12,6 +12,7 @@ class Reward extends Model
     	'rwd_points',
     	'rwd_hrs',
     	'rwd_space',
+        'rwd_price',
     	'rwd_description',
     	'create_user',
     	'update_user'

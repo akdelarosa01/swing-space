@@ -120,7 +120,45 @@
                     <span aria-hidden="true" class="zmdi zmdi-close"></span>
                 </button>
             </div>
-            <div class="modal-body"></div>
+            <div class="modal-body">
+                <table class="table table-sm" id="tbl_rewards" width="100%">
+                    <thead>
+                        <th>Description</th>
+                        <th>Points</th>
+                        <th></th>
+                    </thead>
+                    <tbody id="tbl_rewards_body"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
+                    <span class="trn">Cancel</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="change_modal" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span class="trn">Change</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="zmdi zmdi-close"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm" id="tbl_rewards" width="100%" style="font-size: 28px">
+                    <thead>
+                        <th>Change:</th>
+                        <th id="change_view">0.00</th>
+                    </thead>
+                </table>
+                <input type="hidden" name="order_change" id="order_change" value="0.00">
+            </div>
             <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
                     <span class="trn">Cancel</span>

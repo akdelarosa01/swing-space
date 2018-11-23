@@ -50,12 +50,12 @@
 					</thead>
 					<tbody id="tbl_discountView_body"></tbody>
 				</table>
-				<table class="table table-sm" id="tbl_rewardsView" width="100%">
+				<table class="table table-sm" id="tbl_rewardView" width="100%">
 					<thead>
 						<td width="70%">Rewards</td>
 						<td width="30%"></td>
 					</thead>
-					<tbody id="tbl_rewardsView_body"></tbody>
+					<tbody id="tbl_rewardView_body"></tbody>
 				</table>
 				
 			</div>

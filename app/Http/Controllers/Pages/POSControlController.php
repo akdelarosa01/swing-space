@@ -15,6 +15,7 @@ use App\CurrentCustomerBill;
 use App\Reward;
 use App\Discount;
 use DB;
+use PDF;
 
 
 class POSControlController extends Controller
@@ -293,9 +294,24 @@ class POSControlController extends Controller
         return response()->json($discounts);
     }
 
-    public function show_rewards()
+    public function show_rewards(Request $req)
     {
-        $rewards = Rewards::all();
+        $rewards = Reward::where('rwd_points','<=',$req->available_points)->get();
         return response()->json($rewards);
+    }
+
+    public function save_payments(Request $req)
+    {
+        # code...
+    }
+
+    public function Receipt(Request $req)
+    {
+
+    }
+
+    public function EmailCustomer(Request $req)
+    {
+        # code...
     }
 }
