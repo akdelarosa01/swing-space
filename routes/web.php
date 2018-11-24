@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('pos-control/show-current-bill', 'Pages\POSControlController@show_currentBill');
     Route::post('pos-control/delete-current-item', 'Pages\POSControlController@delete_currentItemBill');
     Route::post('pos-control/update-current-item', 'Pages\POSControlController@update_currentItemBill');
+    Route::post('pos-control/save-payments', 'Pages\POSControlController@save_payments');
 
     Route::get('pos-control/customer-view', function() {
         return view('pages.pos.customer_view');

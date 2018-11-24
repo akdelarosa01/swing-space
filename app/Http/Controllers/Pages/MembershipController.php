@@ -9,6 +9,7 @@ use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserLogsController;
 use App\Customer;
 use App\Incentive;
+use App\CustomerPoint;
 use App\User;
 use DB;
 use App;
@@ -184,7 +185,7 @@ class MembershipController extends Controller
                                 ['inc_hrs',0],
                                 ['inc_days',0]
                             ])
-                            ->select('inc_points')->first();
+                            ->select('inc_code','inc_name','inc_points')->first();
 
                     Customer::where('user_id',$req->referrer)->increment(
                         'points', $inc->inc_points,[
@@ -192,6 +193,13 @@ class MembershipController extends Controller
                             'updated_at' => date('Y-m-d h:i:s')
                         ]
                     );
+
+                    CustomerPoint::create([
+                        'customer_id' => $user->id,
+                        'inc_code' => $inc->inc_code,
+                        'inc_name' => $inc->inc_name,
+                        'inc_points' => $inc->inc_points
+                    ]);
                 }
 
                 $this->_userlog->log([

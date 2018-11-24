@@ -177,17 +177,6 @@ $( function() {
 		$('#control').hide();
 	});
 
-	$('#control').on('click', '.pay_now', function() {
-		var order_payment = parseFloat($('#order_payment').val());
-		var order_total_amount = parseFloat($('#order_total_amount').val());
-		var order_change = order_payment - order_total_amount;
-
-		$('#order_change').val((order_change).toFixed(2));
-		$('#change_view').html((order_change).toFixed(2));
-
-		$('#change_modal').modal('show');
-	});
-
 	$('#product_types').on('click', '.type', function() {
 		getProduct($(this).attr('data-product_type'));
 	});
@@ -309,6 +298,48 @@ $( function() {
 
     	showCurrentBill($('#current_cust_id').val());
     });
+
+    $('#control').on('click', '.pay_now', function() {
+		var order_payment = parseFloat($('#order_payment').val());
+		var order_total_amount = parseFloat($('#order_total_amount').val());
+		var order_change = order_payment - order_total_amount;
+
+		$('#order_change').val((order_change).toFixed(2));
+		$('#change_view').html((order_change).toFixed(2));
+
+		$('#change_modal').modal('show');
+
+		$.ajax({
+			url: '../../pos-control/save-payments',
+			type: 'POST',
+			dataType: 'JSON',
+			data: {
+				_token: token,
+				cust_id: $('#current_cust_id').val(),
+				discount_value: $('#discount_value').val(),
+				reward_price: $('#reward_price').val(),
+				reward_points: $('#reward_points').val(),
+				order_payment: $('#order_payment').val(),
+				order_total_amount: $('#order_total_amount').val(),
+				order_change: $('#order_change').val(),
+				order_prod_name: $('input[name="order_prod_name[]"]').map(function(){return $(this).val();}).get(),
+				order_quantity: $('input[name="order_quantity[]"]').map(function(){return $(this).val();}).get(),
+				order_price: $('input[name="order_price[]"]').map(function(){return $(this).val();}).get(),
+				order_prod_code: $('input[name="order_prod_code[]"]').map(function(){return $(this).val();}).get(),
+				order_prod_id: $('input[name="order_prod_id[]"]').map(function(){return $(this).val();}).get(),
+			},
+		}).done(function(data, textStatus, xhr) {
+			showCustomer();
+			$('#customers').show();
+			$('#pos_control').hide();
+			$('#control').hide();
+			$('#tbl_discounts_body').html('');
+			$('#tbl_rewards_body').html('');
+			msg(data.msg,data.status);
+		}).fail(function(xhr, textStatus, errorThrown) {
+			msg('Payment: '+errorThrown,textStatus);
+		});
+	});
 });
 
 function getProductTypes() {
@@ -368,6 +399,7 @@ function productButton(data) {
 						'data-prod_id="'+x.id+'" '+
 						'data-prod_code="'+x.prod_code+'" '+
 						'data-prod_name="'+x.prod_name+'" '+
+						'data-variants="'+x.variants+'" '+
 						'data-price="'+(x.price).toFixed(2)+'">'+
 							'<span style="word-wrap: break-word;">'+x.prod_name+'</span><br>'+
 							'<span>'+(x.price).toFixed(2)+'</span>'+

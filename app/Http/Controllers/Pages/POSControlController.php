@@ -7,13 +7,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserLogsController;
+use Carbon\Carbon;
 use App\Events\POS;
 use App\Product;
 use App\DropdownOption;
 use App\CurrentCustomer;
 use App\CurrentCustomerBill;
+use App\CustomerProductBill;
 use App\Reward;
+use App\Incentive;
 use App\Discount;
+use App\CustomerLog;
+use App\Customer;
+use App\CustomerPoint;
+use App\Sale;
 use DB;
 use PDF;
 
@@ -190,9 +197,20 @@ class POSControlController extends Controller
             'cust_code' => $code,
             'cust_firstname' => $req->cust_firstname,
             'cust_lastname' => $req->cust_lastname,
-            'cust_timein' => (isset($req->cust_timein))? $req->cust_timein : date('H:i:s'),
+            'cust_timein' => (isset($req->cust_timein))? $this->_global->convertDate($req->cust_timein,'Y-m-d H:i:s') : date('Y-m-d H:i:s'),
             'create_user' => Auth::user()->id,
             'update_user' => Auth::user()->id,
+        ]);
+
+        $cus = Customer::where('customer_code',$code)
+                        ->select('user_id')->first();
+
+        CustomerLog::create([
+            'customer_id' => (isset($cus->user_id))? $cus->id : 0,
+            'date_logged' => date('Y-m-d'),
+            'time_in' => date('Y-m-d H:i:s'),
+            'time_out' => date('Y-m-d H:i:s'),
+            'hrs' => 0
         ]);
 
         if ($cust) {
@@ -302,7 +320,33 @@ class POSControlController extends Controller
 
     public function save_payments(Request $req)
     {
-        # code...
+        $data = [
+            'msg' => 'Payment Failed.',
+            'status' => 'failed'
+        ];
+
+        $currcust = CurrentCustomer::where('id',$req->cust_id)->first();
+        $timein = Carbon::parse($currcust->cust_timein);
+        $hrs = $timein->diffInHours(Carbon::now());
+
+        $saved = $this->saveSoldProducts($currcust->cust_code,$req);
+
+        $this->deductRewardPoints($currcust->cust_code,$req->reward_points);
+
+        $this->giveIncentives($currcust->cust_code,$hrs);
+
+        if ($saved) {
+            CurrentCustomer::where('id',$req->cust_id)->delete();
+            $data = [
+                'msg' => 'Payment successfully transacted',
+                'status' => 'success'
+            ];
+        }
+
+        $bill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+        event(new POS($bill));
+
+        return $data;
     }
 
     public function Receipt(Request $req)
@@ -313,5 +357,114 @@ class POSControlController extends Controller
     public function EmailCustomer(Request $req)
     {
         # code...
+    }
+
+    public function giveIncentives($cust_code,$hrs)
+    {
+        $cust = Customer::where('customer_code',$cust_code)
+                        ->select('user_id')->first();
+
+        $inc = Incentive::where('inc_hrs','<=',$hrs)->orderBy('id','desc')->first();
+
+        if (count((array)$inc) > 0) {
+            if (count((array)$cust) > 0) {
+                CustomerPoint::create([
+                    'customer_id' => $cust->user_id,
+                    'inc_code' => $inc->inc_code,
+                    'inc_name' => $inc->inc_name,
+                    'inc_points' => $inc->inc_points
+                ]);
+
+                Customer::where('customer_code',$cust_code)->increment(
+                                'points', $inc->inc_points,[
+                                    'update_user' => Auth::user()->id,
+                                    'updated_at' => date('Y-m-d h:i:s')
+                                ]
+                            );
+            }
+        }
+
+        
+    }
+
+    public function saveSoldProducts($cust_code,$req)
+    {
+        $cust = Customer::where('customer_code',$cust_code)
+                        ->select('user_id')->first();
+        $sub_total = 0;
+        $discount = $req->discount_value + $req->reward_price;
+
+        foreach ($req->order_prod_id as $key => $prod_id) {
+            $prod = Product::where('id',$prod_id)->first();
+
+            if (count((array)$cust) > 0) {
+                CustomerProductBill::create([
+                    'customer_id' => $cust->user_id,
+                    'prod_code' => $prod->prod_code,
+                    'prod_name' => $prod->prod_name,
+                    'prod_type' => $prod->prod_type,
+                    'variants' => $prod->variants,
+                    'quantity' => $req->order_quantity[$key],
+                    'cost' => $req->order_price[$key]
+                ]);
+            } else {
+                CustomerProductBill::create([
+                    'customer_id' => 0, //walk ins
+                    'prod_code' => $prod->prod_code,
+                    'prod_name' => $prod->prod_name,
+                    'prod_type' => $prod->prod_type,
+                    'variants' => $prod->variants,
+                    'quantity' => $req->order_quantity[$key],
+                    'cost' => $req->order_price[$key]
+                ]);
+            }
+
+            
+
+            $sub_total += $req->order_price[$key];
+        }
+
+        $sales;
+
+        if (count((array)$cust) > 0) {
+            $sales = Sale::create([
+                        'customer_code' => $cust_code,
+                        'sub_total' => $sub_total,
+                        'discount' => $discount,
+                        'payment' => $req->order_payment,
+                        'change' => $req->order_change,
+                        'total_sale' => $req->order_total_amount,
+                        'create_user' => Auth::user()->id,
+                        'update_user' => Auth::user()->id
+                    ]);
+        } else {
+            $sales = Sale::create([
+                        'customer_code' => 'N/A',
+                        'sub_total' => $sub_total,
+                        'discount' => $discount,
+                        'payment' => $req->order_payment,
+                        'change' => $req->order_change,
+                        'total_sale' => $req->order_total_amount,
+                        'create_user' => Auth::user()->id,
+                        'update_user' => Auth::user()->id
+                    ]);
+        }
+
+        
+        if ($sales) {
+            return true;
+        }
+    }
+
+    public function deductRewardPoints($cust_code,$points)
+    {
+        if (isset($points)) {
+            Customer::where('customer_code',$cust_code)->decrement(
+                        'points', $points,[
+                            'update_user' => Auth::user()->id,
+                            'updated_at' => date('Y-m-d h:i:s')
+                        ]
+                    );
+        }
     }
 }

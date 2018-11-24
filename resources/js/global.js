@@ -420,7 +420,9 @@ function ordersTable(arr) {
         bInfo : false,
         columns: [
             {data: function(x) {
-                return x.prod_name+'<input type="hidden" name="order_prod_name[]" value="'+x.prod_name+'">';
+                return x.prod_name+'<input type="hidden" name="order_prod_name[]" value="'+x.prod_name+'">'+
+                '<input type="hidden" name="order_prod_code[]" value="'+x.prod_code+'">'+
+                '<input type="hidden" name="order_prod_id[]" value="'+x.prod_id+'">';
             }, searchable: false, orderable: false},
             {data: function(x) {
                 return '<input type="number" name="order_quantity[]" class="form-control form-control-sm quantity" '+

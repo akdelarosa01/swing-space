@@ -13917,9 +13917,9 @@ window.Popper = __webpack_require__(3).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(4);
+    window.$ = window.jQuery = __webpack_require__(4);
 
-  __webpack_require__(16);
+    __webpack_require__(16);
 } catch (e) {}
 
 /**
@@ -13941,9 +13941,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -13957,10 +13957,10 @@ if (token) {
 window.Pusher = __webpack_require__(37);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-  broadcaster: 'pusher',
-  key: "53acfdc5fb11d97e0910",
-  cluster: "ap1",
-  encrypted: true
+    broadcaster: 'pusher',
+    key: "53acfdc5fb11d97e0910",
+    cluster: "ap1",
+    encrypted: true
 });
 
 /***/ }),
@@ -58647,7 +58647,9 @@ function ordersTable(arr) {
         bInfo : false,
         columns: [
             {data: function(x) {
-                return x.prod_name+'<input type="hidden" name="order_prod_name[]" value="'+x.prod_name+'">';
+                return x.prod_name+'<input type="hidden" name="order_prod_name[]" value="'+x.prod_name+'">'+
+                '<input type="hidden" name="order_prod_code[]" value="'+x.prod_code+'">'+
+                '<input type="hidden" name="order_prod_id[]" value="'+x.prod_id+'">';
             }, searchable: false, orderable: false},
             {data: function(x) {
                 return '<input type="number" name="order_quantity[]" class="form-control form-control-sm quantity" '+
