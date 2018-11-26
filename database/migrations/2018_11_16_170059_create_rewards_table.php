@@ -15,14 +15,8 @@ class CreateRewardsTable extends Migration
     {
         Schema::create('rewards', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('rwd_code');
-            $table->string('rwd_name');
-            $table->double('rwd_points',12,2)->default(0.00);
-            $table->integer('rwd_hrs')->default(0);
-            $table->integer('rwd_days')->default(0);
-            $table->string('rwd_space');
-            $table->double('rwd_price',12,2)->default(0.00);
-            $table->text('rwd_description');
+            $table->double('deducted_points',12,2)->default(0.00);
+            $table->double('deducted_price',12,2)->default(0.00);
             $table->integer('create_user');
             $table->integer('update_user');
             $table->timestamps();

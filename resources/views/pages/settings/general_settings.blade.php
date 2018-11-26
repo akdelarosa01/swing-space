@@ -3,52 +3,6 @@
 @section('content')
     <div class="row">
 
-        {{-- <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <span class="trn">Hour Rate Settings</span>
-                </div>
-                <div class="card-body">
-                    <form action="../../general-settings/save-rate" method="post" class="form-horizontal" id="frm_rate">
-                        <input type="hidden" id="hr_token" name="_token" value="{{ Session::token() }}">
-                        <input type="hidden" id="hr_id" name="hr_id">
-                        <div class="form-group row">
-                            <label for="hr" class="control-label text-right col-md-3 trn">Hours</label>
-                            <div class="col-md-9">
-                                <input type="number" class="form-control form-control-sm clear" id="hr" name="hr" min="1" required>
-                                <div id="hr_feedback"></div>
-                            </div>
-                            <label for="rate" class="control-label text-right col-md-3 trn">Rate</label>
-                            <div class="col-md-9">
-                                <div class="input-group input-group-sm">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">₱</span>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm clear" id="rate" name="rate" required>
-                                    
-                                </div>
-                                <div id="rate_feedback"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="offset-md-8 col-md-4">
-                                <button type="submit" class="btn btn-sm btn-info btn-block">Set</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <table class="table table-sm" id="tbl_rate" width="100%">
-                        <thead>
-                            <th>Hrs</th>
-                            <th>Rate</th>
-                            <th></th>
-                        </thead>
-                        <tbody id="tbl_rate_body"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div> --}}
-
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -94,7 +48,7 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <span class="trn">Goal Settings</span>
@@ -105,13 +59,9 @@
                 <div class="card-body">
                     <table class="table table-sm" id="tbl_incentive" width="100%">
                         <thead>
-                            <th class="trn">Code</th>
-                            <th class="trn">Name</th>
+                            <th class="trn">Price From</th>
+                            <th class="trn">Price To</th>
                             <th class="trn">Points</th>
-                            <th class="trn">Hours</th>
-                            <th class="trn">Days</th>
-                            <th class="trn">Space</th>
-                            <th class="trn">Description</th>
                             <th></th>
                         </thead>
                         <tbody id="tbl_incentive_body"></tbody>
@@ -120,7 +70,7 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <span class="trn">Reward Settings</span>
@@ -131,14 +81,8 @@
                 <div class="card-body">
                     <table class="table table-sm" id="tbl_reward" width="100%">
                         <thead>
-                            <th class="trn">Code</th>
-                            <th class="trn">Name</th>
-                            <th class="trn">Points</th>
-                            <th class="trn">Hours</th>
-                            <th class="trn">Days</th>
-                            <th class="trn">Space</th>
-                            <th class="trn">Discount</th>
-                            <th class="trn">Description</th>
+                            <th class="trn">Discounted Price</th>
+                            <th class="trn">Equivalent Points</th>
                             <th></th>
                         </thead>
                         <tbody id="tbl_incentive_body"></tbody>

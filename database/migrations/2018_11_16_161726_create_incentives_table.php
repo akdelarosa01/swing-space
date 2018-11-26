@@ -15,13 +15,9 @@ class CreateIncentivesTable extends Migration
     {
         Schema::create('incentives', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('inc_code');
-            $table->string('inc_name');
-            $table->double('inc_points',12,2)->default(0.00);
-            $table->integer('inc_hrs')->default(0);
-            $table->integer('inc_days')->default(0);
-            $table->string('inc_space');
-            $table->text('inc_description');
+            $table->double('price_from',12,2)->default(0.00);
+            $table->double('price_to',12,2)->default(0.00);
+            $table->double('points',12,2)->default(0.00);
             $table->integer('create_user');
             $table->integer('update_user');
             $table->timestamps();
