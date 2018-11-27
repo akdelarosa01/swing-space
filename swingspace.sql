@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.22, for Linux (x86_64)
+CREATE DATABASE  IF NOT EXISTS `swingspace` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `swingspace`;
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: swingspace
 -- ------------------------------------------------------
--- Server version	5.7.22-0ubuntu18.04.1
+-- Server version	5.7.24-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -66,7 +68,7 @@ CREATE TABLE `current_customer_bills` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +77,7 @@ CREATE TABLE `current_customer_bills` (
 
 LOCK TABLES `current_customer_bills` WRITE;
 /*!40000 ALTER TABLE `current_customer_bills` DISABLE KEYS */;
-INSERT INTO `current_customer_bills` VALUES (9,1,9,'SSP009','Oreo Muffin',1,58.00,58.00,6,6,'2018-11-20 08:40:49','2018-11-20 08:40:49'),(10,1,2,'SSP002','C2',2,50.00,25.00,6,6,'2018-11-20 08:46:35','2018-11-20 08:46:41'),(11,1,3,'SSP003','Soda In Can',1,35.00,35.00,6,6,'2018-11-20 08:48:46','2018-11-20 08:48:46'),(12,1,1,'SSP001','Bottled Water',1,20.00,20.00,6,6,'2018-11-20 08:48:59','2018-11-20 08:48:59'),(13,1,7,'SSP007','Ube Cream',1,148.00,148.00,6,6,'2018-11-20 08:49:08','2018-11-20 08:49:56'),(14,1,30,'SSP030','Shared Space Rent',1,80.00,80.00,6,6,'2018-11-20 08:49:09','2018-11-20 08:49:09'),(25,5,17,'SSP017','Print BW (SHORT)',1,3.00,3.00,6,6,'2018-11-20 11:22:43','2018-11-20 11:22:43'),(26,5,20,'SSP020','Print Colored (LONG)',1,25.00,25.00,6,6,'2018-11-20 11:22:44','2018-11-20 11:22:44'),(27,5,23,'SSP023','Photocopy (LONG)',1,1.50,1.50,6,6,'2018-11-20 11:22:44','2018-11-20 11:22:44'),(28,5,30,'SSP030','Shared Space Rent',1,80.00,80.00,6,6,'2018-11-20 11:22:47','2018-11-20 11:22:47');
+INSERT INTO `current_customer_bills` VALUES (1,1,2,'SSP002','C2',1,25.00,25.00,6,6,'2018-11-27 09:57:05','2018-11-27 09:57:05'),(2,1,9,'SSP009','Oreo Muffin',1,58.00,58.00,6,6,'2018-11-27 09:57:07','2018-11-27 09:57:07'),(3,1,12,'SSP012','Key Lime Tart',1,58.00,58.00,6,6,'2018-11-27 09:57:07','2018-11-27 09:57:07'),(4,1,15,'SSP015','Ham & Cheese',1,58.00,58.00,6,6,'2018-11-27 09:57:08','2018-11-27 09:57:08'),(5,1,18,'SSP018','Print BW (LONG)',100,500.00,5.00,6,6,'2018-11-27 09:57:11','2018-11-27 09:57:14'),(6,1,30,'SSP030','Shared Space Rent',2,160.00,80.00,6,6,'2018-11-27 09:57:17','2018-11-27 09:57:21');
 /*!40000 ALTER TABLE `current_customer_bills` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +99,7 @@ CREATE TABLE `current_customers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +108,7 @@ CREATE TABLE `current_customers` (
 
 LOCK TABLES `current_customers` WRITE;
 /*!40000 ALTER TABLE `current_customers` DISABLE KEYS */;
-INSERT INTO `current_customers` VALUES (1,'N/A','Boss','Keng','2018-11-20 11:54:10',6,6,'2018-11-20 02:41:57','2018-11-20 02:41:57'),(2,'A0006','Gordon','Ramsey','2018-11-20 11:54:10',1,1,'2018-11-20 03:28:17','2018-11-20 03:28:17'),(3,'A0002','Franz','Simon','2018-11-20 11:54:10',1,1,'2018-11-20 03:41:13','2018-11-20 03:41:13'),(4,'N/A','Kenneth','Ga','2018-11-20 11:55:34',1,1,'2018-11-20 03:55:56','2018-11-20 03:55:56'),(5,'N/A','Pang','Ku','2018-11-20 13:20:00',1,1,'2018-11-20 03:59:38','2018-11-20 03:59:38');
+INSERT INTO `current_customers` VALUES (1,'A0006','Gordon','Ramsey','2018-11-27 17:56:57',6,6,'2018-11-27 09:56:57','2018-11-27 09:56:57');
 /*!40000 ALTER TABLE `current_customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +129,7 @@ CREATE TABLE `customer_logs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,6 +138,7 @@ CREATE TABLE `customer_logs` (
 
 LOCK TABLES `customer_logs` WRITE;
 /*!40000 ALTER TABLE `customer_logs` DISABLE KEYS */;
+INSERT INTO `customer_logs` VALUES (1,8,'2018-11-27','17:56:57','17:56:57',0.00,'2018-11-27 09:56:57','2018-11-27 09:56:57');
 /*!40000 ALTER TABLE `customer_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,13 +152,12 @@ DROP TABLE IF EXISTS `customer_points`;
 CREATE TABLE `customer_points` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `ins_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `ins_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `points` double(12,2) NOT NULL DEFAULT '0.00',
+  `remarks` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accumulated_points` double(12,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,6 +166,7 @@ CREATE TABLE `customer_points` (
 
 LOCK TABLES `customer_points` WRITE;
 /*!40000 ALTER TABLE `customer_points` DISABLE KEYS */;
+INSERT INTO `customer_points` VALUES (1,8,'15 points accumulated from your referral customer code A0006',15.00,'2018-11-27 02:40:28','2018-11-27 02:40:28'),(2,7,'20 points accumulated from your referral customer code A0002',20.00,'2018-11-27 02:42:25','2018-11-27 02:42:25');
 /*!40000 ALTER TABLE `customer_points` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +189,7 @@ CREATE TABLE `customer_product_bills` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,6 +198,7 @@ CREATE TABLE `customer_product_bills` (
 
 LOCK TABLES `customer_product_bills` WRITE;
 /*!40000 ALTER TABLE `customer_product_bills` DISABLE KEYS */;
+INSERT INTO `customer_product_bills` VALUES (1,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:05:42','2018-11-27 02:05:42'),(2,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:07:10','2018-11-27 02:07:10'),(3,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:16:22','2018-11-27 02:16:22'),(4,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:16:35','2018-11-27 02:16:35'),(5,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:16:57','2018-11-27 02:16:57'),(6,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:19:45','2018-11-27 02:19:45'),(7,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:19:55','2018-11-27 02:19:55'),(8,8,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 02:40:27','2018-11-27 02:40:27'),(9,7,'SSP009','Oreo Muffin','Pastries','Personal  Serving',1,58.00,'2018-11-27 02:42:25','2018-11-27 02:42:25'),(10,7,'SSP015','Ham & Cheese','Pastries','Personal  Serving',1,58.00,'2018-11-27 02:42:25','2018-11-27 02:42:25'),(11,7,'SSP002','C2','Beverages','355ml Bottle',1,25.00,'2018-11-27 02:42:25','2018-11-27 02:42:25'),(12,7,'SSP030','Shared Space Rent','Space Rental','Hour',1,80.00,'2018-11-27 02:42:25','2018-11-27 02:42:25'),(13,0,'SSP008','Blueberry Muffin','Pastries','Personal  Serving',1,58.00,'2018-11-27 02:47:41','2018-11-27 02:47:41'),(14,0,'SSP011','Choco Ship Cookies','Pastries','Personal  Serving',1,48.00,'2018-11-27 02:47:41','2018-11-27 02:47:41'),(15,0,'SSP014','Tuna','Pastries','Personal  Serving',1,58.00,'2018-11-27 02:47:41','2018-11-27 02:47:41'),(16,0,'SSP002','C2','Beverages','355ml Bottle',1,25.00,'2018-11-27 02:50:56','2018-11-27 02:50:56'),(17,0,'SSP008','Blueberry Muffin','Pastries','Personal  Serving',1,58.00,'2018-11-27 02:50:56','2018-11-27 02:50:56'),(18,0,'SSP011','Choco Ship Cookies','Pastries','Personal  Serving',1,48.00,'2018-11-27 02:50:56','2018-11-27 02:50:56'),(19,0,'SSP030','Shared Space Rent','Space Rental','Hour',1,80.00,'2018-11-27 02:50:56','2018-11-27 02:50:56'),(20,0,'SSP003','Soda In Can','Beverages','355ml Bottle',1,35.00,'2018-11-27 05:41:57','2018-11-27 05:41:57'),(21,0,'SSP004','Mango Citrus','Cakes','Slice',1,148.00,'2018-11-27 05:41:57','2018-11-27 05:41:57'),(22,0,'SSP006','Classic Sansrival','Cakes','Slice',1,148.00,'2018-11-27 05:41:58','2018-11-27 05:41:58');
 /*!40000 ALTER TABLE `customer_product_bills` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +223,7 @@ CREATE TABLE `customers` (
   `school` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'N/A',
   `company` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'N/A',
   `referrer` int(11) DEFAULT '0',
-  `points` double(12,2) DEFAULT NULL,
+  `points` double(12,2) DEFAULT '0.00',
   `membership_type` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT 'A',
   `date_registered` date NOT NULL,
   `create_user` int(11) NOT NULL,
@@ -227,7 +231,7 @@ CREATE TABLE `customers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +240,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (2,7,'A0002','1991-09-09','N/A','N/A','N/A','N/A','N/A','N/A','N/A','N/A',0,NULL,'A','2018-11-13',1,1,'2018-11-13 03:15:17','2018-11-13 03:22:44'),(3,8,'A0006','1980-10-10','N/A','N/A','N/A','N/A','N/A','N/A','N/A','N/A',0,NULL,'A','2018-11-20',1,1,'2018-11-20 03:11:06','2018-11-20 03:11:06');
+INSERT INTO `customers` VALUES (2,7,'A0002','1991-09-09',NULL,'N/A','N/A','N/A','N/A','N/A','N/A','N/A',8,0.00,'B','2018-11-13',1,6,'2018-11-13 03:15:17','2018-11-27 02:42:25'),(3,8,'A0006','1980-10-10','N/A','N/A','N/A','N/A','N/A','N/A','N/A','N/A',0,20.00,'A','2018-11-20',1,6,'2018-11-20 03:11:06','2018-11-27 02:42:25'),(4,9,'A0007','1992-12-08',NULL,'(+63)927-553-0774','N/A','Isaac Jacob Dichoson','N/A','N/A','N/A','Seiko IT Solutions Philippines Inc.',8,0.00,'B','2018-11-22',1,6,'2018-11-22 10:16:34','2018-11-21 22:25:23');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -364,7 +368,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (4,14,'SSA001','1980-09-09','N/A','N/A','N/A','N/A','N/A','N/A','Manager','N/A','N/A','N/A','N/A','2018-11-04',2,2,'2018-11-04 03:25:44','2018-11-04 03:25:44'),(5,14,'SSA004','1980-09-09','N/A','N/A','N/A','N/A','N/A','N/A','Staff','N/A','N/A','N/A','N/A','2018-11-13',1,1,'2018-11-13 02:54:19','2018-11-13 02:54:19'),(6,9,'SSA005','1999-02-04','N/A','N/A','N/A','N/A','N/A','N/A','Staff','N/A','N/A','N/A','N/A','2018-11-13',1,1,'2018-11-13 03:14:07','2018-11-13 03:14:07'),(7,6,'SSA006','1983-02-02','N/A','N/A','N/A','N/A','N/A','N/A','Staff','N/A','N/A','N/A','N/A','2018-11-13',1,2,'2018-11-13 03:14:30','2018-11-15 00:23:45');
+INSERT INTO `employees` VALUES (4,14,'SSA001','1980-09-09','N/A','N/A','N/A','N/A','N/A','N/A','Manager','N/A','N/A','N/A','N/A','2018-11-04',2,2,'2018-11-04 03:25:44','2018-11-04 03:25:44'),(5,14,'SSA004','1980-09-09','N/A','N/A','N/A','N/A','N/A','N/A','Staff','N/A','N/A','N/A','N/A','2018-11-13',1,1,'2018-11-13 02:54:19','2018-11-13 02:54:19'),(6,9,'SSA005','1999-02-04','N/A','N/A','N/A','N/A','N/A','N/A','Staff','N/A','N/A','N/A','N/A','2018-11-13',1,1,'2018-11-13 03:14:07','2018-11-13 03:14:07'),(7,6,'SSA006','1983-02-02','N/A','N/A','N/A','N/A','N/A','N/A','Staff','N/A','N/A','N/A','N/A','2018-11-13',1,1,'2018-11-13 03:14:30','2018-11-27 04:14:35');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,19 +381,15 @@ DROP TABLE IF EXISTS `incentives`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `incentives` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inc_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `inc_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `inc_points` double(12,2) NOT NULL DEFAULT '0.00',
-  `inc_hrs` int(11) NOT NULL DEFAULT '0',
-  `inc_days` int(11) NOT NULL DEFAULT '0',
-  `inc_space` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `inc_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price_from` double(12,2) NOT NULL DEFAULT '0.00',
+  `price_to` double(12,2) NOT NULL DEFAULT '0.00',
+  `points` double(12,2) NOT NULL DEFAULT '0.00',
   `create_user` int(11) NOT NULL,
   `update_user` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +398,7 @@ CREATE TABLE `incentives` (
 
 LOCK TABLES `incentives` WRITE;
 /*!40000 ALTER TABLE `incentives` DISABLE KEYS */;
-INSERT INTO `incentives` VALUES (1,'SSAI003','Refer 1 Guest',1.00,0,0,'Shared Space or Conference Room','Refer / Invite a guest to apply for membership',1,1,'2018-11-16 11:21:24','2018-11-16 11:46:52'),(2,'SSAI004','Weekly Rate',5.00,8,7,'Shared Space','Acquire 5 points if rented 8hrs for 7 consecutive days',1,1,'2018-11-16 11:34:27','2018-11-16 11:45:34');
+INSERT INTO `incentives` VALUES (2,100.00,200.00,15.00,6,6,'2018-11-26 05:34:07','2018-11-26 06:09:03'),(3,201.00,400.00,20.00,6,6,'2018-11-26 06:14:06','2018-11-26 06:14:06');
 /*!40000 ALTER TABLE `incentives` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -519,7 +519,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -528,7 +528,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(4,'2018_10_20_094644_create_employees_table',1),(6,'2018_10_20_131948_create_modules_table',1),(7,'2018_10_20_132439_create_user_accesses_table',1),(9,'2018_10_27_110534_create_dropdown_names_table',1),(10,'2018_10_27_112642_create_dropdown_options_table',1),(11,'2018_10_20_094541_create_customers_table',2),(12,'2018_10_26_015312_create_transaction_codes_table',2),(22,'2018_11_08_031120_create_item_inputs_table',3),(23,'2018_11_08_031139_create_item_outputs_table',3),(24,'2018_11_08_031825_create_inventories_table',3),(25,'2018_10_20_094848_create_products_table',4),(26,'2018_11_13_182113_create_available_products_table',5),(27,'2018_11_14_174647_create_user_logs_table',6),(28,'2018_11_16_150303_create_customer_logs_table',7),(29,'2018_11_16_150307_create_customer_points_table',7),(30,'2018_11_16_150310_create_customer_product_bills_table',7),(31,'2018_11_16_161726_create_incentives_table',7),(32,'2018_11_16_170059_create_rewards_table',7),(33,'2018_11_19_094040_create_discounts_table',8),(34,'2018_11_20_101713_create_current_customers_table',9),(35,'2018_11_20_101729_create_current_customer_bills_table',9);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(4,'2018_10_20_094644_create_employees_table',1),(6,'2018_10_20_131948_create_modules_table',1),(7,'2018_10_20_132439_create_user_accesses_table',1),(9,'2018_10_27_110534_create_dropdown_names_table',1),(10,'2018_10_27_112642_create_dropdown_options_table',1),(11,'2018_10_20_094541_create_customers_table',2),(12,'2018_10_26_015312_create_transaction_codes_table',2),(22,'2018_11_08_031120_create_item_inputs_table',3),(23,'2018_11_08_031139_create_item_outputs_table',3),(24,'2018_11_08_031825_create_inventories_table',3),(25,'2018_10_20_094848_create_products_table',4),(26,'2018_11_13_182113_create_available_products_table',5),(27,'2018_11_14_174647_create_user_logs_table',6),(28,'2018_11_16_150303_create_customer_logs_table',7),(30,'2018_11_16_150310_create_customer_product_bills_table',7),(33,'2018_11_19_094040_create_discounts_table',8),(34,'2018_11_20_101713_create_current_customers_table',9),(35,'2018_11_20_101729_create_current_customer_bills_table',9),(36,'2018_11_16_161726_create_incentives_table',10),(37,'2018_11_16_170059_create_rewards_table',10),(38,'2018_11_24_120852_create_sales_table',10),(39,'2018_11_16_150307_create_customer_points_table',11);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -740,19 +740,14 @@ DROP TABLE IF EXISTS `rewards`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rewards` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `rwd_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rwd_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rwd_points` double(12,2) NOT NULL DEFAULT '0.00',
-  `rwd_hrs` int(11) NOT NULL DEFAULT '0',
-  `rwd_days` int(11) NOT NULL DEFAULT '0',
-  `rwd_space` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rwd_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `deducted_points` double(12,2) NOT NULL DEFAULT '0.00',
+  `deducted_price` double(12,2) NOT NULL DEFAULT '0.00',
   `create_user` int(11) NOT NULL,
   `update_user` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -761,8 +756,41 @@ CREATE TABLE `rewards` (
 
 LOCK TABLES `rewards` WRITE;
 /*!40000 ALTER TABLE `rewards` DISABLE KEYS */;
-INSERT INTO `rewards` VALUES (1,'SSAR002','1 HR Free rent of shared space',10.00,1,0,'Shared Space','1 HR Free rent of shared space',1,1,'2018-11-16 11:30:42','2018-11-16 11:45:48'),(2,'SSAR003','Free Half day rent',20.00,4,0,'Shared Space','Free Half day rent for shared space',1,1,'2018-11-16 11:38:17','2018-11-16 11:40:43');
+INSERT INTO `rewards` VALUES (1,1.00,1.00,6,6,'2018-11-26 06:00:10','2018-11-26 06:25:09');
 /*!40000 ALTER TABLE `rewards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sales`
+--
+
+DROP TABLE IF EXISTS `sales`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sales` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_total` double(12,2) NOT NULL DEFAULT '0.00',
+  `discount` double(12,2) NOT NULL DEFAULT '0.00',
+  `payment` double(12,2) NOT NULL DEFAULT '0.00',
+  `change` double(12,2) NOT NULL DEFAULT '0.00',
+  `total_sale` double(12,2) NOT NULL DEFAULT '0.00',
+  `create_user` int(11) NOT NULL,
+  `update_user` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sales`
+--
+
+LOCK TABLES `sales` WRITE;
+/*!40000 ALTER TABLE `sales` DISABLE KEYS */;
+INSERT INTO `sales` VALUES (1,'A0006',148.00,2.00,150.00,4.00,146.00,6,6,'2018-11-24 02:05:42','2018-11-27 02:05:42'),(2,'A0006',148.00,10.00,140.00,2.00,138.00,6,6,'2018-11-25 02:07:10','2018-11-27 02:07:10'),(3,'A0006',148.00,0.00,150.00,2.00,148.00,6,6,'2018-11-27 02:16:22','2018-11-27 02:16:22'),(4,'A0006',148.00,0.00,150.00,2.00,148.00,6,6,'2018-11-27 02:16:35','2018-11-27 02:16:35'),(5,'A0006',148.00,0.00,150.00,2.00,148.00,6,6,'2018-11-27 02:16:57','2018-11-27 02:16:57'),(6,'A0006',148.00,0.00,150.00,2.00,148.00,6,6,'2018-11-27 02:19:45','2018-11-27 02:19:45'),(7,'A0006',148.00,0.00,150.00,2.00,148.00,6,6,'2018-11-27 02:19:55','2018-11-27 02:19:55'),(8,'A0006',148.00,0.00,150.00,2.00,148.00,6,6,'2018-11-27 02:40:28','2018-11-27 02:40:28'),(9,'A0002',221.00,0.00,250.00,29.00,221.00,6,6,'2018-12-01 02:42:25','2018-11-27 02:42:25'),(10,'N/A',164.00,0.00,150.00,-14.00,164.00,6,6,'2018-12-02 02:47:41','2018-11-27 02:47:41'),(11,'N/A',211.00,0.00,220.00,9.00,211.00,6,6,'2018-11-30 02:50:56','2018-11-27 02:50:56'),(12,'N/A',331.00,0.00,340.00,9.00,331.00,6,6,'2018-11-28 05:41:58','2018-11-27 05:41:58');
+/*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -794,7 +822,7 @@ CREATE TABLE `transaction_codes` (
 
 LOCK TABLES `transaction_codes` WRITE;
 /*!40000 ALTER TABLE `transaction_codes` DISABLE KEYS */;
-INSERT INTO `transaction_codes` VALUES (1,'CUS_CODE','Customer Code','A','A',7,4,'1','1','2018-11-03 22:14:38','2018-11-20 03:11:06'),(2,'EMP_ID','Employee ID','SSA','SSA',7,3,'1','1','2018-11-03 22:15:55','2018-11-13 03:14:30'),(3,'ITM_CODE','Item Code','SSI','SSI',9,3,'1','1','2018-11-07 19:09:40','2018-11-14 08:40:01'),(4,'PRD_CODE','Product Code','SSP','SSP',31,3,'1','1','2018-11-13 07:15:43','2018-11-20 01:17:27'),(5,'INC_CODE','Incentive Code','SSAI','SSAI',5,3,'1','1','2018-11-16 08:16:20','2018-11-16 11:34:27'),(6,'RWD_CODE','Rewards Code','SSAR','SSAR',4,3,'1','1','2018-11-16 08:50:55','2018-11-16 11:38:17');
+INSERT INTO `transaction_codes` VALUES (1,'CUS_CODE','Customer Code','A','A',8,4,'1','1','2018-11-03 22:14:38','2018-11-22 10:16:34'),(2,'EMP_ID','Employee ID','SSA','SSA',7,3,'1','1','2018-11-03 22:15:55','2018-11-13 03:14:30'),(3,'ITM_CODE','Item Code','SSI','SSI',9,3,'1','1','2018-11-07 19:09:40','2018-11-14 08:40:01'),(4,'PRD_CODE','Product Code','SSP','SSP',31,3,'1','1','2018-11-13 07:15:43','2018-11-20 01:17:27'),(5,'INC_CODE','Incentive Code','SSAI','SSAI',5,3,'1','1','2018-11-16 08:16:20','2018-11-16 11:34:27'),(6,'RWD_CODE','Rewards Code','SSAR','SSAR',4,3,'1','1','2018-11-16 08:50:55','2018-11-16 11:38:17');
 /*!40000 ALTER TABLE `transaction_codes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -843,7 +871,7 @@ CREATE TABLE `user_logs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -852,7 +880,7 @@ CREATE TABLE `user_logs` (
 
 LOCK TABLES `user_logs` WRITE;
 /*!40000 ALTER TABLE `user_logs` DISABLE KEYS */;
-INSERT INTO `user_logs` VALUES (1,'Dropdown Settings','Added Dropdown option 18oz Cup',2,'2018-11-15 12:14:45','2018-11-15 12:14:45'),(2,'Dropdown Settings','Added Dropdown option Cakes',2,'2018-11-15 12:16:43','2018-11-15 12:16:43'),(3,'Dropdown Settings','Added Dropdown option Utilities',2,'2018-11-15 12:18:25','2018-11-15 12:18:25'),(4,'Employee Registration','Updated Employee user ID 6, Name Gladys Dela Rosa',2,'2018-11-15 12:23:45','2018-11-15 12:23:45'),(5,'Dropdown Settings','Added Dropdown name Space',1,'2018-11-16 08:21:34','2018-11-16 08:21:34'),(6,'Dropdown Settings','Added Dropdown option Conference Room',1,'2018-11-16 08:22:59','2018-11-16 08:22:59'),(7,'Dropdown Settings','Added Dropdown option Shared Space',1,'2018-11-16 08:23:09','2018-11-16 08:23:09'),(8,'Dropdown Settings','Added Dropdown option Shared Space or Conference Room',1,'2018-11-16 11:16:48','2018-11-16 11:16:48'),(9,'General Settings','Added incentive setting Refer 1 Guest',1,'2018-11-16 11:21:24','2018-11-16 11:21:24'),(10,'General Settings','Added reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:30:42','2018-11-16 11:30:42'),(11,'General Settings','Added incentive setting Weekly Rate',1,'2018-11-16 11:34:27','2018-11-16 11:34:27'),(12,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:35:54','2018-11-16 11:35:54'),(13,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:36:30','2018-11-16 11:36:30'),(14,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:37:35','2018-11-16 11:37:35'),(15,'General Settings','Added reward setting Free Half day rent',1,'2018-11-16 11:38:17','2018-11-16 11:38:17'),(16,'General Settings','Updated reward setting Free Half day rent',1,'2018-11-16 11:39:37','2018-11-16 11:39:37'),(17,'General Settings','Updated reward setting Free Half day rent',1,'2018-11-16 11:40:43','2018-11-16 11:40:43'),(18,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:40:56','2018-11-16 11:40:56'),(19,'General Settings','Updated incentive setting Refer 1 Guest',1,'2018-11-16 11:43:49','2018-11-16 11:43:49'),(20,'General Settings','Updated incentive setting Refer 1 Guest',1,'2018-11-16 11:45:31','2018-11-16 11:45:31'),(21,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:45:34','2018-11-16 11:45:34'),(22,'General Settings','Updated reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:45:38','2018-11-16 11:45:38'),(23,'General Settings','Updated reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:45:41','2018-11-16 11:45:41'),(24,'General Settings','Updated reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:45:48','2018-11-16 11:45:48'),(25,'General Settings','Updated incentive setting Refer 1 Guest',1,'2018-11-16 11:46:52','2018-11-16 11:46:52'),(26,'Dropdown Settings','Added Dropdown name Discounts',1,'2018-11-19 02:25:26','2018-11-19 02:25:26'),(27,'Dropdown Settings','Added Dropdown option Employee Discount',1,'2018-11-19 02:25:44','2018-11-19 02:25:44'),(28,'Dropdown Settings','Added Dropdown option Senior Citizen Discount',1,'2018-11-19 02:25:59','2018-11-19 02:25:59'),(29,'General Settings','Added discount setting Senior Citizen Discount',1,'2018-11-19 03:28:28','2018-11-19 03:28:28'),(30,'General Settings','Added discount setting Employee Discount',1,'2018-11-19 03:30:23','2018-11-19 03:30:23'),(31,'Dropdown Settings','Deleted Dropdown option ID 18,17,16,15,14,13,12',1,'2018-11-19 08:10:18','2018-11-19 08:10:18'),(32,'Dropdown Settings','Deleted Dropdown option ID 17,16,15,14,13,12',1,'2018-11-19 08:23:24','2018-11-19 08:23:24'),(33,'Dropdown Settings','Deleted Dropdown option ID 16,15,14,13,12',1,'2018-11-19 08:24:05','2018-11-19 08:24:05'),(34,'Dropdown Settings','Deleted Dropdown option ID 15,14,13,12',1,'2018-11-19 08:27:59','2018-11-19 08:27:59'),(35,'Dropdown Settings','Added Dropdown option Slice',1,'2018-11-19 08:30:22','2018-11-19 08:30:22'),(36,'Dropdown Settings','Added Dropdown option 330ml Can',1,'2018-11-19 08:31:45','2018-11-19 08:31:45'),(37,'Dropdown Settings','Added Dropdown option 355ml Bottle',1,'2018-11-19 08:32:54','2018-11-19 08:32:54'),(38,'Dropdown Settings','Added Dropdown option Personal  Serving',1,'2018-11-19 08:34:19','2018-11-19 08:34:19'),(39,'Dropdown Settings','Added Dropdown option Services',1,'2018-11-19 08:35:01','2018-11-19 08:35:01'),(40,'Dropdown Settings','Added Dropdown option Black Short',1,'2018-11-19 08:54:25','2018-11-19 08:54:25'),(41,'Dropdown Settings','Added Dropdown option Black Long',1,'2018-11-19 08:54:31','2018-11-19 08:54:31'),(42,'Dropdown Settings','Added Dropdown option Colored Short',1,'2018-11-19 08:54:40','2018-11-19 08:54:40'),(43,'Dropdown Settings','Added Dropdown option Colored Long',1,'2018-11-19 08:54:46','2018-11-19 08:54:46'),(44,'Dropdown Settings','Added Dropdown option Short',1,'2018-11-19 08:54:56','2018-11-19 08:54:56'),(45,'Dropdown Settings','Added Dropdown option Long',1,'2018-11-19 08:55:00','2018-11-19 08:55:00'),(46,'Dropdown Settings','Added Dropdown option Daily',1,'2018-11-19 08:55:31','2018-11-19 08:55:31'),(47,'Dropdown Settings','Added Dropdown option Weekly',1,'2018-11-19 08:55:37','2018-11-19 08:55:37'),(48,'Dropdown Settings','Added Dropdown option Monthly',1,'2018-11-19 08:55:45','2018-11-19 08:55:45'),(49,'Dropdown Settings','Added Dropdown option Space Rental',1,'2018-11-20 01:12:14','2018-11-20 01:12:14'),(50,'Dropdown Settings','Added Dropdown option Hour',1,'2018-11-20 01:12:41','2018-11-20 01:12:41');
+INSERT INTO `user_logs` VALUES (1,'Dropdown Settings','Added Dropdown option 18oz Cup',2,'2018-11-15 12:14:45','2018-11-15 12:14:45'),(2,'Dropdown Settings','Added Dropdown option Cakes',2,'2018-11-15 12:16:43','2018-11-15 12:16:43'),(3,'Dropdown Settings','Added Dropdown option Utilities',2,'2018-11-15 12:18:25','2018-11-15 12:18:25'),(4,'Employee Registration','Updated Employee user ID 6, Name Gladys Dela Rosa',2,'2018-11-15 12:23:45','2018-11-15 12:23:45'),(5,'Dropdown Settings','Added Dropdown name Space',1,'2018-11-16 08:21:34','2018-11-16 08:21:34'),(6,'Dropdown Settings','Added Dropdown option Conference Room',1,'2018-11-16 08:22:59','2018-11-16 08:22:59'),(7,'Dropdown Settings','Added Dropdown option Shared Space',1,'2018-11-16 08:23:09','2018-11-16 08:23:09'),(8,'Dropdown Settings','Added Dropdown option Shared Space or Conference Room',1,'2018-11-16 11:16:48','2018-11-16 11:16:48'),(9,'General Settings','Added incentive setting Refer 1 Guest',1,'2018-11-16 11:21:24','2018-11-16 11:21:24'),(10,'General Settings','Added reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:30:42','2018-11-16 11:30:42'),(11,'General Settings','Added incentive setting Weekly Rate',1,'2018-11-16 11:34:27','2018-11-16 11:34:27'),(12,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:35:54','2018-11-16 11:35:54'),(13,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:36:30','2018-11-16 11:36:30'),(14,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:37:35','2018-11-16 11:37:35'),(15,'General Settings','Added reward setting Free Half day rent',1,'2018-11-16 11:38:17','2018-11-16 11:38:17'),(16,'General Settings','Updated reward setting Free Half day rent',1,'2018-11-16 11:39:37','2018-11-16 11:39:37'),(17,'General Settings','Updated reward setting Free Half day rent',1,'2018-11-16 11:40:43','2018-11-16 11:40:43'),(18,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:40:56','2018-11-16 11:40:56'),(19,'General Settings','Updated incentive setting Refer 1 Guest',1,'2018-11-16 11:43:49','2018-11-16 11:43:49'),(20,'General Settings','Updated incentive setting Refer 1 Guest',1,'2018-11-16 11:45:31','2018-11-16 11:45:31'),(21,'General Settings','Updated incentive setting Weekly Rate',1,'2018-11-16 11:45:34','2018-11-16 11:45:34'),(22,'General Settings','Updated reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:45:38','2018-11-16 11:45:38'),(23,'General Settings','Updated reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:45:41','2018-11-16 11:45:41'),(24,'General Settings','Updated reward setting 1 HR Free rent of shared space',1,'2018-11-16 11:45:48','2018-11-16 11:45:48'),(25,'General Settings','Updated incentive setting Refer 1 Guest',1,'2018-11-16 11:46:52','2018-11-16 11:46:52'),(26,'Dropdown Settings','Added Dropdown name Discounts',1,'2018-11-19 02:25:26','2018-11-19 02:25:26'),(27,'Dropdown Settings','Added Dropdown option Employee Discount',1,'2018-11-19 02:25:44','2018-11-19 02:25:44'),(28,'Dropdown Settings','Added Dropdown option Senior Citizen Discount',1,'2018-11-19 02:25:59','2018-11-19 02:25:59'),(29,'General Settings','Added discount setting Senior Citizen Discount',1,'2018-11-19 03:28:28','2018-11-19 03:28:28'),(30,'General Settings','Added discount setting Employee Discount',1,'2018-11-19 03:30:23','2018-11-19 03:30:23'),(31,'Dropdown Settings','Deleted Dropdown option ID 18,17,16,15,14,13,12',1,'2018-11-19 08:10:18','2018-11-19 08:10:18'),(32,'Dropdown Settings','Deleted Dropdown option ID 17,16,15,14,13,12',1,'2018-11-19 08:23:24','2018-11-19 08:23:24'),(33,'Dropdown Settings','Deleted Dropdown option ID 16,15,14,13,12',1,'2018-11-19 08:24:05','2018-11-19 08:24:05'),(34,'Dropdown Settings','Deleted Dropdown option ID 15,14,13,12',1,'2018-11-19 08:27:59','2018-11-19 08:27:59'),(35,'Dropdown Settings','Added Dropdown option Slice',1,'2018-11-19 08:30:22','2018-11-19 08:30:22'),(36,'Dropdown Settings','Added Dropdown option 330ml Can',1,'2018-11-19 08:31:45','2018-11-19 08:31:45'),(37,'Dropdown Settings','Added Dropdown option 355ml Bottle',1,'2018-11-19 08:32:54','2018-11-19 08:32:54'),(38,'Dropdown Settings','Added Dropdown option Personal  Serving',1,'2018-11-19 08:34:19','2018-11-19 08:34:19'),(39,'Dropdown Settings','Added Dropdown option Services',1,'2018-11-19 08:35:01','2018-11-19 08:35:01'),(40,'Dropdown Settings','Added Dropdown option Black Short',1,'2018-11-19 08:54:25','2018-11-19 08:54:25'),(41,'Dropdown Settings','Added Dropdown option Black Long',1,'2018-11-19 08:54:31','2018-11-19 08:54:31'),(42,'Dropdown Settings','Added Dropdown option Colored Short',1,'2018-11-19 08:54:40','2018-11-19 08:54:40'),(43,'Dropdown Settings','Added Dropdown option Colored Long',1,'2018-11-19 08:54:46','2018-11-19 08:54:46'),(44,'Dropdown Settings','Added Dropdown option Short',1,'2018-11-19 08:54:56','2018-11-19 08:54:56'),(45,'Dropdown Settings','Added Dropdown option Long',1,'2018-11-19 08:55:00','2018-11-19 08:55:00'),(46,'Dropdown Settings','Added Dropdown option Daily',1,'2018-11-19 08:55:31','2018-11-19 08:55:31'),(47,'Dropdown Settings','Added Dropdown option Weekly',1,'2018-11-19 08:55:37','2018-11-19 08:55:37'),(48,'Dropdown Settings','Added Dropdown option Monthly',1,'2018-11-19 08:55:45','2018-11-19 08:55:45'),(49,'Dropdown Settings','Added Dropdown option Space Rental',1,'2018-11-20 01:12:14','2018-11-20 01:12:14'),(50,'Dropdown Settings','Added Dropdown option Hour',1,'2018-11-20 01:12:41','2018-11-20 01:12:41'),(51,'General Settings','Updated reward setting 1 HR Free rent of shared space',6,'2018-11-22 10:14:12','2018-11-22 10:14:12'),(52,'General Settings','Updated reward setting Free Half day rent',6,'2018-11-22 10:14:24','2018-11-22 10:14:24'),(53,'General Settings','Updated incentive setting Refer 1 Guest',1,'2018-11-22 10:15:32','2018-11-22 10:15:32'),(54,'Customer Membership','Added Customer user ID 9, Name Isaac Jacob Dichoson',1,'2018-11-22 10:16:34','2018-11-22 10:16:34'),(55,'Customer Membership','Updated Customer user ID 9, Name Isaac Jacob Dichoson',6,'2018-11-22 10:24:14','2018-11-22 10:24:14'),(56,'Customer Membership','Updated Customer user ID 9, Name Isaac Jacob Dichoson',6,'2018-11-22 10:25:23','2018-11-22 10:25:23'),(57,'General Settings','Set incentive setting Price from 100 to 200 equivalent to 10 points.',6,'2018-11-26 05:27:30','2018-11-26 05:27:30'),(58,'General Settings','Updated incentive setting ',6,'2018-11-26 05:30:07','2018-11-26 05:30:07'),(59,'General Settings','Set incentive setting Price from 100 to 200 equivalent to 10 points.',6,'2018-11-26 05:34:07','2018-11-26 05:34:07'),(60,'General Settings','Updated incentive setting ',6,'2018-11-26 05:36:55','2018-11-26 05:36:55'),(61,'General Settings','Set Reward setting to deduct 1 equivalent to 1 points.',6,'2018-11-26 06:00:10','2018-11-26 06:00:10'),(62,'General Settings','Update Reward setting to deduct 1 equivalent to 1 points.',6,'2018-11-26 06:05:30','2018-11-26 06:05:30'),(63,'General Settings','Update Reward setting to deduct 2 equivalent to 1 points.',6,'2018-11-26 06:05:53','2018-11-26 06:05:53'),(64,'General Settings','Updated incentive setting Price from 100 to 200 equivalent to 5 points.',6,'2018-11-26 06:07:34','2018-11-26 06:07:34'),(65,'General Settings','Update Reward setting to deduct 1 equivalent to 1 points.',6,'2018-11-26 06:08:48','2018-11-26 06:08:48'),(66,'General Settings','Updated incentive setting Price from 100 to 200 equivalent to 10 points.',6,'2018-11-26 06:08:57','2018-11-26 06:08:57'),(67,'General Settings','Updated incentive setting Price from 100 to 200 equivalent to 15 points.',6,'2018-11-26 06:09:03','2018-11-26 06:09:03'),(68,'General Settings','Set incentive setting Price from 201 to 400 equivalent to 20 points.',6,'2018-11-26 06:14:06','2018-11-26 06:14:06'),(69,'General Settings','Update Reward setting to deduct 1.00 equivalent to 1 points.',6,'2018-11-26 06:25:10','2018-11-26 06:25:10'),(70,'Customer Membership','Updated Customer user ID 7, Name Franz Simon',6,'2018-11-27 02:40:55','2018-11-27 02:40:55');
 /*!40000 ALTER TABLE `user_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -877,13 +905,12 @@ CREATE TABLE `users` (
   `disabled` int(11) NOT NULL DEFAULT '0',
   `language` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '/img/default-profile.png',
-  `points` double(12,2) DEFAULT '0.00',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -892,7 +919,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Kurt','Dela Rosa','ak.delarosa01@gmail.com',NULL,'$2y$10$bMDjdL4CHf.YGB8cxzPtbebouko91OZMJUT6y34SME2P31mww6MS2','akdelarosa','Administrator','',1,0,'en','/img/default-profile.png',0.00,'gkEwmS6Op7tsmyHO24DlzkqLOroW5jhc1NZswqDbPKXctd0PFTF7bqwG7Xqa','2018-10-20 06:29:38','2018-11-19 01:04:42'),(2,'Owner','Account','owner@gmail.com',NULL,'$2y$10$a7RVCWtzxaUqypjHAU8rXeRkHxA6sMwdN7/T09i0dEr0ZVWs6sUum','owners','Owner','',0,0,'ch','/img/default-profile.png',0.00,'R6HOwZgbFnNuqF28aDJAHgK0CIIMUw9AtMPcglpK2P78qUS86nQRjnfqSc9k','2018-10-24 04:49:32','2018-11-16 06:45:40'),(6,'Gladys','Dela Rosa','maryagladys01@gmail.com',NULL,'$2y$10$d6yX4uRYqbHV3vq110kt3uoUOCX7aTu8WV0gvgl0dsLXTIdKZs48m','delarosa181103','Employee','Female',0,0,'en','img/employees/img_6.jpg',0.00,'lM3jjdOf9u9QOdxKrSSfWM9GolwZFGI2HuLjOk3LPV9Vzod1Hc0ItQceSuwb','2018-11-02 22:46:50','2018-11-20 01:44:58'),(7,'Franz','Simon','franz@gmail.com',NULL,'$2y$10$xF3CGJqLy6ajzu8Zj4WkU.lSf0ayqqPdbZHnQFcE6AbCGdhONByym','simon181103','Customer','Male',0,0,'en','/img/default-profile.png',0.00,'UUlt1ox1mxAbJd6lRIrCTp110hBvO769eKBcCFPFLbelY6cgYjjpzyN6LHeV','2018-11-03 00:04:47','2018-11-16 06:56:39'),(8,'Gordon','Ramsey','ramsey@gmail.com',NULL,'$2y$10$DiwcWAwDV6l0Y7G4ktV1veh1JU/yKSLHeFdsnAPDmtO7onvwtRm/6','10101980','Customer','Male',0,0,'en','/img/default-profile.png',0.00,NULL,'2018-11-20 03:11:05','2018-11-20 03:11:05');
+INSERT INTO `users` VALUES (1,'Kurt','Dela Rosa','ak.delarosa01@gmail.com',NULL,'$2y$10$bMDjdL4CHf.YGB8cxzPtbebouko91OZMJUT6y34SME2P31mww6MS2','akdelarosa','Administrator','',1,0,'en','/img/default-profile.png','ae5LzTEjutg4vnb1L3IjrrBMWHlgiOtWRPviHy9pgkJPACicJZUa0dRnEMZ3','2018-10-20 06:29:38','2018-11-19 01:04:42'),(2,'Owner','Account','owner@gmail.com',NULL,'$2y$10$a7RVCWtzxaUqypjHAU8rXeRkHxA6sMwdN7/T09i0dEr0ZVWs6sUum','owners','Owner','',0,0,'en','/img/default-profile.png','7lGWtybkFZfdI6Gkp6ko1GWtiRNIgUUbcPc39QVT97SLbrB2zk55jGLAFXSr','2018-10-24 04:49:32','2018-11-27 07:32:26'),(6,'Gladys','Dela Rosa','maryagladys01@gmail.com',NULL,'$2y$10$G4/.i4kSFqONxC2fu9xCau0lb3ciCRpGUzVfc2vxi0.1eRfQtegrC','maryataba01','Employee','Female',0,0,'en','img/employees/img_6.jpg','AK2P7NJdBjAKV3mliwWK53S1xT9eJxaMU8xDrhCFoqwAH7CCjCtYqLZMWUNe','2018-11-02 22:46:50','2018-11-27 04:14:35'),(7,'Franz','Simon','franz@gmail.com',NULL,'$2y$10$xF3CGJqLy6ajzu8Zj4WkU.lSf0ayqqPdbZHnQFcE6AbCGdhONByym','simon181103','Customer','Male',0,0,'en','/img/default-profile.png','UUlt1ox1mxAbJd6lRIrCTp110hBvO769eKBcCFPFLbelY6cgYjjpzyN6LHeV','2018-11-03 00:04:47','2018-11-16 06:56:39'),(8,'Gordon','Ramsey','ramsey@gmail.com',NULL,'$2y$10$DiwcWAwDV6l0Y7G4ktV1veh1JU/yKSLHeFdsnAPDmtO7onvwtRm/6','10101980','Customer','Male',0,0,'en','/img/default-profile.png','nn7aJ30yR0UmkcaF17n9COmc8W47QGzBIiJAUppgsSXajPXhWYQYnGrjsFDO','2018-11-20 03:11:05','2018-11-20 03:11:05'),(9,'Isaac Jacob','Dichoson','ijbdichoson@gmail.com',NULL,'$2y$10$Az4Mz1yq3NW0iqqjkuzO7ud/75BgY/s0YsClIgfMDk25GEpFhiUy2','19921208','Customer','Male',0,0,'en','/img/default-profile.png',NULL,'2018-11-22 10:16:34','2018-11-22 10:16:34');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -909,4 +936,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-20 21:05:11
+-- Dump completed on 2018-11-27 18:22:55

@@ -8,8 +8,7 @@ class CustomerPoint extends Model
 {
     protected $fillable = [
     	'customer_id',
-    	'inc_code',
-    	'inc_name',
-    	'inc_points'
+    	'remarks',
+    	'accumulated_points'
     ];
 }

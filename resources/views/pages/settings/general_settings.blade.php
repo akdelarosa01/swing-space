@@ -74,19 +74,41 @@
             <div class="card">
                 <div class="card-header">
                     <span class="trn">Reward Settings</span>
-                    <button type="button" class="btn btn-sm btn-success pull-right" id="btn_add_reward">
-                        <span class="trn">Add New Reward</span>
-                    </button>
                 </div>
                 <div class="card-body">
-                    <table class="table table-sm" id="tbl_reward" width="100%">
-                        <thead>
-                            <th class="trn">Discounted Price</th>
-                            <th class="trn">Equivalent Points</th>
-                            <th></th>
-                        </thead>
-                        <tbody id="tbl_incentive_body"></tbody>
-                    </table>
+                    <form action="../../general-settings/save-reward" class="form-horizontal" id="frm_reward">
+                        <input type="hidden" class="clear" id="rwd_id" name="rwd_id">
+                        <div class="form-group row">
+                            <label for="deducted_price" class="control-label text-right col-md-3 trn">Discount Price</label>
+                            <div class="col-md-9">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">₱</span>
+                                    </div>
+                                    <input type="number" class="form-control form-control-sm clear validate" id="deducted_price" name="deducted_price" min="1" step="any">
+                                    <div id="deducted_price_feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="deducted_points" class="control-label text-right col-md-3 trn">Points Equivalent</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control form-control-sm clear" id="deducted_points" name="deducted_points">
+                                <div id="deducted_points_feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="offset-md-8 col-md-4">
+                                <button type="submit" class="btn btn-info btn-sm">
+                                    <span class="trn">Save</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
+                                    <span class="trn">Cancel</span>
+                                </button>
+                            </div>
+                                
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

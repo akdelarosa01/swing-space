@@ -43,20 +43,15 @@ class GeneralSettingsController extends Controller
 
         if (isset($req->inc_id)) {
             $this->validate($req,[
-                'inc_name' => 'required',
-                'inc_points' => 'required',
-                'inc_hrs' => 'required',
-                'inc_days' => 'required',
-                'inc_space' => 'required'
+                'price_from' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+                'price_to' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+                'points' => 'required|numeric'
             ]);
 
             $incentive = Incentive::where('id',$req->inc_id)->update([
-                            'inc_name' => $req->inc_name,
-                            'inc_points' => ($req->inc_points == '' || $req->inc_points == 0)? 0 : $req->inc_points,
-                            'inc_hrs' => ($req->inc_hrs == '' || $req->inc_hrs == 0)? 0 : $req->inc_hrs,
-                            'inc_days' => ($req->inc_days == '' || $req->inc_days == 0)? 0 : $req->inc_days,
-                            'inc_space' => $req->inc_space,
-                            'inc_description' => $req->inc_description,
+                            'price_from' => $req->price_from,
+                            'price_to' => $req->price_to,
+                            'points' => ($req->points == '' || $req->points == 0)? 0 : $req->points,
                             'update_user' => Auth::user()->id,
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
@@ -64,7 +59,7 @@ class GeneralSettingsController extends Controller
             if ($incentive) {
                 $this->_userlog->log([
                     'module' => 'General Settings',
-                    'action' => 'Updated incentive setting '.$req->inc_name,
+                    'action' => 'Updated incentive setting Price from '.$req->price_from.' to '.$req->price_to.' equivalent to '.$req->points.' points.',
                     'user_id' => Auth::user()->id
                 ]);
 
@@ -76,21 +71,15 @@ class GeneralSettingsController extends Controller
             }
         } else {
             $this->validate($req,[
-                'inc_name' => 'required',
-                'inc_points' => 'required',
-                'inc_hrs' => 'required',
-                'inc_days' => 'required',
-                'inc_space' => 'required'
+                'price_from' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+                'price_to' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+                'points' => 'required|numeric'
             ]);
 
             $incentive = Incentive::create([
-                            'inc_code' => $this->_global->TransactionNo('INC_CODE'),
-                            'inc_name' => $req->inc_name,
-                            'inc_points' => ($req->inc_points == '' || $req->inc_points == 0)? 0 : $req->inc_points,
-                            'inc_hrs' => ($req->inc_hrs == '' || $req->inc_hrs == 0)? 0 : $req->inc_hrs,
-                            'inc_days' => ($req->inc_days == '' || $req->inc_days == 0)? 0 : $req->inc_days,
-                            'inc_space' => $req->inc_space,
-                            'inc_description' => $req->inc_description,
+                            'price_from' => $req->price_from,
+                            'price_to' => $req->price_to,
+                            'points' => ($req->points == '' || $req->points == 0)? 0 : $req->points,
                             'create_user' => Auth::user()->id,
                             'update_user' => Auth::user()->id,
                         ]);
@@ -98,7 +87,7 @@ class GeneralSettingsController extends Controller
             if ($incentive) {
                 $this->_userlog->log([
                     'module' => 'General Settings',
-                    'action' => 'Added incentive setting '.$req->inc_name,
+                    'action' => 'Set incentive setting Price from '.$req->price_from.' to '.$req->price_to.' equivalent to '.$req->points.' points.',
                     'user_id' => Auth::user()->id
                 ]);
 
@@ -148,22 +137,13 @@ class GeneralSettingsController extends Controller
 
         if (isset($req->rwd_id)) {
             $this->validate($req,[
-                'rwd_name' => 'required',
-                'rwd_points' => 'required',
-                'rwd_hrs' => 'required',
-                'rwd_days' => 'required',
-                'rwd_space' => 'required',
-                'rwd_price' => 'required'
+                'deducted_price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+                'deducted_points' => 'required|numeric',
             ]);
 
             $rewards = Reward::where('id',$req->rwd_id)->update([
-                            'rwd_name' => $req->rwd_name,
-                            'rwd_points' => ($req->rwd_points == '' || $req->rwd_points == 0)? 0 : $req->rwd_points,
-                            'rwd_hrs' => ($req->rwd_hrs == '' || $req->rwd_hrs == 0)? 0 : $req->rwd_hrs,
-                            'rwd_days' => ($req->rwd_days == '' || $req->rwd_days == 0)? 0 : $req->rwd_days,
-                            'rwd_space' => $req->rwd_space,
-                            'rwd_price' => ($req->rwd_price == '' || $req->rwd_price == 0)? 0 : $req->rwd_price,
-                            'rwd_description' => $req->rwd_description,
+                            'deducted_price' => $req->deducted_price,
+                            'deducted_points' => ($req->deducted_points == '' || $req->deducted_points == 0)? 0 : $req->deducted_points,
                             'update_user' => Auth::user()->id,
                             'updated_at' => date('Y-m-d H:i:s')
                         ]);
@@ -171,7 +151,7 @@ class GeneralSettingsController extends Controller
             if ($rewards) {
                 $this->_userlog->log([
                     'module' => 'General Settings',
-                    'action' => 'Updated reward setting '.$req->rwd_name,
+                    'action' => 'Update Reward setting to deduct '.$req->deducted_price.' equivalent to '.$req->deducted_points.' points.',
                     'user_id' => Auth::user()->id
                 ]);
 
@@ -183,22 +163,13 @@ class GeneralSettingsController extends Controller
             }
         } else {
             $this->validate($req,[
-                'rwd_name' => 'required',
-                'rwd_points' => 'required',
-                'rwd_hrs' => 'required',
-                'rwd_days' => 'required',
-                'rwd_space' => 'required'
+                'deducted_price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+                'deducted_points' => 'required|numeric',
             ]);
 
             $rewards = Reward::create([
-                            'rwd_code' => $this->_global->TransactionNo('RWD_CODE'),
-                            'rwd_name' => $req->rwd_name,
-                            'rwd_points' => ($req->rwd_points == '' || $req->rwd_points == 0)? 0 : $req->rwd_points,
-                            'rwd_hrs' => ($req->rwd_hrs == '' || $req->rwd_hrs == 0)? 0 : $req->rwd_hrs,
-                            'rwd_days' => ($req->rwd_days == '' || $req->rwd_days == 0)? 0 : $req->rwd_days,
-                            'rwd_space' => $req->rwd_space,
-                            'rwd_price' => ($req->rwd_price == '' || $req->rwd_price == 0)? 0 : $req->rwd_price,
-                            'rwd_description' => $req->rwd_description,
+                            'deducted_price' => $req->deducted_price,
+                            'deducted_points' => ($req->deducted_points == '' || $req->deducted_points == 0)? 0 : $req->deducted_points,
                             'create_user' => Auth::user()->id,
                             'update_user' => Auth::user()->id,
                         ]);
@@ -206,7 +177,7 @@ class GeneralSettingsController extends Controller
             if ($rewards) {
                 $this->_userlog->log([
                     'module' => 'General Settings',
-                    'action' => 'Added reward setting '.$req->rwd_name,
+                    'action' => 'Set Reward setting to deduct '.$req->deducted_price.' equivalent to '.$req->deducted_points.' points.',
                     'user_id' => Auth::user()->id
                 ]);
 
@@ -242,7 +213,11 @@ class GeneralSettingsController extends Controller
 
     public function rewards()
     {
-        $rwd = Reward::all();
+        $rwd = Reward::select(
+                            'id',
+                            'deducted_price',
+                            'deducted_points'
+                        )->first();
         return response()->json($rwd);
     }
 

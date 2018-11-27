@@ -206,7 +206,7 @@ class POSControlController extends Controller
                         ->select('user_id')->first();
 
         CustomerLog::create([
-            'customer_id' => (isset($cus->user_id))? $cus->id : 0,
+            'customer_id' => (isset($cus->user_id))? $cus->user_id : 0,
             'date_logged' => date('Y-m-d'),
             'time_in' => date('Y-m-d H:i:s'),
             'time_out' => date('Y-m-d H:i:s'),
@@ -312,10 +312,29 @@ class POSControlController extends Controller
         return response()->json($discounts);
     }
 
-    public function show_rewards(Request $req)
+    public function calculate_rewards(Request $req)
     {
-        $rewards = Reward::where('rwd_points','<=',$req->available_points)->get();
-        return response()->json($rewards);
+        $rwd = Reward::select('deducted_price','deducted_points')->first();
+        $computed_points = 0;
+        $price_to_deduct = 0;
+        $points = intval($req->points);
+
+        if ($points >= $rwd->deducted_points) {
+            $computed_points = $points / $rwd->deducted_points;
+        }
+
+        if ($points <= $rwd->deducted_points) {
+            $computed_points = $rwd->deducted_points / $points;
+        }
+
+        $price_to_deduct = $computed_points * $rwd->deducted_price;
+
+        $data = [
+            'points_to_deduct' => $points,
+            'price_to_deduct' => $price_to_deduct
+        ];
+        
+        return response()->json($data);
     }
 
     public function save_payments(Request $req)
@@ -326,14 +345,16 @@ class POSControlController extends Controller
         ];
 
         $currcust = CurrentCustomer::where('id',$req->cust_id)->first();
-        $timein = Carbon::parse($currcust->cust_timein);
-        $hrs = $timein->diffInHours(Carbon::now());
 
         $saved = $this->saveSoldProducts($currcust->cust_code,$req);
 
         $this->deductRewardPoints($currcust->cust_code,$req->reward_points);
 
-        $this->giveIncentives($currcust->cust_code,$hrs);
+        $this->giveIncentives($currcust->cust_code,$req->order_total_amount);
+
+        if ($req->email_receipt > 0) {
+            $this->EmailCustomerReceipt($req);
+        }
 
         if ($saved) {
             CurrentCustomer::where('id',$req->cust_id)->delete();
@@ -349,42 +370,40 @@ class POSControlController extends Controller
         return $data;
     }
 
-    public function Receipt(Request $req)
-    {
-
-    }
-
-    public function EmailCustomer(Request $req)
+    public function EmailCustomerReceipt($req)
     {
         # code...
     }
 
-    public function giveIncentives($cust_code,$hrs)
+    public function giveIncentives($cust_code,$order_total_amount)
     {
-        $cust = Customer::where('customer_code',$cust_code)
-                        ->select('user_id')->first();
+        $customer = Customer::where('customer_code',$cust_code)
+                        ->select('user_id','referrer')->first();
 
-        $inc = Incentive::where('inc_hrs','<=',$hrs)->orderBy('id','desc')->first();
+        $inc = DB::select("select points from incentives
+                    where ".$order_total_amount." between price_from and price_to");
 
         if (count((array)$inc) > 0) {
-            if (count((array)$cust) > 0) {
+            if (count((array)$customer) > 0) {
+                $cust = User::select(DB::raw("concat(firstname,' ',lastname) as buyer_name"))
+                            ->where('id',$customer->user_id)->first();
+
                 CustomerPoint::create([
-                    'customer_id' => $cust->user_id,
-                    'inc_code' => $inc->inc_code,
-                    'inc_name' => $inc->inc_name,
-                    'inc_points' => $inc->inc_points
+                    'customer_id' => $customer->referrer,
+                    'remarks' => $inc[0]->points.' points accumulated from your referred customer '.$cust->buyer_name,
+                    'accumulated_points' => $inc[0]->points
                 ]);
 
-                Customer::where('customer_code',$cust_code)->increment(
-                                'points', $inc->inc_points,[
+                if ($customer->referrer > 0) {
+                    Customer::where('user_id',$customer->referrer)->increment(
+                                'points', $inc[0]->points,[
                                     'update_user' => Auth::user()->id,
                                     'updated_at' => date('Y-m-d h:i:s')
                                 ]
                             );
+                }
             }
         }
-
-        
     }
 
     public function saveSoldProducts($cust_code,$req)

@@ -110,8 +110,8 @@ $( function() {
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
-							'<span style="word-wrap: break-word;">Timed In: </span><br>'+
-							'<span>'+timein.substring(11)+'</span>'+
+							'<span style="word-wrap: break-word;">Email Receipt <br>'+
+							'<input type="checkbox" name="email_receipt" id="email_receipt" checked></span>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -162,7 +162,7 @@ $( function() {
 	});
 
 	$('#control').on('click', '.rewards', function() {
-		rewards($(this).attr('data-available_points'));
+		$('#available_points').val($(this).attr('data-available_points'));
 		$('#rewards_modal').modal('show');
 	});
 
@@ -302,43 +302,64 @@ $( function() {
     $('#control').on('click', '.pay_now', function() {
 		var order_payment = parseFloat($('#order_payment').val());
 		var order_total_amount = parseFloat($('#order_total_amount').val());
-		var order_change = order_payment - order_total_amount;
 
-		$('#order_change').val((order_change).toFixed(2));
-		$('#change_view').html((order_change).toFixed(2));
+		if (order_payment >= order_total_amount) {
+			var order_change = order_payment - order_total_amount;
 
-		$('#change_modal').modal('show');
+			$('#order_change').val((order_change).toFixed(2));
+			$('#change_view').html((order_change).toFixed(2));
 
-		$.ajax({
-			url: '../../pos-control/save-payments',
-			type: 'POST',
-			dataType: 'JSON',
-			data: {
-				_token: token,
-				cust_id: $('#current_cust_id').val(),
-				discount_value: $('#discount_value').val(),
-				reward_price: $('#reward_price').val(),
-				reward_points: $('#reward_points').val(),
-				order_payment: $('#order_payment').val(),
-				order_total_amount: $('#order_total_amount').val(),
-				order_change: $('#order_change').val(),
-				order_prod_name: $('input[name="order_prod_name[]"]').map(function(){return $(this).val();}).get(),
-				order_quantity: $('input[name="order_quantity[]"]').map(function(){return $(this).val();}).get(),
-				order_price: $('input[name="order_price[]"]').map(function(){return $(this).val();}).get(),
-				order_prod_code: $('input[name="order_prod_code[]"]').map(function(){return $(this).val();}).get(),
-				order_prod_id: $('input[name="order_prod_id[]"]').map(function(){return $(this).val();}).get(),
-			},
-		}).done(function(data, textStatus, xhr) {
-			showCustomer();
-			$('#customers').show();
-			$('#pos_control').hide();
-			$('#control').hide();
-			$('#tbl_discounts_body').html('');
-			$('#tbl_rewards_body').html('');
-			msg(data.msg,data.status);
-		}).fail(function(xhr, textStatus, errorThrown) {
-			msg('Payment: '+errorThrown,textStatus);
-		});
+			$('#change_modal').modal('show');
+
+			var email_receipt = 0;
+
+			if ($('#email_receipt').is(":checked")) {
+				email_receipt = 1;
+			}
+
+			$.ajax({
+				url: '../../pos-control/save-payments',
+				type: 'POST',
+				dataType: 'JSON',
+				data: {
+					_token: token,
+					cust_id: $('#current_cust_id').val(),
+					discount_value: $('#discount_value').val(),
+					reward_price: $('#reward_price').val(),
+					reward_points: $('#reward_points').val(),
+					order_payment: $('#order_payment').val(),
+					order_total_amount: $('#order_total_amount').val(),
+					order_change: $('#order_change').val(),
+					order_prod_name: $('input[name="order_prod_name[]"]').map(function(){return $(this).val();}).get(),
+					order_quantity: $('input[name="order_quantity[]"]').map(function(){return $(this).val();}).get(),
+					order_price: $('input[name="order_price[]"]').map(function(){return $(this).val();}).get(),
+					order_prod_code: $('input[name="order_prod_code[]"]').map(function(){return $(this).val();}).get(),
+					order_prod_id: $('input[name="order_prod_id[]"]').map(function(){return $(this).val();}).get(),
+					email_receipt: email_receipt
+				},
+			}).done(function(data, textStatus, xhr) {
+				showCustomer();
+				$('#customers').show();
+				$('#pos_control').hide();
+				$('#control').hide();
+				$('#tbl_discounts_body').html('');
+				$('#tbl_rewards_body').html('');
+				msg(data.msg,data.status);
+			}).fail(function(xhr, textStatus, errorThrown) {
+				msg('Payment: '+errorThrown,textStatus);
+			});
+		} else {
+			msg('Customer payment is insufficient. Please pay exact or more than the total bill.','failed');
+		}
+			
+	});
+
+	$('#btn_calculateRewards').on('click', function() {
+		if (parseFloat($('#points_used').val()) < 1 || $('#points_used').val() == '' || parseFloat($('#points_used').val()) > parseFloat($('#available_points').val())) {
+			msg('Please enter a valid point value.','failed');
+		} else {
+			CalculateRewards($('#points_used').val());
+		}
 	});
 });
 
@@ -538,45 +559,34 @@ function discountTable(arr) {
     });
 }
 
-function rewards(available_points) {
+function CalculateRewards(points) {
 	$.ajax({
-		url: '../../pos-control/show-rewards',
+		url: '../../pos-control/calculate-rewards',
 		type: 'GET',
 		dataType: 'JSON',
 		data: {
 			_token: token,
-			available_points: available_points
+			points: points
 		},
 	}).done(function(data, textStatus, xhr) {
-		rewardsTable(data);
+		var price = (data.price_to_deduct).toFixed(2);
+		$('#reward_points').val(data.points_to_deduct);
+		$('#reward_price').val(price);
+
+		var reward_viewTable = '';
+    	$('#tbl_rewardView_body').html(reward_viewTable);
+
+    	reward_viewTable = '<tr>'+
+    							'<td>Discount from reward points</td>'+
+    							'<td>'+'-'+price+'</td>'+
+    						'</tr>';
+
+    	$('#tbl_rewardView_body').html(reward_viewTable);
+
+    	$('#rewards_modal').modal('hide');
+
+    	showCurrentBill($('#current_cust_id').val());
 	}).fail(function(xhr, textStatus, errorThrown) {
 		msg('Discounts: '+errorThrown,textStatus);
 	});
-}
-
-function rewardsTable(arr) {
-	$('#tbl_rewards').dataTable().fnClearTable();
-    $('#tbl_rewards').dataTable().fnDestroy();
-    $('#tbl_rewards').dataTable({
-        data: arr,
-        searching: false,
-        ordering: false,
-        columns: [
-            {data: function(x) {
-            	return x.rwd_name+'<input type="hidden" name="rwd_name[]" value="'+x.rwd_name+'">';
-            }},
-            {data: function(x) {
-            	return x.rwd_points+'<input type="hidden" name="rwd_points[]" value="'+x.rwd_points+'">';
-            }},
-            {data: function(x) {
-                return '<button type="button" class="btn btn-info btn-sm select_reward" '+
-                			'data-rwd_name="'+x.rwd_name+'"'+
-                			'data-rwd_points="'+x.rwd_points+'"'+
-                			'data-rwd_price="'+x.rwd_price+'"'+
-                			'>'+
-                        	'<i class="fa fa-plus"></i>'+
-                        '</button>';
-            }, searchable: false, orderable: false},
-        ]
-    });
 }

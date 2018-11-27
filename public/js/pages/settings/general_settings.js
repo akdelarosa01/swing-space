@@ -237,11 +237,21 @@ $( function() {
             url: $(this).attr('action'),
             type: 'POST',
             dataType: 'JSON',
-            data: $(this).serialize(),
+            data: {
+                _token: token,
+                inc_id: $('#inc_id').val(),
+                price_from: $('#price_from').val(),
+                price_to: $('#price_to').val(),
+                points: $('#points').val(),
+            },
         }).done(function(data, textStatus, xhr) {
             if (textStatus == 'success') {
                 msg(data.msg,data.status)
                 incentives();
+
+                $('#price_from').val('');
+                $('#price_to').val('');
+                $('#points').val('');
             }
         }).fail(function(xhr, textStatus, errorThrown) {
             var errors = xhr.responseJSON.errors;
@@ -253,7 +263,6 @@ $( function() {
             }
         }).always( function() {
             $('.loading').hide();
-            clear();
         });
     });
 
@@ -265,7 +274,12 @@ $( function() {
             url: $(this).attr('action'),
             type: 'POST',
             dataType: 'JSON',
-            data: $(this).serialize(),
+            data: {
+                _token: token,
+                rwd_id: $('#rwd_id').val(),
+                deducted_points: $('#deducted_points').val(),
+                deducted_price: $('#deducted_price').val(),
+            },
         }).done(function(data, textStatus, xhr) {
             if (textStatus == 'success') {
                 msg(data.msg,data.status)
@@ -281,7 +295,6 @@ $( function() {
             }
         }).always( function() {
             $('.loading').hide();
-            clear();
         });
     });
 
@@ -315,13 +328,9 @@ $( function() {
 
     $('#tbl_incentive').on('click', '.edit_incentive', function() {
     	$('#inc_id').val($(this).attr('data-inc_id'));
-    	$('#inc_code').val($(this).attr('data-inc_code'));
-    	$('#inc_name').val($(this).attr('data-inc_name'));
-    	$('#inc_points').val($(this).attr('data-inc_points'));
-    	$('#inc_hrs').val($(this).attr('data-inc_hrs'));
-    	$('#inc_days').val($(this).attr('data-inc_days'));
-    	$('#inc_space').val($(this).attr('data-inc_space'));
-    	$('#inc_description').val($(this).attr('data-inc_description'));
+    	$('#price_from').val($(this).attr('data-price_from'));
+    	$('#price_to').val($(this).attr('data-price_to'));
+    	$('#points').val($(this).attr('data-points'));
     	$('#inc_token').val(token);
 
     	$('#incentive_modal').modal('show');
@@ -329,13 +338,8 @@ $( function() {
 
     $('#tbl_reward').on('click', '.edit_reward', function() {
     	$('#rwd_id').val($(this).attr('data-rwd_id'));
-    	$('#rwd_code').val($(this).attr('data-rwd_code'));
-    	$('#rwd_name').val($(this).attr('data-rwd_name'));
-    	$('#rwd_points').val($(this).attr('data-rwd_points'));
-    	$('#rwd_hrs').val($(this).attr('data-rwd_hrs'));
-    	$('#rwd_days').val($(this).attr('data-rwd_days'));
-    	$('#rwd_space').val($(this).attr('data-rwd_space'));
-    	$('#rwd_description').val($(this).attr('data-rwd_description'));
+    	$('#deducted_points').val($(this).attr('data-deducted_points'));
+        $('#deducted_price').val($(this).attr('data-deducted_price'));
     	$('#rwd_token').val(token);
 
     	$('#rewards_modal').modal('show');
@@ -435,22 +439,14 @@ function makeIncentiveDataTable(arr) {
         searching: false,
         ordering: false,
         columns: [
-        	{data: 'inc_code' },
-            {data: 'inc_name' },
-            {data: 'inc_points' },
-            {data: 'inc_hrs' },
-            {data: 'inc_days' },
-            {data: 'inc_space' },
-            {data: 'inc_description' },
+        	{data: 'price_from' },
+            {data: 'price_to' },
+            {data: 'points' },
             {data: function(x) {
                 return '<button class="btn btn-sm btn-info edit_incentive" data-inc_id="'+x.id+'" '+
-	                        ' data-inc_code="'+x.inc_code+'" '+
-	                        ' data-inc_name="'+x.inc_name+'" '+
-	                        ' data-inc_points="'+x.inc_points+'" '+
-	                        ' data-inc_hrs="'+x.inc_hrs+'" '+
-	                        ' data-inc_days="'+x.inc_days+'" '+
-	                        ' data-inc_space="'+x.inc_space+'" '+
-	                        ' data-inc_description="'+x.inc_description+'">'+
+	                        ' data-price_from="'+x.price_from+'" '+
+	                        ' data-price_to="'+x.price_to+'" '+
+	                        ' data-points="'+x.points+'">'+
                             '<i class="fa fa-edit"></i>'+
                         '</button>'+
                         '<button class="btn btn-sm btn-danger delete_incentive" data-inc_id="'+x.id+'">'+
@@ -470,7 +466,9 @@ function rewards() {
             _token: token,
         },
     }).done(function(data, textStatus, xhr) {
-        makeRewardDataTable(data);
+        $('#rwd_id').val(data.id);
+        $('#deducted_points').val(data.deducted_points);
+        $('#deducted_price').val(data.deducted_price);
     }).fail(function(xhr, textStatus, errorThrown) {
         msg('Reward Settings: '+errorThrown,textStatus);
     });
@@ -484,24 +482,12 @@ function makeRewardDataTable(arr) {
         searching: false,
         ordering: false,
         columns: [
-        	{data: 'rwd_code' },
-            {data: 'rwd_name' },
-            {data: 'rwd_points' },
-            {data: 'rwd_hrs' },
-            {data: 'rwd_days' },
-            {data: 'rwd_space' },
-            {data: 'rwd_price' },
-            {data: 'rwd_description' },
+        	{data: 'deducted_price' },
+            {data: 'deducted_points' },
             {data: function(x) {
                 return '<button class="btn btn-sm btn-info edit_reward" data-rwd_id="'+x.id+'" '+
-	                        ' data-rwd_code="'+x.rwd_code+'" '+
-	                        ' data-rwd_name="'+x.rwd_name+'" '+
-	                        ' data-rwd_points="'+x.rwd_points+'" '+
-	                        ' data-rwd_hrs="'+x.rwd_hrs+'" '+
-	                        ' data-rwd_days="'+x.rwd_days+'" '+
-	                        ' data-rwd_space="'+x.rwd_space+'" '+
-                            ' data-rwd_price="'+x.rwd_price+'" '+
-	                        ' data-rwd_description="'+x.rwd_description+'">'+
+	                        ' data-deducted_price="'+x.deducted_price+'" '+
+	                        ' data-deducted_points="'+x.deducted_points+'">'+
                             '<i class="fa fa-edit"></i>'+
                         '</button>'+
                         '<button class="btn btn-sm btn-danger delete_reward" data-rwd_id="'+x.id+'">'+

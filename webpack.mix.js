@@ -37,6 +37,21 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/super_admin/transaction_codes.js', 'public/js/pages/super_admin/')
 
     .scripts([
+    	'resources/js/page_translation/dashboard/employee.js',
+		'resources/js/pages/dashboard/employee.js',
+	], 'public/js/pages/dashboard/employee.js')
+
+	.scripts([
+    	'resources/js/page_translation/dashboard/owner.js',
+		'resources/js/pages/dashboard/owner.js',
+	], 'public/js/pages/dashboard/owner.js')
+
+	.scripts([
+    	'resources/js/page_translation/dashboard/customer.js',
+		'resources/js/pages/dashboard/customer.js',
+	], 'public/js/pages/dashboard/customer.js')
+
+    .scripts([
     	'resources/js/page_translation/pos_control.js',
 		'resources/js/pages/pos_control.js',
 	], 'public/js/pages/pos_control.js')

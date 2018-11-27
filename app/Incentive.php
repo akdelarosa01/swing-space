@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Incentive extends Model
 {
     protected $fillable = [
-    	'inc_code',
-    	'inc_name',
-    	'inc_points',
-    	'inc_hrs',
-        'inc_days',
-    	'inc_space',
-    	'inc_description',
-    	'create_user',
-    	'update_user'
+    	'price_from',
+        'price_to',
+        'points',
+        'create_user',
+        'update_user'
     ];
 }

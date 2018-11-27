@@ -120,19 +120,21 @@
                     <span aria-hidden="true" class="zmdi zmdi-close"></span>
                 </button>
             </div>
-            <div class="modal-body">
-                <table class="table table-sm" id="tbl_rewards" width="100%">
-                    <thead>
-                        <th>Description</th>
-                        <th>Points</th>
-                        <th></th>
-                    </thead>
-                    <tbody id="tbl_rewards_body"></tbody>
-                </table>
+             <div class="modal-body">
+                <div class="form-group row">
+                    <label for="points_used" class="control-label text-right col-md-3 trn">Points to use</label>
+                    <div class="col-md-9">
+                        <input type="number" class="form-control form-control-sm clear validate" id="points_used" name="points_used">
+                        <div id="points_used_feedback"></div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="price_deducted" name="price_deducted">
+                <input type="hidden" id="available_points" name="available_points">
             </div>
             <div class="modal-footer bg-light">
-                <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
-                    <span class="trn">Cancel</span>
+                <button type="button" class="btn btn-info btn-sm" id="btn_calculateRewards">
+                    <span class="trn">Use Points</span>
                 </button>
             </div>
         </div>

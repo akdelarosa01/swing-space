@@ -44,6 +44,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
 });
 
 Route::group(['middleware' => ['auth','no.back']], function() {
+    Route::get('dashboard/customers-today', 'DashboardController@customersToday');
+    Route::get('dashboard/employee-total-statistic', 'DashboardController@EmployeeTotalStatistic');
+
+    Route::get('dashboard/get-sales', 'DashboardController@getSales');
+    Route::get('dashboard/owner-total-statistic', 'DashboardController@OwnerTotalStatistic');
+    Route::get('dashboard/sales-registered', 'DashboardController@SalesFromRegisteredCustomer');
+
+    Route::get('dashboard/customer-bill', 'DashboardController@customerBill');
+    Route::get('dashboard/customer-statistic', 'DashboardController@CustomerStatistic');
+
     Route::get('pos-control', 'Pages\POSControlController@index');
     Route::get('pos-control/product-types', 'Pages\POSControlController@product_types');
     Route::get('pos-control/products', 'Pages\POSControlController@show_products');
@@ -51,7 +61,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('pos-control/check-in-member', 'Pages\POSControlController@check_in_member');
     Route::get('pos-control/show-customer', 'Pages\POSControlController@show_currentCustomer');
     Route::get('pos-control/show-discounts', 'Pages\POSControlController@show_discounts');
-    Route::get('pos-control/show-rewards', 'Pages\POSControlController@show_rewards');
+    Route::get('pos-control/calculate-rewards', 'Pages\POSControlController@calculate_rewards');
 
     Route::post('pos-control/save-current-bill', 'Pages\POSControlController@save_currentBill');
     Route::post('pos-control/show-current-bill', 'Pages\POSControlController@show_currentBill');
