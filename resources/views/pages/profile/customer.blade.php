@@ -14,10 +14,12 @@
 						<span class="trn">Upload</span>
 					</button>
 					<div class="row justify-content-center">
-						<img src="{{ asset('img/qr_code.png') }}" alt="QR Code" class="img-fluid mb-1">
+						<div class="col-md-12">
+							<img src="{{ asset('img/qr_code.png') }}" alt="QR Code" class="img-fluid mb-1" id="qr_code">
+						</div>
 					</div>
 					
-					<p class="text-center">CS10001</p>
+					<h3 class="text-center" id="cust_code"></h3>
 				</div>
 				<div class="col-md-10">
 					<div class="row">
@@ -74,17 +76,16 @@
 
 					<div class="row">
         				<div class="col-md-12">
-        					<h4>Purchase History</h4>
+        					<h4 class="trn">Purchase History</h4>
         					<div class="table-responsive">
-        						<table class="table table-striped table-sm">
+        						<table class="table table-striped table-sm" id="tbl_history">
         							<thead>
-        								<tr>
-        									<th class="trn">Product Code</th>
-        									<th class="trn">Product Name</th>
-        									<th class="trn">Product Type</th>
-        									<th class="trn">Price</th>
-        									<th class="trn">Date</th>
-        								</tr>
+    									<th class="trn">Product Code</th>
+    									<th class="trn">Product Name</th>
+    									<th class="trn">Variant</th>
+    									<th class="trn">Quantity</th>
+    									<th class="trn">Price</th>
+    									<th class="trn">Date</th>
         							</thead>
         						</table>
         					</div>

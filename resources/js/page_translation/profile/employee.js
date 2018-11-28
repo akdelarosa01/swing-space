@@ -109,7 +109,15 @@ var dict = {
         en: "Dropdown Settings"
     },
 
+    "Purchase History": {
+        ch: "购买历史",
+        en: "Purchase History"
+    },
 
+    "Page Access": {
+        ch: "页面访问",
+        en: "Page Access"
+    },
 
 
     "First Name": {

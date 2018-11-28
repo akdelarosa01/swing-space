@@ -111,6 +111,40 @@ var dict = {
 
 
 
+    "Customers Today": {
+        ch: "今天的客户",
+        en: "Customers Today"
+    },
+    "Total Registered Customer": {
+        ch: "注册客户总数",
+        en: "Total Registered Customer"
+    },
+    "Total sold products today": {
+        ch: "今天销售的产品总数",
+        en: "Total sold products today"
+    },
+    "Total earnings today": {
+        ch: "今天的总收入",
+        en: "Total earnings today"
+    },
+
+    "Code": {
+        ch: "码",
+        en: "Code"
+    },
+    "Name": {
+        ch: "名称",
+        en: "Name"
+    },
+    "Avail. Points": {
+        ch: "可用积分",
+        en: "Avail. Points"
+    },
+    "Total Bill": {
+        ch: "总账单",
+        en: "Total Bill"
+    },
+
 
 
     "Add New Incentive": {
@@ -121,18 +155,7 @@ var dict = {
         ch: "添加新奖励",
         en: "Add New Reward"
     },
-    "Code": {
-        ch: "码",
-        en: "Code"
-    },
-    "Name": {
-        ch: "名称",
-        en: "Name"
-    },
-    "Points": {
-        ch: "奖励分数",
-        en: "Points"
-    },
+    
     "Hours": {
         ch: "小时",
         en: "Hours"

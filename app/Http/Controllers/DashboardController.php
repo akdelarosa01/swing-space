@@ -200,4 +200,19 @@ class DashboardController extends Controller
         ];
         return response()->json($data);
     }
+
+    public function referredCustomers()
+    {
+        $cust = DB::select("SELECT u.id as id,
+                                u.photo as photo,
+                                c.customer_code as code,
+                                u.firstname as firstname,
+                                u.lastname as lastname
+                            FROM users as u
+                            inner join customers as c
+                            on c.user_id = u.id
+                            where referrer = ".Auth::user()->id);
+
+        return response()->json($cust);
+    }
 }

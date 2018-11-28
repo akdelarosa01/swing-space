@@ -20,9 +20,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('qr_code',function() {
+    return QRCode::text('SSA006')
+                ->setSize(10)
+                ->setMargin(1)
+                ->setOutfile('qr_codes/SSA006.png')
+                ->png();
+});
+
 Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/profile', 'ProfileController@index')->name('profile');
+    Route::get('/profile/purchase-history', 'ProfileController@purchaseHistory');
+    Route::get('/profile/qr_code', 'ProfileController@getQRcode');
+    Route::get('/profile/qr_code_employee', 'ProfileController@getQRcodeEmployee');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], function() {
@@ -53,6 +64,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('dashboard/customer-bill', 'DashboardController@customerBill');
     Route::get('dashboard/customer-statistic', 'DashboardController@CustomerStatistic');
+    Route::get('dashboard/referred-customers', 'DashboardController@referredCustomers');
 
     Route::get('pos-control', 'Pages\POSControlController@index');
     Route::get('pos-control/product-types', 'Pages\POSControlController@product_types');

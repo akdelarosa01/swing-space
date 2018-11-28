@@ -6,7 +6,6 @@
 			<div class="row">
 				<div class="col-md-2">
 					<img src="{{ asset(Auth::user()->photo) }}" alt="Profile Photo" class="img-fluid mb-1">
-					<img src="{{ asset('img/qr_code.png') }}" alt="QR Code" class="img-fluid">
 				</div>
 				<div class="col-md-10">
 					<div class="row">
@@ -70,7 +69,7 @@
         				</div>
 
                         <div class="col-md-6">
-                            <h4>Page Access</h4>
+                            <h4 class="trn">Page Access</h4>
                             <div class="table-responsive">
                                 <table class="table table-striped table-sm">
                                     <thead>
@@ -98,9 +97,9 @@
                         </div>
 					</div>
 
-					<div class="row">
+					{{-- <div class="row">
         				<div class="col-md-12">
-        					<h4>Purchase History</h4>
+        					<h4 class="trn">Purchase History</h4>
         					<div class="table-responsive">
         						<table class="table table-striped table-sm">
         							<thead>
@@ -115,7 +114,7 @@
         						</table>
         					</div>
         				</div>
-        			</div>
+        			</div> --}}
 				</div>
 			</div>
 

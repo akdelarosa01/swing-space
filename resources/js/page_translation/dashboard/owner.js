@@ -111,16 +111,32 @@ var dict = {
 
 
 
+    "Total registered customers" : {
+        ch: "注册客户总数",
+        en: "Total registered customers"
+    },
+
+    "Total employees" : {
+        ch: "员工总数",
+        en: "Total employees"
+    },
+
+    "Total registered products" : {
+        ch: "总注册产品",
+        en: "Total registered products"
+    },
+
+    "Sales from Registered Customers Monthly" : {
+        ch: "每月注册客户的销售额",
+        en: "Sales from Registered Customers Monthly"
+    },
+
+    "Week of": {
+        ch: "周",
+        en: "Week of"
+    },
 
 
-    "Add New Incentive": {
-    	ch: "添加新目标",
-        en: "Add New Incentive"
-    },
-    "Add New Reward": {
-        ch: "添加新奖励",
-        en: "Add New Reward"
-    },
     "Code": {
         ch: "码",
         en: "Code"
@@ -133,37 +149,38 @@ var dict = {
         ch: "奖励分数",
         en: "Points"
     },
-    "Hours": {
-        ch: "小时",
-        en: "Hours"
+    "Sales": {
+        ch: "销售",
+        en: "Sales"
     },
-    "Days": {
-        ch: "天",
-        en: "Days"
+
+    "Monday": {
+        ch: "星期一",
+        en: "Monday"
     },
-    "Space": {
-        ch: "空间",
-        en: "Space"
+    "Tuesday": {
+        ch: "星期二",
+        en: "Tuesday"
     },
-    "Description": {
-        ch: "描述",
-        en: "Description"
+    "Wednesday": {
+        ch: "星期三",
+        en: "Wednesday"
     },
-    "Employee discount": {
-        ch: "员工折扣",
-        en: "Employee discount"
+    "Thursday": {
+        ch: "星期四",
+        en: "Thursday"
     },
-    "Senior discount": {
-        ch: "老年人折扣",
-        en: "Senior discount"
+    "Friday": {
+        ch: "星期五",
+        en: "Friday"
     },
-    "Set": {
-        ch: "定",
-        en: "Set"
+    "Saturday": {
+        ch: "星期六",
+        en: "Saturday"
     },
-    "Cancel": {
-        ch: "取消",
-        en: "Cancel"
+    "Sunday": {
+        ch: "星期日",
+        en: "Sunday"
     }
 
 };

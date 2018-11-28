@@ -140,10 +140,11 @@ class MembershipController extends Controller
                 }
 
                 if ($user->save()) {
+                    $cust_code = $this->_global->TransactionNo('CUS_CODE');
                     Customer::create([
                         'user_id' => $user->id,
                         'date_of_birth' => $req->date_of_birth,
-                        'customer_code' => $this->_global->TransactionNo('CUS_CODE'),
+                        'customer_code' => $cust_code,
                         'phone' => ($req->phone == '' || $req->phone == null)? 'N/A' : $req->phone,
                         'mobile' => ($req->mobile == '' || $req->mobile == null)? 'N/A' : $req->mobile,
                         'facebook' => ($req->facebook == '' || $req->facebook == null)? 'N/A' : $req->facebook,
@@ -158,6 +159,12 @@ class MembershipController extends Controller
                         'create_user' => Auth::user()->id,
                         'update_user' => Auth::user()->id,
                     ]);
+
+                    QRCode::text($cust_code)
+                            ->setSize(10)
+                            ->setMargin(1)
+                            ->setOutfile('qr_codes/'.$cust_code.'.png')
+                            ->png();
                 }
 
                 $this->_userlog->log([

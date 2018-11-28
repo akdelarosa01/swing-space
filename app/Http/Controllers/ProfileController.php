@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Employee;
 use App\Customer;
+use App\CustomerProductBill;
+use DB;
 
 class ProfileController extends Controller
 {
@@ -60,5 +62,31 @@ class ProfileController extends Controller
     {
         $cust = Customer::where('user_id',$id)->first();
         return $cust;
+    }
+
+    public function purchaseHistory()
+    {
+        $bills = DB::select("SELECT prod_code,
+                                    prod_name,
+                                    variants,
+                                    quantity,
+                                    concat('₱', format(cost, 2)) as cost,
+                                    DATE_FORMAT(created_at,'%b %d, %Y') as created_at
+                            FROM customer_product_bills
+                            order by id desc");
+        
+        return response()->json($bills);
+    }
+
+    public function getQRcode()
+    {
+        $cust = Customer::select('customer_code')->where('user_id',Auth::user()->id)->first();
+        return response()->json($cust);
+    }
+
+    public function getQRcodeEmployee()
+    {
+        $emp = Employee::select('employee_id')->where('user_id',Auth::user()->id)->first();
+        return response()->json($emp);
     }
 }

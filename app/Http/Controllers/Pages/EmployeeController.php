@@ -139,9 +139,11 @@ class EmployeeController extends Controller
             if ($user->save()) {
                 $this->_global->uploadPhoto($user->id,$req->photo,'employees');
 
+                $emp_id = $this->_global->TransactionNo('EMP_ID');
+
                 Employee::create([
                     'user_id' => $user->id,
-                    'employee_id' => $this->_global->TransactionNo('EMP_ID'),
+                    'employee_id' => $emp_id,
                     'date_of_birth' => $req->date_of_birth,
                     'phone' => ($req->phone == '' || $req->phone == null)? 'N/A' : $req->phone,
                     'mobile' => ($req->mobile == '' || $req->mobile == null)? 'N/A' : $req->mobile,
@@ -160,6 +162,12 @@ class EmployeeController extends Controller
                 ]);
 
                 $this->give_access($req,$user->id);
+
+                QRCode::text($emp_id)
+                        ->setSize(10)
+                        ->setMargin(1)
+                        ->setOutfile('qr_codes/'.$emp_id.'.png')
+                        ->png();
             }
 
             $this->_userlog->log([

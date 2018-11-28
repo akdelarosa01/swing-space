@@ -52,14 +52,14 @@ function employeeStatistic() {
             _token: token
         },
     }).done(function(data, textStatus, xhr) {
-        $('#total_customers').attr('data-count',data.total_customers);
-        $('#total_customers').html(data.total_customers);
+        $('#total_customers').attr('data-count',(data.total_customers == null)? 0 : data.total_customers);
+        $('#total_customers').html((data.total_customers == null)? 0 : data.total_customers);
 
-        $('#total_sold_product').attr('data-count',data.total_sold_product);
-        $('#total_sold_product').html(data.total_sold_product);
+        $('#total_sold_product').attr('data-count',(data.total_sold_product == null)? 0 : data.total_sold_product);
+        $('#total_sold_product').html((data.total_sold_product == null)? 0 : data.total_sold_product);
 
-        $('#total_earnings').attr('data-count',data.total_earnings);
-        $('#total_earnings').html(data.total_earnings);
+        $('#total_earnings').attr('data-count',(data.total_earnings == null)? 0 : data.total_earnings);
+        $('#total_earnings').html((data.total_earnings == null)? 0 : data.total_earnings);
     }).fail(function(xhr, textStatus, errorThrown) {
         msg('Employee Statistics: '+ errorThrown,textStatus);
     });

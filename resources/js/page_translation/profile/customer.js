@@ -190,21 +190,31 @@ var dict = {
         ch: "描述",
         en: "Description"
     },
-    "Product Type": {
-        ch: "产品类别",
-        en: "Product Type"
+    "Quantity": {
+        ch: "数量",
+        en: "Quantity"
     },
     "Price": {
         ch: "价钱",
         en: "Price"
     },
-    "Variants": {
+    "Variant": {
         ch: "变种",
         en: "Variants"
     },
     "Date": {
         ch: "日期",
         en: "Date"
+    },
+
+    "Purchase History": {
+        ch: "购买历史",
+        en: "Purchase History"
+    },
+
+    "Membership Date": {
+        ch: "会员日期",
+        en: "Membership Date"
     }
 
 

@@ -1,5 +1,5 @@
 var dict = {
-	"Profile": {
+    "Profile": {
         ch: "轮廓",
         en: "Profile"
     },
@@ -8,8 +8,8 @@ var dict = {
         ch: "登出",
         en: "Sign Out"
     },
-	
-	"Dashboard": {
+    
+    "Dashboard": {
         ch: "仪表盘",
         en: "Dashboard"
     },
@@ -109,11 +109,19 @@ var dict = {
         en: "Dropdown Settings"
     },
 
+    "Purchase History": {
+        ch: "购买历史",
+        en: "Purchase History"
+    },
 
+    "Page Access": {
+        ch: "页面访问",
+        en: "Page Access"
+    },
 
 
     "First Name": {
-    	ch: "名字",
+        ch: "名字",
         en: "First Name"
     },
     "Last Name": {

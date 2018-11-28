@@ -112,54 +112,41 @@ var dict = {
 
 
 
-
-    "Add New Incentive": {
-    	ch: "添加新目标",
-        en: "Add New Incentive"
-    },
-    "Add New Reward": {
-        ch: "添加新奖励",
-        en: "Add New Reward"
-    },
     "Code": {
         ch: "码",
         en: "Code"
     },
-    "Name": {
-        ch: "名称",
-        en: "Name"
+    "First Name": {
+        ch: "名字",
+        en: "First Name"
     },
-    "Points": {
-        ch: "奖励分数",
-        en: "Points"
+    "Last Name": {
+        ch: "姓",
+        en: "Last Name"
     },
-    "Hours": {
-        ch: "小时",
-        en: "Hours"
+    "Product": {
+        ch: "制品",
+        en: "Product"
     },
-    "Days": {
-        ch: "天",
-        en: "Days"
+    "Qty/Hrs": {
+        ch: "数量 / 小时",
+        en: "Qty/Hrs"
     },
-    "Space": {
-        ch: "空间",
-        en: "Space"
+    "Price": {
+        ch: "价钱",
+        en: "Price"
     },
-    "Description": {
-        ch: "描述",
-        en: "Description"
+    "My Bill for Today": {
+        ch: "我的今日法案",
+        en: "My Bill for Today"
     },
-    "Employee discount": {
-        ch: "员工折扣",
-        en: "Employee discount"
+    "Available Refund Points": {
+        ch: "可用退款积分",
+        en: "Available Refund Points"
     },
-    "Senior discount": {
-        ch: "老年人折扣",
-        en: "Senior discount"
-    },
-    "Set": {
-        ch: "定",
-        en: "Set"
+    "Referred Customers": {
+        ch: "推荐的客户",
+        en: "Referred Customers"
     },
     "Cancel": {
         ch: "取消",
