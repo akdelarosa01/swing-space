@@ -205,7 +205,29 @@ var dict = {
     "Cancel": {
         ch: "取消",
         en: "Cancel"
+    },
+
+    "Discount Price": {
+        ch: "折扣价",
+        en: "Discount Price"
+    },
+
+    "Points Equivalent": {
+        ch: "点相当于",
+        en: "Points Equivalent"
+    },
+
+    "Price From": {
+        ch: "价格来自",
+        en: "Price From"
+    },
+
+    "Price To": {
+        ch: "价格到",
+        en: "Price To"
     }
+
+
 
 };
 

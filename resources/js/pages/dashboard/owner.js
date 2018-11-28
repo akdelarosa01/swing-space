@@ -13,6 +13,7 @@ function getSales() {
 			_token: token
 		},
 	}).done(function(data, textStatus, xhr) {
+		console.log(data.labels);
 		if ($('#ct-LineChart1').length > 0) {
 			new Chartist.Line('#ct-LineChart1 .ct-chart', {
 				labels: data.labels,

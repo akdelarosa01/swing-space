@@ -19,9 +19,9 @@
                 </div>
                 <table class="table table-sm" id="tbl_members" width="100%">
                     <thead>
-                        <td width="10%">Code</td>
-                        <td width="45%">Firstname</td>
-                        <td width="40%">Lastname</td>
+                        <td width="10%" class="trn">Code</td>
+                        <td width="45%" class="trn">First Name</td>
+                        <td width="40%" class="trn">Last Name</td>
                         <td width="5%"></td>
                     </thead>
                     <tbody id="tbl_members_body"></tbody>

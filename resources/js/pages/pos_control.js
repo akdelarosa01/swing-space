@@ -110,15 +110,15 @@ $( function() {
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
-							'<span style="word-wrap: break-word;">Email Receipt <br>'+
-							'<input type="checkbox" name="email_receipt" id="email_receipt" checked></span>'+
+							'<span style="word-wrap: break-word;" class="trn">Email Receipt</span> <br>'+
+							'<input type="checkbox" name="email_receipt" id="email_receipt" checked>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
-							'<span style="word-wrap: break-word;">Available Points: </span><br>'+
+							'<span style="word-wrap: break-word;" class="trn">Available Points</span><br>'+
 							'<span style="font-size:18px">'+$(this).attr('data-points')+'</span>'+
 						'</div>'+
 					'</div>'+
@@ -138,7 +138,7 @@ $( function() {
 				'<div class="col-md-2 ml-1">'+
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
-							'<span style="word-wrap: break-word;">Payment: </span><br>'+
+							'<span style="word-wrap: break-word;" class="trn">Payment:</span><br>'+
 							'<input type="number" id="order_payment" class="form-control form-control-sm" min="1" step="any">'+
 						'</div>'+
 					'</div>'+
@@ -151,7 +151,7 @@ $( function() {
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
-							'<span style="word-wrap: break-word;">Total Amount: </span><br>'+
+							'<span style="word-wrap: break-word;" class="trn">Total Amount:</span><br>'+
 							'<span id="total_amount" style="font-size:18px">0.00</span>'+
 							'<input type="hidden" id="order_total_amount">'+
 						'</div>'+
@@ -159,6 +159,8 @@ $( function() {
 				'</div>';
 		$('#control').html(info);
 		showCurrentBill($(this).attr('data-cust_id'));
+
+		getLanguage(dict);
 	});
 
 	$('#control').on('click', '.rewards', function() {
@@ -490,6 +492,7 @@ function membersTable(arr) {
             }, searchable: false, orderable: false},
         ]
     });
+    getLanguage(dict);
 }
 
 function customers(data) {
@@ -577,7 +580,7 @@ function CalculateRewards(points) {
     	$('#tbl_rewardView_body').html(reward_viewTable);
 
     	reward_viewTable = '<tr>'+
-    							'<td>Discount from reward points</td>'+
+    							'<td class="trn">Discount from reward points</td>'+
     							'<td>'+'-'+price+'</td>'+
     						'</tr>';
 

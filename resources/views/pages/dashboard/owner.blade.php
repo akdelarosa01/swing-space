@@ -51,7 +51,7 @@
 
         <div class="col-md-6">
             <div class="card">
-                <h5 class="card-header trn">Sales from Registered Customers Monthly</h5>
+                <h5 class="card-header trn">Monthly Sales per Registered Customers</h5>
                 <div class="card-body">
                     <table class="table table-sm table-striped" width="100%" id="tbl_registered">
                         <thead>

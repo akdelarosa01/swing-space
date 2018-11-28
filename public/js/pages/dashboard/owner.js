@@ -126,9 +126,9 @@ var dict = {
         en: "Total registered products"
     },
 
-    "Sales from Registered Customers Monthly" : {
-        ch: "每月注册客户的销售额",
-        en: "Sales from Registered Customers Monthly"
+    "Monthly Sales per Registered Customers" : {
+        ch: "每位注册客户的月销售额",
+        en: "Monthly Sales per Registered Customers"
     },
 
     "Week of": {
@@ -203,6 +203,7 @@ function getSales() {
 			_token: token
 		},
 	}).done(function(data, textStatus, xhr) {
+		console.log(data.labels);
 		if ($('#ct-LineChart1').length > 0) {
 			new Chartist.Line('#ct-LineChart1 .ct-chart', {
 				labels: data.labels,

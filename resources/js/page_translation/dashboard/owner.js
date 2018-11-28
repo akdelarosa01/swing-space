@@ -126,9 +126,9 @@ var dict = {
         en: "Total registered products"
     },
 
-    "Sales from Registered Customers Monthly" : {
-        ch: "每月注册客户的销售额",
-        en: "Sales from Registered Customers Monthly"
+    "Monthly Sales per Registered Customers" : {
+        ch: "每位注册客户的月销售额",
+        en: "Monthly Sales per Registered Customers"
     },
 
     "Week of": {
