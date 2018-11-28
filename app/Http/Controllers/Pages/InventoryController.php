@@ -9,6 +9,7 @@ use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserLogsController;
 use Excel;
 use DB;
+use PDF;
 
 class InventoryController extends Controller
 {
@@ -120,12 +121,12 @@ class InventoryController extends Controller
                     ->get();
 
         switch ($req->file_type) {
-            case 'Excel':
-                $this->excelfile($data);
+            case 'PDF':
+                $this->pdffile($data);
                 break;
             
             default:
-                # code...
+                $this->excelfile($data);
                 break;
         }
     }
@@ -211,5 +212,11 @@ class InventoryController extends Controller
                 });
             });
         })->download('xlsx');
+    }
+
+    public function pdffile($data)
+    {
+        $pdf = PDF::loadFile('http://www.github.com');
+        return $pdf->inline('inventory.pdf');
     }
 }
