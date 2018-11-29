@@ -308,6 +308,11 @@
 						                                                    <?php
 						                                                    	}
 				                                                        	?>
+				                                                        	<tr class="total">
+					                                                        	<td>SubTotal</td>
+					                                                            <td></td>
+					                                                            <td class="alignright">{{ $data['sub_total'] }}</td>
+					                                                        </tr>
 					                                                    </tbody>
 					                                                </table>
 					                                                <hr>
@@ -335,6 +340,11 @@
 
 					                                                <table class="invoice-items" cellpadding="0" cellspacing="0">
 				                                                        <tbody>
+				                                                        	<tr class="total">
+					                                                        	<td>Total</td>
+					                                                            <td></td>
+					                                                            <td class="alignright">{{ $data['total_amount'] }}</td>
+					                                                        </tr>
 				                                                        	<tr>
 					                                                            <td>Payment</td>
 					                                                            <td></td>
@@ -344,12 +354,6 @@
 					                                                            <td>Change</td>
 					                                                            <td></td>
 					                                                            <td class="alignright">{{ $data['change'] }}</td>
-					                                                        </tr>
-
-					                                                        <tr class="total">
-					                                                        	<td>Total</td>
-					                                                            <td></td>
-					                                                            <td class="alignright">{{ $data['total_amount'] }}</td>
 					                                                        </tr>
 					                                                    </tbody>
 					                                                </table>
@@ -361,7 +365,7 @@
 			                                </tr>
 			                                <tr>
 			                                    <td class="content-block">
-			                                        {{ $data['company_address'] }}
+			                                        <?php echo nl2br($data['company_address']);?>
 			                                    </td>
 			                                </tr>
 			                            </tbody></table>

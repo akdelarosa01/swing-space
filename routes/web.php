@@ -155,6 +155,10 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('general-settings/delete-discount','Pages\GeneralSettingsController@delete_discount');
     Route::get('general-settings/discounts','Pages\GeneralSettingsController@discounts');
 
+    Route::get('sales-report', 'Pages\SalesReportController@index');
+    Route::get('sales-report/yearly-comparison-report', 'Pages\SalesReportController@YearlyComparisonReport');
+    Route::get('sales-report/sales-from-customers-report', 'Pages\SalesReportController@SalesFromCustomerReport');
+
     Route::get('get-province', 'GlobalController@getProvince');
     Route::get('get-city', 'GlobalController@getCity');
     Route::get('get-modules', 'GlobalController@getModules');

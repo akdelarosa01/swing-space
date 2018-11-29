@@ -480,6 +480,8 @@ function calculateSubTotal(data) {
         total = parseFloat(total) + parseFloat(x.price);
     });
 
+    $('#sub_total_value').val(total);
+
     return total.toFixed(2);
 }
 

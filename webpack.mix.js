@@ -22,11 +22,11 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/switchery-npm/index.js',
 		'resources/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
 		'resources/plugins/chartist/dist/chartist.js',
+		'resources/plugins/canvasjs/canvasjs.min.js',
 		'resources/plugins/toast/jquery.toast.js',
 		'resources/plugins/jquery-mask/jquery.mask.min.js',
 		'resources/plugins/datatables.net/js/jquery.dataTables.js',
 		'resources/plugins/datatables.net-bs4/js/dataTables.bootstrap4.js',
-		// 'resources/plugins/localize/jquery.localize.min.js',
 		'resources/plugins/translate/jquery.translate.js',
 		'resources/plugins/select2/select2.min.js',
 		'resources/js/scripts/app.js',
@@ -126,9 +126,6 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/js/pages/dashboard/dashboard.js',
 	], 'public/js/pages/dashboard/dashboard.js')
 
-
-
-
 	.scripts([
     	'resources/js/page_translation/profile/owner.js',
 		'resources/js/pages/profile/owner.js',
@@ -143,6 +140,11 @@ mix.js('resources/js/app.js', 'public/js')
     	'resources/js/page_translation/profile/customer.js',
 		'resources/js/pages/profile/customer.js',
 	], 'public/js/pages/profile/customer.js')
+
+	.scripts([
+    	'resources/js/page_translation/reports/sales_report.js',
+		'resources/js/pages/reports/sales_report.js',
+	], 'public/js/pages/reports/sales_report.js')
 
 
     .sass('resources/sass/app.scss', 'public/css')

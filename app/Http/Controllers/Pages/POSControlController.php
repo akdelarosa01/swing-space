@@ -360,6 +360,8 @@ class POSControlController extends Controller
 
         if ($saved) {
             CurrentCustomer::where('id',$req->cust_id)->delete();
+            CurrentCustomerBill::where('cust_id',$req->cust_id)->delete();
+
             $data = [
                 'msg' => 'Payment successfully transacted',
                 'status' => 'success'
@@ -379,6 +381,7 @@ class POSControlController extends Controller
                     ->where('c.customer_code',$cust_code)
                     ->select(
                         DB::raw('u.email as email'),
+                        DB::raw('c.mobile as mobile'),
                         DB::raw('concat(u.firstname," ",u.lastname) as cust_name')
                     )->first();
 
@@ -397,8 +400,11 @@ class POSControlController extends Controller
             'prod_name' => $req->order_prod_name,
             'quantity' => $req->order_quantity,
             'price' => $req->order_price,
-            'company_address' => 'Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., Loyola Heights Katipunan, Quezon City',
-            'company_email' => 'spacekatipunan@gmail.com'
+            'company_address' => 'Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., <br>Loyola Heights Katipunan, Quezon City',
+            'company_email' => 'spacekatipunan@gmail.com',
+            'cust_email' => $cust->email,
+            'cust_mobile' => $cust->mobile,
+            'sub_total' => '₱'.number_format($req->sub_total,2)
         ];
 
 

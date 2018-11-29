@@ -245,6 +245,29 @@
                             </ul>
                         </li>
                     @endif
+
+                    @if(in_array('Reports', $category))
+                        <li class="nav-dropdown {{ Request::is('general-settings') || Request::is('dropdown') ? ' active' : null }}">
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="zmdi zmdi-file zmdi-hc-fw"></i>
+                                <span class="trn">Reports</span>
+                            </a>
+                            <ul class="collapse nav-sub" aria-expanded="false">
+                                @foreach ($user_access as $key => $access)
+                                    @if($access->module_code == 'SAL_RPT')
+                                        <?php
+                                            $url = 'sales-report';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span class="trn">{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
                 @endif
 
                 @if (Auth::check() and Auth::user()->user_type == 'Administrator')

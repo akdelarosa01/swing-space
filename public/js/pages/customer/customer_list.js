@@ -109,6 +109,17 @@ var dict = {
         en: "Dropdown Settings"
     },
 
+    "Reports": {
+        ch: "报告",
+        en: "Reports"
+    },
+
+    "Sales Report": {
+        ch: "销售报告",
+        en: "Sales Report"
+    },
+
+
 
 
 

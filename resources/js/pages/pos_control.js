@@ -108,6 +108,7 @@ $( function() {
 							'<input type="hidden" id="reward_price" name="reward_price" value="0">'+
 							'<input type="hidden" id="reward_points" name="reward_points" value="0">'+
 							'<input type="hidden" id="reward_name" name="reward_name" value="Discount from Rewards">'+
+							'<input type="hidden" id="sub_total_value" name="sub_total_value" value="0">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -346,7 +347,8 @@ $( function() {
 					order_prod_id: $('input[name="order_prod_id[]"]').map(function(){return $(this).val();}).get(),
 					email_receipt: email_receipt,
 					discount_name: $('#discount_name').val(),
-					reward_name: $('#reward_name').val()
+					reward_name: $('#reward_name').val(),
+					sub_total: $('#sub_total_value').val()
 				},
 			}).done(function(data, textStatus, xhr) {
 				showCustomer();
@@ -355,6 +357,9 @@ $( function() {
 				$('#control').hide();
 				$('#tbl_discounts_body').html('');
 				$('#tbl_rewards_body').html('');
+
+				$('#tbl_discountView_body').html('');
+				$('#tbl_rewardView_body').html('');
 				msg(data.msg,data.status);
 			}).fail(function(xhr, textStatus, errorThrown) {
 				msg('Payment: '+errorThrown,textStatus);

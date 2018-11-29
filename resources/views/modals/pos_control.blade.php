@@ -163,7 +163,7 @@
             </div>
             <div class="modal-footer bg-light">
                 <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
-                    <span class="trn">Cancel</span>
+                    <span class="trn">Close</span>
                 </button>
             </div>
         </div>
