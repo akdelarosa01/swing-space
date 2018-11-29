@@ -21,6 +21,7 @@ class CreateTransactionCodesTable extends Migration
             $table->string('prefix_format');
             $table->integer('next_no')->default(0);
             $table->integer('next_no_length')->default(0);
+            $table->string('month')->default(0)->length(2);
             $table->string('create_user');
             $table->string('update_user');
             $table->timestamps();

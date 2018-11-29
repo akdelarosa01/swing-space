@@ -23,6 +23,8 @@ use App\CustomerPoint;
 use App\Sale;
 use DB;
 use PDF;
+use Mail;
+use App\User;
 
 
 class POSControlController extends Controller
@@ -353,7 +355,7 @@ class POSControlController extends Controller
         $this->giveIncentives($currcust->cust_code,$req->order_total_amount);
 
         if ($req->email_receipt > 0) {
-            $this->EmailCustomerReceipt($req);
+            $this->EmailCustomerReceipt($currcust->cust_code,$req);
         }
 
         if ($saved) {
@@ -370,9 +372,41 @@ class POSControlController extends Controller
         return $data;
     }
 
-    public function EmailCustomerReceipt($req)
+    public function EmailCustomerReceipt($cust_code,$req)
     {
-        # code...
+        $cust = DB::table('customers as c')
+                    ->join('users as u','c.user_id','=','u.id')
+                    ->where('c.customer_code',$cust_code)
+                    ->select(
+                        DB::raw('u.email as email'),
+                        DB::raw('concat(u.firstname," ",u.lastname) as cust_name')
+                    )->first();
+
+        $data = [
+            'invoice_num' => $this->_global->TransactionNo('INVOICE_NUM'),
+            'cust_name' => $cust->cust_name,
+            'payment' => '₱'.number_format($req->order_payment,2),
+            'total_amount' => '₱'.number_format($req->order_total_amount,2),
+            'change' => '₱'.number_format($req->order_change,2),
+            'discount_value' => '₱'.number_format($req->discount_value,2),
+            'discount_name' => $req->discount_name,
+            'reward_name' => $req->reward_name,
+            'reward_price' => '₱'.number_format($req->reward_price,2),
+            'reward_points' => $req->reward_points,
+            'date' => date('M d, Y'),
+            'prod_name' => $req->order_prod_name,
+            'quantity' => $req->order_quantity,
+            'price' => $req->order_price,
+            'company_address' => 'Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., Loyola Heights Katipunan, Quezon City',
+            'company_email' => 'spacekatipunan@gmail.com'
+        ];
+
+
+        Mail::send('email.receipt', ['data'=>$data], function ($mail) use ($cust) {
+                    $mail->to($cust->email)
+                        ->from('spacekatipunan@gmail.com','Swing Space')
+                        ->subject('Swing Space Receipt');
+                });
     }
 
     public function giveIncentives($cust_code,$order_total_amount)

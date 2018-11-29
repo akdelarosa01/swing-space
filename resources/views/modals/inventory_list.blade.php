@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-light">
-                    <button type="submit" class="btn btn-info btn-sm">
+                    <button type="button" class="btn btn-info btn-sm" id="btn_export_files">
                         <span class="trn">Export</span>
                     </button>
                     <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">

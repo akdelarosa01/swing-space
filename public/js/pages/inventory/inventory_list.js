@@ -182,6 +182,19 @@ $( function() {
     $('#btn_export').on('click', function() {
         $('#export_modal').modal('show');
     });
+
+    $('#btn_export_files').on('click', function() {
+        var ExportFileURL = '../../inventory-files?_token='+token+
+            '&&item_type_export='+$('#item_type_export').val()+
+            '&&file_type='+$('#file_type').val();
+
+        if ($('#file_type').val() == 'PDF') {
+            window.open(ExportFileURL,'_tab');
+        } else {
+            window.location.href = ExportFileURL;
+        }
+        
+    });
 });
 
 function searchItems(item_type) {

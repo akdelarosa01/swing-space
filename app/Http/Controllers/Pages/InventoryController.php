@@ -122,16 +122,16 @@ class InventoryController extends Controller
 
         switch ($req->file_type) {
             case 'PDF':
-                $this->pdffile($data);
+                $this->pdfFile($data);
                 break;
             
             default:
-                $this->excelfile($data);
+                $this->excelFile($data);
                 break;
         }
     }
 
-    public function excelfile($data)
+    public function excelFile($data)
     {
         $date = date('Ymd');
 
@@ -214,9 +214,9 @@ class InventoryController extends Controller
         })->download('xlsx');
     }
 
-    public function pdffile($data)
+    public function pdfFile($data)
     {
-        $pdf = PDF::loadFile('http://www.github.com');
-        return $pdf->inline('inventory.pdf');
+        $pdf = PDF::loadView('pdf.inventory', ['data'=>$data]);
+        return $pdf->download('inventory.pdf');
     }
 }

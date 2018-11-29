@@ -134,7 +134,8 @@ class GlobalController extends Controller
         {
             $result = TransactionCode::select(
                                             DB::raw("CONCAT(prefix, LPAD(IFNULL(next_no, 0), next_no_length, '0')) AS new_code"),
-                                            'next_no'
+                                            'next_no',
+                                            'month'
                                         )
                                         ->where('code', '=', $code)
                                         ->first();
@@ -145,12 +146,28 @@ class GlobalController extends Controller
                 $result->next_no = 0;
             }
 
-            $result = TransactionCode::select(
+            if ($code == 'INVOICE_NUM') {
+                if ($result->month == date('m')) {
+                    TransactionCode::where('code', '=', $code) ->update(['next_no' => $result->next_no + 1]);
+                } else {
+                    TransactionCode::where('code', '=', $code)->update(['next_no' => 1, 'month' => date('m')]);
+
+                    $result = TransactionCode::select(
                                             DB::raw("CONCAT(prefix, LPAD(IFNULL(next_no, 0), next_no_length, '0')) AS new_code"),
                                             'next_no'
                                         )
                                         ->where('code', '=', $code)
                                         ->first();
+                }
+            } else {
+                $result = TransactionCode::select(
+                                            DB::raw("CONCAT(prefix, LPAD(IFNULL(next_no, 0), next_no_length, '0')) AS new_code"),
+                                            'next_no'
+                                        )
+                                        ->where('code', '=', $code)
+                                        ->first();
+            }
+            
 
             if(count((array)$result) <= 0)
             {
@@ -158,8 +175,6 @@ class GlobalController extends Controller
                 $result->next_no = 0;
             }
             TransactionCode::where('code', '=', $code)->update(['next_no' => $result->next_no + 1]);
-
-
         }
         catch (Exception $e)
         {
@@ -171,10 +186,17 @@ class GlobalController extends Controller
 
     public function TransactionNo($transcode)
     {
+        $transno;
         $check = TransactionCode::where('code',$transcode)->count();
         if ($check > 0) {
-            $transno = $this->NextTransactionNo($transcode);
-
+            $code;
+            if ($transcode == 'INVOICE_NUM') {
+                $code = $this->NextTransactionNo($transcode);
+                $transno = str_replace('YYMM',date("ym"),$code);
+            } else {
+                $transno = $this->NextTransactionNo($transcode);
+            }
+            
             return $transno;
         }
     }

@@ -47,6 +47,7 @@ $( function() {
             }
         }).always( function() {
             $('.loading').hide();
+            $('#member_modal').modal('hide');
             clear();
         });
 	});
@@ -74,6 +75,7 @@ $( function() {
             }
         }).always( function() {
             $('.loading').hide();
+            $('#walkin_modal').modal('hide');
             clear();
         });
 	});
@@ -102,8 +104,10 @@ $( function() {
 							'</span><br>'+
 							'<input type="hidden" id="current_cust_id" value="'+$(this).attr('data-cust_id')+'">'+
 							'<input type="hidden" id="discount_value" name="discount_value" value="0">'+
+							'<input type="hidden" id="discount_name" name="discount_name" value="Discount">'+
 							'<input type="hidden" id="reward_price" name="reward_price" value="0">'+
 							'<input type="hidden" id="reward_points" name="reward_points" value="0">'+
+							'<input type="hidden" id="reward_name" name="reward_name" value="Discount from Rewards">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -270,6 +274,7 @@ $( function() {
     	var discount = sub_total * percentage;
     	
     	$('#discount_value').val((discount).toFixed(2));
+    	$('#discount_name').val($(this).attr('data-description'));
 
     	discount_viewTable = '<tr>'+
     							'<td>'+$(this).attr('data-description')+'</td>'+
@@ -302,10 +307,12 @@ $( function() {
     });
 
     $('#control').on('click', '.pay_now', function() {
+
 		var order_payment = parseFloat($('#order_payment').val());
 		var order_total_amount = parseFloat($('#order_total_amount').val());
 
 		if (order_payment >= order_total_amount) {
+			$('.loading').show();
 			var order_change = order_payment - order_total_amount;
 
 			$('#order_change').val((order_change).toFixed(2));
@@ -337,7 +344,9 @@ $( function() {
 					order_price: $('input[name="order_price[]"]').map(function(){return $(this).val();}).get(),
 					order_prod_code: $('input[name="order_prod_code[]"]').map(function(){return $(this).val();}).get(),
 					order_prod_id: $('input[name="order_prod_id[]"]').map(function(){return $(this).val();}).get(),
-					email_receipt: email_receipt
+					email_receipt: email_receipt,
+					discount_name: $('#discount_name').val(),
+					reward_name: $('#reward_name').val()
 				},
 			}).done(function(data, textStatus, xhr) {
 				showCustomer();
@@ -349,7 +358,9 @@ $( function() {
 				msg(data.msg,data.status);
 			}).fail(function(xhr, textStatus, errorThrown) {
 				msg('Payment: '+errorThrown,textStatus);
-			});
+			}).always(function() {
+		        $('.loading').hide();
+		    });
 		} else {
 			msg('Customer payment is insufficient. Please pay exact or more than the total bill.','failed');
 		}
@@ -575,6 +586,7 @@ function CalculateRewards(points) {
 		var price = (data.price_to_deduct).toFixed(2);
 		$('#reward_points').val(data.points_to_deduct);
 		$('#reward_price').val(price);
+		$('#reward_name').val('Reward Discount');
 
 		var reward_viewTable = '';
     	$('#tbl_rewardView_body').html(reward_viewTable);

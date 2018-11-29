@@ -14,6 +14,7 @@ use App\User;
 use DB;
 use App;
 use Hash;
+use QRCode;
 
 class MembershipController extends Controller
 {

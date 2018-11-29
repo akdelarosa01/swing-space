@@ -5,7 +5,7 @@
         <div class="card-header">
             <span class="trn">Inventories</span>
             <a href="{{ url('/item-output') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
-                <span class="trn">Item Ouput</span>
+                <span class="trn">Item Output</span>
             </a>
             <a href="{{ url('/receive-items') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
                 <span class="trn">Receive Item</span>
