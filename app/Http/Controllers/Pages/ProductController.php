@@ -10,6 +10,7 @@ use App\AvailableProduct;
 use App\Product;
 use Excel;
 use DB;
+use PDF;
 
 class ProductController extends Controller
 {
@@ -292,12 +293,12 @@ class ProductController extends Controller
         }
 
         switch ($req->file_type) {
-            case 'Excel':
-                $this->excelfile($data);
+            case 'PDF':
+                return $this->pdfFile($data);
                 break;
             
             default:
-                # code...
+                return $this->excelfile($data);
                 break;
         }
     }
@@ -410,5 +411,13 @@ class ProductController extends Controller
                 });
             });
         })->download('xlsx');
+    }
+
+    public function pdfFile($data)
+    {
+        $pdf = PDF::loadView('pdf.product', ['data'=>$data])
+                        ->setPaper('A4')
+                        ->setOrientation('landscape');
+        return $pdf->inline('prodtuct');
     }
 }

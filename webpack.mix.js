@@ -146,6 +146,11 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/js/pages/reports/sales_report.js',
 	], 'public/js/pages/reports/sales_report.js')
 
+	.scripts([
+    	'resources/js/page_translation/reports/send_reports.js',
+		'resources/js/pages/reports/send_reports.js',
+	], 'public/js/pages/reports/send_reports.js')
+
 
     .sass('resources/sass/app.scss', 'public/css')
     .styles([

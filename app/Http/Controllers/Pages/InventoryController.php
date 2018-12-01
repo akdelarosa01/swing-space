@@ -122,11 +122,11 @@ class InventoryController extends Controller
 
         switch ($req->file_type) {
             case 'PDF':
-                $this->pdfFile($data);
+                return $this->pdfFile($data);
                 break;
             
             default:
-                $this->excelFile($data);
+                return $this->excelFile($data);
                 break;
         }
     }
@@ -216,7 +216,9 @@ class InventoryController extends Controller
 
     public function pdfFile($data)
     {
-        $pdf = PDF::loadView('pdf.inventory', ['data'=>$data]);
-        return $pdf->download('inventory.pdf');
+        $pdf = PDF::loadView('pdf.inventory', ['data'=>$data])
+                        ->setPaper('A4')
+                        ->setOrientation('portrait');
+        return $pdf->inline('inventory');
     }
 }

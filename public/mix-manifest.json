@@ -27,5 +27,6 @@
     "/js/pages/profile/employee.js": "/js/pages/profile/employee.js",
     "/js/pages/profile/customer.js": "/js/pages/profile/customer.js",
     "/js/pages/reports/sales_report.js": "/js/pages/reports/sales_report.js",
+    "/js/pages/reports/send_reports.js": "/js/pages/reports/send_reports.js",
     "/css/main.css": "/css/main.css"
 }

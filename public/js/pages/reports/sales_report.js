@@ -127,18 +127,54 @@ $( function() {
 });
 $( function() {
 	SalesFromCustomerReport();
+	SalesOverDiscountsReport();
 	yearlyComparisonChartReport();
+
+	$('#btn_customer').on('click', function() {
+		$('#sales_per_customer_modal').modal('show');
+	});
+
+	$('#sales_per_customer').on('click', function() {
+		var ExportURL = '../../sales-report/sales-from-customers-excel?_token='+token+
+			'&&date_from='+$('#customer_from').val()+
+			'&&date_to='+$('#customer_to').val();
+		window.location.href=ExportURL;
+	});
+
+	$('#btn_discount').on('click', function() {
+		$('#sales_vs_discount_modal').modal('show');
+	});
+
+	$('#sales_vs_discount').on('click', function() {
+		var ExportURL = '../../sales-report/sales-over-discounts-excel?_token='+token+
+			'&&date_from='+$('#discount_from').val()+
+			'&&date_to='+$('#discount_to').val();
+		window.location.href=ExportURL;
+	});
 });
 
-function monthlySalesPerProduct(data) {
-	var chart = new CanvasJS.Chart("chartContainer", {
+function monthlySalesPerProductReport() {
+	$.ajax({
+		url: '../../sales-report/monthly-sales-product-report',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {param1: 'value1'},
+	}).done(function(data, textStatus, xhr) {
+		monthlySalesPerProductChart(data)
+	}).fail(function(xhr, textStatus, errorThrown) {
+		console.log("error");
+	});
+}
+
+function monthlySalesPerProductChart(data) {
+	var chart = new CanvasJS.Chart("monthlySalesPerProduct", {
 		animationEnabled: true,
 		title:{
-			text: "Monthly Expenses, 2016-17"
+			text: "Monthly Sales per Product"
 		},
 		axisY :{
 			includeZero: false,
-			prefix: "$"
+			prefix: "₱"
 		},
 		toolTip: {
 			shared: true
@@ -146,87 +182,7 @@ function monthlySalesPerProduct(data) {
 		legend: {
 			fontSize: 13
 		},
-		data: [{
-			type: "splineArea",
-			showInLegend: true,
-			name: "Salaries",
-			yValueFormatString: "$#,##0",
-			xValueFormatString: "MMM YYYY",
-			dataPoints: [
-				{ x: new Date(2016, 2), y: 30000 },
-				{ x: new Date(2016, 3), y: 35000 },
-				{ x: new Date(2016, 4), y: 30000 },
-				{ x: new Date(2016, 5), y: 30400 },
-				{ x: new Date(2016, 6), y: 20900 },
-				{ x: new Date(2016, 7), y: 31000 },
-				{ x: new Date(2016, 8), y: 30200 },
-				{ x: new Date(2016, 9), y: 30000 },
-				{ x: new Date(2016, 10), y: 33000 },
-				{ x: new Date(2016, 11), y: 38000 },
-				{ x: new Date(2017, 0),  y: 38900 },
-				{ x: new Date(2017, 1),  y: 39000 }
-			]
-	 	},
-		{
-			type: "splineArea", 
-			showInLegend: true,
-			name: "Office Cost",
-			yValueFormatString: "$#,##0",
-			dataPoints: [
-				{ x: new Date(2016, 2), y: 20100 },
-				{ x: new Date(2016, 3), y: 16000 },
-				{ x: new Date(2016, 4), y: 14000 },
-				{ x: new Date(2016, 5), y: 18000 },
-				{ x: new Date(2016, 6), y: 18000 },
-				{ x: new Date(2016, 7), y: 21000 },
-				{ x: new Date(2016, 8), y: 22000 },
-				{ x: new Date(2016, 9), y: 25000 },
-				{ x: new Date(2016, 10), y: 23000 },
-				{ x: new Date(2016, 11), y: 25000 },
-				{ x: new Date(2017, 0), y: 26000 },
-				{ x: new Date(2017, 1), y: 25000 }
-			]
-	 	},
-		{
-			type: "splineArea", 
-			showInLegend: true,
-			name: "Entertainment",
-			yValueFormatString: "$#,##0",     
-			dataPoints: [
-				{ x: new Date(2016, 2), y: 10100 },
-				{ x: new Date(2016, 3), y: 6000 },
-				{ x: new Date(2016, 4), y: 3400 },
-				{ x: new Date(2016, 5), y: 4000 },
-				{ x: new Date(2016, 6), y: 9000 },
-				{ x: new Date(2016, 7), y: 3900 },
-				{ x: new Date(2016, 8), y: 4200 },
-				{ x: new Date(2016, 9), y: 5000 },
-				{ x: new Date(2016, 10), y: 14300 },
-				{ x: new Date(2016, 11), y: 12300 },
-				{ x: new Date(2017, 0), y: 8300 },
-				{ x: new Date(2017, 1), y: 6300 }
-			]
-	 	},
-		{
-			type: "splineArea", 
-			showInLegend: true,
-			yValueFormatString: "$#,##0",      
-			name: "Maintenance",
-			dataPoints: [
-				{ x: new Date(2016, 2), y: 1700 },
-				{ x: new Date(2016, 3), y: 2600 },
-				{ x: new Date(2016, 4), y: 1000 },
-				{ x: new Date(2016, 5), y: 1400 },
-				{ x: new Date(2016, 6), y: 900 },
-				{ x: new Date(2016, 7), y: 1000 },
-				{ x: new Date(2016, 8), y: 1200 },
-				{ x: new Date(2016, 9), y: 5000 },
-				{ x: new Date(2016, 10), y: 1300 },
-				{ x: new Date(2016, 11), y: 2300 },
-				{ x: new Date(2017, 0), y: 2800 },
-				{ x: new Date(2017, 1), y: 1300 }
-			]
-		}]
+		data: data
 	});
 	chart.render();
 }
@@ -296,6 +252,58 @@ function yearlyComparisonChart(dt) {
 		},
 		axisY2: {
 			title: "Sales of "+dt.year_now,
+			titleFontColor: "#C0504E",
+			lineColor: "#C0504E",
+			labelFontColor: "#C0504E",
+			tickColor: "#C0504E"
+		},	
+		toolTip: {
+			shared: true
+		},
+		legend: {
+			cursor:"pointer",
+			itemclick: toggleDataSeries
+		},
+		data: dt.details
+	});
+	chart.render();
+
+	function toggleDataSeries(e) {
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		}
+		else {
+			e.dataSeries.visible = true;
+		}
+		chart.render();
+	}
+}
+
+function SalesOverDiscountsReport() {
+	$.ajax({
+		url: '../../sales-report/sales-over-discounts-report',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {param1: 'value1'},
+	}).done(function(data, textStatus, xhr) {
+		SalesOverDiscountsChart(data)
+	}).fail(function(xhr, textStatus, errorThrown) {
+		console.log("error");
+	});
+}
+
+function SalesOverDiscountsChart(dt) {
+	var chart = new CanvasJS.Chart("SalesOverDiscounts", {
+		animationEnabled: true,
+		axisY: {
+			title: "Total sales per month.",
+			titleFontColor: "#4F81BC",
+			lineColor: "#4F81BC",
+			labelFontColor: "#4F81BC",
+			tickColor: "#4F81BC"
+		},
+		axisY2: {
+			title: "Total discount per month.",
 			titleFontColor: "#C0504E",
 			lineColor: "#C0504E",
 			labelFontColor: "#C0504E",

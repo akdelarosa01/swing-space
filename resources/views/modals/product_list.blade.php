@@ -9,7 +9,7 @@
 					<span aria-hidden="true" class="zmdi zmdi-close"></span>
 				</button>
 			</div>
-			<form action="../../product-files" method="get" class="form-horizontal" id="frm_inventory">
+			<form action="../../product-files" method="get" class="form-horizontal" id="frm_product_files">
 				@csrf
                 <div class="modal-body">
                     <div class="form-group row">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-light">
-                    <button type="submit" class="btn btn-info btn-sm">
+                    <button type="button" class="btn btn-info btn-sm" id="btn_export_files">
                         <span class="trn">Export</span>
                     </button>
                     <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">

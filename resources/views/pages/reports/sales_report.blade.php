@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header trn">
+        <div class="card-header">
             <span class="trn">Total amount of Customer's purchased</span>
-            <a href="{{ url('/sales-report/sales-from-customers-excel') }}" class="btn btn-sm btn-success btn-rounded btn-outline pull-right">
-                <span class="trn">Excel</span>
-            </a>
+            <button type="button" class="btn btn-sm btn-success btn-rounded btn-outline pull-right" id="btn_customer">
+                <span class="trn">Export</span>
+            </button>
         </div>
         <div class="card-body">
             <div class="row">
@@ -17,12 +17,29 @@
             
         </div>
     </div>
-	<div class="card">
-		<div class="card-header trn">
-            <span class="trn">Yearly Comparison Sales Report</span>
-            <a href="{{ url('/sales-report/yearly-comparison-excel') }}" class="btn btn-sm btn-success btn-rounded btn-outline pull-right">
+    <div class="card">
+        <div class="card-header">
+            <span class="trn">Total sales Vs. Total Discounts</span>
+            <button type="buton" class="btn btn-sm btn-success btn-rounded btn-outline pull-right" id="btn_discount">
                 <span class="trn">Excel</span>
-            </a></div>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="SalesOverDiscounts" style="height: 300px; width: 100%;"></div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+	<div class="card">
+		<div class="card-header">
+            <span class="trn">Yearly Comparison Sales Report</span>
+            {{-- <a href="{{ url('/sales-report/yearly-comparison-excel') }}" class="btn btn-sm btn-success btn-rounded btn-outline pull-right">
+                <span class="trn">Excel</span>
+            </a> --}}
+        </div>
 		<div class="card-body">
             <div class="row">
                 <div class="col-md-12">
@@ -32,6 +49,8 @@
 			
 		</div>
 	</div>
+
+    @include('modals.sales_report')
 @endsection
 
 @push('scripts')

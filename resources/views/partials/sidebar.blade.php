@@ -264,6 +264,17 @@
                                             </a>
                                         </li>
                                     @endif
+
+                                    @if($access->module_code == 'SND_RPT')
+                                        <?php
+                                            $url = 'send-reports';
+                                        ?>
+                                        <li class="{{ Request::is($url) ? ' active' : null }}">
+                                            <a href="{{ url($url) }}">
+                                                <span class="trn">{{ $access->module_name }}</span>
+                                            </a>
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         </li>

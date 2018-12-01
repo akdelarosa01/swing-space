@@ -1,6 +1,6 @@
 APP_NAME="Swing Space"
 APP_ENV=local
-APP_KEY=base64:2+FWCpn+Vt+oECPndlyITuz4WHqzpWe/nbd4mzbCQfE=
+APP_KEY=base64:2tuUGCJUmClYYTBhVz7SEuWmHf5JvTOKECkbwMBUIGI=
 APP_DEBUG=true
 APP_URL=http://swingspace
 
@@ -24,11 +24,13 @@ REDIS_PASSWORD=null
 REDIS_PORT=6379
 
 MAIL_DRIVER=smtp
-MAIL_HOST=smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=ak.delarosa01@gmail.com
+MAIL_PASSWORD=maryataba01
+MAIL_ENCRYPTION=tls
+MAIL_FROM_NAME="Swing Space"
+MAIL_FROM_ADDRESS=ak.delarosa01@gmail.com
 
 PUSHER_APP_ID=649374
 PUSHER_APP_KEY=53acfdc5fb11d97e0910

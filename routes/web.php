@@ -158,6 +158,16 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('sales-report', 'Pages\SalesReportController@index');
     Route::get('sales-report/yearly-comparison-report', 'Pages\SalesReportController@YearlyComparisonReport');
     Route::get('sales-report/sales-from-customers-report', 'Pages\SalesReportController@SalesFromCustomerReport');
+    Route::get('sales-report/sales-over-discounts-report', 'Pages\SalesReportController@SalesOverDiscount');
+
+    Route::get('sales-report/sales-from-customers-excel', 'Pages\SalesReportController@SalesFromCustomerExcel');
+    Route::get('sales-report/sales-over-discounts-excel', 'Pages\SalesReportController@SalesOverDiscountExcel');
+    Route::get('sales-report/yearly-comparison-excel', 'Pages\SalesReportController@YearlyComparisonExcel');
+
+    Route::get('send-reports', 'Pages\SendReportsController@index');
+    Route::post('send-reports/save', 'Pages\SendReportsController@save');
+
+
 
     Route::get('get-province', 'GlobalController@getProvince');
     Route::get('get-city', 'GlobalController@getCity');

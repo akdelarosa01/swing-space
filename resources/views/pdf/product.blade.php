@@ -13,7 +13,7 @@
 				                <p style="line-height: 1.8px; font-size:12px; ">Unit 2 Mezzanine, Burgundy Place, B. Gonzales St.,</p>
 				            	<p style="line-height: 1.8px; font-size:12px; ">Loyola Heights Katipunan, Quezon City</p>
 				                <p style="line-height: 1.8px; font-size:12px; ">{{ 'spacekatipunan@gmail.com' }}</p>
-				                <h3><ins>INVENTORY LIST</ins></h3>
+				                <h3><ins>PRODUCT LIST</ins></h3>
 			                </td>
 			            </tr>
 			        </tbody>
@@ -27,22 +27,28 @@
 			<div class="col-xs-12">
 				<table class="table table-condensed table-stripped table-bordered" width="100%">
 					<thead>
-						<th>Item Code</th>
-						<th>Item Name</th>
-						<th>Item Type</th>
+						<th>Product Code</th>
+						<th>Product Name</th>
+						<th>Description</th>
+						<th>Product Type</th>
+						<th>Price</th>
+						<th>Variants</th>
+						<th>Target Qty</th>
 						<th>Quantity</th>
-						<th>Minimum Stock</th>
 					</thead>
 					<tbody>
 						<?php
 							foreach($data as $key => $dt) {
 						?>
 								<tr>
-									<td>{{ $dt->item_code }}</td>
-									<td>{{ $dt->item_name }}</td>
-									<td>{{ $dt->item_type }}</td>
+									<td>{{ $dt->prod_code }}</td>
+									<td>{{ $dt->prod_name }}</td>
+									<td>{{ $dt->description }}</td>
+									<td>{{ $dt->prod_type }}</td>
+									<td>{{ $dt->price }}</td>
+									<td>{{ $dt->variants }}</td>
+									<td>{{ $dt->target_qty }}</td>
 									<td>{{ $dt->quantity }}</td>
-									<td>{{ $dt->minimum_stock }}</td>
 								</tr>
 						<?php
 							}

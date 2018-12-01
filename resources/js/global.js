@@ -498,6 +498,30 @@ function calculateTotal(data,discounts,rewards) {
     return total.toFixed(2);
 }
 
+function calculateSubTotalCustomerView(data) {
+    var total = 0;
+    $.each(data, function(i,x) {
+        total = parseFloat(total) + parseFloat(x.price);
+    });
+
+    $('#sub_total_value').val(total);
+
+    return total.toFixed(2);
+}
+
+function calculateTotalCustomerView(data,discounts,rewards) {
+    var total = 0;
+    $.each(data, function(i,x) {
+        total = parseFloat(total) + parseFloat(x.price);
+    });
+
+    total = parseFloat(total) - parseFloat(discounts) - parseFloat(rewards);
+
+    $('#order_total_amount').val(total);
+
+    return total.toFixed(2);
+}
+
 function showCurrentBill(cust_id) {
     $.ajax({
         url: '../../pos-control/show-current-bill',
