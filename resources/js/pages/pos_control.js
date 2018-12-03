@@ -19,6 +19,10 @@ $( function() {
 		checkInMember($(this).val());
 	});
 
+	$('#btn_open').on('click', function() {
+		window.open('../../pos-control/customer-view','_blank');
+	});
+
 	$('#tbl_members_body').on('click', '.btn_checkInMemeber', function() {
 		$.ajax({
             url: '../../pos-control/current-customer',
@@ -163,7 +167,11 @@ $( function() {
 					'</div>'+
 				'</div>';
 		$('#control').html(info);
-		showCurrentBill($(this).attr('data-cust_id'));
+		showCurrentBill($(this).attr('data-cust_id'),
+						$('#discount_name').val(),
+						$('#discount_value').val(),
+						$('#reward_name').val(),
+						$('#reward_price').val());
 
 		getLanguage(dict);
 	});
@@ -201,6 +209,10 @@ $( function() {
 				prod_name: $(this).attr('data-prod_name'),
 				price: $(this).attr('data-price'),
 				unit_price: $(this).attr('data-price'),
+				discount_name: $('#discount_name').val(),
+				discount_value: $('#discount_value').val(),
+				reward_name: $('#reward_name').val(),
+				reward_price: $('#reward_price').val(),
 				quantity: 1
 			},
 		}).done(function(data, textStatus, xhr) {
@@ -225,6 +237,10 @@ $( function() {
 				_token: token,
 				cust_id: $(this).attr('data-cust_id'),
 				prod_id: $(this).attr('data-prod_id'),
+				discount_name: $('#discount_name').val(),
+				discount_value: $('#discount_value').val(),
+				reward_name: $('#reward_name').val(),
+				reward_price: $('#reward_price').val()
 			},
 		}).done(function(data, textStatus, xhr) {
             if (textStatus == 'success') {
@@ -248,6 +264,10 @@ $( function() {
 					cust_id: $(this).attr('data-cust_id'),
 					prod_id: $(this).attr('data-prod_id'),
 					unit_price: $(this).attr('data-unit_price'),
+					discount_name: $('#discount_name').val(),
+					discount_value: $('#discount_value').val(),
+					reward_name: $('#reward_name').val(),
+					reward_price: $('#reward_price').val(),
 					quantity: $(this).val()
 				},
 			}).done(function(data, textStatus, xhr) {
@@ -260,7 +280,7 @@ $( function() {
 				console.log("error");
 			});
     	} else {
-    		showCurrentBill($(this).attr('data-cust_id'));
+    		showCurrentBill($(this).attr('data-cust_id'),$('#discount_name').val(),$('#discount_value').val(),$('#reward_name').val(),$('#reward_price').val());
     	}
     });
 
@@ -273,18 +293,22 @@ $( function() {
     	var sub_total = parseFloat($('#sub_total').html());
     	var percentage = parseFloat($(this).attr('data-percentage'));
     	var discount = sub_total * percentage;
+
+    	var discount_value = (discount).toFixed(2);
+    	var discount_name = $(this).attr('data-description');
     	
-    	$('#discount_value').val((discount).toFixed(2));
-    	$('#discount_name').val($(this).attr('data-description'));
+    	$('#discount_value').val(discount_value);
+    	$('#discount_name').val(discount_name);
 
     	discount_viewTable = '<tr>'+
-    							'<td>'+$(this).attr('data-description')+'</td>'+
-    							'<td>'+'-'+(discount).toFixed(2)+'</td>'+
+    							'<td>'+discount_name+'</td>'+
+    							'<td>'+'-'+discount_value+'</td>'+
     						'</tr>';
 
     	$('#tbl_discountView_body').html(discount_viewTable);
+    	// $('#tbl_discountCustomerView_body').html(discount_viewTable);
 
-    	showCurrentBill($('#current_cust_id').val());
+    	showCurrentBill($('#current_cust_id').val(),discount_name,discount_value,$('#reward_name').val(),$('#reward_price').val());
     });
 
     $('#tbl_rewards_body').on('click', '.select_reward', function() {
@@ -293,18 +317,22 @@ $( function() {
 
     	var discount = parseFloat($('#reward_price').val()) + parseFloat($(this).attr('data-rwd_price'));
     	var deducted_points = parseFloat($('#reward_points').val()) + parseFloat($(this).attr('data-rwd_points'));
+
+    	var reward_price = (discount).toFixed(2);
+    	var reward_name = $(this).attr('data-rwd_name');
     	
-    	$('#reward_price').val((discount).toFixed(2));
+    	$('#reward_price').val(reward_price);
     	$('#reward_points').val(deducted_points);
+    	$('#reward_name').val(reward_name);
 
     	reward_viewTable = '<tr>'+
-    							'<td>'+$(this).attr('data-rwd_name')+'</td>'+
-    							'<td>'+'-'+(discount).toFixed(2)+'</td>'+
+    							'<td>'+reward_price+'</td>'+
+    							'<td>'+'-'+reward_name+'</td>'+
     						'</tr>';
 
     	$('#tbl_rewardView_body').html(reward_viewTable);
 
-    	showCurrentBill($('#current_cust_id').val());
+    	showCurrentBill($('#current_cust_id').val(),$('#discount_name').val(),$('#discount_value').val(),reward_name,reward_price);
     });
 
     $('#control').on('click', '.pay_now', function() {
@@ -605,7 +633,7 @@ function CalculateRewards(points) {
 
     	$('#rewards_modal').modal('hide');
 
-    	showCurrentBill($('#current_cust_id').val());
+    	showCurrentBill($('#current_cust_id').val(),$('#discount_name').val(),$('#discount_value').val(),$('#reward_name').val(),$('#reward_price').val());
 	}).fail(function(xhr, textStatus, errorThrown) {
 		msg('Discounts: '+errorThrown,textStatus);
 	});

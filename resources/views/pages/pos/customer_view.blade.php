@@ -40,17 +40,33 @@
 												</thead>
 												<tbody id="tbl_custview_body"></tbody>
 											</table>
-										</div>
-									</div>
 
-									<div class="row">
-										<div class="col-md-12">
-											<table class="table table-sm" id="tbl_subs" width="100%">
+											<table class="table table-sm" id="tbl_subs_customer" width="100%">
 												<thead>
-													<td width="70%">Sub Total</td>
+													<td width="70%" class="trn">Sub Total</td>
+													<td width="30%" id="sub_total_customer"></td>
+												</thead>
+											</table>
+											<table class="table table-sm" id="tbl_discountCustomerView" width="100%">
+												<thead>
+													<td width="70%" class="trn">Discount</td>
 													<td width="30%"></td>
 												</thead>
-												<tbody id="tbl_subs_body"></tbody>
+												<tbody id="tbl_discountCustomerView_body"></tbody>
+											</table>
+											<table class="table table-sm" id="tbl_rewardCustomerView" width="100%">
+												<thead>
+													<td width="70%" class="trn">Rewards</td>
+													<td width="30%"></td>
+												</thead>
+												<tbody id="tbl_rewardCustomerView_body"></tbody>
+											</table>
+											<table class="table table-sm" id="tbl_totalCustomerView" width="100%">
+												<thead>
+													<td width="70%" class="trn">Total</td>
+													<td width="30%" style="font-size: 24px" id="total_amount_customer">0.00</td>
+												</thead>
+												<tbody id="tbl_totalCustomerView_body"></tbody>
 											</table>
 										</div>
 									</div>

@@ -14,6 +14,12 @@
 					<span class="trn" style="font-size:12px;word-wrap: break-word;">Members</span>
 				</button>
 			</div>
+
+			<div class="col-md-2 ml-1 mb-1">
+				<button type="button" class="btn btn-lg btn-block btn-accent" id="btn_open">
+					<span class="trn" style="font-size:12px;word-wrap: break-word;">Open Customer's View</span>
+				</button>
+			</div>
 		</div>
 
 		<div class="row no-gutters" id="current_customers"></div>

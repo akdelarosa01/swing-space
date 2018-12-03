@@ -13917,9 +13917,9 @@ window.Popper = __webpack_require__(3).default;
  */
 
 try {
-    window.$ = window.jQuery = __webpack_require__(4);
+  window.$ = window.jQuery = __webpack_require__(4);
 
-    __webpack_require__(16);
+  __webpack_require__(16);
 } catch (e) {}
 
 /**
@@ -13941,9 +13941,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -13957,10 +13957,10 @@ if (token) {
 window.Pusher = __webpack_require__(37);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-    broadcaster: 'pusher',
-    key: "53acfdc5fb11d97e0910",
-    cluster: "ap1",
-    encrypted: true
+  broadcaster: 'pusher',
+  key: "53acfdc5fb11d97e0910",
+  cluster: "ap1",
+  encrypted: true
 });
 
 /***/ }),
@@ -59135,8 +59135,28 @@ Echo.channel('user_log')
 
 Echo.channel('pos')
     .listen('POS', (e) => {
-        console.log(e.pos);
-        ordersCustomerViewTable(e.pos);
+        var returns = e.pos;
+        calculateCustomerSubTotal(returns.bill);
+        calculateTotalCustomerView(returns.bill,returns.discount_value,returns.reward_price);
+        ordersCustomerViewTable(returns.bill);
+
+        $("#tbl_discountCustomerView_body").html('');
+        $("#tbl_rewardCustomerView_body").html('');
+
+        var discount_viewTable = '<tr>'+
+                                '<td>'+returns.discount_name+'</td>'+
+                                '<td>'+'-'+returns.discount_value+'</td>'+
+                            '</tr>';
+
+        $('#tbl_discountCustomerView_body').html(discount_viewTable);
+
+        var reward_viewTable = '<tr>'+
+                                '<td>'+returns.reward_name+'</td>'+
+                                '<td>'+'-'+returns.reward_price+'</td>'+
+                            '</tr>';
+
+        $('#tbl_rewardCustomerView_body').html(reward_viewTable);
+        
     });
 
 
@@ -59614,6 +59634,18 @@ function calculateSubTotal(data) {
     return total.toFixed(2);
 }
 
+function calculateCustomerSubTotal(data) {
+    var total = 0;
+    $.each(data, function(i,x) {
+        total = parseFloat(total) + parseFloat(x.price);
+    });
+
+    $('#sub_total_customer').html(total.toFixed(2));
+    console.log('fired');
+
+    return total.toFixed(2);
+}
+
 function calculateTotal(data,discounts,rewards) {
     var total = 0;
     $.each(data, function(i,x) {
@@ -59627,38 +59659,36 @@ function calculateTotal(data,discounts,rewards) {
     return total.toFixed(2);
 }
 
-function calculateSubTotalCustomerView(data) {
-    var total = 0;
-    $.each(data, function(i,x) {
-        total = parseFloat(total) + parseFloat(x.price);
-    });
-
-    $('#sub_total_value').val(total);
-
-    return total.toFixed(2);
-}
-
 function calculateTotalCustomerView(data,discounts,rewards) {
     var total = 0;
     $.each(data, function(i,x) {
         total = parseFloat(total) + parseFloat(x.price);
     });
 
-    total = parseFloat(total) - parseFloat(discounts) - parseFloat(rewards);
+    var discounts_val = parseFloat(discounts);
+    var rewards_val = parseFloat(rewards);
 
-    $('#order_total_amount').val(total);
+    total = parseFloat(total) - parseFloat(discounts_val) - parseFloat(rewards_val);
+
+    $('#total_amount_customer').html(total.toFixed(2));
+
+    console.log(total);
 
     return total.toFixed(2);
 }
 
-function showCurrentBill(cust_id) {
+function showCurrentBill(cust_id,discount_name,discount_value,reward_name,reward_price) {
     $.ajax({
         url: '../../pos-control/show-current-bill',
         type: 'POST',
         dataType: 'JSON',
         data: {
             _token: token,
-            cust_id: cust_id
+            cust_id: cust_id,
+            discount_name: discount_name,
+            discount_value: discount_value,
+            reward_name: reward_name,
+            reward_price: reward_price
         },
     }).done(function(data, textStatus, xhr) {
         ordersTable(data);

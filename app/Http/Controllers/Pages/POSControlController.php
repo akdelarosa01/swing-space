@@ -260,19 +260,37 @@ class POSControlController extends Controller
             ]);
         }
 
-        $bill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+        $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
 
-        event(new POS($bill));
+        $data = [
+            'discount_name' => $req->discount_name,
+            'discount_value' => $req->discount_value,
+            'reward_name' => $req->reward_name,
+            'reward_price' => $req->reward_price,
+            'bill' => $currentBill
+        ];
 
-        return response()->json($bill);
+        event(new POS($data));
+
+        return response()->json($currentBill);
     }
 
     public function show_currentBill(Request $req)
     {
-        $bill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
-        event(new POS($bill));
+        $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
 
-        return response()->json($bill);
+        $data = [
+            'discount_name' => $req->discount_name,
+            'discount_value' => $req->discount_value,
+            'reward_name' => $req->reward_name,
+            'reward_price' => $req->reward_price,
+            'bill' => $currentBill
+        ];
+
+
+        event(new POS($data));
+
+        return response()->json($currentBill);
     }
 
     public function delete_currentItemBill(Request $req)
@@ -283,10 +301,18 @@ class POSControlController extends Controller
         ])->delete();
 
         if ($delete) {
-            $bill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
-            event(new POS($bill));
+            $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
 
-            return response()->json($bill);
+            $data = [
+                'discount_name' => $req->discount_name,
+                'discount_value' => $req->discount_value,
+                'reward_name' => $req->reward_name,
+                'reward_price' => $req->reward_price,
+                'bill' => $currentBill
+            ];
+            event(new POS($data));
+
+            return response()->json($currentBill);
         }
     }
 
@@ -301,10 +327,17 @@ class POSControlController extends Controller
         ]);
 
         if ($update) {
-            $bill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
-            event(new POS($bill));
+            $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+            $data = [
+                'discount_name' => $req->discount_name,
+                'discount_value' => $req->discount_value,
+                'reward_name' => $req->reward_name,
+                'reward_price' => $req->reward_price,
+                'bill' => $currentBill
+            ];
+            event(new POS($data));
 
-            return response()->json($bill);
+            return response()->json($currentBill);
         }
     }
 
