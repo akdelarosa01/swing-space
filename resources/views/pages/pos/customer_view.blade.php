@@ -23,7 +23,7 @@
 
 					<div class="row">
 						<div class="col-md-7">
-							<img src="/img/logo.png" alt="" class="img-fluid" height="300px">
+							<img src="/img/logo.png" alt="" class="img-fluid" height="250px">
 						</div>
 
 						<div class="col-md-5">
