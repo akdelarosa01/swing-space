@@ -162,6 +162,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/sass/icons/dripicons.min.css',
 		'resources/sass/icons/material-design-iconic-font.min.css',
 		'resources/sass/icons/font-awesome.min.css',
+		'resources/plugins/animate/animate.min.css',
 		'resources/plugins/toast/jquery.toast.css',
 		'resources/plugins/select2/select2.min.css',
 		'resources/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css',

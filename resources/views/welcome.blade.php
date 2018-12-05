@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
         <!-- Styles -->
         <style>
@@ -76,14 +77,24 @@
             @endif
 
             <div class="content">
-                <div class="title">
-                    <img src="/img/logo.png" alt="" class="img-fluid" height="300px">
+                <div class="row justify-content-center">
+                    <div class="title col-md-7">
+                        <img src="/img/logo.png" alt="" class="img-fluid animated infinite swing delay-3s slower" height="300px">
+                    </div>
                 </div>
+                <br>
+                    
 
                 <div class="links">
-                    <a href="https://facebook.com">Facebook</a>
-                    <a href="https://instagram.com">Instagram</a>
-                    <a href="https://twitter.com">Twitter</a>
+                    <a href="https://facebook.com">
+                        <i class="fa fa-facebook-square fa-3x" style="color:#3b5998"></i>
+                    </a>
+                    <a href="https://instagram.com">
+                        <i class="fa fa-instagram fa-3x" style="color:#231F20"></i>
+                    </a>
+                    <a href="https://twitter.com">
+                        <i class="fa fa-twitter fa-3x" style="color:#38A1F3"></i>
+                    </a>
                 </div>
             </div>
         </div>
