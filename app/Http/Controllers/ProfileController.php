@@ -8,6 +8,7 @@ use App\Http\Controllers\GlobalController;
 use App\Employee;
 use App\Customer;
 use App\CustomerProductBill;
+use App\User;
 use DB;
 
 class ProfileController extends Controller
@@ -88,5 +89,29 @@ class ProfileController extends Controller
     {
         $emp = Employee::select('employee_id')->where('user_id',Auth::user()->id)->first();
         return response()->json($emp);
+    }
+
+    public function uploadCustomerPhoto(Request $req)
+    {
+        $data = [
+            'msg' => 'Photo upload failed.',
+            'status' => 'failed',
+            'photo' => '../../img/default-profile.png'
+        ];
+
+        if ($req->photo) {
+            $this->_global->uploadPhoto(Auth::user()->id,$req->photo,'customers');
+
+            $user = User::find(Auth::user()->id);
+
+            $data = [
+                'msg' => 'Photo was successfully uploaded.',
+                'status' => 'success',
+                'photo' => $user->photo
+            ];
+        }
+            
+
+        return response()->json($data);
     }
 }

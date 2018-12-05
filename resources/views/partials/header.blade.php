@@ -37,7 +37,7 @@
 		<ul class="navbar-nav nav-right">
 			<li class="nav-item dropdown">
 				<a class="nav-link nav-pill user-avatar" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-					<img src="{{ asset(Auth::user()->photo) }}" class="w-35 rounded-circle" alt="{{ Auth::user()->firstname.' '.Auth::user()->lastname }}"> {{ Auth::user()->firstname.' '.Auth::user()->lastname }}
+					<img src="{{ asset(Auth::user()->photo) }}" class="w-35 rounded-circle" alt="{{ Auth::user()->firstname.' '.Auth::user()->lastname }}" id="profile_photo"> {{ Auth::user()->firstname.' '.Auth::user()->lastname }}
 				</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-menu-accout">
 					<div class="dropdown-header pb-3">

@@ -236,6 +236,43 @@ $( function() {
 $( function() {
 	qr_code();
 	purchaseHistory();
+
+	$('#frm_upload').on('submit', function(e) {
+		e.preventDefault();
+
+		if ($('#photo').val() == '') {
+			msg('Please choose an image file.','failed');
+		} else {
+			$('.loading').show();
+
+			var data = new FormData(this);
+	   		$.ajax({
+				url: $(this).attr('action'),
+				type: 'POST',
+				dataType: 'JSON',
+				data: data,
+				mimeType:"multipart/form-data",
+				contentType: false,
+				cache: false,
+				processData:false,
+			}).done(function(data, textStatus, xhr) {
+	            if (textStatus == 'success') {
+					msg(data.msg,data.status);
+					$('#profile_photo').attr('src','../../'+data.photo);
+				}
+			}).fail(function(xhr, textStatus, errorThrown) {
+				var errors = xhr.responseJSON.errors;
+				showErrors(errors);
+
+				if(errorThrown == "Internal Server Error"){
+	                msg('Upload Photo: '+errorThrown,textStatus);
+	            }
+			}).always(function() {
+				$('.loading').hide();
+			});
+		}
+			
+	});
 });
 
 function qr_code() {

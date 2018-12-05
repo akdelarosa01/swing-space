@@ -5,21 +5,25 @@
 		<div class="card-body">
 			<div class="row justify-content-center">
 				<div class="col-md-2">
-					<img src="{{ asset('img/default-profile.png') }}" alt="Profile Photo" class="img-fluid mb-1">
-					<div class="custom-file mb-1">
-                		<input type="file" class="custom-file-input" id="photo">
-                		<label class="custom-file-label trn" for="photo">Choose Photo</label>
-					</div>
-					<button class="btn btn-primary btn-block mb-3">
-						<span class="trn">Upload</span>
-					</button>
-					<div class="row justify-content-center">
-						<div class="col-md-12">
-							<img src="{{ asset('img/qr_code.png') }}" alt="QR Code" class="img-fluid mb-1" id="qr_code">
+					<form id="frm_upload" enctype="multipart/form-data" method="post" action="../../profile/upload-photo">
+						@csrf
+						<img src="{{ asset('img/default-profile.png') }}" alt="Profile Photo" class="img-fluid mb-1 photo">
+						<div class="custom-file mb-1">
+	                		<input type="file" class="custom-file-input" id="photo" name="photo">
+	                		<label class="custom-file-label trn" for="photo">Choose Photo</label>
 						</div>
-					</div>
-					
-					<h3 class="text-center" id="cust_code"></h3>
+						<button class="btn btn-primary btn-block mb-3">
+							<span class="trn">Upload</span>
+						</button>
+						<div class="row justify-content-center">
+							<div class="col-md-12">
+								<img src="{{ asset('img/qr_code.png') }}" alt="QR Code" class="img-fluid mb-1" id="qr_code">
+							</div>
+						</div>
+						
+						<h3 class="text-center" id="cust_code"></h3>
+					</form>
+						
 				</div>
 				<div class="col-md-10">
 					<div class="row">

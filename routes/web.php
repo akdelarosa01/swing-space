@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('/profile/purchase-history', 'ProfileController@purchaseHistory');
     Route::get('/profile/qr_code', 'ProfileController@getQRcode');
     Route::get('/profile/qr_code_employee', 'ProfileController@getQRcodeEmployee');
+    Route::post('/profile/upload-photo', 'ProfileController@uploadCustomerPhoto');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], function() {
