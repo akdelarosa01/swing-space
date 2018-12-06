@@ -156,6 +156,10 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('general-settings/delete-discount','Pages\GeneralSettingsController@delete_discount');
     Route::get('general-settings/discounts','Pages\GeneralSettingsController@discounts');
 
+    Route::post('general-settings/save-promo','Pages\GeneralSettingsController@save_promo');
+    Route::post('general-settings/delete-promo','Pages\GeneralSettingsController@delete_promo');
+    Route::get('general-settings/promos','Pages\GeneralSettingsController@promos');
+
     Route::get('sales-report', 'Pages\SalesReportController@index');
     Route::get('sales-report/yearly-comparison-report', 'Pages\SalesReportController@YearlyComparisonReport');
     Route::get('sales-report/sales-from-customers-report', 'Pages\SalesReportController@SalesFromCustomerReport');

@@ -10,6 +10,8 @@ use App\Http\Controllers\UserLogsController;
 use App\Incentive;
 use App\Reward;
 use App\Discount;
+use App\Promo;
+use File;
 
 class GeneralSettingsController extends Controller
 {
@@ -311,4 +313,146 @@ class GeneralSettingsController extends Controller
         $dis = Discount::all();
         return response()->json($dis);
     }
+
+    public function save_promo(Request $req)
+    {
+        $data = [
+            'msg' => 'Saving failed',
+            'status' => 'failed',
+            'promos' => ''
+        ];
+
+        if ($req->promo_id) {
+            $this->validate($req,[
+                'promo_photo' => 'required',
+                'promo_desc' => 'required'
+            ]);
+
+            $promo = Promo::where('id',$req->promo_id)
+                        ->update([
+                            'promo_desc' => $req->promo_desc,
+                            'update_user' => Auth::user()->id,
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+
+            if (isset($req->promo_photo)) {
+                $photo = $req->promo_photo;
+
+                $dbPath = 'img/promos/';
+                $destinationPath = public_path($dbPath);
+                $fileName = 'promo_'.$req->promo_id.'.'.$photo->getClientOriginalExtension();
+
+                if (!File::exists($destinationPath)) {
+                    File::makeDirectory($destinationPath, 0777, true, true);
+                }
+
+                if (File::exists($destinationPath.'/'.$fileName)) {
+                    File::delete($destinationPath.'/'.$fileName);
+                }
+
+                $photo->move($destinationPath, $fileName);
+
+                $prom = Promo::find($req->promo_id);
+                $prom->promo_photo = $dbPath.$fileName;
+                $prom->update();
+            }
+
+            if ($promo) {
+                $this->_userlog->log([
+                    'module' => 'General Settings',
+                    'action' => 'Updated promo setting '.$req->promo_desc,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                $data = [
+                    'msg' => 'Promo successfully saved.',
+                    'status' => 'success',
+                    'promos' => $this->promos()
+                ];
+            }
+
+            return response()->json($data);
+        } else {
+            $this->validate($req,[
+                'promo_photo' => 'required',
+                'promo_desc' => 'required'
+            ]);
+
+            $promo = Promo::create([
+                'promo_desc' => $req->promo_desc,
+                'create_user' => Auth::user()->id,
+                'update_user' => Auth::user()->id
+            ]);
+
+            if (isset($req->promo_photo)) {
+                $photo = $req->promo_photo;
+
+                $dbPath = 'img/promos/';
+                $destinationPath = public_path($dbPath);
+                $fileName = 'promo_'.$promo->id.'.'.$photo->getClientOriginalExtension();
+
+                if (!File::exists($destinationPath)) {
+                    File::makeDirectory($destinationPath, 0777, true, true);
+                }
+
+                if (File::exists($destinationPath.'/'.$fileName)) {
+                    File::delete($destinationPath.'/'.$fileName);
+                }
+
+                $photo->move($destinationPath, $fileName);
+
+                $prom = Promo::find($promo->id);
+                $prom->promo_photo = $dbPath.$fileName;
+                $prom->update();
+            }
+
+            if ($promo) {
+                $this->_userlog->log([
+                    'module' => 'General Settings',
+                    'action' => 'Added promo setting '.$req->promo_desc,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                $data = [
+                    'msg' => 'Promo successfully saved.',
+                    'status' => 'success',
+                    'promos' => $this->promos()
+                ];
+            }
+
+            return response()->json($data);
+        }
+    }
+
+    public function delete_promo(Request $req)
+    {
+        $data = [
+            'msg' => 'Deleting failed.',
+            'status' => 'failed'
+        ];
+
+        $promo = Promo::find($req->id);
+
+        $destinationPath = public_path($promo->promo_photo);
+
+        if (File::exists($destinationPath)) {
+            File::delete($destinationPath);
+        }
+
+        if ($promo->delete()) {
+            $data = [
+                'msg' => 'Successfully deleted.',
+                'status' => 'success'
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    public function promos()
+    {
+        $promo = Promo::all();
+        return response()->json($promo);
+    }
+
 }

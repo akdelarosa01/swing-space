@@ -49,3 +49,47 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="promo_modal" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span class="trn">Promo for POS Customer View Settings</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="zmdi zmdi-close"></span>
+                </button>
+            </div>
+            <form action="../../general-settings/save-promo" class="form-horizontal" id="frm_promo" enctype="multipart/form-data" method="post">
+                <input type="hidden" id="promo_token" name="_token" value="{{ Session::token() }}">
+                <div class="modal-body">
+                    <input type="hidden" class="clear" id="promo_id" name="promo_id">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="promo_photo" name="promo_photo">
+                                <label class="custom-file-label trn" for="promo_photo">Choose Photo</label>
+                             </div>
+                            <div id="promo_photo_feedback"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <textarea class="form-control form-control-sm clear" id="promo_desc" name="promo_desc" placeholder="Promo Description.."></textarea>
+                            <div id="promo_desc_feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="submit" class="btn btn-info btn-sm">
+                        <span class="trn">Save</span>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
+                        <span class="trn">Cancel</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

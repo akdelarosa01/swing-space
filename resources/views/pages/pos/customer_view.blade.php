@@ -22,11 +22,11 @@
                 {{-- <div id="pos_control"> --}}
 
 					<div class="row">
-						<div class="col-md-7">
-							<img src="/img/logo.png" alt="" class="img-fluid" height="250px">
+						<div class="col-md-8" id="promos">
+							{{-- <img src="/img/logo.png" alt="" class="img-fluid" height="250px"> --}}
 						</div>
 
-						<div class="col-md-5">
+						<div class="col-md-4">
 							<div class="card mt-10">
 								<div class="card-body">
 
@@ -84,7 +84,8 @@
     <script type="text/javascript">
 		var token = $('meta[name="csrf-token"]').attr('content');
 	</script>
-	<script type="text/javascript" src="{{ asset('/js/pages/pos_control.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/js/pages/pos/pos_control.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/js/pages/pos/customer_view.js') }}"></script>
     <script type="text/javascript">
         getLanguage();
     </script>

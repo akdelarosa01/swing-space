@@ -252,6 +252,7 @@ $( function() {
     incentives();
     rewards();
     discounts();
+    promos();
 
 	$('#btn_add_itcentive').on('click', function() {
 		$('#incentive_modal').modal('show');
@@ -260,6 +261,10 @@ $( function() {
 	$('#btn_add_reward').on('click', function() {
 		$('#rewards_modal').modal('show');
 	});
+
+    $('#btn_add_promo').on('click', function() {
+        $('#promo_modal').modal('show');
+    });
 
 	$('#frm_incentive').on('submit', function(e) {
         e.preventDefault();
@@ -358,6 +363,36 @@ $( function() {
         });
     });
 
+    $('#frm_promo').on('submit', function(e) {
+        e.preventDefault();
+        $('.loading').show();
+
+        var data = new FormData(this);
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            dataType: 'JSON',
+            data: data,
+            mimeType:"multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData:false,
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                msg(data.msg,data.status);
+            }
+        }).fail(function(xhr, textStatus, errorThrown) {
+            var errors = xhr.responseJSON.errors;
+            showErrors(errors);
+
+            if(errorThrown == "Internal Server Error"){
+                msg('Promo Settings: '+errorThrown,textStatus);
+            }
+        }).always(function() {
+            $('.loading').hide();
+        });
+    });
+
     $('#tbl_incentive').on('click', '.edit_incentive', function() {
     	$('#inc_id').val($(this).attr('data-inc_id'));
     	$('#price_from').val($(this).attr('data-price_from'));
@@ -384,6 +419,14 @@ $( function() {
         $('#dis_token').val(token);
     });
 
+    $('#tbl_promo').on('click', '.edit_promo', function() {
+        $('#discount_id').val($(this).attr('data-id'));
+        $('#promo_desc').val($(this).attr('data-promo_desc'));
+        $('#promo_token').val(token);
+
+        $('#promo_modal').modal('show');
+    });
+
     $('#tbl_discount_body').on('click', '.delete_discount', function() {
         confirm('Delete Discount','Do you want to delete this discount?',$(this).attr('data-id'),'discount');
     });
@@ -394,6 +437,10 @@ $( function() {
 
     $('#tbl_reward_body').on('click', '.delete_reward', function() {
         confirm('Delete reward','Do you want to delete this reward?',$(this).attr('data-rwd_id'),'reward');
+    });
+
+    $('#tbl_promo_body').on('click', '.delete_promo', function() {
+        confirm('Delete Promo','Do you want to delete this promo?',$(this).attr('data-id'),'promo');
     });
 
     $('#btn_confirm').on('click', function() {
@@ -566,6 +613,47 @@ function makeDiscountDataTable(arr) {
                             '<i class="fa fa-edit"></i>'+
                         '</button>'+
                         '<button class="btn btn-sm btn-danger delete_discount" data-id="'+x.id+'">'+
+                            '<i class="fa fa-times"></i>'+
+                        '</button>';
+            }, searchable: false, orderable: false},
+        ]
+    });
+}
+
+function promos() {
+    $.ajax({
+        url: '../../general-settings/promos',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+        },
+    }).done(function(data, textStatus, xhr) {
+        makePromoDataTable(data);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Discount Settings: '+errorThrown,textStatus);
+    });
+}
+
+function makePromoDataTable(arr) {
+    $('#tbl_promo').dataTable().fnClearTable();
+    $('#tbl_promo').dataTable().fnDestroy();
+    $('#tbl_promo').dataTable({
+        data: arr,
+        searching: false,
+        ordering: false,
+        paging: false,
+        columns: [
+            {data: function(x) {
+                return '<img src="'+x.promo_photo+'" class="w-35 rounded-circle">';
+            }, searchable: false, orderable: false},
+            {data:'promo_desc'},
+            {data: function(x) {
+                return '<button class="btn btn-sm btn-info edit_promo" data-id="'+x.id+'" '+
+                            ' data-promo_desc="'+x.promo_desc+'">'+
+                            '<i class="fa fa-edit"></i>'+
+                        '</button>'+
+                        '<button class="btn btn-sm btn-danger delete_promo" data-id="'+x.id+'">'+
                             '<i class="fa fa-times"></i>'+
                         '</button>';
             }, searchable: false, orderable: false},

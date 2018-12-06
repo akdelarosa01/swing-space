@@ -80,5 +80,5 @@
 	<script type="text/javascript">
 		var token = $('meta[name="csrf-token"]').attr('content');
 	</script>
-	<script type="text/javascript" src="{{ asset('/js/pages/pos_control.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('/js/pages/pos/pos_control.js') }}"></script>
 @endpush

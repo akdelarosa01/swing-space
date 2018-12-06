@@ -113,6 +113,27 @@
             </div>
         </div>
 
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <span class="trn">Promo for POS Customer View Settings</span>
+                    <button type="button" class="btn btn-sm btn-success pull-right" id="btn_add_promo">
+                        <span class="trn">Add Promo</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm" id="tbl_promo" width="100%">
+                        <thead>
+                            <th class="trn">Photo</th>
+                            <th class="trn">Description</th>
+                            <th></th>
+                        </thead>
+                        <tbody id="tbl_promo_body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
 
     </div>
     @include('modals.general_settings')

@@ -53,8 +53,12 @@ mix.js('resources/js/app.js', 'public/js')
 
     .scripts([
     	'resources/js/page_translation/pos_control.js',
-		'resources/js/pages/pos_control.js',
-	], 'public/js/pages/pos_control.js')
+		'resources/js/pages/pos/pos_control.js',
+	], 'public/js/pages/pos/pos_control.js')
+
+	.scripts([
+		'resources/js/pages/pos/customer_view.js',
+	], 'public/js/pages/pos/customer_view.js')
 
     .scripts([
     	'resources/js/page_translation/customer/customer_list.js',
