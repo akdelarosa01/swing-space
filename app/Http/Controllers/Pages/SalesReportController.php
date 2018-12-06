@@ -69,18 +69,18 @@ class SalesReportController extends Controller
         $year_now = $date->format('Y');
 
         $discounts = DB::select("SELECT sum(discount)/sum(sub_total)*100 as y,
-                                        date_format(created_at,'%b %d') as label
+                                        date_format(created_at,'%Y-%m-%d') as label
                                 FROM sales
                                 where left(created_at,4) = '".$year_now."'
-                                group by date_format(created_at,'%b %d')
-                                order by created_at asc");
+                                group by date_format(created_at,'%Y-%m-%d')
+                                order by date_format(created_at,'%Y-%m-%d') asc");
 
         $total_sale = DB::select("SELECT sum(total_sale)/sum(sub_total)*100 as y,
-                                        date_format(created_at,'%b %d') as label
+                                        date_format(created_at,'%Y-%m-%d') as label
                                 FROM sales
                                 where left(created_at,4) = '".$year_now."'
-                                group by date_format(created_at,'%b %d')
-                                order by created_at asc");
+                                group by date_format(created_at,'%Y-%m-%d')
+                                order by date_format(created_at,'%Y-%m-%d') asc");
 
         $details = [
             [

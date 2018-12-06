@@ -46,6 +46,7 @@ class CustomerController extends Controller
                             DB::raw('u.email as email'),
                             DB::raw('u.gender as gender'),
                             DB::raw('c.customer_code as customer_code'),
+                            DB::raw('date_format(c.date_of_birth,"%b %d, %Y") as date_of_birth'),
                             DB::raw('c.phone as phone'),
                             DB::raw('c.mobile as mobile'),
                             DB::raw('c.facebook as facebook'),
@@ -54,8 +55,11 @@ class CustomerController extends Controller
                             DB::raw('c.occupation as occupation'),
                             DB::raw('c.company as company'),
                             DB::raw('c.school as school'),
+                            DB::raw("(select ifnull(concat(us.firstname,' ',us.lastname),'N/A')
+                                    from users as us where us.id = c.referrer) as referrer"),
+                            DB::raw('c.points as points'),
                             DB::raw('c.membership_type as membership_type'),
-                            DB::raw('c.date_registered as date_registered')
+                            DB::raw('date_format(c.date_registered,"%b %d, %Y") as date_registered')
                         )
                         ->get();
         return response()->json($customers);
@@ -85,6 +89,7 @@ class CustomerController extends Controller
                             DB::raw('u.email as email'),
                             DB::raw('u.gender as gender'),
                             DB::raw('c.customer_code as customer_code'),
+                            DB::raw('date_format(c.date_of_birth,"%b %d, %Y") as date_of_birth'),
                             DB::raw('c.phone as phone'),
                             DB::raw('c.mobile as mobile'),
                             DB::raw('c.facebook as facebook'),
@@ -93,8 +98,11 @@ class CustomerController extends Controller
                             DB::raw('c.occupation as occupation'),
                             DB::raw('c.company as company'),
                             DB::raw('c.school as school'),
+                            DB::raw("(select ifnull(concat(us.firstname,' ',us.lastname),'N/A')
+                                    from users as us where us.id = c.referrer) as referrer"),
+                            DB::raw('c.points as points'),
                             DB::raw('c.membership_type as membership_type'),
-                            DB::raw('c.date_registered as date_registered')
+                            DB::raw('date_format(c.date_registered,"%b %d, %Y") as date_registered')
                         )
                         ->get();
 

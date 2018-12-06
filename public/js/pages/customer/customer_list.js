@@ -135,6 +135,34 @@ var dict = {
     "Gender": {
         ch: "性别",
         en: "Gender"
+    },
+    "Date of Birth": {
+        ch: "出生日期",
+        en: "Date of Birth"
+    },
+    "Occupation": {
+        ch: "占用",
+        en: "Occupation"
+    },
+    "Company": {
+        ch: "公司",
+        en: "Company"
+    },
+    "School": {
+        ch: "学校",
+        en: "School"
+    },
+    "Referrer": {
+        ch: "引用",
+        en: "Referrer"
+    },
+    "Points": {
+        ch: "点",
+        en: "Points"
+    },
+    "Date Registered": {
+        ch: "注册日期",
+        en: "Date Registered"
     }
 
 };
@@ -208,10 +236,21 @@ function customerTable(arr) {
                 return x.firstname+' '+x.lastname;
             }},
             {data:'gender'},
+            {data:'date_of_birth'},
+            {data:'occupation'},
+            {data:'company'},
+            {data:'school'},
+            {data:'referrer'},
+            {data:'points'},
+            {data:'date_registered'},
             {data: function(x) {
             	return '<div class="btn-group">'+
-                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info"><span class="trn">Edit</span></a>'+
-                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'"><span class="trn">Delete</span></button>'+
+                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info">'+
+                                '<i class="fa fa-edit"></i>'+
+                            '</a>'+
+                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'">'+
+                                '<i class="fa fa-trash"></i>'+
+                            '</button>'+
                         '</div>';
             }, searchable: false, orderable: false},
         ]

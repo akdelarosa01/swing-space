@@ -68,10 +68,21 @@ function customerTable(arr) {
                 return x.firstname+' '+x.lastname;
             }},
             {data:'gender'},
+            {data:'date_of_birth'},
+            {data:'occupation'},
+            {data:'company'},
+            {data:'school'},
+            {data:'referrer'},
+            {data:'points'},
+            {data:'date_registered'},
             {data: function(x) {
             	return '<div class="btn-group">'+
-                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info"><span class="trn">Edit</span></a>'+
-                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'"><span class="trn">Delete</span></button>'+
+                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info">'+
+                                '<i class="fa fa-edit"></i>'+
+                            '</a>'+
+                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'">'+
+                                '<i class="fa fa-trash"></i>'+
+                            '</button>'+
                         '</div>';
             }, searchable: false, orderable: false},
         ]

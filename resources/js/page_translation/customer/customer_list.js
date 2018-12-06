@@ -135,6 +135,34 @@ var dict = {
     "Gender": {
         ch: "性别",
         en: "Gender"
+    },
+    "Date of Birth": {
+        ch: "出生日期",
+        en: "Date of Birth"
+    },
+    "Occupation": {
+        ch: "占用",
+        en: "Occupation"
+    },
+    "Company": {
+        ch: "公司",
+        en: "Company"
+    },
+    "School": {
+        ch: "学校",
+        en: "School"
+    },
+    "Referrer": {
+        ch: "引用",
+        en: "Referrer"
+    },
+    "Points": {
+        ch: "点",
+        en: "Points"
+    },
+    "Date Registered": {
+        ch: "注册日期",
+        en: "Date Registered"
     }
 
 };
