@@ -10,9 +10,21 @@
     <title>{{ config('app.name', 'Swing Space') }}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500" rel="stylesheet">
-
-    @stack('styles')
     <link rel="stylesheet" href="{{ mix('/css/main.css') }}">
+    <style type="text/css">
+    	.bannercontainer {
+			width:100%;
+			height: 100%;
+			position:relative;
+			padding:0;
+		}
+		 
+		.banner{
+			width:100%;
+			height: 100%;
+			position:relative;
+		}
+    </style>
 </head>
 <body class="compact-menu">
     <div id="vue_app">
@@ -23,7 +35,11 @@
 
 					<div class="row">
 						<div class="col-md-8" id="promos">
-							{{-- <img src="/img/logo.png" alt="" class="img-fluid" height="250px"> --}}
+							<div class="bannercontainer">
+								<div class="banner">
+									
+								</div>
+							</div>
 						</div>
 
 						<div class="col-md-4">

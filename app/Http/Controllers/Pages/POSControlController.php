@@ -418,34 +418,38 @@ class POSControlController extends Controller
                         DB::raw('concat(u.firstname," ",u.lastname) as cust_name')
                     )->first();
 
-        $data = [
-            'invoice_num' => $this->_global->TransactionNo('INVOICE_NUM'),
-            'cust_name' => $cust->cust_name,
-            'payment' => '₱'.number_format($req->order_payment,2),
-            'total_amount' => '₱'.number_format($req->order_total_amount,2),
-            'change' => '₱'.number_format($req->order_change,2),
-            'discount_value' => '₱'.number_format($req->discount_value,2),
-            'discount_name' => $req->discount_name,
-            'reward_name' => $req->reward_name,
-            'reward_price' => '₱'.number_format($req->reward_price,2),
-            'reward_points' => $req->reward_points,
-            'date' => date('M d, Y'),
-            'prod_name' => $req->order_prod_name,
-            'quantity' => $req->order_quantity,
-            'price' => $req->order_price,
-            'company_address' => 'Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., <br>Loyola Heights Katipunan, Quezon City',
-            'company_email' => 'spacekatipunan@gmail.com',
-            'cust_email' => $cust->email,
-            'cust_mobile' => $cust->mobile,
-            'sub_total' => '₱'.number_format($req->sub_total,2)
-        ];
+        if (count((array)$cust) > 0) {
+            $data = [
+                'invoice_num' => $this->_global->TransactionNo('INVOICE_NUM'),
+                'cust_name' => $cust->cust_name,
+                'payment' => '₱'.number_format($req->order_payment,2),
+                'total_amount' => '₱'.number_format($req->order_total_amount,2),
+                'change' => '₱'.number_format($req->order_change,2),
+                'discount_value' => '₱'.number_format($req->discount_value,2),
+                'discount_name' => $req->discount_name,
+                'reward_name' => $req->reward_name,
+                'reward_price' => '₱'.number_format($req->reward_price,2),
+                'reward_points' => $req->reward_points,
+                'date' => date('M d, Y'),
+                'prod_name' => $req->order_prod_name,
+                'quantity' => $req->order_quantity,
+                'price' => $req->order_price,
+                'company_address' => 'Unit 2 Mezzanine, Burgundy Place, B. Gonzales St., <br>Loyola Heights Katipunan, Quezon City',
+                'company_email' => 'spacekatipunan@gmail.com',
+                'cust_email' => $cust->email,
+                'cust_mobile' => $cust->mobile,
+                'sub_total' => '₱'.number_format($req->sub_total,2)
+            ];
 
 
-        Mail::send('email.receipt', ['data'=>$data], function ($mail) use ($cust) {
-                    $mail->to($cust->email)
-                        ->from('spacekatipunan@gmail.com','Swing Space')
-                        ->subject('Swing Space Receipt');
-                });
+            Mail::send('email.receipt', ['data'=>$data], function ($mail) use ($cust) {
+                        $mail->to($cust->email)
+                            ->from('spacekatipunan@gmail.com','Swing Space')
+                            ->subject('Swing Space Receipt');
+                    });
+        }
+
+            
     }
 
     public function giveIncentives($cust_code,$order_total_amount)
@@ -495,7 +499,7 @@ class POSControlController extends Controller
                     'prod_code' => $prod->prod_code,
                     'prod_name' => $prod->prod_name,
                     'prod_type' => $prod->prod_type,
-                    'variants' => $prod->variants,
+                    'variants' => (isset($prod->variants))? $prod->variants : 'N/A',
                     'quantity' => $req->order_quantity[$key],
                     'cost' => $req->order_price[$key]
                 ]);
@@ -505,7 +509,7 @@ class POSControlController extends Controller
                     'prod_code' => $prod->prod_code,
                     'prod_name' => $prod->prod_name,
                     'prod_type' => $prod->prod_type,
-                    'variants' => $prod->variants,
+                    'variants' => (isset($prod->variants))? $prod->variants : 'N/A',
                     'quantity' => $req->order_quantity[$key],
                     'cost' => $req->order_price[$key]
                 ]);

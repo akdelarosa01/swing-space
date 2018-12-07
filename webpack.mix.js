@@ -30,7 +30,9 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/translate/jquery.translate.js',
 		'resources/plugins/select2/select2.min.js',
 		'resources/js/scripts/app.js',
-		'resources/js/global.js'
+		'resources/js/global.js',
+		'resources/plugins/revolution-slider/js/jquery.themepunch.plugins.min.js',
+		'resources/plugins/revolution-slider/js/jquery.themepunch.revolution.min.js',
     ], 'public/js/main.js')
     .js('resources/js/pages/super_admin/user_master.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
@@ -170,6 +172,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/toast/jquery.toast.css',
 		'resources/plugins/select2/select2.min.css',
 		'resources/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css',
+		'resources/plugins/revolution-slider/css/settings.css',
 		'resources/sass/common/main.bundle.css',
 		'resources/sass/layouts/vertical/core/main.css',
 		'resources/sass/layouts/vertical/menu-type/compact.css',

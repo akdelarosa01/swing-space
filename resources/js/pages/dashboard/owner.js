@@ -88,7 +88,8 @@ function SalesFromRegisteredCustomerTable(arr) {
     $('#tbl_registered').dataTable({
         data: arr,
         // bLengthChange : false,
-        // ordering: false,
+        ordering: false,
+        searching: false,
         columns: [
         	{ data: function(x) {
             	return '<img src="'+x.photo+'" class="w-35 rounded-circle" alt="'+x.firstname+' '+x.lastname+'">';

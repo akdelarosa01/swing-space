@@ -380,6 +380,7 @@ $( function() {
         }).done(function(data, textStatus, xhr) {
             if (textStatus == 'success') {
                 msg(data.msg,data.status);
+                promos();
             }
         }).fail(function(xhr, textStatus, errorThrown) {
             var errors = xhr.responseJSON.errors;
@@ -420,7 +421,7 @@ $( function() {
     });
 
     $('#tbl_promo').on('click', '.edit_promo', function() {
-        $('#discount_id').val($(this).attr('data-id'));
+        $('#promo_id').val($(this).attr('data-id'));
         $('#promo_desc').val($(this).attr('data-promo_desc'));
         $('#promo_token').val(token);
 
@@ -458,6 +459,10 @@ $( function() {
             deleteURL = '../../general-settings/delete-reward';
         }
 
+        if ($('#confirm_type').val() == 'promo') {
+            deleteURL = '../../general-settings/delete-promo';
+        }
+
         $.ajax({
             url: deleteURL,
             type: 'POST',
@@ -481,6 +486,10 @@ $( function() {
 
                 if ($('#confirm_type').val() == 'reward') {
                     rewards();
+                }
+
+                if ($('#confirm_type').val() == 'promo') {
+                    promos();
                 }
             }
         }).fail(function(xhr, textStatus, errorThrown) {
