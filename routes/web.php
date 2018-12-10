@@ -134,6 +134,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('add-products/show', 'Pages\ProductController@show');
     Route::get('add-products/search', 'Pages\ProductController@search_products');
     Route::post('add-products/save', 'Pages\ProductController@save');
+    Route::post('add-products/delete', 'Pages\ProductController@destroy');
     Route::post('add-products/set-qty', 'Pages\ProductController@set_qty');
 
     Route::get('dropdown','Pages\DropdownController@index');

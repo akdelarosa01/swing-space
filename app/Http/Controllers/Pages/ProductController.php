@@ -269,11 +269,17 @@ class ProductController extends Controller
                 ];
             }
         } else {
-            $prod = Product::find($req->id);
-            $prod->delete();
+            $ids = explode(',', $req->id);
+
+            foreach ($ids as $key => $id) {
+                $prod = Product::find($id);
+                $prod->delete();
+            }
+
+            
 
             $data = [
-                'msg' => "Product was successfully deleted.",
+                'msg' => "Products was successfully deleted.",
                 'status' => "success",
                 'products' => $this->products()
             ];
