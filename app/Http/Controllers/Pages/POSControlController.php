@@ -465,13 +465,13 @@ class POSControlController extends Controller
                 $cust = User::select(DB::raw("concat(firstname,' ',lastname) as buyer_name"))
                             ->where('id',$customer->user_id)->first();
 
-                CustomerPoint::create([
-                    'customer_id' => $customer->referrer,
-                    'remarks' => $inc[0]->points.' points accumulated from your referred customer '.$cust->buyer_name,
-                    'accumulated_points' => $inc[0]->points
-                ]);
-
                 if ($customer->referrer > 0) {
+                    CustomerPoint::create([
+                        'customer_id' => $customer->referrer,
+                        'remarks' => $inc[0]->points.' points accumulated from your referred customer '.$cust->buyer_name,
+                        'accumulated_points' => $inc[0]->points
+                    ]);
+
                     Customer::where('user_id',$customer->referrer)->increment(
                                 'points', $inc[0]->points,[
                                     'update_user' => Auth::user()->id,
