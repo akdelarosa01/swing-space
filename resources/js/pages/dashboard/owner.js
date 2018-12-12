@@ -2,6 +2,7 @@ $( function() {
 	getSales();
 	OwnerStatistics();
 	SalesFromRegisteredCustomer();
+	soldProducts();
 });
 
 function getSales() {
@@ -100,6 +101,38 @@ function SalesFromRegisteredCustomerTable(arr) {
             }, searchable: false, orderable: false},
             { data:'points', searchable: false, orderable: false},
             { data: 'total_sale', searchable: false, orderable: false}
+        ]
+    });
+}
+
+function soldProducts() {
+	$.ajax({
+		url: '../../dashboard/sold-products',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {
+			_token: token
+		},
+	}).done(function(data, textStatus, xhr) {
+		soldProductsTable(data);
+	}).fail(function(xhr, textStatus, errorThrown) {
+		msg('Sales from customers: '+errorThrown,textStatus);
+	});
+}
+
+function soldProductsTable(arr) {
+	$('#tbl_sold').dataTable().fnClearTable();
+    $('#tbl_sold').dataTable().fnDestroy();
+    $('#tbl_sold').dataTable({
+        data: arr,
+        // bLengthChange : false,
+        ordering: false,
+        searching: false,
+        columns: [
+            { data:'prod_code', searchable: false, orderable: false},
+            { data: 'prod_name', searchable: false, orderable: false},
+            { data:'quantity', searchable: false, orderable: false},
+            { data: 'amount', searchable: false, orderable: false}
         ]
     });
 }

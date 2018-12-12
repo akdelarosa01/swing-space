@@ -446,7 +446,7 @@ function ordersTable(arr) {
             }, searchable: false, orderable: false},
             {data: function(x) {
                 return '<input type="number" name="order_quantity[]" class="form-control form-control-sm quantity" '+
-                        'data-cust_id="'+x.cust_id+'" '+
+                        'data-cust_id="'+x.current_cust_id+'" '+
                         'data-prod_id="'+x.prod_id+'" '+
                         'data-price="'+x.price+'" '+
                         'data-unit_price="'+x.unit_price+'" '+
@@ -457,7 +457,7 @@ function ordersTable(arr) {
             }, searchable: false, orderable: false},
             {data: function(x) {
                 return '<div class="btn-group">'+
-                            '<button class="btn btn-sm btn-danger remove" data-cust_id="'+x.cust_id+'" '+
+                            '<button class="btn btn-sm btn-danger remove" data-cust_id="'+x.current_cust_id+'" '+
                                 'data-prod_id="'+x.prod_id+'">'+
                                 '<i class="fa fa-times"></i>'+
                             '</button>'+

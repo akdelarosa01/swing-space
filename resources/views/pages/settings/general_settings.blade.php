@@ -85,7 +85,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">₱</span>
                                     </div>
-                                    <input type="number" class="form-control form-control-sm clear validate" id="deducted_price" name="deducted_price" min="1" step="any">
+                                    <input type="number" class="form-control form-control-sm clear validate" id="deducted_price" name="deducted_price" min="0" step="any">
                                     <div id="deducted_price_feedback"></div>
                                 </div>
                             </div>

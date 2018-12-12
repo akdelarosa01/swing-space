@@ -153,7 +153,7 @@ class POSControlController extends Controller
                         ->where('c.customer_code',$req->cust_code)
                         ->orderBy('u.id')
                         ->select(
-                            DB::raw('u.id as id'),
+                            DB::raw('u.id as customer_user_id'),
                             DB::raw('u.firstname as cust_firstname'),
                             DB::raw('u.lastname as cust_lastname'),
                             DB::raw('c.customer_code as cust_code')
@@ -165,7 +165,7 @@ class POSControlController extends Controller
                         ->where('u.disabled',0)
                         ->orderBy('u.id')
                         ->select(
-                            DB::raw('u.id as id'),
+                            DB::raw('u.id as customer_user_id'),
                             DB::raw('u.firstname as cust_firstname'),
                             DB::raw('u.lastname as cust_lastname'),
                             DB::raw('c.customer_code as cust_code')
@@ -184,36 +184,38 @@ class POSControlController extends Controller
         ];
 
         $code = $req->cust_code;
+        $cust_id = $req->customer_user_id;
 
-        if ($req->type == 'walkin') {
+        if ($req->type == 'W') {
             $code = 'N/A';
+            $cust_id = 0;
 
             $this->validate($req,[
                 'cust_firstname' => 'required',
                 'cust_lastname' => 'required',
-                'cust_timein' => 'required'
             ]);
         }
 
         $cust = CurrentCustomer::create([
+            'customer_user_id' => $cust_id,
             'cust_code' => $code,
+            'customer_type' => $req->type,
             'cust_firstname' => $req->cust_firstname,
             'cust_lastname' => $req->cust_lastname,
-            'cust_timein' => (isset($req->cust_timein))? $this->_global->convertDate($req->cust_timein,'Y-m-d H:i:s') : date('Y-m-d H:i:s'),
             'create_user' => Auth::user()->id,
             'update_user' => Auth::user()->id,
         ]);
 
-        $cus = Customer::where('customer_code',$code)
-                        ->select('user_id')->first();
+        // $cus = Customer::where('customer_code',$code)
+        //                 ->select('user_id')->first();
 
-        CustomerLog::create([
-            'customer_id' => (isset($cus->user_id))? $cus->user_id : 0,
-            'date_logged' => date('Y-m-d'),
-            'time_in' => date('Y-m-d H:i:s'),
-            'time_out' => date('Y-m-d H:i:s'),
-            'hrs' => 0
-        ]);
+        // CustomerLog::create([
+        //     'customer_id' => (isset($cus->user_id))? $cus->user_id : 0,
+        //     'date_logged' => date('Y-m-d'),
+        //     'time_in' => date('Y-m-d H:i:s'),
+        //     'time_out' => date('Y-m-d H:i:s'),
+        //     'hrs' => 0
+        // ]);
 
         if ($cust) {
             $data = [
@@ -231,10 +233,11 @@ class POSControlController extends Controller
                     ->leftJoin('customers as c','cc.cust_code','=','c.customer_code')
                     ->select(
                         DB::raw('cc.id as id'),
+                        DB::raw('cc.customer_user_id as customer_user_id'),
+                        DB::raw('cc.customer_type as customer_type'),
                         DB::raw('cc.cust_code as cust_code'),
                         DB::raw('cc.cust_firstname as cust_firstname'),
                         DB::raw('cc.cust_lastname as cust_lastname'),
-                        DB::raw('cc.cust_timein as cust_timein'),
                         DB::raw('IFNULL(c.points,0) as points')
                     )->get();
         return response()->json($cust);
@@ -243,12 +246,13 @@ class POSControlController extends Controller
     public function save_currentBill(Request $req)
     {
         $check = CurrentCustomerBill::where([
-                    ['cust_id',$req->cust_id],
+                    ['current_cust_id',$req->cust_id],
                     ['prod_id',$req->prod_id]
                 ])->count();
+
         if ($check < 1) {
             CurrentCustomerBill::create([
-                'cust_id' => $req->cust_id,
+                'current_cust_id' => $req->cust_id,
                 'prod_id' => $req->prod_id,
                 'prod_code' => $req->prod_code,
                 'prod_name' => $req->prod_name,
@@ -260,7 +264,7 @@ class POSControlController extends Controller
             ]);
         }
 
-        $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+        $currentBill = CurrentCustomerBill::where('current_cust_id',$req->cust_id)->get();
 
         $data = [
             'discount_name' => $req->discount_name,
@@ -277,7 +281,7 @@ class POSControlController extends Controller
 
     public function show_currentBill(Request $req)
     {
-        $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+        $currentBill = CurrentCustomerBill::where('current_cust_id',$req->cust_id)->get();
 
         $data = [
             'discount_name' => $req->discount_name,
@@ -296,12 +300,12 @@ class POSControlController extends Controller
     public function delete_currentItemBill(Request $req)
     {
         $delete = CurrentCustomerBill::where([
-            ['cust_id',$req->cust_id],
+            ['current_cust_id',$req->cust_id],
             ['prod_id',$req->prod_id]
         ])->delete();
 
         if ($delete) {
-            $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+            $currentBill = CurrentCustomerBill::where('current_cust_id',$req->cust_id)->get();
 
             $data = [
                 'discount_name' => $req->discount_name,
@@ -319,7 +323,7 @@ class POSControlController extends Controller
     public function update_currentItemBill(Request $req)
     {
         $update = CurrentCustomerBill::where([
-            ['cust_id',$req->cust_id],
+            ['current_cust_id',$req->cust_id],
             ['prod_id',$req->prod_id]
         ])->update([
             'quantity' => $req->quantity,
@@ -327,7 +331,7 @@ class POSControlController extends Controller
         ]);
 
         if ($update) {
-            $currentBill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+            $currentBill = CurrentCustomerBill::where('current_cust_id',$req->cust_id)->get();
             $data = [
                 'discount_name' => $req->discount_name,
                 'discount_value' => $req->discount_value,
@@ -379,21 +383,19 @@ class POSControlController extends Controller
             'status' => 'failed'
         ];
 
-        $currcust = CurrentCustomer::where('id',$req->cust_id)->first();
+        $saved = $this->saveSoldProducts($req);
 
-        $saved = $this->saveSoldProducts($currcust->cust_code,$req);
+        $this->deductRewardPoints($req->customer_code,$req->reward_points);
 
-        $this->deductRewardPoints($currcust->cust_code,$req->reward_points);
-
-        $this->giveIncentives($currcust->cust_code,$req->order_total_amount);
+        $this->giveIncentives($req->customer_code,$req->order_total_amount);
 
         if ($req->email_receipt > 0) {
-            $this->EmailCustomerReceipt($currcust->cust_code,$req);
+            $this->EmailCustomerReceipt($req);
         }
 
         if ($saved) {
             CurrentCustomer::where('id',$req->cust_id)->delete();
-            CurrentCustomerBill::where('cust_id',$req->cust_id)->delete();
+            CurrentCustomerBill::where('current_cust_id',$req->cust_id)->delete();
 
             $data = [
                 'msg' => 'Payment successfully transacted',
@@ -401,17 +403,17 @@ class POSControlController extends Controller
             ];
         }
 
-        $bill = CurrentCustomerBill::where('cust_id',$req->cust_id)->get();
+        $bill = CurrentCustomerBill::where('current_cust_id',$req->cust_id)->get();
         event(new POS($bill));
 
         return $data;
     }
 
-    public function EmailCustomerReceipt($cust_code,$req)
+    public function EmailCustomerReceipt($req)
     {
         $cust = DB::table('customers as c')
                     ->join('users as u','c.user_id','=','u.id')
-                    ->where('c.customer_code',$cust_code)
+                    ->where('c.customer_code',$req->customer_code)
                     ->select(
                         DB::raw('u.email as email'),
                         DB::raw('c.mobile as mobile'),
@@ -448,8 +450,6 @@ class POSControlController extends Controller
                             ->subject('Swing Space Receipt');
                     });
         }
-
-            
     }
 
     public function giveIncentives($cust_code,$order_total_amount)
@@ -483,69 +483,45 @@ class POSControlController extends Controller
         }
     }
 
-    public function saveSoldProducts($cust_code,$req)
+    public function saveSoldProducts($req)
     {
-        $cust = Customer::where('customer_code',$cust_code)
-                        ->select('user_id')->first();
         $sub_total = 0;
         $discount = $req->discount_value + $req->reward_price;
 
         foreach ($req->order_prod_id as $key => $prod_id) {
             $prod = Product::where('id',$prod_id)->first();
 
-            if (count((array)$cust) > 0) {
-                CustomerProductBill::create([
-                    'customer_id' => $cust->user_id,
-                    'prod_code' => $prod->prod_code,
-                    'prod_name' => $prod->prod_name,
-                    'prod_type' => $prod->prod_type,
-                    'variants' => (isset($prod->variants))? $prod->variants : 'N/A',
-                    'quantity' => $req->order_quantity[$key],
-                    'cost' => $req->order_price[$key]
-                ]);
-            } else {
-                CustomerProductBill::create([
-                    'customer_id' => 0, //walk ins
-                    'prod_code' => $prod->prod_code,
-                    'prod_name' => $prod->prod_name,
-                    'prod_type' => $prod->prod_type,
-                    'variants' => (isset($prod->variants))? $prod->variants : 'N/A',
-                    'quantity' => $req->order_quantity[$key],
-                    'cost' => $req->order_price[$key]
-                ]);
-            }
-
-            
+            CustomerProductBill::create([
+                'customer_user_id' => $req->customer_user_id,
+                'customer_code' => $req->customer_code,
+                'firstname' => $req->cust_firstname,
+                'lastname' => $req->cust_lastname,
+                'customer_type' => $req->customer_type,
+                'prod_code' => $prod->prod_code,
+                'prod_name' => $prod->prod_name,
+                'prod_type' => $prod->prod_type,
+                'variants' => (isset($prod->variants))? $prod->variants : 'N/A',
+                'quantity' => $req->order_quantity[$key],
+                'cost' => $req->order_price[$key]
+            ]);
 
             $sub_total += $req->order_price[$key];
         }
 
-        $sales;
-
-        if (count((array)$cust) > 0) {
-            $sales = Sale::create([
-                        'customer_code' => $cust_code,
-                        'sub_total' => $sub_total,
-                        'discount' => $discount,
-                        'payment' => $req->order_payment,
-                        'change' => $req->order_change,
-                        'total_sale' => $req->order_total_amount,
-                        'create_user' => Auth::user()->id,
-                        'update_user' => Auth::user()->id
-                    ]);
-        } else {
-            $sales = Sale::create([
-                        'customer_code' => 'N/A',
-                        'sub_total' => $sub_total,
-                        'discount' => $discount,
-                        'payment' => $req->order_payment,
-                        'change' => $req->order_change,
-                        'total_sale' => $req->order_total_amount,
-                        'create_user' => Auth::user()->id,
-                        'update_user' => Auth::user()->id
-                    ]);
-        }
-
+        $sales = Sale::create([
+                    'customer_user_id' => $req->customer_user_id,
+                    'customer_code' => $req->customer_code,
+                    'firstname' => $req->cust_firstname,
+                    'lastname' => $req->cust_lastname,
+                    'customer_type' => $req->customer_type,
+                    'sub_total' => $sub_total,
+                    'discount' => $discount,
+                    'payment' => $req->order_payment,
+                    'change' => $req->order_change,
+                    'total_sale' => $req->order_total_amount,
+                    'create_user' => Auth::user()->id,
+                    'update_user' => Auth::user()->id
+                ]);
         
         if ($sales) {
             return true;

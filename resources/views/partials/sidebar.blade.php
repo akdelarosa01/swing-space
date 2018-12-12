@@ -247,7 +247,7 @@
                     @endif
 
                     @if(in_array('Reports', $category))
-                        <li class="nav-dropdown {{ Request::is('general-settings') || Request::is('dropdown') ? ' active' : null }}">
+                        <li class="nav-dropdown {{ Request::is('sales-report') || Request::is('send-reports') ? ' active' : null }}">
                             <a class="has-arrow" href="#" aria-expanded="false">
                                 <i class="zmdi zmdi-file zmdi-hc-fw"></i>
                                 <span class="trn">Reports</span>

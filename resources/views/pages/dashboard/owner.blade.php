@@ -66,6 +66,23 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header trn">Products Sold this Month</h5>
+                <div class="card-body">
+                    <table class="table table-sm table-striped" width="100%" id="tbl_sold">
+                        <thead>
+                            <th class="trn">Code</th>
+                            <th class="trn">Name</th>
+                            <th class="trn">Qty</th>
+                            <th class="trn">Amount</th>
+                        </thead>
+                        <tbody id="tbl_sold_body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

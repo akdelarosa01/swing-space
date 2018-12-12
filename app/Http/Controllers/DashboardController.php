@@ -175,6 +175,20 @@ class DashboardController extends Controller
         return response()->json($sales);
     }
 
+    public function SoldProductsPerMonth()
+    {
+        $sales = DB::select("SELECT prod_code,
+                                prod_name,
+                                SUM(quantity) as quantity,
+                                concat('₱', format(sum(cost), 2)) as amount
+                            FROM swingspace.customer_product_bills
+                            where left(created_at,10) like '".date('Y-m')."%'
+                            group by prod_code,
+                                    prod_name
+                            order by sum(cost) desc");
+        return response()->json($sales);
+    }
+
     public function customerBill()
     {
         $bills = DB::select("SELECT b.prod_code as prod_code,
