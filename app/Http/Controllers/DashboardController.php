@@ -197,7 +197,7 @@ class DashboardController extends Controller
                                 b.price as price
                             from current_customers as c
                             inner join current_customer_bills as b
-                            on b.cust_id = c.id
+                            on b.current_cust_id = c.id
                             where b.created_at like '".date('Y-m-d')."%'");
         return response()->json($bills);
     }

@@ -57,7 +57,7 @@ function qr_code() {
 	});
 }
 
-function purchaseHistory(argument) {
+function purchaseHistory() {
 	$.ajax({
 		url: '../../profile/purchase-history',
 		type: 'GET',

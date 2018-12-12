@@ -158,6 +158,40 @@ var dict = {
         ch: "推荐的客户",
         en: "Referred Customers"
     },
+    "Purchase History": {
+        ch: "购买历史",
+        en: "Purchase History"
+    },
+
+    "Product Code": {
+        ch: "产品代码",
+        en: "Product Code"
+    },
+    "Product Name": {
+        ch: "产品名称",
+        en: "Product Name"
+    },
+    "Description": {
+        ch: "描述",
+        en: "Description"
+    },
+    "Quantity": {
+        ch: "数量",
+        en: "Quantity"
+    },
+    "Price": {
+        ch: "价钱",
+        en: "Price"
+    },
+    "Variant": {
+        ch: "变种",
+        en: "Variants"
+    },
+    "Date": {
+        ch: "日期",
+        en: "Date"
+    },
+    
     "Cancel": {
         ch: "取消",
         en: "Cancel"
@@ -173,6 +207,7 @@ $( function() {
 	getCustomerBill();
 	referredCustomers();
 	qr_code();
+	purchaseHistory();
 });
 
 function qr_code() {
@@ -283,6 +318,40 @@ function referredCustomersTable(arr) {
             { data:'code', searchable: false, orderable: false},
             { data: 'firstname', searchable: false, orderable: false},
             { data: 'lastname', searchable: false, orderable: false}
+        ]
+    });
+}
+
+function purchaseHistory() {
+	$.ajax({
+		url: '../../profile/purchase-history',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {
+			_token: token
+		},
+	}).done(function(data, textStatus, xhr) {
+		purchaseHistoryTable(data);
+	}).fail(function(xhr, textStatus, errorThrown) {
+		msg('Referred Customers: '+ errorThrown,textStatus);
+	});
+}
+
+function purchaseHistoryTable(arr) {
+	$('#tbl_history').dataTable().fnClearTable();
+    $('#tbl_history').dataTable().fnDestroy();
+    $('#tbl_history').dataTable({
+        data: arr,
+        bLengthChange : false,
+        ordering: false,
+        searching: false,
+        columns: [
+        	{ data: 'prod_code', searchable: false, orderable: false },
+			{ data: 'prod_name', searchable: false, orderable: false },
+			{ data: 'variants', searchable: false, orderable: false },
+			{ data: 'quantity', searchable: false, orderable: false },
+			{ data: 'cost', searchable: false, orderable: false },
+			{ data: 'created_at', searchable: false, orderable: false }
         ]
     });
 }

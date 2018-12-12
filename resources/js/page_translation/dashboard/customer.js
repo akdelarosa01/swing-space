@@ -158,6 +158,40 @@ var dict = {
         ch: "推荐的客户",
         en: "Referred Customers"
     },
+    "Purchase History": {
+        ch: "购买历史",
+        en: "Purchase History"
+    },
+
+    "Product Code": {
+        ch: "产品代码",
+        en: "Product Code"
+    },
+    "Product Name": {
+        ch: "产品名称",
+        en: "Product Name"
+    },
+    "Description": {
+        ch: "描述",
+        en: "Description"
+    },
+    "Quantity": {
+        ch: "数量",
+        en: "Quantity"
+    },
+    "Price": {
+        ch: "价钱",
+        en: "Price"
+    },
+    "Variant": {
+        ch: "变种",
+        en: "Variants"
+    },
+    "Date": {
+        ch: "日期",
+        en: "Date"
+    },
+    
     "Cancel": {
         ch: "取消",
         en: "Cancel"

@@ -74,6 +74,7 @@ class ProfileController extends Controller
                                     concat('₱', format(cost, 2)) as cost,
                                     DATE_FORMAT(created_at,'%b %d, %Y') as created_at
                             FROM customer_product_bills
+                            WHERE customer_user_id = '".Auth::user()->id."'
                             order by id desc");
         
         return response()->json($bills);

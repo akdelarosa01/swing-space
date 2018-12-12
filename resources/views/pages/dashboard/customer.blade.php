@@ -64,9 +64,28 @@
 	    		</div>
 				
 			</div>
-        </div>
+        </div>   
+    </div>
 
-		        
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="card">
+        		<div class="card-header trn">Purchase History</div>
+        		<div class="card-body">
+		    		<table class="table table-striped table-sm" width="100%" id="tbl_history">
+		    			<thead>
+		    				<th class="trn">Product Code</th>
+		    				<th class="trn">Product Name</th>
+		    				<th class="trn">Variant</th>
+		    				<th class="trn">Quantity</th>
+		    				<th class="trn">Cost</th>
+		    				<th class="trn">Date</th>
+		    			</thead>
+		    			<tbody id="tbl_history_body"></tbody>
+		    		</table>
+		    	</div>
+	        </div>
+    	</div>
     </div>
 @endsection
 
