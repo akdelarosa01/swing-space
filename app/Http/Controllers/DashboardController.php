@@ -101,8 +101,8 @@ class DashboardController extends Controller
     {
         $date = Carbon::now();
         $date->setISODate(date('Y'),date('W'));
-        $start = $this->_global->convertDate($date->startOfWeek(),'Y-m-d');
-        $end = $this->_global->convertDate($date->endOfWeek(),'Y-m-d');
+        $start = $this->_global->convertDate($date->startOfMonth(),'Y-m-d');
+        $end = $this->_global->convertDate($date->endOfMonth(),'Y-m-d');
 
         $labels = [];
         $series = [];
@@ -110,12 +110,12 @@ class DashboardController extends Controller
                                 sum(total_sale) as total_sale,
                                 left(created_at,10) as date_today
                             FROM sales
-                            where left(created_at,10) between '".$start."' and '".$end."'
+                            where left(created_at,10) like '".date('Y-m')."%'
                             group by left(created_at,10)
                             order by left(created_at,10)");
 
         foreach ($sales as $key => $s) {
-            array_push($labels, $this->_global->convertDate($s->date_today,'D'));
+            array_push($labels, $this->_global->convertDate($s->date_today,'m/d/Y'));
             array_push($series, $s->total_sale);
         }
 
@@ -128,9 +128,9 @@ class DashboardController extends Controller
         $data = [
             'labels' => $labels,
             'series' => $series,
-            'weekly_sale' => '₱'.number_format($total_weekly_sale,2),
-            'start_date' => $this->_global->convertDate($date->startOfWeek(),'M d, Y'),
-            'end_date' => $this->_global->convertDate($date->endOfWeek(),'M d, Y'),
+            'monthly_sale' => '₱'.number_format($total_weekly_sale,2),
+            'start_date' => $this->_global->convertDate($date->startOfMonth(),'M d, Y'),
+            'end_date' => $this->_global->convertDate($date->endOfMonth(),'M d, Y'),
         ];
 
         return response()->json($data);

@@ -235,7 +235,7 @@ function getSales() {
 				}
 			});
 
-			$('#weekly_sale').html(data.weekly_sale);
+			$('#monthly_sale').html(data.monthly_sale);
 			$('#start_date').html(data.start_date);
 			$('#end_date').html(data.end_date);
 		}

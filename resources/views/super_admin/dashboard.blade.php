@@ -40,8 +40,8 @@
             <div class="card">
                 <h5 class="card-header trn">Sales</h5>
                 <div class="card-body p-10">
-                      <h5 class="card-title secondary-type m-b-0 m-l-10" id="weekly_sale"></h5>
-                        <small class="text-muted m-l-10"><span class="trn">Week of</span> <span id="start_date"></span> - <span id="end_date"></span></small>
+                      <h5 class="card-title secondary-type m-b-0 m-l-10" id="monthly_sale"></h5>
+                        <small class="text-muted m-l-10"><span class="trn">Month of</span> <span id="start_date"></span> - <span id="end_date"></span></small>
                     <div id="ct-LineChart1" class="chartist-primary">
                         <div class="ct-chart"></div>
                     </div>
