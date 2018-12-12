@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('dashboard/get-sales', 'DashboardController@getSales');
     Route::get('dashboard/owner-total-statistic', 'DashboardController@OwnerTotalStatistic');
     Route::get('dashboard/sales-registered', 'DashboardController@SalesFromRegisteredCustomer');
+    Route::get('dashboard/sold-products', 'DashboardController@SoldProductsPerMonth');
 
     Route::get('dashboard/customer-bill', 'DashboardController@customerBill');
     Route::get('dashboard/customer-statistic', 'DashboardController@CustomerStatistic');

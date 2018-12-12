@@ -15,7 +15,11 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('customer_user_id')->nullable()->default(0);
             $table->string('customer_code');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('customer_type')->length(1);
             $table->double('sub_total',12,2)->default(0.00);
             $table->double('discount',12,2)->default(0.00);
             $table->double('payment',12,2)->default(0.00);

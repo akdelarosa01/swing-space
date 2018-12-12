@@ -15,13 +15,17 @@ class CreateCustomerProductBillsTable extends Migration
     {
         Schema::create('customer_product_bills', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('customer_id')->nullable()->default(0);
+            $table->integer('customer_user_id')->nullable()->default(0);
+            $table->string('customer_code');
+            $table->string('firstname');
+            $table->string('lastname');
             $table->string('prod_code');
             $table->string('prod_name');
             $table->string('prod_type');
             $table->string('variants');
             $table->integer('quantity');
             $table->double('cost',12,2);
+            $table->string('customer_type')->length(1);
             $table->timestamps();
         });
     }

@@ -45,7 +45,7 @@
             <form action="../../pos-control/current-customer" method="post" class="form-horizontal" id="frm_walkin">
                 @csrf
                 <input type="hidden" id="id" class="clear" name="id">
-                <input type="hidden" name="type" value="walkin">
+                <input type="hidden" name="type" value="W">
                 <div class="modal-body">
                     <div class="form-group row">
                         <label for="walk_firstname" class="control-label text-right col-md-3 trn">First Name</label>
@@ -59,13 +59,6 @@
                         <div class="col-md-9">
                             <input type="text" class="form-control form-control-sm clear validate" id="walk_lastname" name="cust_lastname">
                             <div id="walk_lastname_feedback"></div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="walk_timein" class="control-label text-right col-md-3 trn">Time In</label>
-                        <div class="col-md-9">
-                            <input type="time" class="form-control form-control-sm clear validate" id="walk_timein" name="cust_timein">
-                            <div id="walk_timein_feedback"></div>
                         </div>
                     </div>
                 </div>

@@ -251,7 +251,8 @@ $( function() {
             dataType: 'JSON',
             data: {
             	_token: token,
-            	type: 'member',
+            	type: 'M',
+            	customer_user_id: $(this).attr('data-customer_user_id'),
             	cust_code: $(this).attr('data-cust_code'),
             	cust_firstname: $(this).attr('data-cust_firstname'),
             	cust_lastname: $(this).attr('data-cust_lastname')
@@ -325,7 +326,8 @@ $( function() {
 							'<span style="word-wrap: break-word;">'+
 								$(this).attr('data-cust_code')+'<br>'+
 								$(this).attr('data-cust_firstname')+'<br>'+
-								$(this).attr('data-cust_lastname')+
+								$(this).attr('data-cust_lastname')+'<br>'+
+								(($(this).attr('data-customer_type') == 'W')? 'WALK-IN' : 'MEMBER')+
 							'</span><br>'+
 							'<input type="hidden" id="current_cust_id" value="'+$(this).attr('data-cust_id')+'">'+
 							'<input type="hidden" id="discount_value" name="discount_value" value="0">'+
@@ -334,6 +336,11 @@ $( function() {
 							'<input type="hidden" id="reward_points" name="reward_points" value="0">'+
 							'<input type="hidden" id="reward_name" name="reward_name" value="Discount from Rewards">'+
 							'<input type="hidden" id="sub_total_value" name="sub_total_value" value="0">'+
+							'<input type="hidden" id="customer_type" name="customer_type" value="'+$(this).attr('data-customer_type')+'">'+
+							'<input type="hidden" id="cust_firstname" name="cust_firstname" value="'+$(this).attr('data-cust_firstname')+'">'+
+							'<input type="hidden" id="cust_lastname" name="cust_lastname" value="'+$(this).attr('data-cust_lastname')+'">'+
+							'<input type="hidden" id="customer_user_id" name="customer_user_id" value="'+$(this).attr('data-customer_user_id')+'">'+
+							'<input type="hidden" id="customer_code" name="customer_code" value="'+$(this).attr('data-cust_code')+'">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -341,7 +348,7 @@ $( function() {
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
 							'<span style="word-wrap: break-word;" class="trn">Email Receipt</span> <br>'+
-							'<input type="checkbox" name="email_receipt" id="email_receipt" checked>'+
+							'<input type="checkbox" name="email_receipt" id="email_receipt" '+(($(this).attr('data-customer_type') == 'W')? '' : 'checked')+'>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -597,7 +604,12 @@ $( function() {
 					email_receipt: email_receipt,
 					discount_name: $('#discount_name').val(),
 					reward_name: $('#reward_name').val(),
-					sub_total: $('#sub_total_value').val()
+					sub_total: $('#sub_total_value').val(),
+					customer_type: $('#customer_type').val(),
+					cust_firstname: $('#cust_firstname').val(),
+					cust_lastname: $('#cust_lastname').val(),
+					customer_user_id: $('#customer_user_id').val(),
+					customer_code: $('#customer_code').val()
 				},
 			}).done(function(data, textStatus, xhr) {
 				showCustomer();
@@ -738,7 +750,8 @@ function membersTable(arr) {
         ordering: false,
         columns: [
             {data: function(x) {
-            	return x.cust_code+'<input type="hidden" name="cust_code[]" value="'+x.cust_code+'">';
+            	return x.cust_code+'<input type="hidden" name="cust_code[]" value="'+x.cust_code+'">'+
+            			x.customer_user_id+'<input type="hidden" name="customer_user_id[]" value="'+x.customer_user_id+'">';
             }},
             {data: function(x) {
             	return x.cust_firstname+'<input type="hidden" name="cust_firstname[]" value="'+x.cust_firstname+'">';
@@ -751,6 +764,7 @@ function membersTable(arr) {
                 			'data-cust_code="'+x.cust_code+'"'+
                 			'data-cust_firstname="'+x.cust_firstname+'"'+
                 			'data-cust_lastname="'+x.cust_lastname+'"'+
+                			'data-customer_user_id="'+x.customer_user_id+'"'+
                 			'>'+
                         	'<span class="trn">Check In</span>'+
                         '</button>';
@@ -776,8 +790,9 @@ function customers(data) {
 					'data-cust_code="'+x.cust_code+'" '+
 					'data-cust_firstname="'+x.cust_firstname+'" '+
 					'data-cust_lastname="'+x.cust_lastname+'" '+
-					'data-points="'+x.points+'" '+
-					'data-cust_timein="'+x.cust_timein+'">'+
+					'data-customer_user_id="'+x.customer_user_id+'" '+
+					'data-customer_type="'+x.customer_type+'" '+
+					'data-points="'+x.points+'">'+
 						'<span style="font-size:12px;word-wrap: break-word;">'+x.cust_firstname+' '+x.cust_lastname+'</span>'+
 					'</div>'+
 				'</div>';

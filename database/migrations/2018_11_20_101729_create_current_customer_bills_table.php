@@ -15,13 +15,14 @@ class CreateCurrentCustomerBillsTable extends Migration
     {
         Schema::create('current_customer_bills', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cust_id');
+            $table->integer('current_cust_id');
             $table->integer('prod_id');
             $table->string('prod_code');
             $table->string('prod_name');
             $table->integer('quantity');
             $table->double('price',12,2);
             $table->double('unit_price',12,2);
+            $table->string('customer_type')->length(1);
             $table->integer('create_user');
             $table->integer('update_user');
             $table->timestamps();
