@@ -58,19 +58,17 @@ class DashboardController extends Controller
                         DB::raw("c.cust_code as code"),
                         DB::raw("c.cust_firstname as firstname"),
                         DB::raw("c.cust_lastname as lastname"),
-                        DB::raw("RIGHT(c.cust_timein,0) as timein"),
                         DB::raw("ifnull(SUM(b.price),0) as total_bill"),
                         DB::raw("ifnull(u.photo,'/img/default-profile.png') as photo"),
                         DB::raw("ifnull(cus.points,0) as points")
                     )
-                    ->leftJoin('current_customer_bills as b','c.id','=','b.cust_id')
+                    ->leftJoin('current_customer_bills as b','c.id','=','b.current_cust_id')
                     ->leftJoin('customers as cus','c.cust_code','=','cus.customer_code')
                     ->leftJoin('users as u','cus.user_id','=','u.id')
                     ->groupBy('c.id',
                             'c.cust_code',
                             'c.cust_firstname',
                             'c.cust_lastname',
-                            'c.cust_timein',
                             'u.photo',
                             'cus.points'
                         )->get();
