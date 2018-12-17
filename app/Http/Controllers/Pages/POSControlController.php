@@ -397,6 +397,12 @@ class POSControlController extends Controller
             CurrentCustomer::where('id',$req->cust_id)->delete();
             CurrentCustomerBill::where('current_cust_id',$req->cust_id)->delete();
 
+            $this->_userlog->log([
+                'module' => 'POS Control',
+                'action' => 'Customer code: '.$req->customer_code.', purchased an amount of '.$req->order_total_amount,
+                'user_id' => Auth::user()->id
+            ]);
+
             $data = [
                 'msg' => 'Payment successfully transacted',
                 'status' => 'success'
