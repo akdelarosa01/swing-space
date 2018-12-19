@@ -652,7 +652,6 @@ function makePromoDataTable(arr) {
         data: arr,
         searching: false,
         ordering: false,
-        paging: false,
         columns: [
             {data: function(x) {
                 return '<img src="'+x.promo_photo+'" class="w-35 rounded-circle">';

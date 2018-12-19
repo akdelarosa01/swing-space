@@ -412,7 +412,7 @@ class POSControlController extends Controller
         $bill = CurrentCustomerBill::where('current_cust_id',$req->cust_id)->get();
         event(new POS($bill));
 
-        return $data;
+        return response()->json($data);
     }
 
     public function EmailCustomerReceipt($req)

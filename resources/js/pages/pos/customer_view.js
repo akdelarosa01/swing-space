@@ -25,22 +25,30 @@ function promos() {
         ];
 
         $.each(data, function(i, x) {
-                slide += '<li data-transition="'+transition[i]+'" data-slotamount="7" data-masterspeed="2000">'+
-                            '<img src="../../'+x.promo_photo+'">'+
-                            '<div class="tp-caption mediumlarge_light_white_center customin customout"'+
-                                'data-x="center" data-hoffset="0"'+
-                                'data-y="bottom" data-voffset="-120"'+
-                                'data-customin="x:0;y:0;z:0;rotationX:90;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:200;transformOrigin:50% 0%;"'+
-                                'data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"'+
-                                'data-speed="1000"'+
-                                'data-start="1900"'+
-                                'data-easing="Back.easeInOut"'+
-                                'data-endspeed="300"'+
-                                'style="z-index: 12">'+
-                                    x.promo_desc+
-                            '</div>'+
-                        '</li>';
-        	
+
+            var desc = '';
+
+            if (x.promo_desc == null) {
+                desc = '';
+            } else {
+                desc = x.promo_desc;
+            }
+
+            slide += '<li data-transition="'+transition[i]+'" data-slotamount="7" data-masterspeed="2000">'+
+                        '<img src="../../'+x.promo_photo+'">'+
+                        '<div class="tp-caption mediumlarge_light_white_center customin customout"'+
+                            'data-x="center" data-hoffset="0"'+
+                            'data-y="bottom" data-voffset="-120"'+
+                            'data-customin="x:0;y:0;z:0;rotationX:90;rotationY:0;rotationZ:0;scaleX:1;scaleY:1;skewX:0;skewY:0;opacity:0;transformPerspective:200;transformOrigin:50% 0%;"'+
+                            'data-customout="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0.75;scaleY:0.75;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"'+
+                            'data-speed="1000"'+
+                            'data-start="1900"'+
+                            'data-easing="Back.easeInOut"'+
+                            'data-endspeed="300"'+
+                            'style="z-index: 12">'+
+                                desc+
+                        '</div>'+
+                    '</li>';
         });
 
         // slide += '</div>'+

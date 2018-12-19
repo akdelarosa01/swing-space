@@ -325,7 +325,6 @@ class GeneralSettingsController extends Controller
         if ($req->promo_id) {
             $this->validate($req,[
                 'promo_photo' => 'required',
-                'promo_desc' => 'required'
             ]);
 
             $promo = Promo::where('id',$req->promo_id)
@@ -375,7 +374,6 @@ class GeneralSettingsController extends Controller
         } else {
             $this->validate($req,[
                 'promo_photo' => 'required',
-                'promo_desc' => 'required'
             ]);
 
             $promo = Promo::create([

@@ -59143,17 +59143,35 @@ Echo.channel('pos')
         $("#tbl_discountCustomerView_body").html('');
         $("#tbl_rewardCustomerView_body").html('');
 
-        var discount_viewTable = '<tr>'+
-                                '<td>'+returns.discount_name+'</td>'+
-                                '<td>'+'-'+returns.discount_value+'</td>'+
-                            '</tr>';
+        var discount_viewTable = '';
+
+        if (returns.discount_name == undefined) {
+            discount_viewTable = '<tr>'+
+                                    '<td></td>'+
+                                    '<td></td>'+
+                                '</tr>';
+        } else {
+            discount_viewTable = '<tr>'+
+                                    '<td>'+returns.discount_name+'</td>'+
+                                    '<td>'+'-'+returns.discount_value+'</td>'+
+                                '</tr>';
+        }
 
         $('#tbl_discountCustomerView_body').html(discount_viewTable);
 
-        var reward_viewTable = '<tr>'+
+        var reward_viewTable = '';
+
+        if (returns.reward_name == undefined) {
+            reward_viewTable = '<tr>'+
+                                    '<td></td>'+
+                                    '<td></td>'+
+                                '</tr>';
+        } else {
+            reward_viewTable = '<tr>'+
                                 '<td>'+returns.reward_name+'</td>'+
                                 '<td>'+'-'+returns.reward_price+'</td>'+
                             '</tr>';
+        }
 
         $('#tbl_rewardCustomerView_body').html(reward_viewTable);
         
@@ -59710,11 +59728,13 @@ function calculateTotalCustomerView(data,discounts,rewards) {
 
     total = parseFloat(total) - parseFloat(discounts_val) - parseFloat(rewards_val);
 
-    $('#total_amount_customer').html(total.toFixed(2));
-
-    console.log(total);
-
-    return total.toFixed(2);
+    if (isNaN(total)) {
+        $('#total_amount_customer').html(0.00);
+        return 0.00;
+    } else {
+        $('#total_amount_customer').html(total.toFixed(2));
+        return total.toFixed(2);
+    }
 }
 
 function showCurrentBill(cust_id,discount_name,discount_value,reward_name,reward_price) {

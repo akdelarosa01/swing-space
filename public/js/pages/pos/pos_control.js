@@ -613,17 +613,16 @@ $( function() {
 					customer_code: $('#customer_code').val()
 				},
 			}).done(function(data, textStatus, xhr) {
-				console.log(data);
-				// showCustomer();
-				// $('#customers').show();
-				// $('#pos_control').hide();
-				// $('#control').hide();
-				// $('#tbl_discounts_body').html('');
-				// $('#tbl_rewards_body').html('');
+				showCustomer();
+				$('#customers').show();
+				$('#pos_control').hide();
+				$('#control').hide();
+				$('#tbl_discounts_body').html('');
+				$('#tbl_rewards_body').html('');
 
-				// $('#tbl_discountView_body').html('');
-				// $('#tbl_rewardView_body').html('');
-				// msg(data.msg,data.status);
+				$('#tbl_discountView_body').html('');
+				$('#tbl_rewardView_body').html('');
+				msg(data.msg,data.status);
 			}).fail(function(xhr, textStatus, errorThrown) {
 				msg('Payment: '+errorThrown,textStatus);
 			}).always(function() {
