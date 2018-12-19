@@ -1,4 +1,5 @@
 $( function() {
+	check_permission('SND_RPT');
 	$('#frm_reports').on('submit', function(e) {
 		e.preventDefault();
 		$('.loading').show();

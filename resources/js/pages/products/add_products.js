@@ -2,6 +2,7 @@ let products = [];
 let for_sale = [];
 
 $( function() {
+    check_permission('PRD_REG');
     get_dropdown_options(3,'#prod_type');
     get_dropdown_options(5,'#variants');
     checkAllCheckboxesInTable('.check_all_products','.check_product');

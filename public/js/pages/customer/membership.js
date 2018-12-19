@@ -193,6 +193,7 @@ $( function() {
     getLanguage(dict);
 });
 $( function() {
+	check_permission('CUS_MEM');
 	$('#phone').mask('(99)999-9999', {placeholder: '(__) ___-____'});
 	$('#mobile').mask('(+63)999-999-9999', {placeholder: '(+63)___-___-____'});
 

@@ -388,15 +388,33 @@ function translateLanguage(language) {
 
 function getUserLogs() {
     $.ajax({
-        url: '../../../logs',
+        url: '../../../admin/getlogs',
         type: 'GET',
         dataType: 'JSON',
     }).done(function(data, textStatus, xhr) {
         user_log = [];
         user_log = data;
-        // makeUserLogTable(user_log);
+        makeUserLogTable(user_log);
     }).fail(function(xhr, textStatus, errorThrown) {
         console.log(xhr+' '+errorThrown);
+    });
+}
+
+function makeUserLogTable(arr) {
+    $('#tbl_logs').dataTable().fnClearTable();
+    $('#tbl_logs').dataTable().fnDestroy();
+    $('#tbl_logs').dataTable({
+        data: arr,
+        sorting: false,
+        searching: false,
+        deferRender: true,
+        columns: [
+            { data: 'id', searchable: false, orderable: false },
+            { data: 'module', searchable: false, orderable: false },
+            { data: 'action', searchable: false, orderable: false },
+            { data: 'user_name', searchable: false, orderable: false },
+            { data: 'log_date', searchable: false, orderable: false },
+        ]
     });
 }
 
@@ -423,6 +441,28 @@ function checkTimeSpent(timein) {
         + minutes + "m " + seconds + "s ";
     };
     myTimer = setInterval(timeSpent, 1000);
+}
+
+function check_permission(code) {
+    $.ajax({
+        url: '../../check-permission',
+        type: 'GET',
+        dataType: 'JSON',
+        data: { code: code }
+    }).done(function(data, textStatus, xhr) {
+        if (data.access == 2) {
+            $('.permission').prop('readonly', true);
+            $('.btn-permission').prop('disabled', true);
+        } else {
+            $('.permission').prop('readonly', false);
+            $('.btn-permission').prop('disabled', false);
+        }
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg(errorThrown,textStatus);
+    }).always(function() {
+        console.log("complete");
+    });
+    
 }
 
 // POS CONTROL

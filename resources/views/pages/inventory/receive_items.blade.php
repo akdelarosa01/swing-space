@@ -79,7 +79,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-info btn-sm pull-right">
+                                <button type="submit" class="btn btn-info btn-sm pull-right btn-permission">
                                     <span class="trn">Save</span>
                                 </button>
                                 {{-- <button type="button" class="btn btn-success btn-sm" id="btn_download_format">Download Upload Format</button> --}}

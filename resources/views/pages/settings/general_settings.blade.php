@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <div class="offset-md-8 col-md-4">
-                                <button type="submit" class="btn btn-sm btn-info btn-block trn">Set</button>
+                                <button type="submit" class="btn btn-sm btn-info btn-block trn btn-permission">Set</button>
                             </div>
                         </div>
                     </form>
@@ -99,7 +99,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="offset-md-8 col-md-4">
-                                <button type="submit" class="btn btn-info btn-sm">
+                                <button type="submit" class="btn btn-info btn-sm btn-permission">
                                     <span class="trn">Save</span>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">

@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/pages/super_admin/user_master.js": "/js/pages/super_admin/user_master.js",
+    "/js/pages/super_admin/user_logs.js": "/js/pages/super_admin/user_logs.js",
     "/js/pages/super_admin/transaction_codes.js": "/js/pages/super_admin/transaction_codes.js",
     "/js/pages/super_admin/module.js": "/js/pages/super_admin/module.js",
     "/js/main.js": "/js/main.js",

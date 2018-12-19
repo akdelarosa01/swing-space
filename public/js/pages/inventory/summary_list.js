@@ -168,6 +168,7 @@ $( function() {
 var items = [];
 
 $( function() {
+    check_permission('SUM_LST');
     get_dropdown_options(2,'#item_type');
     inventoryTable(items);
 

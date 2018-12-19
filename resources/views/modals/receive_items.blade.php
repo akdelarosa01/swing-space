@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-light">
-                    <button type="submit" class="btn btn-info btn-sm">
+                    <button type="submit" class="btn btn-info btn-sm btn-permission">
                         <span class="trn">Save</span>
                     </button>
                     <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">

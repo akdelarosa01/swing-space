@@ -156,7 +156,7 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="offset-sm-5 col-md-6">
-                                    <button type="submit" class="btn btn-info btn-rounded">
+                                    <button type="submit" class="btn btn-info btn-rounded btn-permission">
                                         <span class="trn">Apply</span>
                                     </button>
                                     <button type="button" class="btn btn-secondary clear-form btn-rounded btn-outline">
@@ -177,7 +177,6 @@
 @push('scripts')
     <script type="text/javascript">
         var token = $('meta[name="csrf-token"]').attr('content');
-
     </script>
     <script type="text/javascript" src="{{ asset('/js/pages/customer/membership.js') }}"></script>
 @endpush

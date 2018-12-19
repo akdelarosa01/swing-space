@@ -59,7 +59,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-info btn-sm pull-right">Save</button>
+                                <button type="submit" class="btn btn-info btn-sm pull-right btn-permission">Save</button>
                             </div>
                         </div>
                     </form>

@@ -1,6 +1,7 @@
 var items = [];
 
 $( function() {
+    check_permission('INV_LST');
     get_dropdown_options(2,'#item_type');
     get_dropdown_options(2,'#item_type_export');
 	inventoryTable(items);

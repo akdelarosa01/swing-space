@@ -89,10 +89,10 @@
                     </div>        
                 </div>
                 <div class="modal-footer bg-light">
-                    <button type="submit" class="btn btn-info btn-sm">
+                    <button type="submit" class="btn btn-info btn-sm btn-permission">
                         <span class="trn">Save</span>
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm" id="btn_delete">
+                    <button type="button" class="btn btn-danger btn-sm btn-permission" id="btn_delete">
                         <span class="trn">Delete</span>
                     </button>
                 </div>

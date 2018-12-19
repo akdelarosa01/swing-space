@@ -19,7 +19,7 @@
                                     <input type="text" class="form-control form-control-sm clear validate" id="description" name="description">
                                     <div id="description_feedback"></div>
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-sm btn-info" id="btn_add_name">
+                                        <button type="submit" class="btn btn-sm btn-info btn-permission" id="btn_add_name">
                                             <span class="trn">Save</span>
                                         </button>
                                     </div>
@@ -67,7 +67,7 @@
                                     <input type="text" class="form-control form-control-sm clear validate" id="option_description" name="option_description" readonly>
                                     <div id="option_description_feedback"></div>
                                     <div class="input-group-append">
-                                        <button type="submit" class="btn btn-sm btn-info">
+                                        <button type="submit" class="btn btn-sm btn-info btn-permission">
                                             <span class="trn">Save</span>
                                         </button>
                                     </div>
@@ -94,7 +94,7 @@
 
                     <div class="row">
                         <div class="offset-md-10 col-md-2">
-                            <button type="button" class="btn btn-sm btn-block btn-danger" id="btn_delete">Delete</button>
+                            <button type="button" class="btn btn-sm btn-block btn-danger btn-permission" id="btn_delete">Delete</button>
                         </div>
                     </div>
                 </div>

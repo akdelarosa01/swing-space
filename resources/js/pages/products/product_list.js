@@ -1,6 +1,7 @@
 var products = [];
 
 $( function() {
+    check_permission('PRD_LST');
     get_dropdown_options(3,'#prod_type_export');
 	getProducts();
 

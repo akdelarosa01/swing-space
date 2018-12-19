@@ -214,7 +214,7 @@
                 <div class="form-actions">
                     <div class="row">
                         <div class="offset-sm-5 col-md-6">
-                            <button type="submit" class="btn btn-info btn-rounded">
+                            <button type="submit" class="btn btn-info btn-rounded btn-permission">
                                 <span class="trn">Save</span>
                             </button>
                             <button class="btn btn-secondary clear-form btn-rounded btn-outline">

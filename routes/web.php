@@ -53,6 +53,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
     Route::post('user-master/save','SuperAdmin\UserMasterController@save');
     Route::post('user-master/delete','SuperAdmin\UserMasterController@destroy');
     Route::post('user-master/assign-access','SuperAdmin\UserMasterController@assign_access');
+
+    Route::get('/user-logs','SuperAdmin\UserLogsController@index');
+    Route::get('/getlogs', 'SuperAdmin\UserLogsController@getLogs');
 });
 
 Route::group(['middleware' => ['auth','no.back']], function() {
@@ -182,6 +185,6 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('get-referrer', 'GlobalController@referrers');
     Route::get('get-language', 'GlobalController@getLanguage');
     Route::post('translate-language', 'GlobalController@translateLanguage');
-});
 
-Route::get('/logs', 'UserLogsController@getLogs')->name('logs');
+    Route::get('check-permission', 'GlobalController@check_permission');
+});

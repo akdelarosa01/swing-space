@@ -2,6 +2,7 @@ let items = [];
 let selected_items = [];
 
 $( function() {
+    check_permission('ITM_OUT');
     makeItemsDataTable(items);
     makeSelectedItemsDataTable(selected_items);
 

@@ -41,7 +41,7 @@
 
                 <div class="row">
                     <div class="offset-md-10 col-md-2">
-                        <button type="submit" class="btn btn-info btn-sm btn-block">
+                        <button type="submit" class="btn btn-info btn-sm btn-block btn-permission">
                             <span class="trn">Save</span>
                         </button>
                     </div>

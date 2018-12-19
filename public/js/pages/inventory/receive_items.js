@@ -193,6 +193,7 @@ let items = [];
 let selected_items = [];
 
 $( function() {
+    check_permission('RCV_ITM');
     makeItemsDataTable(items);
     makeSelectedItemsDataTable(selected_items);
 

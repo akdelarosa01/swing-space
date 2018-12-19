@@ -206,7 +206,7 @@ function EmployeeList(data) {
 										'<a href="../../employee/'+x.id+'/edit" class="dropdown-item">'+
 											'<i class="icon dripicons-pencil"></i> <span class="trn">Edit</span>'+
 										'</a>'+
-										'<a href="javascript:void(0)" class="dropdown-item delete-employee" data-id="'+x.id+'">'+
+										'<a href="javascript:void(0)" class="dropdown-item delete-employee permission" data-id="'+x.id+'">'+
 											'<i class="icon dripicons-trash"></i> <span class="trn">Remove</span>'+
 										'</a>'+
 									'</div>'+
@@ -229,6 +229,8 @@ function EmployeeList(data) {
 				'</div>';
 		$('#employee_list').append(list);
 	});
+
+	check_permission('EMP_LST');
 
 	getLanguage(dict);
 }

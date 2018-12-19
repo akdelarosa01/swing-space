@@ -46,7 +46,7 @@
 
                         <div class="form-group row">
                             <div class="offset-md-10 col-md-2">
-                                <button type="submit" class="btn btn-sm btn-success btn-block">Send</button>
+                                <button type="submit" class="btn btn-sm btn-success btn-block btn-permission">Send</button>
                             </div>
                         </div>
                     </form>

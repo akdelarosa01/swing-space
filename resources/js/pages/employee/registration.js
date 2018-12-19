@@ -4,6 +4,8 @@ getModules('');
 
 $( function() {
 
+	check_permission('EMP_REG');
+
 	if ($('#id').val() !== '') {
 		show_employee($('#id').val());
 	}

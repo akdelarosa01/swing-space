@@ -14,7 +14,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-danger pull-left" data-dismiss="modal">No</button>
-				<button type="button" class="btn btn-sm btn-info" id="btn_confirm">Yes</button>
+				<button type="button" class="btn btn-sm btn-info btn-permission" id="btn_confirm">Yes</button>
 			</div>
 		</div>
 	</div>

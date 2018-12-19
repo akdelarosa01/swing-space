@@ -1,6 +1,7 @@
 let options = [];
 
 $( function() {
+	check_permission('DRP_SET');
 	getName('');
 	getOption(0);
 

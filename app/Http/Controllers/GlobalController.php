@@ -48,6 +48,21 @@ class GlobalController extends Controller
         return $access;
     }
 
+    public function check_permission(Request $req)
+    {
+        $access = DB::table('modules as m')
+                    ->join('user_accesses as u','m.id','=','u.module_id')
+                    ->select(
+                        DB::raw('u.access as access')
+                    )
+                    ->where([
+                        ['m.module_code', $req->code],
+                        ['u.user_id', Auth::user()->id]
+                    ])->first();
+
+        return response()->json($access);
+    }
+
     public function getLanguage()
     {
         $user = User::find(Auth::user()->id);

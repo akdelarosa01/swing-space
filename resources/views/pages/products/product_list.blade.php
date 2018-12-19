@@ -34,7 +34,7 @@
 
             <div class="row">
                 <div class="offset-md-10 col-md-2">
-                    <button class="btn btn-sm btn-success btn-block" id="btn_export">
+                    <button class="btn btn-sm btn-success btn-block btn-permission" id="btn_export">
                         <span class="trn">Export Files</span>
                     </button>
                 </div>

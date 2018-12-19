@@ -294,6 +294,11 @@
                                 </a>
                             </li>
                             <li class="{{ Request::is('admin/module') ? ' active' : null }}">
+                                <a href="{{ url('/admin/user-logs') }}">
+                                    <span>User Logs</span>
+                                </a>
+                            </li>
+                            <li class="{{ Request::is('admin/module') ? ' active' : null }}">
                                 <a href="{{ url('/admin/module') }}">
                                     <span>Modules</span>
                                 </a>

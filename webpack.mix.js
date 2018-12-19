@@ -35,6 +35,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/revolution-slider/js/jquery.themepunch.revolution.min.js',
     ], 'public/js/main.js')
     .js('resources/js/pages/super_admin/user_master.js', 'public/js/pages/super_admin/')
+    .js('resources/js/pages/super_admin/user_logs.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/transaction_codes.js', 'public/js/pages/super_admin/')
 

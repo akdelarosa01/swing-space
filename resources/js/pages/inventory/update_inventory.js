@@ -1,6 +1,7 @@
 var items = [];
 
 $( function() {
+    check_permission('UPD_INV');
     get_dropdown_options(2,'#item_type');
 	inventoryTable(items);
 

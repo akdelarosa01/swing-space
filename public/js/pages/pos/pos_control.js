@@ -227,6 +227,8 @@ $( function() {
 	getProductTypes();
 	showCustomer();
 
+
+
 	$('#btn_walkin').on('click', function() {
 		$('#walkin_modal').modal('show');
 	});
@@ -564,7 +566,6 @@ $( function() {
     });
 
     $('#control').on('click', '.pay_now', function() {
-
 		var order_payment = parseFloat($('#order_payment').val());
 		var order_total_amount = parseFloat($('#order_total_amount').val());
 
@@ -612,16 +613,17 @@ $( function() {
 					customer_code: $('#customer_code').val()
 				},
 			}).done(function(data, textStatus, xhr) {
-				showCustomer();
-				$('#customers').show();
-				$('#pos_control').hide();
-				$('#control').hide();
-				$('#tbl_discounts_body').html('');
-				$('#tbl_rewards_body').html('');
+				console.log(data);
+				// showCustomer();
+				// $('#customers').show();
+				// $('#pos_control').hide();
+				// $('#control').hide();
+				// $('#tbl_discounts_body').html('');
+				// $('#tbl_rewards_body').html('');
 
-				$('#tbl_discountView_body').html('');
-				$('#tbl_rewardView_body').html('');
-				msg(data.msg,data.status);
+				// $('#tbl_discountView_body').html('');
+				// $('#tbl_rewardView_body').html('');
+				// msg(data.msg,data.status);
 			}).fail(function(xhr, textStatus, errorThrown) {
 				msg('Payment: '+errorThrown,textStatus);
 			}).always(function() {
@@ -785,7 +787,7 @@ function customers(data) {
 		}
 
 		cards = '<div class="col-md-2 ml-1 mb-1">'+
-					'<div class="btn btn-lg btn-block '+type+' current_customer btn-outline" '+
+					'<button type="button" class="btn btn-lg btn-block '+type+' current_customer btn-outline btn-permission" '+
 					'data-cust_id="'+x.id+'" '+
 					'data-cust_code="'+x.cust_code+'" '+
 					'data-cust_firstname="'+x.cust_firstname+'" '+
@@ -794,10 +796,12 @@ function customers(data) {
 					'data-customer_type="'+x.customer_type+'" '+
 					'data-points="'+x.points+'">'+
 						'<span style="font-size:12px;word-wrap: break-word;">'+x.cust_firstname+' '+x.cust_lastname+'</span>'+
-					'</div>'+
+					'</button>'+
 				'</div>';
 		$('#current_customers').append(cards);
 	});
+
+	check_permission('POS_CTRL');
 }
 
 function discounts() {

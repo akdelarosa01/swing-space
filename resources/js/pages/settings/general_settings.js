@@ -1,4 +1,5 @@
 $( function() {
+    check_permission('GEN_SET');
     get_dropdown_options(7,'#discount');
 	get_dropdown_options(6,'#inc_space');
     get_dropdown_options(6,'#rwd_space');

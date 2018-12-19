@@ -77,16 +77,18 @@ function customerTable(arr) {
             {data:'date_registered'},
             {data: function(x) {
             	return '<div class="btn-group">'+
-                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info">'+
+                            '<a href="/membership/'+x.id+'/edit" class="btn btn-sm btn-info btn-permission">'+
                                 '<i class="fa fa-edit"></i>'+
                             '</a>'+
-                            '<button class="btn btn-sm btn-danger delete-customer" data-id="'+x.id+'">'+
+                            '<button class="btn btn-sm btn-danger delete-customer btn-permission" data-id="'+x.id+'">'+
                                 '<i class="fa fa-trash"></i>'+
                             '</button>'+
                         '</div>';
             }, searchable: false, orderable: false},
         ]
     });
+    
+    check_permission('CUS_LST');
 
     getLanguage(dict);
 }

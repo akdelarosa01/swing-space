@@ -1,4 +1,5 @@
 $( function() {
+	check_permission('SAL_RPT');
 	SalesFromCustomerReport();
 	SalesOverDiscountsReport();
 	yearlyComparisonChartReport();

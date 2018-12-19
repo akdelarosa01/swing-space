@@ -5,18 +5,18 @@
 	<div id="customers">
 		<div class="row no-gutters">
 			<div class="col-md-2 ml-1 mb-1">
-				<button type="button" class="btn btn-lg btn-block btn-success btn-outline" id="btn_walkin">
+				<button type="button" class="btn btn-lg btn-block btn-success btn-outline btn-permission" id="btn_walkin">
 					<span class="trn" style="font-size:12px;word-wrap: break-word;">Walk-in</span>
 				</button>
 			</div>
 			<div class="col-md-2 ml-1 mb-1">
-				<button type="button" class="btn btn-lg btn-block btn-info btn-outline" id="btn_member">
+				<button type="button" class="btn btn-lg btn-block btn-info btn-outline btn-permission" id="btn_member">
 					<span class="trn" style="font-size:12px;word-wrap: break-word;">Members</span>
 				</button>
 			</div>
 
 			<div class="col-md-2 ml-1 mb-1">
-				<button type="button" class="btn btn-lg btn-block btn-accent" id="btn_open">
+				<button type="button" class="btn btn-lg btn-block btn-accent btn-permission" id="btn_open">
 					<span class="trn" style="font-size:12px;word-wrap: break-word;">Open Customer's View</span>
 				</button>
 			</div>

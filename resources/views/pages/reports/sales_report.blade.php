@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">
             <span class="trn">Total amount of Customer's purchased</span>
-            <button type="button" class="btn btn-sm btn-success btn-rounded btn-outline pull-right" id="btn_customer">
+            <button type="button" class="btn btn-sm btn-success btn-rounded btn-outline pull-right btn-permission" id="btn_customer">
                 <span class="trn">Export</span>
             </button>
         </div>
@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-header">
             <span class="trn">Total sales Vs. Total Discounts</span>
-            <button type="buton" class="btn btn-sm btn-success btn-rounded btn-outline pull-right" id="btn_discount">
+            <button type="buton" class="btn btn-sm btn-success btn-rounded btn-outline pull-right btn-permission" id="btn_discount">
                 <span class="trn">Excel</span>
             </button>
         </div>
