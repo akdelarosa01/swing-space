@@ -26,11 +26,11 @@ REDIS_PORT=6379
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
-MAIL_USERNAME=ak.delarosa01@gmail.com
-MAIL_PASSWORD=maryataba01
+MAIL_USERNAME=spacekatipunan@gmail.com
+MAIL_PASSWORD=swingspacekatipunan
 MAIL_ENCRYPTION=tls
 MAIL_FROM_NAME="Swing Space"
-MAIL_FROM_ADDRESS=ak.delarosa01@gmail.com
+MAIL_FROM_ADDRESS=spacekatipunan@gmail.com
 
 PUSHER_APP_ID=649374
 PUSHER_APP_KEY=53acfdc5fb11d97e0910
