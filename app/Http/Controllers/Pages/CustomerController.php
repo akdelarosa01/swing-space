@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserLogsController;
 use App\User;
+use App\Customer;
 use DB;
 
 class CustomerController extends Controller
@@ -74,6 +75,15 @@ class CustomerController extends Controller
         ];
 
         if (isset($req->id)) {
+
+            $cust = Customer::where('user_id',$req->id)->first();
+
+            $this->_userlog->log([
+                'module' => 'Customer List',
+                'action' => 'Delete Customer code: '.$cust->customer_code.', User ID: '.$req->id,
+                'user_id' => Auth::user()->id
+            ]);
+
             $user = User::find($req->id);
             $user->disabled = 1;
             if ($user->update()) {
@@ -111,12 +121,6 @@ class CustomerController extends Controller
                     'status' => 'success',
                     'customers' => $customers
                 ];
-
-                $this->_userlog->log([
-                    'module' => 'Customer List',
-                    'action' => 'Delete customer ID '.$req->id,
-                    'user_id' => Auth::user()->id
-                ]);
             }
         }
 
