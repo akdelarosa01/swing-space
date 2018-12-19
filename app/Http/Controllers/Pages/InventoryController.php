@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
-use App\Http\Controllers\UserLogsController;
+use App\Http\Controllers\SuperAdmin\UserLogsController;
 use Excel;
 use DB;
 use PDF;

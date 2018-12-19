@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\SuperAdmin\UserLogsController;
 use App\AvailableProduct;
 use App\Product;
 use Excel;
@@ -14,11 +15,13 @@ use PDF;
 
 class ProductController extends Controller
 {
-     protected $_global;
+    protected $_global;
+    protected $_userlog;
 
     public function __construct()
     {
         $this->_global = new GlobalController;
+        $this->_userlog = new UserLogsController;
     }
 
     public function index()
@@ -76,6 +79,12 @@ class ProductController extends Controller
 
             if ($prod->update()) {
 
+                $this->_userlog->log([
+                    'module' => 'Product Registration',
+                    'action' => 'Updated Product ID '.$req->id.', Name '.$req->prod_name,
+                    'user_id' => Auth::user()->id
+                ]);
+
                 $data = [
                     'msg' => 'Product is successfully updated.',
                     'status' => 'success',
@@ -101,6 +110,12 @@ class ProductController extends Controller
             $prod->update_user = Auth::user()->id;
 
             if ($prod->save()) {
+
+                $this->_userlog->log([
+                    'module' => 'Product Registration',
+                    'action' => 'Added Product Code '.$prod->prod_code.', Name '.$prod->prod_name,
+                    'user_id' => Auth::user()->id
+                ]);
 
                 $data = [
                     'msg' => 'Product is successfully saved.',
@@ -260,6 +275,13 @@ class ProductController extends Controller
         if (is_array($req->id)) {
             foreach ($req->id as $key => $id) {
                 $prod = Product::find($id);
+
+                $this->_userlog->log([
+                    'module' => 'Product Registration',
+                    'action' => 'Deleted Product Code '.$prod->prod_code.', Name '.$prod->prod_name,
+                    'user_id' => Auth::user()->id
+                ]);
+
                 $prod->delete();
 
                 $data = [
@@ -273,10 +295,15 @@ class ProductController extends Controller
 
             foreach ($ids as $key => $id) {
                 $prod = Product::find($id);
+
+                $this->_userlog->log([
+                    'module' => 'Product Registration',
+                    'action' => 'Deleted Product Code '.$prod->prod_code.', Name '.$prod->prod_name,
+                    'user_id' => Auth::user()->id
+                ]);
+
                 $prod->delete();
             }
-
-            
 
             $data = [
                 'msg' => "Products was successfully deleted.",
