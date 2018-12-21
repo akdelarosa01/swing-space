@@ -166,6 +166,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('general-settings/promos','Pages\GeneralSettingsController@promos');
 
     Route::get('sales-report', 'Pages\SalesReportController@index');
+    Route::get('sales-report/get-sales', 'Pages\SalesReportController@sales');
     Route::get('sales-report/yearly-comparison-report', 'Pages\SalesReportController@YearlyComparisonReport');
     Route::get('sales-report/sales-from-customers-report', 'Pages\SalesReportController@SalesFromCustomerReport');
     Route::get('sales-report/sales-over-discounts-report', 'Pages\SalesReportController@SalesOverDiscount');

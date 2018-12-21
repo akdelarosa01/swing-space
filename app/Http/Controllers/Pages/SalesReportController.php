@@ -33,6 +33,34 @@ class SalesReportController extends Controller
         }
     }
 
+    public function sales(Request $req)
+    {
+        $date_cond = '';
+        if ($req->datefrom == '') {
+            $date_cond = "";
+        } else {
+            $datefrom = $this->_global->convertDate($req->datefrom,'Y-m-d');
+            $dateto = $this->_global->convertDate($req->dateto,'Y-m-d');
+
+            $date_cond = " AND left(created_at,10) between '".$datefrom."' AND '".$dateto."'";
+        }
+
+        $sales = DB::select("select customer_code,
+                                    firstname,
+                                    lastname,
+                                    IF(customer_type = 'M','Member','Walk-In') as customer_type,
+                                    concat('₱',format(total_sale,2)) as total_sale,
+                                    date_format(created_at,'%b. %d, %Y') as date_purchase,
+                                    created_at
+                                    from sales where 1=1".$date_cond." 
+                                    order by created_at desc");
+
+        if (count((array)$sales) > 0) {
+            return response()->json($sales);
+        }
+        
+    }
+
     public function monthlySalesPerProductReport()
     {
         $data = [];
@@ -259,7 +287,7 @@ class SalesReportController extends Controller
 
     public function SalesOverDiscountExcel(Request $req)
     {
-         $date = date('Ymd');
+        $date = date('Ymd');
 
         $this->_userlog->log([
             'module' => 'Sales vs Discount',

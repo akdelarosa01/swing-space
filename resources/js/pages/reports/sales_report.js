@@ -1,5 +1,6 @@
 $( function() {
 	check_permission('SAL_RPT');
+	getSales();
 	SalesFromCustomerReport();
 	SalesOverDiscountsReport();
 	yearlyComparisonChartReport();
@@ -25,7 +26,45 @@ $( function() {
 			'&&date_to='+$('#discount_to').val();
 		window.location.href=ExportURL;
 	});
+
+	$('#btn_generate').on('click', function() {
+		getSales();
+	});
 });
+
+function getSales() {
+	$.ajax({
+		url: '../../sales-report/get-sales',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {
+			_token : token,
+			datefrom: $('#datefrom').val(),
+			dateto: $('#dateto').val()
+		},
+	}).done(function(data, textStatus, xhr) {
+		salesTable(data)
+	}).fail(function(xhr, textStatus, errorThrown) {
+		console.log("error");
+	});
+}
+
+function salesTable(arr) {
+    $('#tbl_sales').dataTable().fnClearTable();
+    $('#tbl_sales').dataTable().fnDestroy();
+    $('#tbl_sales').dataTable({
+        data: arr,
+        sorting: false,
+        columns: [
+            { data: 'customer_code' },
+            { data: 'firstname' },
+            { data: 'lastname' },
+            { data: 'customer_type' },
+            { data: 'total_sale' },
+            { data: 'date_purchase' },
+        ]
+    });
+}
 
 function monthlySalesPerProductReport() {
 	$.ajax({
