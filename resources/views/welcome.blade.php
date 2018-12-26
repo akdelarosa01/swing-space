@@ -86,10 +86,10 @@
                     
 
                 <div class="links">
-                    <a href="https://facebook.com">
+                    <a href="https://www.facebook.com/Swing.Space.Katipunan/">
                         <i class="fa fa-facebook-square fa-3x" style="color:#3b5998"></i>
                     </a>
-                    <a href="https://instagram.com">
+                    <a href="https://www.instagram.com/swingspacekatipunan?utm_source=ig_profile_share&igshid=194sdi4ry8vbv">
                         <i class="fa fa-instagram fa-3x" style="color:#231F20"></i>
                     </a>
                     <a href="https://twitter.com">
