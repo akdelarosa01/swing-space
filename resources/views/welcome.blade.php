@@ -92,9 +92,6 @@
                     <a href="https://www.instagram.com/swingspacekatipunan?utm_source=ig_profile_share&igshid=194sdi4ry8vbv">
                         <i class="fa fa-instagram fa-3x" style="color:#231F20"></i>
                     </a>
-                    <a href="https://twitter.com">
-                        <i class="fa fa-twitter fa-3x" style="color:#38A1F3"></i>
-                    </a>
                 </div>
             </div>
         </div>
