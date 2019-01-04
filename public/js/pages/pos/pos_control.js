@@ -738,20 +738,39 @@ function productButton(data) {
 	var cards = '';
 	$('#products').html(cards);
 	$.each(data, function(i, x) {
-		cards = '<div class="col-md-3 ml-1">'+
-					'<div class="card card-info">'+
-						'<div class="card-body product text-center" style="font-size:12px;height: 80px;"'+
-						'data-prod_id="'+x.id+'" '+
-						'data-prod_code="'+x.prod_code+'" '+
-						'data-prod_name="'+x.prod_name+'" '+
-						'data-variants="'+x.variants+'" '+
-						'data-price="'+(x.price).toFixed(2)+'">'+
-							'<span style="word-wrap: break-word;">'+x.prod_name+'</span><br>'+
-							'<span>'+(x.price).toFixed(2)+'</span>'+
+		if (x.quantity > 0) {
+			cards = '<div class="col-md-3 ml-1">'+
+						'<div class="card card-info">'+
+							'<div class="card-body product text-center" style="font-size:12px;height: 80px;"'+
+							'data-prod_id="'+x.id+'" '+
+							'data-prod_code="'+x.prod_code+'" '+
+							'data-prod_name="'+x.prod_name+'" '+
+							'data-variants="'+x.variants+'" '+
+							'data-price="'+(x.price).toFixed(2)+'">'+
+								'<span style="word-wrap: break-word;">'+x.prod_name+'</span><br>'+
+								'<span>'+(x.price).toFixed(2)+'</span>'+
+							'</div>'+
 						'</div>'+
-					'</div>'+
-				'</div>';
-		$('#products').append(cards);
+					'</div>';
+			$('#products').append(cards);
+		} else {
+			if (x.prod_type === 'Services' || x.prod_type === 'Space Rental') {
+				cards = '<div class="col-md-3 ml-1">'+
+							'<div class="card card-info">'+
+								'<div class="card-body product text-center" style="font-size:12px;height: 80px;"'+
+								'data-prod_id="'+x.id+'" '+
+								'data-prod_code="'+x.prod_code+'" '+
+								'data-prod_name="'+x.prod_name+'" '+
+								'data-variants="'+x.variants+'" '+
+								'data-price="'+(x.price).toFixed(2)+'">'+
+									'<span style="word-wrap: break-word;">'+x.prod_name+'</span><br>'+
+									'<span>'+(x.price).toFixed(2)+'</span>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+				$('#products').append(cards);
+			}
+		}
 	});
 }
 

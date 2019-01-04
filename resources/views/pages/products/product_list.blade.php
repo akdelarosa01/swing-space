@@ -23,7 +23,6 @@
                             <th scope="col" class="trn">Product Type</th>
                             <th scope="col" class="trn">Price</th>
                             <th scope="col" class="trn">Variants</th>
-                            <th scope="col" class="trn">Target Qty.</th>
                             <th scope="col" class="trn">Avail. Qty.</th>
                             <th scope="col" class="trn">Update Date</th>
                         </tr>

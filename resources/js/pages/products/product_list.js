@@ -54,7 +54,6 @@ function makeProductsDataTable(arr) {
             { data: 'prod_type' },
             { data: 'price' },
             { data: 'variants' },
-            { data: 'target_qty' },
             { data: 'quantity' },
             { data: 'updated_at' },
         ]

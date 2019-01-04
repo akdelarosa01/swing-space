@@ -532,6 +532,9 @@ class POSControlController extends Controller
                 'cost' => $req->order_price[$key]
             ]);
 
+            DB::table('available_products')->where('prod_id',$prod_id)
+                ->decrement('quantity',$req->order_quantity[$key]);
+
             $sub_total += $req->order_price[$key];
         }
 

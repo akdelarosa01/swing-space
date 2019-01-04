@@ -18,9 +18,9 @@
                                 <tr>
                                     <th scope="col" class="trn">Code</th>
                                     <th scope="col" class="trn">Product Name</th>
+                                    <th scope="col" class="trn">Product Type</th>
                                     <th scope="col" class="trn">Variants</th>
                                     <th scope="col" class="trn">Price</th>
-                                    <th scope="col" class="trn">Target Qty.</th>
                                     <th scope="col" class="trn">Avail. Qty.</th>
                                     <th scope="col"></th>
                                 </tr>
@@ -48,7 +48,6 @@
                                         <th width="20%" class="trn">Product Name</th>
                                         <th width="20%" class="trn">Variants</th>
                                         <th width="10%" class="trn">Price</th>
-                                        <th width="15%" class="trn">Target Qty.</th>
                                         <th width="15%" class="trn">Avail. Qty.</th>
                                         <th width="10%" class="trn"></th>
                                     </tr>

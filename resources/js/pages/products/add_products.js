@@ -228,13 +228,12 @@ function makeAvailablesDataTable(arr) {
     $('#tbl_availables').dataTable({
         data: arr,
         sorting: false,
-        searching: false,
         columns: [
             { data: 'prod_code', orderable: false },
             { data: 'prod_name', orderable: false },
+            { data: 'prod_type', orderable: false },
             { data: 'variants', orderable: false },
             { data: 'price', orderable: false },
-            { data: 'target_qty', orderable: false },
             { data: 'quantity', orderable: false },
             { data: function(x) {
 
@@ -244,7 +243,7 @@ function makeAvailablesDataTable(arr) {
                             'data-prod_type="'+x.prod_type+'"'+
                             'data-variants="'+x.variants+'"'+
                             'data-price="'+x.price+'"'+
-                            'data-target_qty="'+x.target_qty+'"'+
+                            'data-target_qty="0"'+
                             'data-quantity="'+x.quantity+'"'+
                         '>'+
                             '<i class="fa fa-plus"></i>'+
@@ -273,10 +272,8 @@ function makeSelectedDataTable(arr) {
             { data: 'variants', orderable: false },
             { data: 'price', orderable: false },
             { data: function(x) {
-                return '<input type="number" class="form-control form-control-sm qunatity" name="target_qty[]" value="'+x.target_qty+'" required>';
-            }, orderable: false },
-            { data: function(x) {
-                return '<input type="number" class="form-control form-control-sm qunatity" name="quantity[]" value="'+x.quantity+'" required>';
+                return '<input type="hidden" class="form-control form-control-sm qunatity" name="target_qty[]" value="0" required>'+
+                        '<input type="number" class="form-control form-control-sm qunatity" name="quantity[]" value="'+x.quantity+'" required>';
             }, orderable: false },
             { data: function(x) {
                 return  '<input type="hidden" name="prod_code[]" value="'+x.prod_code+'">'+
