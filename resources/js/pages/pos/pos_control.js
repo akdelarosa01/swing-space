@@ -87,7 +87,9 @@ $( function() {
         });
 	});
 
-	$('#current_customers').on('click', '.current_customer', function() {
+	$('#btn_view_pos').on('click', function() {
+		$('#menu_modal').modal('hide');
+
 		var info = '';
 		$('#control').html(info);
 
@@ -105,23 +107,23 @@ $( function() {
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
 							'<span style="word-wrap: break-word;">'+
-								$(this).attr('data-cust_code')+'<br>'+
-								$(this).attr('data-cust_firstname')+'<br>'+
-								$(this).attr('data-cust_lastname')+'<br>'+
-								(($(this).attr('data-customer_type') == 'W')? 'WALK-IN' : 'MEMBER')+
+								$('#data-cust_code').val()+'<br>'+
+								$('#data-cust_firstname').val()+'<br>'+
+								$('#data-cust_lastname').val()+'<br>'+
+								(($('#data-customer_type').val() == 'W')? 'WALK-IN' : 'MEMBER')+
 							'</span><br>'+
-							'<input type="hidden" id="current_cust_id" value="'+$(this).attr('data-cust_id')+'">'+
+							'<input type="hidden" id="current_cust_id" value="'+$('#data-cust_id').val()+'">'+
 							'<input type="hidden" id="discount_value" name="discount_value" value="0">'+
 							'<input type="hidden" id="discount_name" name="discount_name" value="Discount">'+
 							'<input type="hidden" id="reward_price" name="reward_price" value="0">'+
 							'<input type="hidden" id="reward_points" name="reward_points" value="0">'+
 							'<input type="hidden" id="reward_name" name="reward_name" value="Discount from Rewards">'+
 							'<input type="hidden" id="sub_total_value" name="sub_total_value" value="0">'+
-							'<input type="hidden" id="customer_type" name="customer_type" value="'+$(this).attr('data-customer_type')+'">'+
-							'<input type="hidden" id="cust_firstname" name="cust_firstname" value="'+$(this).attr('data-cust_firstname')+'">'+
-							'<input type="hidden" id="cust_lastname" name="cust_lastname" value="'+$(this).attr('data-cust_lastname')+'">'+
-							'<input type="hidden" id="customer_user_id" name="customer_user_id" value="'+$(this).attr('data-customer_user_id')+'">'+
-							'<input type="hidden" id="customer_code" name="customer_code" value="'+$(this).attr('data-cust_code')+'">'+
+							'<input type="hidden" id="customer_type" name="customer_type" value="'+$('#data-customer_type').val()+'">'+
+							'<input type="hidden" id="cust_firstname" name="cust_firstname" value="'+$('#data-cust_firstname').val()+'">'+
+							'<input type="hidden" id="cust_lastname" name="cust_lastname" value="'+$('#data-cust_lastname').val()+'">'+
+							'<input type="hidden" id="customer_user_id" name="customer_user_id" value="'+$('#data-customer_user_id').val()+'">'+
+							'<input type="hidden" id="customer_code" name="customer_code" value="'+$('#data-cust_code').val()+'">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -129,7 +131,7 @@ $( function() {
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
 							'<span style="word-wrap: break-word;" class="trn">Email Receipt</span> <br>'+
-							'<input type="checkbox" name="email_receipt" id="email_receipt" '+(($(this).attr('data-customer_type') == 'W')? '' : 'checked')+'>'+
+							'<input type="checkbox" name="email_receipt" id="email_receipt" '+(($('#data-customer_type').val() == 'W')? '' : 'checked')+'>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -137,19 +139,19 @@ $( function() {
 					'<div class="card">'+
 						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
 							'<span style="word-wrap: break-word;" class="trn">Available Points</span><br>'+
-							'<span style="font-size:18px">'+$(this).attr('data-points')+'</span>'+
+							'<span style="font-size:18px">'+$('#data-points').val()+'</span>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<button class="btn btn-lg btn-info btn-block btn-outline rewards" '+
-						'data-available_points="'+$(this).attr('data-points')+'" style="height: 120px;">'+
+						'data-available_points="'+$('#data-points').val()+'" style="height: 120px;">'+
 						'<span class="trn">Rewards</span>'+
 					'</button>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<button class="btn btn-lg btn-danger btn-block btn-outline discount" style="height: 120px;" '+
-						'data-cust_id ="'+$(this).attr('data-cust_id')+'">'+
+						'data-cust_id ="'+$('#data-cust_id').val()+'">'+
 						'<span class="trn">Discount</span>'+
 					'</button>'+
 				'</div>'+
@@ -176,13 +178,55 @@ $( function() {
 					'</div>'+
 				'</div>';
 		$('#control').html(info);
-		showCurrentBill($(this).attr('data-cust_id'),
+		showCurrentBill($('#data-cust_id').val(),
 						$('#discount_name').val(),
 						$('#discount_value').val(),
 						$('#reward_name').val(),
 						$('#reward_price').val());
 
 		getLanguage(dict);
+	});
+
+	$('#btn_cancel_customer').on('click', function() {
+		confirm('Cancel Customer','Do you want to cancel this customer?',$('#data-cust_id').val());
+		$('#menu_modal').modal('hide');
+	});
+
+	$('#btn_confirm').on('click', function() {
+        $.ajax({
+            url: '../../pos-control/cancel-customer',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: token,
+                id: $('#confirm_id').val()
+            },
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                $('#confirm_modal').modal('hide');
+                msg(data.msg,data.status);
+                showCustomer();
+            }
+            
+        }).fail(function(xhr, textStatus, errorThrown) {
+            console.log("error");
+        }).always(function() {
+            console.log("complete");
+        });
+    });
+
+	$('#current_customers').on('click', '.current_customer', function() {
+		$('#data-cust_code').val($(this).attr('data-cust_code'));
+		$('#data-cust_firstname').val($(this).attr('data-cust_firstname'));
+		$('#data-cust_lastname').val($(this).attr('data-cust_lastname'));
+		$('#data-customer_type').val($(this).attr('data-customer_type'));
+		$('#data-customer_user_id').val($(this).attr('data-customer_user_id'));
+		$('#data-points').val($(this).attr('data-points'));
+		$('#data-cust_id').val($(this).attr('data-cust_id'));
+
+		$('#detail_fullname').html('Customer:' + ' ' +$(this).attr('data-cust_firstname') + ' ' + $(this).attr('data-cust_lastname'));
+
+		$('#menu_modal').modal('show');
 	});
 
 	$('#control').on('click', '.rewards', function() {

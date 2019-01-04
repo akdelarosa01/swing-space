@@ -227,6 +227,27 @@ class POSControlController extends Controller
         return response()->json($data);
     }
 
+    public function cancel_currentCustomer(Request $req)
+    {
+        $data = [
+            'msg' => 'Cancelling failed.',
+            'status' => 'failed'
+        ];
+
+        $cust = CurrentCustomer::find($req->id);
+
+        if ($cust->delete()) {
+            CurrentCustomerBill::where('current_cust_id',$req->id)->delete();
+
+            $data = [
+                'msg' => 'Customer successfully cancelled.',
+                'status' => 'success'
+            ];
+        }
+
+        return response()->json($data);
+    }
+
     public function show_currentCustomer()
     {
         $cust = DB::table('current_customers as cc')

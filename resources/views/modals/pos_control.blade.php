@@ -162,3 +162,41 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="menu_modal" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <span id="detail_fullname"></span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="zmdi zmdi-close"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" name="data-cust_code" id="data-cust_code" /> 
+                    <input type="hidden" name="data-cust_firstname" id="data-cust_firstname" /> 
+                    <input type="hidden" name="data-cust_lastname" id="data-cust_lastname" /> 
+                    <input type="hidden" name="data-customer_type" id="data-customer_type" /> 
+                    <input type="hidden" name="data-customer_user_id" id="data-customer_user_id" /> 
+                    <input type="hidden" name="data-points" id="data-points" /> 
+                    <input type="hidden" name="data-cust_id" id="data-cust_id" />
+
+                    <div class="col-md-6">
+                        <button class="btn btn-lg btn-block btn-info" id="btn_view_pos">ORDER</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-lg btn-block btn-danger" id="btn_cancel_customer">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
+                    <span class="trn">Close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -55,9 +55,9 @@ class SalesReportController extends Controller
                                     from sales where 1=1".$date_cond." 
                                     order by created_at desc");
 
-        if (count((array)$sales) > 0) {
+        // if (count((array)$sales) > 0) {
             return response()->json($sales);
-        }
+        // }
         
     }
 

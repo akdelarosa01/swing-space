@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('pos-control/product-types', 'Pages\POSControlController@product_types');
     Route::get('pos-control/products', 'Pages\POSControlController@show_products');
     Route::post('pos-control/current-customer', 'Pages\POSControlController@save_currentCustomer');
+    Route::post('pos-control/cancel-customer', 'Pages\POSControlController@cancel_currentCustomer');
     Route::get('pos-control/check-in-member', 'Pages\POSControlController@check_in_member');
     Route::get('pos-control/show-customer', 'Pages\POSControlController@show_currentCustomer');
     Route::get('pos-control/show-discounts', 'Pages\POSControlController@show_discounts');
