@@ -30,6 +30,9 @@
                 <table class="table table-striped table-sm" id="tbl_items">
                     <thead>
                         <tr>
+                            <th width="5%">
+                                <input type="checkbox" class="check_all_items">
+                            </th>
                             <th scope="col" class="trn">Item Code</th>
                             <th scope="col" class="trn">Item Name</th>
                             <th scope="col" class="trn">Item Type</th>
@@ -43,8 +46,13 @@
             </div>
 
             <div class="row">
-                <div class="offset-md-10 col-md-2">
+                <div class="offset-md-8 col-md-2">
                     <button class="btn btn-sm btn-success btn-block trn btn-permission" id="btn_export">Export Files</button>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-sm btn-block btn-permission" id="btn_delete">
+                        <span class="trn">Delete</span>
+                    </button>
                 </div>
             </div>
 

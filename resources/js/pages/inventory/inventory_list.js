@@ -2,6 +2,7 @@ var items = [];
 
 $( function() {
     check_permission('INV_LST');
+    checkAllCheckboxesInTable('.check_all_items','.check_item');
     get_dropdown_options(2,'#item_type');
     get_dropdown_options(2,'#item_type_export');
 	inventoryTable(items);
@@ -29,6 +30,45 @@ $( function() {
             window.location.href = ExportFileURL;
         }
         
+    });
+
+    $('#btn_delete').on('click', function() {
+        var chkArray = [];
+        $(".check_item:checked").each(function() {
+            chkArray.push($(this).val());
+        });
+
+        if (chkArray.length > 0) {
+            confirm('Delete Item','Do you want to delete this item/s?',chkArray);
+        } else {
+            msg("Please select at least 1 item.",'failed');
+        }
+
+        $('.check_all_items').prop('checked',false);
+    });
+
+    $('#btn_confirm').on('click', function() {
+        $('#confirm_modal').modal('hide');
+        $('.loading').show();
+        $.ajax({
+            url: '../../inventory-list/delete',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: token,
+                id: $('#confirm_id').val()
+            },
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                msg(data.msg,data.status);
+                inventoryTable(data.items);
+            }
+            
+        }).fail(function(xhr, textStatus, errorThrown) {
+            msg('Inventories: '+errorThrown,textStatus);
+        }).always(function() {
+            $('.loading').hide();
+        });
     });
 });
 
@@ -59,6 +99,9 @@ function inventoryTable(arr) {
     $('#tbl_items').dataTable({
         data: arr,
         columns: [
+            { data: function(x) {
+                return '<input type="checkbox" class="check_item" value="'+x.id+'">';
+            }, searchable: false, orderable: false },
             { data: 'item_code' },
             { data: 'item_name' },
             { data: 'item_type' },

@@ -112,13 +112,16 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('inventory-list', 'Pages\InventoryController@index');
     Route::get('inventory-list/search-items', 'Pages\InventoryController@search_items');
+    Route::post('inventory-list/delete', 'Pages\InventoryController@destroy');
     Route::get('inventory-files', 'Pages\InventoryController@export_files');
 
     Route::get('summary-list', 'Pages\InventoryController@summary_list');
     Route::get('summary-list/search-items', 'Pages\InventoryController@search_summary_items');
 
     Route::get('receive-items', 'Pages\ReceiveItemController@index');
+    Route::get('receive-items/show', 'Pages\ReceiveItemController@show');
     Route::post('receive-items/save', 'Pages\ReceiveItemController@save');
+    Route::post('receive-items/delete', 'Pages\ReceiveItemController@destroy');
     Route::get('receive-items/search-item', 'Pages\ReceiveItemController@search_items');
     Route::post('receive-items/save-selected', 'Pages\ReceiveItemController@save_selected');
     Route::post('receive-items/upload-inventory', 'Pages\ReceiveItemController@upload_inventory');

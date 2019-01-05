@@ -3,6 +3,7 @@ let selected_items = [];
 
 $( function() {
     check_permission('RCV_ITM');
+    checkAllCheckboxesInTable('.check_all_items','.check_item');
     makeItemsDataTable(items);
     makeSelectedItemsDataTable(selected_items);
 
@@ -143,6 +144,54 @@ $( function() {
     $('#btn_download_format').on('click', function() {
         window.location.href = '../../receive-items/download-format';
     });
+
+    $('#btn_delete').on('click', function() {
+        var chkArray = [];
+        $(".check_all_items:checked").each(function() {
+            chkArray.push($(this).val());
+        });
+
+        if (chkArray.length > 0) {
+            confirm('Delete Item','Do you want to delete this item/s?',chkArray);
+        } else {
+            msg("Please select at least 1 item.",'failed');
+        }
+
+        $('.check_all_items').prop('checked',false);
+    });
+
+    $('#btn_confirm').on('click', function() {
+        $.ajax({
+            url: '../../receive-items/delete',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: token,
+                id: $('#confirm_id').val()
+            },
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                $('#confirm_modal').modal('hide');
+                msg(data.msg,data.status);
+                makeRecItemsDataTable(data.items);
+            }
+            
+        }).fail(function(xhr, textStatus, errorThrown) {
+            console.log("error");
+        }).always(function() {
+            console.log("complete");
+        });
+    });
+
+    $('#tbl_recitems_body').on('click', '.edit', function(event) {
+        $('#item_id').val($(this).attr('data-id'));
+        $('#item_code').val($(this).attr('data-item_code'));
+        $('#item_name').val($(this).attr('data-item_name'));
+        $('#item_type').val($(this).attr('data-item_type'));
+        $('#quantity').val($(this).attr('data-quantity'));
+        $('#uom').val($(this).attr('data-uom'));
+        $('#remarks').val($(this).attr('data-remarks'));
+    });
 })
 
 function clear() {
@@ -189,6 +238,62 @@ function makeItemsDataTable(arr) {
                         '</button>';
             }, searchable: false, orderable: false},
         ]
+    });
+}
+
+function getItems() {
+    $('.loading').show();
+    $.ajax({
+        url: '../../receive-items/show',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token
+        },
+    }).done(function(data, textStatus, xhr) {
+        makeRecItemsDataTable(data);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Items : '+errorThrown,textStatus);
+    }).always(function() {
+        $('.loading').hide();
+    }); 
+}
+
+function makeRecItemsDataTable(arr) {
+    $('#tbl_recitems').dataTable().fnClearTable();
+    $('#tbl_recitems').dataTable().fnDestroy();
+    $('#tbl_recitems').dataTable({
+        data: arr,
+        columns: [
+            { data: function(x) {
+                return '<input type="checkbox" class="check_item" value="'+x.id+'">';
+            }, searchable: false, orderable: false },
+            { data: 'item_code' },
+            { data: 'item_name' },
+            { data: 'item_type' },
+            { data: 'quantity' },
+            { data: 'uom' },
+            { data: 'remarks' },
+            { data: function(x) {
+
+                return '<button type="button" class="btn btn-sm btn-info edit" data-id="'+x.id+'"'+
+                            'data-item_code="'+x.item_code+'"'+
+                            'data-item_name="'+x.item_name+'"'+
+                            'data-item_type="'+x.item_type+'"'+
+                            'data-quantity="'+x.quantity+'"'+
+                            'data-uom="'+x.uom+'"'+
+                            'data-remarks="'+x.remarks+'"'+
+                        '>'+
+                            '<i class="fa fa-edit"></i>'+
+                        '</button>';
+            }, searchable: false, orderable: false }
+        ],
+        // createdRow: function (row, data, dataIndex) {
+        //     if (data.disabled > 0) {
+        //         $(row).css('background-color', '#ff6266');
+        //         $(row).css('color', '#fff');
+        //     }
+        // }
     });
 }
 

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\SuperAdmin\UserLogsController;
+use App\Inventory;
+use App\ItemInput;
 use Excel;
 use DB;
 use PDF;
@@ -35,8 +37,15 @@ class InventoryController extends Controller
 
     public function search_items(Request $req)
     {
-        $items = DB::table('inventories as inv')
-                    ->where('inv.item_type',$req->item_type)
+        $items = $this->items($req->item_type);
+        return response()->json($items);
+    }
+
+    public function items($item_type)
+    {
+        $items;
+        if ($item_type == '') {
+            $items = DB::table('inventories as inv')
                     ->where('inv.deleted',0)
                     ->select(
                         DB::raw("inv.id as id"),
@@ -49,7 +58,77 @@ class InventoryController extends Controller
                         DB::raw("inv.uom as uom")
                     )
                     ->get();
-        return response()->json($items);
+        } else {
+            $items = DB::table('inventories as inv')
+                    ->where('inv.item_type',$item_type)
+                    ->where('inv.deleted',0)
+                    ->select(
+                        DB::raw("inv.id as id"),
+                        DB::raw("inv.item_code as item_code"),
+                        DB::raw("(SELECT itm.item_name FROM item_inputs as itm
+                                    WHERE itm.item_code = inv.item_code LIMIT 1) as item_name"),
+                        DB::raw("inv.item_type as item_type"),
+                        DB::raw("inv.quantity as quantity"),
+                        DB::raw("inv.minimum_stock as minimum_stock"),
+                        DB::raw("inv.uom as uom")
+                    )
+                    ->get();
+        }
+        
+        return $items;
+    }
+
+    public function destroy(Request $req)
+    {
+        $data = [
+            'msg' => "Deleting failed",
+            'status' => "warning"
+        ];
+
+        if (is_array($req->id)) {
+            foreach ($req->id as $key => $id) {
+                $item = Inventory::find($id);
+
+                $this->_userlog->log([
+                    'module' => 'Inventory',
+                    'action' => 'Deleted Item Code '.$item->item_code,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                if ($item->delete()) {
+                    ItemInput::where('item_code',$item->item_code)->delete();
+                }
+
+                $data = [
+                    'msg' => "Item was successfully deleted.",
+                    'status' => "success",
+                    'items' => $this->items($item->item_type)
+                ];
+            }
+        } else {
+            $ids = explode(',', $req->id);
+
+            foreach ($ids as $key => $id) {
+                $item = Inventory::find($id);
+
+                $this->_userlog->log([
+                    'module' => 'Product Registration',
+                    'action' => 'Deleted Item Code '.$item->item_code,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                if ($item->delete()) {
+                    ItemInput::where('item_code',$item->item_code)->delete();
+                }
+
+                $data = [
+                    'msg' => "Items was successfully deleted.",
+                    'status' => "success",
+                    'items' => $this->items($item->item_type)
+                ];
+            }
+        }
+        return response()->json($data);
     }
 
     public function search_summary_items(Request $req)

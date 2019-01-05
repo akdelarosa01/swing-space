@@ -35,6 +35,12 @@ class ReceiveItemController extends Controller
         }
     }
 
+    public function show()
+    {
+        $items = ItemInput::all();
+        return response()->json($items);
+    }
+
     public function save(Request $req)
     {
         $data = [
@@ -43,54 +49,101 @@ class ReceiveItemController extends Controller
             'inventory' => ''
         ];
 
-        $this->validate($req,[
-            'item_name' => 'required|string|max:60',
-            'item_type' => 'required',
-            'quantity' => 'required',
-            'minimum_stock' => 'required',
-            'uom' => 'required',
-        ]);
-
-        $item = new ItemInput;
-
-        $item->item_code = $this->_global->TransactionNo('ITM_CODE');
-        $item->item_name = $req->item_name;
-        $item->item_type = $req->item_type;
-        $item->quantity = $req->quantity;
-        $item->uom = $req->uom;
-        $item->remarks = (!isset($req->remarks) || $req->remarks == null || $req->remarks == '')? 'N/A': $req->remarks;
-        $item->transaction_type = 'Input';
-        $item->create_user = Auth::user()->id;
-        $item->update_user = Auth::user()->id;
-        $item->date_received = date('Y-m-d');
-
-        if ($item->save()) {
-            $inv = new Inventory;
-
-            $inv->item_code = $item->item_code;
-            $inv->item_type = $req->item_type;
-            $inv->quantity = $req->quantity;
-            $inv->minimum_stock = $req->minimum_stock;
-            $inv->uom = $req->uom;
-            $inv->create_user = Auth::user()->id;
-            $inv->update_user = Auth::user()->id;
-
-            $inv->save();
-
-            $this->_userlog->log([
-                'module' => 'Receive Item',
-                'action' => 'Received Item '.$req->item_name.' as '.$req->item_type,
-                'user_id' => Auth::user()->id
+        if (isset($req->item_id)) {
+            $this->validate($req,[
+                'item_name' => 'required|string|max:60',
+                'item_type' => 'required',
+                'quantity' => 'required',
+                'minimum_stock' => 'required',
+                'uom' => 'required',
             ]);
 
-            $data = [
-                'msg' => 'Item is successfully saved.',
-                'status' => 'success',
-                'inventory' => ''
-            ];
-        }
+            $item = ItemInput::find($req->item_id);
 
-        return response()->json($data);
+            $item->item_name = $req->item_name;
+            $item->item_type = $req->item_type;
+            $item->quantity = $req->quantity;
+            $item->uom = $req->uom;
+            $item->remarks = (!isset($req->remarks) || $req->remarks == null || $req->remarks == '')? 'N/A': $req->remarks;
+            $item->transaction_type = 'Input';
+            $item->update_user = Auth::user()->id;
+            $item->date_received = date('Y-m-d');
+
+            if ($item->update()) {
+                $inv = DB::table('inventories')->where('item_code',$item->item_code)
+                        ->update([
+                            'item_type' => $item->item_type,
+                            'quantity' => $item->quantity,
+                            'minimum_stock' => $item->minimum_stock,
+                            'uom' => $item->uom,
+                            'update_user' => Auth::user()->id,
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ]);
+
+                $this->_userlog->log([
+                    'module' => 'Receive Item',
+                    'action' => 'Updated Received Item '.$req->item_name.' as '.$req->item_type,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                $data = [
+                    'msg' => 'Item is successfully saved.',
+                    'status' => 'success',
+                    'inventory' => ''
+                ];
+            }
+
+            return response()->json($data);
+        } else {
+            $this->validate($req,[
+                'item_name' => 'required|string|max:60',
+                'item_type' => 'required',
+                'quantity' => 'required',
+                'minimum_stock' => 'required',
+                'uom' => 'required',
+            ]);
+
+            $item = new ItemInput;
+
+            $item->item_code = $this->_global->TransactionNo('ITM_CODE');
+            $item->item_name = $req->item_name;
+            $item->item_type = $req->item_type;
+            $item->quantity = $req->quantity;
+            $item->uom = $req->uom;
+            $item->remarks = (!isset($req->remarks) || $req->remarks == null || $req->remarks == '')? 'N/A': $req->remarks;
+            $item->transaction_type = 'Input';
+            $item->create_user = Auth::user()->id;
+            $item->update_user = Auth::user()->id;
+            $item->date_received = date('Y-m-d');
+
+            if ($item->save()) {
+                $inv = new Inventory;
+
+                $inv->item_code = $item->item_code;
+                $inv->item_type = $req->item_type;
+                $inv->quantity = $req->quantity;
+                $inv->minimum_stock = $req->minimum_stock;
+                $inv->uom = $req->uom;
+                $inv->create_user = Auth::user()->id;
+                $inv->update_user = Auth::user()->id;
+
+                $inv->save();
+
+                $this->_userlog->log([
+                    'module' => 'Receive Item',
+                    'action' => 'Received Item '.$req->item_name.' as '.$req->item_type,
+                    'user_id' => Auth::user()->id
+                ]);
+
+                $data = [
+                    'msg' => 'Item is successfully saved.',
+                    'status' => 'success',
+                    'inventory' => ''
+                ];
+            }
+
+            return response()->json($data);
+        }
     }
 
     public function save_selected(Request $req)
@@ -172,7 +225,7 @@ class ReceiveItemController extends Controller
         $data = [
             'msg' => 'Deleting failed',
             'status' => 'failed',
-            'inventory' => ''
+            'items' => ''
         ];
 
         if (is_array($req->id)) {
@@ -184,7 +237,7 @@ class ReceiveItemController extends Controller
                     $data = [
                         'msg' => 'Items are successfully deleted.',
                         'status' => 'success',
-                        'inventory' => ''
+                        'items' => ''
                     ];
                 }
             }
@@ -210,7 +263,7 @@ class ReceiveItemController extends Controller
                 $data = [
                     'msg' => 'Items are successfully deleted.',
                     'status' => 'success',
-                    'inventory' => ''
+                    'items' => ''
                 ];
             }
         }
