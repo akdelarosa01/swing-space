@@ -265,7 +265,7 @@ class SalesReportController extends Controller
                                                 date_format(b.created_at,'%b %d, %Y') as dates
                                         FROM customer_product_bills as b
                                         inner join users as u
-                                        on u.id = b.customer_id
+                                        on u.id = b.customer_user_id
                                         where date_format(b.created_at,'%b %d, %Y') = '".$sale->dates."'
                                         group by concat(u.firstname,' ',u.lastname),
                                                 date_format(b.created_at,'%b %d, %Y')
