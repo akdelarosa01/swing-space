@@ -247,19 +247,19 @@ function inventoryTable(arr) {
             { data: 'item_code' },
             { data: 'item_name' },
             { data: 'item_type' },
-            { data: 'quantity' },
-            { data: 'minimum_stock' },
-            { data: 'uom' },
             { data: function(x) {
-                return '<input type="number" class="form-control form-control-sm" name="new_qty[]" maxlength="3" min="1" required>'+
+                return '<input type="number" class="form-control form-control-sm" name="quantity[]" maxlength="3" min="0" value="'+x.quantity+'">';
+            }, orderable: false, searchable: false },
+            { data: function(x) {
+                return '<input type="number" class="form-control form-control-sm" name="minimum_stock[]" maxlength="3" min="0" value="'+x.minimum_stock+'">'+
                         '<input type="hidden" name="id[]" value="'+x.id+'">'+
                         '<input type="hidden" name="item_code[]" value="'+x.item_code+'">'+
                         '<input type="hidden" name="item_name[]" value="'+x.item_name+'">'+
                         '<input type="hidden" name="item_type[]" value="'+x.item_type+'">'+
-                        '<input type="hidden" name="quantity[]" value="'+x.quantity+'">'+
-                        '<input type="hidden" name="minimum_stock[]" value="'+x.minimum_stock+'">'+
+                        '<input type="hidden" name="old_qty[]" value="'+x.quantity+'">'+
                         '<input type="hidden" name="uom[]" value="'+x.uom+'">';
-            }}
+            }, orderable: false, searchable: false },
+            { data: 'uom' }
         ],
         createdRow: function (row, data, dataIndex) {
             if (data.quantity <= data.minimum_stock) {

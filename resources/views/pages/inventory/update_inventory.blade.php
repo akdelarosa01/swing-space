@@ -27,12 +27,11 @@
                         <thead>
                             <tr>
                                 <th width="15%" class="trn">Item Code</th>
-                                <th width="25%" class="trn">Item Name</th>
+                                <th width="30%" class="trn">Item Name</th>
                                 <th width="20%" class="trn">Item Type</th>
                                 <th width="10%" class="trn">Quantity</th>
-                                <th width="10%" class="trn">Minimum Stock</th>
+                                <th width="15%" class="trn">Minimum Stock</th>
                                 <th width="10%" class="trn">UoM</th>
-                                <th width="10%" class="trn">New Qty</th>
                             </tr>
                         </thead>
                         <tbody id="tbl_items_body"></tbody>
