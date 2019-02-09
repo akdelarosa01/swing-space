@@ -63,7 +63,8 @@ class UpdateInventoryController extends Controller
 
         if (is_array($req->id)) {
             foreach ($req->id as $key => $id) {
-                if ($req->new_qty[$key] == 0 || $req->new_qty[$key] == '0') {
+
+                if ($req->quantity[$key] == '' || $req->minimum_stock[$key] == '') {
                     $data = [
                         'msg' => 'Please input a valid value.',
                         'status' => 'failed',
@@ -71,7 +72,7 @@ class UpdateInventoryController extends Controller
                     ];
                 }
 
-                if ($req->new_qty[$key] == '') {
+                if (!is_numeric($req->quantity[$key]) || !is_numeric($req->minimum_stock[$key])) {
                     $data = [
                         'msg' => 'Please input a valid value.',
                         'status' => 'failed',
@@ -79,21 +80,14 @@ class UpdateInventoryController extends Controller
                     ];
                 }
 
-                if (!is_numeric($req->new_qty[$key])) {
-                    $data = [
-                        'msg' => 'Please input a valid value.',
-                        'status' => 'failed',
-                        'item_type' => $req->item_type[$key]
-                    ];
-                }
-
-                if (isset($req->new_qty[$key])) {
-                    if ($req->quantity[$key] < $req->new_qty[$key]) {
+                if (isset($req->quantity[$key])) {
+                    if ($req->old_qty[$key] < $req->quantity[$key]) {
                         $inv = Inventory::find($id);
-                        $inv->quantity = $req->new_qty[$key];
+                        $inv->quantity = $req->quantity[$key];
+                        $inv->minimum_stock = $req->minimum_stock[$key];
 
                         if ($inv->update()) {
-                            $new_qty = $req->new_qty[$key] - $req->quantity[$key]; 
+                            $new_qty = $req->quantity[$key] - $req->old_qty[$key]; 
                             $item = ItemInput::create([
                                         'item_code' => $req->item_code[$key],
                                         'item_name' => $req->item_name[$key],
@@ -121,16 +115,16 @@ class UpdateInventoryController extends Controller
                                 ];
                             } 
                         }
-                    } 
-
-                    if ($req->quantity[$key] > $req->new_qty[$key]) {
+                    } else if ($req->old_qty[$key] > $req->quantity[$key]) {
                         $inv = Inventory::find($id);
-                        $inv->quantity = $req->new_qty[$key];
+                        $inv->quantity = $req->quantity[$key];
+                        $inv->minimum_stock = $req->minimum_stock[$key];
 
                         if ($inv->update()) {
-                            $new_qty =  $req->quantity[$key] - $req->new_qty[$key]; 
+                            $new_qty =  $req->quantity[$key] - $req->old_qty[$key]; 
                             $item = ItemOutput::create([
                                 'item_code' => $req->item_code[$key],
+                                'item_name' => $req->item_name[$key],
                                 'item_type' => $req->item_type[$key],
                                 'quantity' => $new_qty,
                                 'uom' => $req->uom[$key],
@@ -153,6 +147,24 @@ class UpdateInventoryController extends Controller
                                     'item_type' => $req->item_type[$key]
                                 ];
                             } 
+                        }
+                    } else {
+                        $inv = Inventory::find($id);
+                        $inv->quantity = $req->quantity[$key];
+                        $inv->minimum_stock = $req->minimum_stock[$key];
+
+                        if ($inv->update()) {
+                            $this->_userlog->log([
+                                'module' => 'Update Inventory',
+                                'action' => 'Adjusted the minimum stock of '.$req->item_name[$key],
+                                'user_id' => Auth::user()->id
+                            ]);
+
+                            $data = [
+                                'msg' => 'Successfully updated.',
+                                'status' => 'success',
+                                'item_type' => $req->item_type[$key]
+                            ];
                         }
                     }
                 } else {
