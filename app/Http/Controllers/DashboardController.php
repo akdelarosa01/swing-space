@@ -189,6 +189,8 @@ class DashboardController extends Controller
 
     public function customerBill()
     {
+        $cust = DB::table('customers')->select('customer_code')->where('user_id',Auth::user()->id)->first();
+
         $bills = DB::select("SELECT b.prod_code as prod_code,
                                 b.prod_name as prod_name,
                                 b.quantity as quantity,
@@ -196,7 +198,9 @@ class DashboardController extends Controller
                             from current_customers as c
                             inner join current_customer_bills as b
                             on b.current_cust_id = c.id
-                            where b.created_at like '".date('Y-m-d')."%'");
+                            where b.created_at like '".date('Y-m-d')."%'
+                            and c.cust_code = '".$cust->customer_code."'");
+        
         return response()->json($bills);
     }
 
