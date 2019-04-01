@@ -128,6 +128,13 @@
                             <hr class="dashed">
 
                             <div class="form-group row">
+                                <label class="control-label text-right col-md-3 trn">Points</label>
+                                <div class="col-md-8">
+                                    <input type="number" class="form-control form-control-sm clear validate" name="points" id="points" step="any" min="0" value="0.00">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label class="control-label text-right col-md-3 trn">Referrer</label>
                                 <div class="col-md-8">
                                     <select class="form-control form-control-sm clear select-validate" name="referrer" id="referrer">

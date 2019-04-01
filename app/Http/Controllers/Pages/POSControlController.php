@@ -313,7 +313,7 @@ class POSControlController extends Controller
         ];
 
 
-        event(new POS($data));
+        //event(new POS($data));
 
         return response()->json($currentBill);
     }

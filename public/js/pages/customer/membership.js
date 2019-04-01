@@ -186,6 +186,10 @@ var dict = {
         ch: "取消",
         en: "Cancel"
     },
+    "Points": {
+        ch: "贷款",
+        en: "Points"
+    }
 
 };
 
@@ -234,6 +238,7 @@ function assign_data_to_moodal(cust) {
 	$('#customer_code_v').html(cust.customer_code);
 	$('#membership_type_v').html(cust.membership_type);
 	$('#date_registered_v').html(cust.date_registered);
+	$('#points_v').html(cust.points);
 	$('#name_v').html(cust.firstname+' '+cust.lastname);
 	$('#email_v').html(cust.email);
 	$('#gender_v').html(cust.gender);
@@ -273,6 +278,7 @@ function display_customer(id) {
 			$('#company').val(data.company);
 			$('#school').val(data.school);
 			$('#referrer').val(data.referrer_id);
+			$('#points').val(data.points);
 			$('#date_of_birth').val(data.date_of_birth);
 			$('#membership_type').val(data.membership_type);
 

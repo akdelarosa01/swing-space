@@ -325,7 +325,6 @@ function ModulesDataTable(arr) {
         sorting: false,
         searching: false,
         paging: false,
-        deferRender: true,
         columns: [
             {data: 'module_name', searchable: false, orderable: false},
 

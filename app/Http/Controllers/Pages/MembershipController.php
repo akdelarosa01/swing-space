@@ -81,6 +81,7 @@ class MembershipController extends Controller
                     'company' => $req->company,
                     'school' => $req->school,
                     'referrer' => $req->referrer,
+                    'points' => $req->points,
                     'membership_type' => (!isset($req->referrer) || $req->referrer == '' || $req->referrer == 0)? 'A' : 'B',
                     'update_user' => Auth::user()->id,
                     'updated_at' => date('Y-m-d h:i:s')
@@ -155,6 +156,7 @@ class MembershipController extends Controller
                         'company' => ($req->company == '' || $req->company == null)? 'N/A' : $req->company,
                         'school' => ($req->school == '' || $req->school == null)? 'N/A' : $req->school,
                         'referrer' => $req->referrer,
+                        'points' => $req->points,
                         'membership_type' => (!isset($req->referrer) || $req->referrer == '' || $req->referrer == 0)? 'A' : 'B',
                         'date_registered' => date('Y-m-d'),
                         'create_user' => Auth::user()->id,
@@ -208,6 +210,7 @@ class MembershipController extends Controller
                             DB::raw('c.school as school'),
                             DB::raw('c.date_of_birth as date_of_birth'),
                             DB::raw('c.referrer as referrer_id'),
+                            DB::raw('c.points as points'),
                             DB::raw('c.membership_type as membership_type'),
                             DB::raw('c.date_registered as date_registered')
                         )
@@ -247,6 +250,7 @@ class MembershipController extends Controller
                             DB::raw('c.school as school'),
                             DB::raw('c.date_of_birth as date_of_birth'),
                             DB::raw('c.referrer as referrer_id'),
+                            DB::raw('c.points as points'),
                             DB::raw('c.membership_type as membership_type'),
                             DB::raw('c.date_registered as date_registered')
                         )

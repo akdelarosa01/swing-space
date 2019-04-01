@@ -186,6 +186,10 @@ var dict = {
         ch: "取消",
         en: "Cancel"
     },
+    "Points": {
+        ch: "贷款",
+        en: "Points"
+    }
 
 };
 

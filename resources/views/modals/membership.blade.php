@@ -12,7 +12,7 @@
 				<table class="table table-sm table-bordered">
 					<tbody>
 						<tr>
-							<td width="30%" rowspan="3">Membership</td>
+							<td width="30%" rowspan="4">Membership</td>
 							<td width="70%" id="customer_code_v"></td>
 						</tr>
 						<tr>
@@ -20,6 +20,9 @@
 						</tr>
 						<tr>
 							<td width="70%" id="date_registered_v"></td>
+						</tr>
+						<tr>
+							<td width="70%" id="points_v"></td>
 						</tr>
 						<tr>
 							<td width="30%">Name</td>
