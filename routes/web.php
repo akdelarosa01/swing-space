@@ -56,6 +56,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
 
     Route::get('/user-logs','SuperAdmin\UserLogsController@index');
     Route::get('/getlogs', 'SuperAdmin\UserLogsController@getLogs');
+
+    Route::get('wrong-sales-deletion','SuperAdmin\WrongSalesDeletionController@index');
+    Route::get('wrong-sales-deletion/get-sold-products','SuperAdmin\WrongSalesDeletionController@getSoldProducts');
+    Route::post('wrong-sales-deletion/delete-sold-products','SuperAdmin\WrongSalesDeletionController@deleteSoldProducts');
+
+    Route::get('wrong-sales-deletion/get-sales','SuperAdmin\WrongSalesDeletionController@getSales');
+    Route::post('wrong-sales-deletion/delete-sales','SuperAdmin\WrongSalesDeletionController@deleteSales');
 });
 
 Route::group(['middleware' => ['auth','no.back']], function() {

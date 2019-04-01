@@ -308,6 +308,11 @@
                                     <span>Transaction Codes</span>
                                 </a>
                             </li>
+                            <li class="{{ Request::is('admin/wrong-sales-deletion') ? ' active' : null }}">
+                                <a href="{{ url('/admin/wrong-sales-deletion') }}">
+                                    <span>Wrong Sales Deletion</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endif

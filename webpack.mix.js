@@ -29,6 +29,7 @@ mix.js('resources/js/app.js', 'public/js')
 		'resources/plugins/datatables.net-bs4/js/dataTables.bootstrap4.js',
 		'resources/plugins/translate/jquery.translate.js',
 		'resources/plugins/select2/select2.min.js',
+		'resources/plugins/bootbox/bootbox.all.min.js',
 		'resources/js/scripts/app.js',
 		'resources/js/global.js',
 		'resources/plugins/revolution-slider/js/jquery.themepunch.plugins.min.js',
@@ -38,6 +39,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/pages/super_admin/user_logs.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/module.js', 'public/js/pages/super_admin/')
     .js('resources/js/pages/super_admin/transaction_codes.js', 'public/js/pages/super_admin/')
+    .js('resources/js/pages/super_admin/wrong_sales_deletion.js', 'public/js/pages/super_admin/')
 
     .scripts([
     	'resources/js/page_translation/dashboard/employee.js',
