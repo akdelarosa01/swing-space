@@ -63,6 +63,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','no.back','admin']], 
 
     Route::get('wrong-sales-deletion/get-sales','SuperAdmin\WrongSalesDeletionController@getSales');
     Route::post('wrong-sales-deletion/delete-sales','SuperAdmin\WrongSalesDeletionController@deleteSales');
+
+    Route::get('wrong-sales-deletion/open-cmd','SuperAdmin\WrongSalesDeletionController@execInBackground');
 });
 
 Route::group(['middleware' => ['auth','no.back']], function() {
@@ -77,6 +79,8 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('dashboard/customer-bill', 'DashboardController@customerBill');
     Route::get('dashboard/customer-statistic', 'DashboardController@CustomerStatistic');
     Route::get('dashboard/referred-customers', 'DashboardController@referredCustomers');
+
+    Route::get('dashboard/month-sales-report', 'DashboardController@ReportForThisMonth');
 
     Route::get('pos-control', 'Pages\POSControlController@index');
     Route::get('pos-control/product-types', 'Pages\POSControlController@product_types');

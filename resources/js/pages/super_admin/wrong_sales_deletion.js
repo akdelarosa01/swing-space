@@ -4,6 +4,21 @@ $(function () {
     checkAllCheckboxesInTable('.check_all_products','.check_product');
     checkAllCheckboxesInTable('.check_all_sales','.check_sale');
 
+    $('#btn_open_cmd').on('click', function() {
+        $('.loading').show();
+        $.ajax({
+            url: '/admin/wrong-sales-deletion/open-cmd',
+            type: 'GET',
+            dataType: 'JSON'
+        }).done(function(data, textStatus, xhr) {
+            msg(data.msg,data.status);
+        }).fail(function(xhr, textStatus, errorThrown) {
+            msg(errorThrown,'error');
+        }).always(function() {
+            $('.loading').hide();
+        });
+    });
+
     $('#btn_delete_products').on('click', function() {
         var ids = [];
         var msgs = 'Do you want to delete this Sold Product?';

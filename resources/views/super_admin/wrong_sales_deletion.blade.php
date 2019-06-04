@@ -4,6 +4,7 @@
     <div class="card">
         <div class="card-header">
             <span class="trn">Wrong Sales Deletion</span>
+            {{-- <button class="btn btn-sm btn-danger pull-right" id="btn_open_cmd"> Open CMD</button> --}}
         </div>
         <div class="card-body">
             <div class="loading"></div>

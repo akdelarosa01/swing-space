@@ -203,10 +203,14 @@ $( function() {
 	OwnerStatistics();
 	SalesFromRegisteredCustomer();
 	soldProducts();
+
+	$('#btn_month_report').on('click', function() {
+		window.location.href = '../../dashboard/month-sales-report?_token='+token;
+	});
 });
 
-function getSales() {
-	$.ajax({
+async function getSales() {
+	await $.ajax({
 		url: '../../dashboard/get-sales',
 		type: 'GET',
 		dataType: 'JSON',
@@ -214,7 +218,7 @@ function getSales() {
 			_token: token
 		},
 	}).done(function(data, textStatus, xhr) {
-		console.log(data.labels);
+		//console.log(data.labels);
 		if ($('#ct-LineChart1').length > 0) {
 			new Chartist.Line('#ct-LineChart1 .ct-chart', {
 				labels: data.labels,
@@ -245,8 +249,8 @@ function getSales() {
 	
 }
 
-function OwnerStatistics() {
-	$.ajax({
+async function OwnerStatistics() {
+	await $.ajax({
 		url: '../../dashboard/owner-total-statistic',
 		type: 'GET',
 		dataType: 'JSON',
@@ -268,8 +272,8 @@ function OwnerStatistics() {
 	});
 }
 
-function SalesFromRegisteredCustomer() {
-	$.ajax({
+async function SalesFromRegisteredCustomer() {
+	await $.ajax({
 		url: '../../dashboard/sales-registered',
 		type: 'GET',
 		dataType: 'JSON',
@@ -305,8 +309,8 @@ function SalesFromRegisteredCustomerTable(arr) {
     });
 }
 
-function soldProducts() {
-	$.ajax({
+async function soldProducts() {
+	await $.ajax({
 		url: '../../dashboard/sold-products',
 		type: 'GET',
 		dataType: 'JSON',

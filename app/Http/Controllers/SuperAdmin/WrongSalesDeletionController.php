@@ -128,4 +128,36 @@ class WrongSalesDeletionController extends Controller
 
         return response()->json($data);
     }
+
+    public function execInBackground()
+    {
+        $data = [
+            'msg' => 'Failed.',
+            'status' => 'failed'
+        ];
+
+        try {
+            $cmd = 'start cmd.exe @cmd /k "ping google.com"';
+
+            if (substr(php_uname(), 0, 7) == "Windows"){
+                pclose(popen("start /B ". $cmd, "r"));
+
+                $data = [
+                    'msg' => 'Success.',
+                    'status' => 'success'
+                ];
+            }
+            else {
+                exec($cmd . " > /dev/null &");
+            }
+        } catch (Exception $e) {
+            $data = [
+                'msg' => $e,
+                'status' => 'error'
+            ];
+        }
+
+
+        return response()->json($data);
+    }
 }

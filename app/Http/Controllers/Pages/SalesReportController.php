@@ -208,7 +208,7 @@ class SalesReportController extends Controller
 
         $this->_userlog->log([
             'module' => 'Sales per Customer',
-            'action' => 'Donwloaded an Sales per Customer file dated '.date('Y-m-d'),
+            'action' => 'Donwloaded a Sales per Customer file dated '.date('Y-m-d'),
             'user_id' => Auth::user()->id
         ]);
 

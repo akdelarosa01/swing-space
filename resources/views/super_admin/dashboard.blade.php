@@ -51,7 +51,13 @@
 
         <div class="col-md-6">
             <div class="card">
-                <h5 class="card-header trn">Monthly Sales per Registered Customers</h5>
+                <h5 class="card-header">
+                    <span class="trn">Monthly Sales per Customers</span>
+                    <button type="button" class="btn btn-sm btn-success pull-right" id="btn_month_report">
+                        <span class="trn">Export</span>
+                    </button>
+                </h5>
+
                 <div class="card-body">
                     <table class="table table-sm table-striped" width="100%" id="tbl_registered">
                         <thead>
