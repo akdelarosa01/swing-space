@@ -60,6 +60,7 @@ $( function() {
 
     $('#tbl_users_body').on('click', '.edit', function() {
         $('#id').val($(this).attr('data-id'));
+        $('#id_number').val($(this).attr('data-id_number'));
         $('#user_type').val($(this).attr('data-user_type'));
         $('#firstname').val($(this).attr('data-firstname'));
         $('#lastname').val($(this).attr('data-lastname'));
@@ -140,6 +141,7 @@ function makeUserDataTable(arr) {
         	{ data: function(x) {
             	return '<input type="checkbox" class="check_user" value="'+x.id+'">';
             }, searchable: false, orderable: false },
+            { data: 'id_number' },
         	{ data: 'user_type' },
             { data: 'firstname' },
             { data: 'lastname' },
@@ -156,6 +158,7 @@ function makeUserDataTable(arr) {
 
             	return '<div class="btn-group">'+
             				'<button class="btn btn-sm btn-info edit" data-id="'+x.id+'"'+
+                                'data-id_number="'+x.id_number+'"'+
                                 'data-user_type="'+x.user_type+'"'+
                                 'data-firstname="'+x.firstname+'"'+
                                 'data-lastname="'+x.lastname+'"'+

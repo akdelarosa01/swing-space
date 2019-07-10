@@ -232,6 +232,7 @@ $( function() {
 
 function clear() {
 	$('.clear').val('');
+	$('#points').val(0.00);
 }
 
 function assign_data_to_moodal(cust) {

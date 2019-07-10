@@ -69,11 +69,11 @@ class UserMasterController extends Controller
             if ($user->update()) {
                 switch ($req->user_type) {
                     case 'Customer':
-                        $this->toCustomer($user->id,$req->date_of_birth);
+                        $this->toCustomer($user->id,$req->date_of_birth,$req->id_number);
                         break;
 
                     case 'Employee':
-                        $this->toEmployee($user->id,$req->date_of_birth);
+                        $this->toEmployee($user->id,$req->date_of_birth,$req->id_number);
                         break;
                 }
 
@@ -130,7 +130,7 @@ class UserMasterController extends Controller
         return response()->json($data);
     }
 
-    public function toCustomer($id,$bdate)
+    public function toCustomer($id,$bdate,$id_number)
     {
         $emp = Employee::where('user_id',$id)->count();
 
@@ -144,6 +144,7 @@ class UserMasterController extends Controller
             Customer::where('user_id',$id)
                     ->update([
                         'date_of_birth' => $bdate,
+                        'customer_code' => $id_number,
                         'update_user' => Auth::user()->id
                     ]);
         } else {
@@ -159,7 +160,7 @@ class UserMasterController extends Controller
         }
     }
 
-    public function toEmployee($id,$bdate)
+    public function toEmployee($id,$bdate,$id_number)
     {
         $cus = Customer::where('user_id',$id)->count();
 
@@ -173,6 +174,7 @@ class UserMasterController extends Controller
             Employee::where('user_id',$id)
                     ->update([
                         'date_of_birth' => $bdate,
+                        'employee_id' => $id_number,
                         'update_user' => Auth::user()->id
                     ]);
         } else {
@@ -212,7 +214,22 @@ class UserMasterController extends Controller
                                                 FROM customers as c
                                                 where c.user_id = u.id limit 1)
                                         else ''
-                                    END  as date_of_birth
+                                    END  as date_of_birth,
+                                    CASE
+                                        when (SELECT e.employee_id
+                                                FROM employees as e
+                                                where e.user_id = u.id limit 1) is not null
+                                        then (SELECT e.employee_id
+                                                FROM employees as e
+                                                where e.user_id = u.id limit 1)
+                                        when (SELECT c.customer_code
+                                                FROM customers as c
+                                                where c.user_id = u.id limit 1) is not null
+                                        then (SELECT c.customer_code
+                                                FROM customers as c
+                                                where c.user_id = u.id limit 1)
+                                        else ''
+                                    END  as id_number
                             from users as u
                             order by u.id desc");
         return response()->json($user);
@@ -242,7 +259,22 @@ class UserMasterController extends Controller
                                                 FROM customers as c
                                                 where c.user_id = u.id limit 1)
                                         else ''
-                                    END  as date_of_birth
+                                    END  as date_of_birth,
+                                    CASE
+                                        when (SELECT e.employee_id
+                                                FROM employees as e
+                                                where e.user_id = u.id limit 1) is not null
+                                        then (SELECT e.employee_id
+                                                FROM employees as e
+                                                where e.user_id = u.id limit 1)
+                                        when (SELECT c.customer_code
+                                                FROM customers as c
+                                                where c.user_id = u.id limit 1) is not null
+                                        then (SELECT c.customer_code
+                                                FROM customers as c
+                                                where c.user_id = u.id limit 1)
+                                        else ''
+                                    END  as id_number
                             from users as u
                             order by u.id desc");
         return $user;

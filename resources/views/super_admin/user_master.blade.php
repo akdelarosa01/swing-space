@@ -12,6 +12,14 @@
                         <input type="hidden" id="id" name="id" class="clear">
 
                         <div class="form-group row">
+                            <label for="id_number" class="col-sm-3 col-form-label">ID Number</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="id_number" name="id_number" class="form-control form-control-sm clear validate">
+                                <div id="id_number_feedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="firstname" class="col-sm-3 col-form-label">First Name</label>
                             <div class="col-sm-9">
                                 <input type="text" id="firstname" name="firstname" class="form-control form-control-sm clear validate">
@@ -93,10 +101,11 @@
                                 <th width="5%">
                                     <input type="checkbox" class="check_all_users">
                                 </th>
-                                <th width="15%">User type</th>
+                                <th width="10%">ID Number</th>
+                                <th width="10%">User type</th>
                                 <th width="15%">First Name</th>
                                 <th width="20%">Last Name</th>
-                                <th width="15%">Email</th>
+                                <th width="10%">Email</th>
                                 <th width="15%">Password</th>
                                 <th width="15%"></th>
                             </thead>

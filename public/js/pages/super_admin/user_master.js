@@ -138,6 +138,7 @@ $(function () {
 
     $('#tbl_users_body').on('click', '.edit', function () {
         $('#id').val($(this).attr('data-id'));
+        $('#id_number').val($(this).attr('data-id_number'));
         $('#user_type').val($(this).attr('data-user_type'));
         $('#firstname').val($(this).attr('data-firstname'));
         $('#lastname').val($(this).attr('data-lastname'));
@@ -214,14 +215,14 @@ function makeUserDataTable(arr) {
         data: arr,
         columns: [{ data: function data(x) {
                 return '<input type="checkbox" class="check_user" value="' + x.id + '">';
-            }, searchable: false, orderable: false }, { data: 'user_type' }, { data: 'firstname' }, { data: 'lastname' }, { data: 'email' }, { data: 'actual_password' }, { data: function data(x) {
+            }, searchable: false, orderable: false }, { data: 'id_number' }, { data: 'user_type' }, { data: 'firstname' }, { data: 'lastname' }, { data: 'email' }, { data: 'actual_password' }, { data: function data(x) {
                 var page_button = '';
 
                 if (x.user_type !== 'Customer') {
                     page_button = '<button class="btn btn-sm btn-success assign_page" data-id="' + x.id + '">' + '<i class="fa fa-list"></i>' + '</button>';
                 }
 
-                return '<div class="btn-group">' + '<button class="btn btn-sm btn-info edit" data-id="' + x.id + '"' + 'data-user_type="' + x.user_type + '"' + 'data-firstname="' + x.firstname + '"' + 'data-lastname="' + x.lastname + '"' + 'data-gender="' + x.gender + '"' + 'data-date_of_birth="' + x.date_of_birth + '"' + 'data-email="' + x.email + '"' + '>' + '<i class="fa fa-edit"></i>' + '</button>' + page_button + '</div>';
+                return '<div class="btn-group">' + '<button class="btn btn-sm btn-info edit" data-id="' + x.id + '"' + 'data-id_number="' + x.id_number + '"' + 'data-user_type="' + x.user_type + '"' + 'data-firstname="' + x.firstname + '"' + 'data-lastname="' + x.lastname + '"' + 'data-gender="' + x.gender + '"' + 'data-date_of_birth="' + x.date_of_birth + '"' + 'data-email="' + x.email + '"' + '>' + '<i class="fa fa-edit"></i>' + '</button>' + page_button + '</div>';
             }, searchable: false, orderable: false }],
         createdRow: function createdRow(row, data, dataIndex) {
             if (data.disabled > 0) {
