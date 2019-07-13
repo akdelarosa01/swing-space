@@ -34,7 +34,7 @@
 			</div>
 
 			<div class="col-md-4">
-				<table class="table table-bordered table-sm" id="tbl_orders" width="100%">
+				<table class="table table-bordered table-striped table-sm" id="tbl_orders" width="100%">
 					<thead>
 						<td width="55%" class="trn">Name</td>
 						<td width="20%" class="trn">Qty/Hrs</td>
@@ -68,7 +68,7 @@
 		</div>
 	</div>
 
-	<footer>
+	<footer class="">
 		<div class="row no-gutters" id="control"></div>
 	</footer>
 

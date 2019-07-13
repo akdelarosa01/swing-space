@@ -11,6 +11,7 @@ use App\Customer;
 use App\Incentive;
 use App\CustomerPoint;
 use App\User;
+use App\ReferralPoint;
 use DB;
 use App;
 use Hash;
@@ -163,6 +164,15 @@ class MembershipController extends Controller
                         'update_user' => Auth::user()->id,
                     ]);
 
+                    if ($req->referrer) {
+                        $rp = ReferralPoint::first();
+
+                        Customer::where('user_id',$req->referrer)->increment('points', $rp->points, [
+                            'update_user' => Auth::user()->id,
+                            'updated_at' => date('Y-m-d h:i:s')
+                        ]);
+                    }
+
                     QRCode::text($cust_code)
                             ->setSize(10)
                             ->setMargin(1)
@@ -170,11 +180,11 @@ class MembershipController extends Controller
                             ->png();
                 }
 
-                $this->_userlog->log([
-                    'module' => 'Customer Membership',
-                    'action' => 'Added Customer user ID '.$user->id.', Name '.$user->firstname.' '.$user->lastname,
-                    'user_id' => Auth::user()->id
-                ]);
+                // $this->_userlog->log([
+                //     'module' => 'Customer Membership',
+                //     'action' => 'Added Customer user ID '.$user->id.', Name '.$user->firstname.' '.$user->lastname,
+                //     'user_id' => Auth::user()->id
+                // ]);
 
                 $data = [
                     'msg' => 'Successfully saved.',

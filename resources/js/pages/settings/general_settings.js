@@ -8,6 +8,7 @@ $( function() {
     rewards();
     discounts();
     promos();
+    referralPoints();
 
 	$('#btn_add_itcentive').on('click', function() {
 		$('#incentive_modal').modal('show');
@@ -149,6 +150,37 @@ $( function() {
         });
     });
 
+    $('#frm_referralpts').on('submit', function(e) {
+        e.preventDefault();
+        $('.loading').show();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            dataType: 'JSON',
+            data: {
+                _token: token,
+                referral_point_id: $('#referral_point_id').val(),
+                referral_points: $('#referral_points').val(),
+            },
+        }).done(function(data, textStatus, xhr) {
+            if (textStatus == 'success') {
+                msg(data.msg,data.status)
+                referralPoints();
+            }
+        }).fail(function(xhr, textStatus, errorThrown) {
+            var errors = xhr.responseJSON.errors;
+
+            if (errors == undefined) {
+                msg('Referral Points Settings: '+errorThrown,textStatus);
+            } else {
+                showErrors(errors);
+            }
+        }).always( function() {
+            $('.loading').hide();
+        });
+    });
+
     $('#tbl_incentive').on('click', '.edit_incentive', function() {
     	$('#inc_id').val($(this).attr('data-inc_id'));
     	$('#price_from').val($(this).attr('data-price_from'));
@@ -259,8 +291,8 @@ function clear() {
 	$('.clear').val('');
 }
 
-function incentives() {
-    $.ajax({
+async function incentives() {
+    await $.ajax({
         url: '../../general-settings/incentives',
         type: 'GET',
         dataType: 'JSON',
@@ -300,8 +332,8 @@ function makeIncentiveDataTable(arr) {
     });
 }
 
-function rewards() {
-    $.ajax({
+async function rewards() {
+    await $.ajax({
         url: '../../general-settings/rewards',
         type: 'GET',
         dataType: 'JSON',
@@ -341,8 +373,8 @@ function makeRewardDataTable(arr) {
     });
 }
 
-function discounts() {
-    $.ajax({
+async function discounts() {
+    await $.ajax({
         url: '../../general-settings/discounts',
         type: 'GET',
         dataType: 'JSON',
@@ -384,8 +416,8 @@ function makeDiscountDataTable(arr) {
     });
 }
 
-function promos() {
-    $.ajax({
+async function promos() {
+    await $.ajax({
         url: '../../general-settings/promos',
         type: 'GET',
         dataType: 'JSON',
@@ -421,5 +453,21 @@ function makePromoDataTable(arr) {
                         '</button>';
             }, searchable: false, orderable: false},
         ]
+    });
+}
+
+async function referralPoints() {
+    await $.ajax({
+        url: '../../general-settings/referral-points',
+        type: 'GET',
+        dataType: 'JSON',
+        data: {
+            _token: token,
+        },
+    }).done(function(data, textStatus, xhr) {
+        $('#referral_point_id').val(data.id);
+        $('#referral_points').val(data.points);
+    }).fail(function(xhr, textStatus, errorThrown) {
+        msg('Referral Points Settings: '+errorThrown,textStatus);
     });
 }

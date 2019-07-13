@@ -11,6 +11,7 @@ use App\Incentive;
 use App\Reward;
 use App\Discount;
 use App\Promo;
+use App\ReferralPoint;
 use File;
 
 class GeneralSettingsController extends Controller
@@ -451,6 +452,74 @@ class GeneralSettingsController extends Controller
     {
         $promo = Promo::all();
         return response()->json($promo);
+    }
+
+    public function save_referral_point(Request $req)
+    {
+        $data = [
+            'msg' => 'Saving failed',
+            'status' => 'failed',
+            'discounts' => ''
+        ];
+
+        if ($req->referral_point_id) {
+            if (is_null($req->referral_points) || !is_numeric($req->referral_points)) {
+                $data = [
+                    'msg' => 'Referral Points is invalid.',
+                    'status' => 'failed',
+                    'points' => ''
+                ];
+            } else {
+                $rp = ReferralPoint::where('id',$req->referral_point_id)
+                            ->update([
+                                'points' => $req->referral_points,
+                                'update_user' => Auth::user()->id,
+                                'updated_at' => date('Y-m-d H:i:s')
+                            ]);
+
+                if ($rp) {
+                    $this->_userlog->log([
+                        'module' => 'General Settings',
+                        'action' => 'Updated setting for '.$req->description,
+                        'user_id' => Auth::user()->id
+                    ]);
+
+                    $data = [
+                        'msg' => 'Referral Points were successfully updated',
+                        'status' => 'success',
+                        'points' => ''
+                    ];
+                }
+            }
+        }
+
+        return response()->json($data);
+    }
+
+    public function delete_referral_point(Request $req)
+    {
+        $data = [
+            'msg' => 'Deleting failed.',
+            'status' => 'failed'
+        ];
+
+        $dis = ReferralPoint::find($req->id);
+
+        if ($dis->delete()) {
+            $data = [
+                'msg' => 'Successfully deleted.',
+                'status' => 'success'
+            ];
+        }
+
+        return response()->json($data);
+    }
+
+    public function referral_point()
+    {
+        $rp = ReferralPoint::first();
+
+        return response()->json($rp);
     }
 
 }

@@ -410,19 +410,15 @@ class POSControlController extends Controller
 
         $this->giveIncentives($req->customer_code,$req->order_total_amount);
 
-        if ($req->email_receipt > 0) {
-            $this->EmailCustomerReceipt($req);
-        }
-
         if ($saved) {
             CurrentCustomer::where('id',$req->cust_id)->delete();
             CurrentCustomerBill::where('current_cust_id',$req->cust_id)->delete();
 
-            $this->_userlog->log([
-                'module' => 'POS Control',
-                'action' => 'Customer code: '.$req->customer_code.', purchased an amount of '.$req->order_total_amount,
-                'user_id' => Auth::user()->id
-            ]);
+            // $this->_userlog->log([
+            //     'module' => 'POS Control',
+            //     'action' => 'Customer code: '.$req->customer_code.', purchased an amount of '.$req->order_total_amount,
+            //     'user_id' => Auth::user()->id
+            // ]);
 
             $data = [
                 'msg' => 'Payment successfully transacted',
@@ -432,6 +428,12 @@ class POSControlController extends Controller
 
         $bill = CurrentCustomerBill::where('current_cust_id',$req->cust_id)->get();
         event(new POS($bill));
+
+        if ($req->email_receipt > 0) {
+            if ($this->is_connected()) {
+                $this->EmailCustomerReceipt($req);
+            }
+        }
 
         return response()->json($data);
     }
@@ -491,21 +493,37 @@ class POSControlController extends Controller
             if (count((array)$customer) > 0) {
                 $cust = User::select(DB::raw("concat(firstname,' ',lastname) as buyer_name"))
                             ->where('id',$customer->user_id)->first();
+                
+                // new promo
+                CustomerPoint::create([
+                    'customer_id' => $customer->user_id,
+                    'remarks' => $cust->buyer_name.' received additional '.$inc[0]->points.' points.',
+                    'accumulated_points' => $inc[0]->points
+                ]);
 
-                if ($customer->referrer > 0) {
-                    CustomerPoint::create([
-                        'customer_id' => $customer->referrer,
-                        'remarks' => $inc[0]->points.' points accumulated from your referred customer '.$cust->buyer_name,
-                        'accumulated_points' => $inc[0]->points
-                    ]);
-
-                    Customer::where('user_id',$customer->referrer)->increment(
+                Customer::where('user_id',$customer->user_id)->increment(
                                 'points', $inc[0]->points,[
                                     'update_user' => Auth::user()->id,
                                     'updated_at' => date('Y-m-d h:i:s')
                                 ]
                             );
-                }
+                // new promo end code
+                
+
+                // if ($customer->referrer > 0) {
+                //     CustomerPoint::create([
+                //         'customer_id' => $customer->referrer,
+                //         'remarks' => $inc[0]->points.' points accumulated from your referred customer '.$cust->buyer_name,
+                //         'accumulated_points' => $inc[0]->points
+                //     ]);
+
+                //     Customer::where('user_id',$customer->referrer)->increment(
+                //                 'points', $inc[0]->points,[
+                //                     'update_user' => Auth::user()->id,
+                //                     'updated_at' => date('Y-m-d h:i:s')
+                //                 ]
+                //             );
+                // }
             }
         }
     }
@@ -568,5 +586,16 @@ class POSControlController extends Controller
                         ]
                     );
         }
+    }
+
+    public function is_connected()
+    {
+        $is_conn = false;
+        $connected = @fsockopen("www.google.com", 80); //website, port  (try 80 or 443)
+        if ($connected){
+            $is_conn = true; //action when connected
+            fclose($connected);
+        }
+        return $is_conn;
     }
 }

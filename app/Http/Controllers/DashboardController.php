@@ -152,6 +152,45 @@ class DashboardController extends Controller
         return response()->json($data);
     }
 
+    public function DailySalesFromRegisteredCustomer()
+    {
+        $sales = DB::select("SELECT ifnull(u.id,0) as id,
+                                    ifnull(c.customer_code,'N/A') as code,
+                                    s.firstname as firstname,
+                                    s.lastname as lastname,
+                                    ifnull(c.points,'N/A') as points,
+                                    ifnull(u.photo,'/img/default-profile.png') as photo,
+                                    concat('₱', format(sum(total_sale), 2)) as total_sale
+                            from sales as s
+                            left join customers as c
+                            on s.customer_code = c.customer_code
+                            left join users as u
+                            on c.user_id = u.id
+                            where left(s.created_at,10) like '".date('Y-m-d')."'
+                            group by u.id,
+                                    c.customer_code,
+                                    s.firstname,
+                                    s.lastname,
+                                    c.points,
+                                    u.photo
+                            order by sum(s.total_sale) desc");
+        return response()->json($sales);
+    }
+
+    public function DailySoldProductsPerMonth()
+    {
+        $sales = DB::select("SELECT prod_code,
+                                prod_name,
+                                SUM(quantity) as quantity,
+                                concat('₱', format(sum(cost), 2)) as amount
+                            FROM customer_product_bills
+                            where left(created_at,10) like '".date('Y-m-d')."'
+                            group by prod_code,
+                                    prod_name
+                            order by sum(cost) desc");
+        return response()->json($sales);
+    }
+
     public function SalesFromRegisteredCustomer()
     {
         $sales = DB::select("SELECT ifnull(u.id,0) as id,

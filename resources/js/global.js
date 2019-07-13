@@ -230,10 +230,10 @@ function msg(msg_content,status) {
     }
 }
 
-function get_dropdown_options(id,el) {
+async function get_dropdown_options(id,el) {
     var opt = "<option value=''></option>";
     $(el).html(opt);
-    $.ajax({
+    await $.ajax({
         url: '../../dropdown/show-option',
         type: 'GET',
         dataType: 'JSON',
@@ -251,10 +251,10 @@ function get_dropdown_options(id,el) {
     });
 }
 
-function getProvince() {
+async function getProvince() {
     var opt = "<option value=''>Select State/Province</option>";
     $('#state').html(opt);
-    $.ajax({
+    await $.ajax({
         url: '../../get-province',
         type: 'GET',
         dataType: 'JSON',
@@ -271,10 +271,10 @@ function getProvince() {
     });
 }
 
-function getCity(prov_code,val) {
+async function getCity(prov_code,val) {
     var opt = "<option value=''>Select City</option>";
     $('#city').html(opt);
-    $.ajax({
+    await $.ajax({
         url: '../../get-city',
         type: 'GET',
         dataType: 'JSON',
@@ -298,9 +298,9 @@ function getCity(prov_code,val) {
     });
 }
 
-function getModules(id) {
+async function getModules(id) {
     $('.loading').show();
-    $.ajax({
+    await $.ajax({
         url: '../../get-modules',
         type: 'GET',
         dataType: 'JSON',
@@ -347,10 +347,10 @@ function ModulesDataTable(arr) {
     });
 }
 
-function referrer(el,val) {
+async function referrer(el,val) {
     var opt = "<option value='0'></option>";
     $(el).html(opt);
-    $.ajax({
+    await $.ajax({
         url: '../../get-referrer',
         type: 'GET',
         dataType: 'JSON',
@@ -371,8 +371,8 @@ function referrer(el,val) {
     });
 }
 
-function getLanguage(dict) {
-    $.ajax({
+async function getLanguage(dict) {
+    await $.ajax({
         url: '../../get-language',
         type: 'GET',
         dataType: 'JSON',
@@ -387,8 +387,8 @@ function getLanguage(dict) {
     });
 }
 
-function translateLanguage(language) {
-    $.ajax({
+async function translateLanguage(language) {
+    await $.ajax({
         url: '../../translate-language',
         type: 'POST',
         dataType: 'JSON',
@@ -403,8 +403,8 @@ function translateLanguage(language) {
     });
 }
 
-function getUserLogs() {
-    $.ajax({
+async function getUserLogs() {
+    await $.ajax({
         url: '../../../admin/getlogs',
         type: 'GET',
         dataType: 'JSON',
@@ -460,8 +460,8 @@ function checkTimeSpent(timein) {
     myTimer = setInterval(timeSpent, 1000);
 }
 
-function check_permission(code) {
-    $.ajax({
+async function check_permission(code) {
+    await $.ajax({
         url: '../../check-permission',
         type: 'GET',
         dataType: 'JSON',
@@ -490,10 +490,22 @@ function ordersTable(arr) {
     $('#tbl_orders').dataTable({
         data: arr,
         sorting: false,
-        searching: false,
+        lengthChange: false,
+        ordering: false,
         paging: false,
+        searching: false,
         deferRender: true,
-        scrollY: "200px",
+        columnDefs: [
+            { targets: 0, sortable: false, orderable: false },
+        ],
+        scrollX: true,
+        scrollY: 300,
+
+        // sorting: false,
+        // searching: false,
+        // paging: false,
+        // deferRender: true,
+        // scrollY: "200px",
         bInfo : false,
         columns: [
             {data: function(x) {
@@ -607,8 +619,8 @@ function calculateTotalCustomerView(data,discounts,rewards) {
     }
 }
 
-function showCurrentBill(cust_id,discount_name,discount_value,reward_name,reward_price) {
-    $.ajax({
+async function showCurrentBill(cust_id,discount_name,discount_value,reward_name,reward_price) {
+    await $.ajax({
         url: '../../pos-control/show-current-bill',
         type: 'POST',
         dataType: 'JSON',

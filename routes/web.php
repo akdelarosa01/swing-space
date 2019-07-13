@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth','no.back']], function() {
 
     Route::get('dashboard/get-sales', 'DashboardController@getSales');
     Route::get('dashboard/owner-total-statistic', 'DashboardController@OwnerTotalStatistic');
+    Route::get('dashboard/daily-sales-registered', 'DashboardController@DailySalesFromRegisteredCustomer');
+    Route::get('dashboard/daily-sold-products', 'DashboardController@DailySoldProductsPerMonth');
     Route::get('dashboard/sales-registered', 'DashboardController@SalesFromRegisteredCustomer');
     Route::get('dashboard/sold-products', 'DashboardController@SoldProductsPerMonth');
 
@@ -179,6 +181,9 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::post('general-settings/save-promo','Pages\GeneralSettingsController@save_promo');
     Route::post('general-settings/delete-promo','Pages\GeneralSettingsController@delete_promo');
     Route::get('general-settings/promos','Pages\GeneralSettingsController@promos');
+
+    Route::post('general-settings/save-referral-points','Pages\GeneralSettingsController@save_referral_point');
+    Route::get('general-settings/referral-points','Pages\GeneralSettingsController@referral_point');
 
     Route::get('sales-report', 'Pages\SalesReportController@index');
     Route::get('sales-report/get-sales', 'Pages\SalesReportController@sales');

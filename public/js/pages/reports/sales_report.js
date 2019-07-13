@@ -159,8 +159,8 @@ $( function() {
 	});
 });
 
-function getSales() {
-	$.ajax({
+async function getSales() {
+	await $.ajax({
 		url: '../../sales-report/get-sales',
 		type: 'GET',
 		dataType: 'JSON',
@@ -193,8 +193,8 @@ function salesTable(arr) {
     });
 }
 
-function monthlySalesPerProductReport() {
-	$.ajax({
+async function monthlySalesPerProductReport() {
+	await $.ajax({
 		url: '../../sales-report/monthly-sales-product-report',
 		type: 'GET',
 		dataType: 'JSON',
@@ -227,8 +227,8 @@ function monthlySalesPerProductChart(data) {
 	chart.render();
 }
 
-function SalesFromCustomerReport() {
-	$.ajax({
+async function SalesFromCustomerReport() {
+	await $.ajax({
 		url: '../../sales-report/sales-from-customers-report',
 		type: 'GET',
 		dataType: 'JSON',
@@ -243,9 +243,9 @@ function SalesFromCustomerReport() {
 function SalesFromCustomerChart(data) {
 	var chart = new CanvasJS.Chart("SalesFromCustomer", {
 		animationEnabled: true,
-		
+		zoomEnabled:true,
 		title:{
-			text:"Sales from Regular Customers"
+			text:"Sales from Regular Customers per Week"
 		},
 		axisX:{
 			interval: 1
@@ -267,8 +267,8 @@ function SalesFromCustomerChart(data) {
 	chart.render();
 }
 
-function yearlyComparisonChartReport() {
-	$.ajax({
+async function yearlyComparisonChartReport() {
+	await $.ajax({
 		url: '../../sales-report/yearly-comparison-report',
 		type: 'GET',
 		dataType: 'JSON',
@@ -283,6 +283,7 @@ function yearlyComparisonChartReport() {
 function yearlyComparisonChart(dt) {
 	var chart = new CanvasJS.Chart("YearlyComparisonReport", {
 		animationEnabled: true,
+		zoomEnabled:true,
 		axisY: {
 			title: "Sales of "+dt.last_year,
 			titleFontColor: "#4F81BC",
@@ -319,8 +320,8 @@ function yearlyComparisonChart(dt) {
 	}
 }
 
-function SalesOverDiscountsReport() {
-	$.ajax({
+async function SalesOverDiscountsReport() {
+	await $.ajax({
 		url: '../../sales-report/sales-over-discounts-report',
 		type: 'GET',
 		dataType: 'JSON',
@@ -335,6 +336,7 @@ function SalesOverDiscountsReport() {
 function SalesOverDiscountsChart(dt) {
 	var chart = new CanvasJS.Chart("SalesOverDiscounts", {
 		animationEnabled: true,
+		zoomEnabled:true,
 		axisY: {
 			title: "Total sales per month.",
 			titleFontColor: "#4F81BC",

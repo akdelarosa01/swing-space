@@ -137,7 +137,7 @@ class SalesReportController extends Controller
     public function SalesFromCustomerReport()
     {
         $date = Carbon::now();
-        $year_now = $date->format('Y');
+        $month_now = $date->format('Y-m');
 
         $data = DB::select("SELECT concat(u.firstname,' ',u.lastname) as label,
                                     u.photo as url,
@@ -147,7 +147,7 @@ class SalesReportController extends Controller
                                 on s.customer_code = c.customer_code
                                 inner join users as u
                                 on c.user_id = u.id
-                                where left(s.created_at,4) = ".$year_now."
+                                where WEEK(s.created_at) = WEEK(CURRENT_DATE())
                                 group by concat(u.firstname,' ',u.lastname),u.photo
                                 order by sum(s.total_sale) asc");
         return response()->json($data);

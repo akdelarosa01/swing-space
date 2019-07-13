@@ -205,6 +205,7 @@ $( function() {
 
 	$('#frm_membership').on('submit', function(e) {
 		e.preventDefault();
+		$('.loading').show();
 		$.ajax({
 			url: $(this).attr('action'),
 			type: 'POST',
@@ -223,7 +224,7 @@ $( function() {
 				showErrors(errors);
 			}
 		}).always(function() {
-			console.log("complete");
+			$('.loading').hide();
 		});
 	});
 

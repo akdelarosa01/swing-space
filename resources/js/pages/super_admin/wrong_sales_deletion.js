@@ -128,9 +128,9 @@ $(function () {
     });
 });
 
-function getSoldProducts() {
+async function getSoldProducts() {
     $('.loading').show();
-    $.ajax({
+    await $.ajax({
         url: '/admin/wrong-sales-deletion/get-sold-products',
         type: 'GET',
         dataType: 'JSON'
@@ -180,9 +180,9 @@ function SoldProductsTable(arr) {
     $("#tbl_products_wrapper .toolbar").html('Sold Products');
 }
 
-function getSales() {
+async function getSales() {
     $('.loading').show();
-    $.ajax({
+    await $.ajax({
         url: '/admin/wrong-sales-deletion/get-sales',
         type: 'GET',
         dataType: 'JSON'

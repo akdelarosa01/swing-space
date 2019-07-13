@@ -201,6 +201,8 @@ $( function() {
 $( function() {
 	getSales();
 	OwnerStatistics();
+	DailySalesFromRegisteredCustomer();
+	DailysoldProducts();
 	SalesFromRegisteredCustomer();
 	soldProducts();
 
@@ -270,6 +272,75 @@ async function OwnerStatistics() {
 	}).fail(function(xhr, textStatus, errorThrown) {
 		msg('Owner Statistics: '+errorThrown,textStatus);
 	});
+}
+
+async function DailySalesFromRegisteredCustomer() {
+	await $.ajax({
+		url: '../../dashboard/daily-sales-registered',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {
+			_token: token
+		},
+	}).done(function(data, textStatus, xhr) {
+		DailySalesFromRegisteredCustomerTable(data);
+	}).fail(function(xhr, textStatus, errorThrown) {
+		msg('Sales from customers: '+errorThrown,textStatus);
+	});
+}
+
+function DailySalesFromRegisteredCustomerTable(arr) {
+	$('#tbl_daily_registered').dataTable().fnClearTable();
+    $('#tbl_daily_registered').dataTable().fnDestroy();
+    $('#tbl_daily_registered').dataTable({
+        data: arr,
+        // bLengthChange : false,
+        ordering: false,
+        searching: false,
+        columns: [
+        	{ data: function(x) {
+            	return '<img src="'+x.photo+'" class="w-35 rounded-circle" alt="'+x.firstname+' '+x.lastname+'">';
+            }, searchable: false, orderable: false},
+            { data:'code', searchable: false, orderable: false},
+            { data: function(x) {
+                return x.firstname+' '+x.lastname;
+            }, searchable: false, orderable: false},
+            { data:'points', searchable: false, orderable: false},
+            { data: 'total_sale', searchable: false, orderable: false}
+        ]
+    });
+}
+
+async function DailysoldProducts() {
+	await $.ajax({
+		url: '../../dashboard/daily-sold-products',
+		type: 'GET',
+		dataType: 'JSON',
+		data: {
+			_token: token
+		},
+	}).done(function(data, textStatus, xhr) {
+		DailysoldProductsTable(data);
+	}).fail(function(xhr, textStatus, errorThrown) {
+		msg('Sales from customers: '+errorThrown,textStatus);
+	});
+}
+
+function DailysoldProductsTable(arr) {
+	$('#tbl_daily_sold').dataTable().fnClearTable();
+    $('#tbl_daily_sold').dataTable().fnDestroy();
+    $('#tbl_daily_sold').dataTable({
+        data: arr,
+        // bLengthChange : false,
+        ordering: false,
+        searching: false,
+        columns: [
+            { data:'prod_code', searchable: false, orderable: false},
+            { data: 'prod_name', searchable: false, orderable: false},
+            { data:'quantity', searchable: false, orderable: false},
+            { data: 'amount', searchable: false, orderable: false}
+        ]
+    });
 }
 
 async function SalesFromRegisteredCustomer() {

@@ -320,13 +320,13 @@ $( function() {
 		var timein = $(this).attr('data-cust_timein');
 
 		info = '<div class="col-md-1">'+
-					'<button class="btn btn-lg btn-danger btn-block back" style="height: 120px;">'+
+					'<button class="btn btn-lg btn-danger btn-block back" style="height: 80px;padding: 0.5rem;">'+
 						'<i class="fa fa-reply"></i>'+
 					'</button>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
-						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
+						'<div class="card-body text-center" style="font-size:10px;height: 80px;padding: 0.5rem;">'+
 							'<span style="word-wrap: break-word;">'+
 								$('#data-cust_code').val()+'<br>'+
 								$('#data-cust_firstname').val()+'<br>'+
@@ -350,7 +350,7 @@ $( function() {
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
-						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
+						'<div class="card-body text-center" style="font-size:10px;height: 80px;padding: 0.5rem;">'+
 							'<span style="word-wrap: break-word;" class="trn">Email Receipt</span> <br>'+
 							'<input type="checkbox" name="email_receipt" id="email_receipt" '+(($('#data-customer_type').val() == 'W')? '' : 'checked')+'>'+
 						'</div>'+
@@ -358,7 +358,7 @@ $( function() {
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
-						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
+						'<div class="card-body text-center" style="font-size:10px;height: 80px;padding: 0.5rem;">'+
 							'<span style="word-wrap: break-word;" class="trn">Available Points</span><br>'+
 							'<span style="font-size:18px">'+$('#data-points').val()+'</span>'+
 						'</div>'+
@@ -366,34 +366,34 @@ $( function() {
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<button class="btn btn-lg btn-info btn-block btn-outline rewards" '+
-						'data-available_points="'+$('#data-points').val()+'" style="height: 120px;">'+
+						'data-available_points="'+$('#data-points').val()+'" style="height: 80px;padding: 0.5rem;">'+
 						'<span class="trn">Rewards</span>'+
 					'</button>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
-					'<button class="btn btn-lg btn-danger btn-block btn-outline discount" style="height: 120px;" '+
+					'<button class="btn btn-lg btn-danger btn-block btn-outline discount" style="height: 80px;padding: 0.5rem;" '+
 						'data-cust_id ="'+$('#data-cust_id').val()+'">'+
 						'<span class="trn">Discount</span>'+
 					'</button>'+
 				'</div>'+
 				'<div class="col-md-2 ml-1">'+
 					'<div class="card">'+
-						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
+						'<div class="card-body text-center" style="font-size:10px;height: 80px;padding: 0.5rem;">'+
 							'<span style="word-wrap: break-word;" class="trn">Payment:</span><br>'+
 							'<input type="number" id="order_payment" class="form-control form-control-sm" min="1" step="any">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
-					'<button class="btn btn-lg btn-success btn-block btn-outline pay_now" style="height: 120px;">'+
+					'<button class="btn btn-lg btn-success btn-block btn-outline pay_now" style="height: 80px;padding: 0.5rem;">'+
 						'<span class="trn">Pay Now</span>'+
 					'</button>'+
 				'</div>'+
 				'<div class="col-md-1 ml-1">'+
 					'<div class="card">'+
-						'<div class="card-body text-center" style="font-size:12px;height: 120px;">'+
-							'<span style="word-wrap: break-word;" class="trn">Total Amount:</span><br>'+
-							'<span id="total_amount" style="font-size:18px">0.00</span>'+
+						'<div class="card-body text-center" style="font-size:10px;height: 80px;padding: 0.5rem;">'+
+							'<span style="word-wrap: break-word;" class="trn">Total Amount:</span><br><br>'+
+							'<span id="total_amount" style="font-size:16px">0.00</span>'+
 							'<input type="hidden" id="order_total_amount">'+
 						'</div>'+
 					'</div>'+
@@ -687,8 +687,8 @@ $( function() {
 	});
 });
 
-function getProductTypes() {
-	$.ajax({
+async function getProductTypes() {
+	await $.ajax({
         url: '../../pos-control/product-types',
         type: 'GET',
         dataType: 'JSON',
@@ -716,8 +716,8 @@ function productTypeButton(data) {
 	});
 }
 
-function getProduct(product_type) {
-	$.ajax({
+async function getProduct(product_type) {
+	await $.ajax({
         url: '../../pos-control/products',
         type: 'GET',
         dataType: 'JSON',
@@ -739,9 +739,9 @@ function productButton(data) {
 	$('#products').html(cards);
 	$.each(data, function(i, x) {
 		if (x.quantity > 0) {
-			cards = '<div class="col-md-3 ml-1">'+
+			cards = '<div class="col-md-2 ml-1">'+
 						'<div class="card card-info">'+
-							'<div class="card-body product text-center" style="font-size:12px;height: 80px;"'+
+							'<div class="card-body product text-center" style="font-size:10px;height:80px;padding:0.5rem;"'+
 							'data-prod_id="'+x.id+'" '+
 							'data-prod_code="'+x.prod_code+'" '+
 							'data-prod_name="'+x.prod_name+'" '+
@@ -774,8 +774,8 @@ function productButton(data) {
 	});
 }
 
-function showCustomer() {
-	$.ajax({
+async function showCustomer() {
+	await $.ajax({
 		url: '../../pos-control/show-customer',
 		type: 'GET',
 		dataType: 'JSON',
@@ -789,8 +789,8 @@ function showCustomer() {
 	});
 }
 
-function checkInMember(cust_code) {
-	$.ajax({
+async function checkInMember(cust_code) {
+	await $.ajax({
 		url: '../../pos-control/check-in-member',
 		type: 'GET',
 		dataType: 'JSON',
@@ -815,7 +815,7 @@ function membersTable(arr) {
         columns: [
             {data: function(x) {
             	return x.cust_code+'<input type="hidden" name="cust_code[]" value="'+x.cust_code+'">'+
-            			x.customer_user_id+'<input type="hidden" name="customer_user_id[]" value="'+x.customer_user_id+'">';
+            		'<input type="hidden" name="customer_user_id[]" value="'+x.customer_user_id+'">';
             }},
             {data: function(x) {
             	return x.cust_firstname+'<input type="hidden" name="cust_firstname[]" value="'+x.cust_firstname+'">';
@@ -866,8 +866,8 @@ function customers(data) {
 	check_permission('POS_CTRL');
 }
 
-function discounts() {
-	$.ajax({
+async function discounts() {
+	await $.ajax({
 		url: '../../pos-control/show-discounts',
 		type: 'GET',
 		dataType: 'JSON',
@@ -908,8 +908,8 @@ function discountTable(arr) {
     });
 }
 
-function CalculateRewards(points) {
-	$.ajax({
+async function CalculateRewards(points) {
+	await $.ajax({
 		url: '../../pos-control/calculate-rewards',
 		type: 'GET',
 		dataType: 'JSON',

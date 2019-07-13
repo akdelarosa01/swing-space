@@ -69,7 +69,8 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -111,6 +112,36 @@
                     </form>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="trn">Referral Points Settings</span>
+                </div>
+                <div class="card-body">
+                    <form action="../../general-settings/save-referral-points" class="form-horizontal" id="frm_referralpts">
+                        <input type="hidden" id="referral_point_id" name="referral_point_id">
+                        
+                        <div class="form-group row">
+                            <label for="referral_points" class="control-label text-right col-md-3 trn">Refferal Points</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control form-control-sm" id="referral_points" name="referral_points">
+                                <div id="referral_points_feedback"></div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="offset-md-8 col-md-4">
+                                <button type="submit" class="btn btn-info btn-sm btn-permission">
+                                    <span class="trn">Save</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm clear-form" data-dismiss="modal">
+                                    <span class="trn">Cancel</span>
+                                </button>
+                            </div>
+                                
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-6">
@@ -133,8 +164,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     @include('modals.general_settings')
     @include('modals.global')

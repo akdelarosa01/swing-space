@@ -52,6 +52,44 @@
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header">
+                    <span class="trn">Daily Sales per Customers</span>
+                </h5>
+
+                <div class="card-body">
+                    <table class="table table-sm table-striped" width="100%" id="tbl_daily_registered">
+                        <thead>
+                            <th></th>
+                            <th class="trn">Code</th>
+                            <th class="trn">Name</th>
+                            <th class="trn">Points</th>
+                            <th class="trn">Sales</th>
+                        </thead>
+                        <tbody id="tbl_daily_registered_body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header trn">Products Sold this Day</h5>
+                <div class="card-body">
+                    <table class="table table-sm table-striped" width="100%" id="tbl_daily_sold">
+                        <thead>
+                            <th class="trn">Code</th>
+                            <th class="trn">Name</th>
+                            <th class="trn">Qty</th>
+                            <th class="trn">Amount</th>
+                        </thead>
+                        <tbody id="tbl_daily_sold_body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header">
                     <span class="trn">Monthly Sales per Customers</span>
                     <button type="button" class="btn btn-sm btn-success pull-right" id="btn_month_report">
                         <span class="trn">Export</span>
