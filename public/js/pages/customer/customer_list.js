@@ -198,6 +198,11 @@ $( function() {
             $('.loading').hide();
         });
     });
+
+    $('#btn_customer_xl').on('click', function() {
+        var ExportURL = '../../customer-list/customer-list-excel?_token='+token;
+        window.location.href=ExportURL;
+    });
 });
 
 function getCustomers() {

@@ -9,6 +9,7 @@ use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\SuperAdmin\UserLogsController;
 use App\User;
 use App\Customer;
+use Excel;
 use DB;
 
 class CustomerController extends Controller
@@ -125,5 +126,129 @@ class CustomerController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function customerListExcel()
+    {
+        $date = date('Ymd');
+
+        $this->_userlog->log([
+            'module' => 'Customer List',
+            'action' => 'Donwloaded Customer list on '.date('Y-m-d'),
+            'user_id' => Auth::user()->id
+        ]);
+
+        Excel::create('Customer_List_'.$date, function($excel)
+        {
+            $excel->sheet('List', function($sheet)
+            {
+                $sheet->setHeight(1, 15);
+                $sheet->mergeCells('A1:L1');
+                $sheet->cells('A1:L1', function($cells) {
+                    $cells->setAlignment('center');
+                    $cells->setFont([
+                        'family'     => 'Calibri',
+                        'size'       => '15',
+                        'bold'       =>  true,
+                    ]);
+                });
+                $sheet->cell('A1'," SWING SPACE");
+
+                $sheet->setHeight(2, 15);
+                $sheet->mergeCells('A2:L2');
+                $sheet->cells('A2:L2', function($cells) {
+                    $cells->setAlignment('center');
+                });
+                $sheet->setHeight(4, 20);
+                $sheet->mergeCells('A4:L4');
+                $sheet->cells('A4:L4', function($cells) {
+                    $cells->setAlignment('center');
+                    $cells->setFont([
+                        'family'     => 'Calibri',
+                        'size'       => '14',
+                        'bold'       =>  true,
+                        'underline'  =>  true
+                    ]);
+                });
+
+                $sheet->cell('A4',"List of Customer");
+
+                $sheet->setHeight(6, 20);
+                $sheet->cells('A6:L6', function($cells) {
+                    $cells->setAlignment('center');
+                    $cells->setFont([
+                        'family'     => 'Calibri',
+                        'size'       => '14',
+                        'bold'       =>  true
+                    ]);
+                    // Set all borders (top, right, bottom, left)
+                    $cells->setBorder('thin', 'thin', 'thin', 'thin');
+                    $cells->setBackground('#226597');
+                    $cells->setFontColor('#fdfdfd');
+                });
+
+                $sheet->cell('B6', 'Customer Code');
+                $sheet->cell('C6', 'Name');
+                $sheet->cell('D6', 'Email');
+                $sheet->cell('E6', 'Date of Birth');
+                $sheet->cell('F6', 'Phone');
+                $sheet->cell('G6', 'Mobile');
+                $sheet->cell('H6', 'Occupation');
+                $sheet->cell('I6', 'School');
+                $sheet->cell('J6', 'Referrer');
+                $sheet->cell('K6', 'Points');
+                $sheet->cell('L6', 'Date Registered');
+
+                $custs = DB::select("SELECT 
+                                    c.customer_code as customer_code,
+                                    CONCAT(u.firstname,' ',u.lastname) as user_name,
+                                    u.email as email,
+                                    date_format(c.date_of_birth,'%b %d, %Y') as date_of_birth,
+                                    ifnull(c.phone,'') as phone,
+                                    ifnull(c.mobile,'') as mobile,
+                                    ifnull(c.occupation,'') as occupation,
+                                    ifnull(c.school,'') as school,
+                                    ifnull((select CONCAT(u1.firstname,' ',u1.lastname)
+                                    from users u1
+                                    where u1.id = c.referrer),'') as referrer,
+                                    if(c.points <> 0,c.points,'0.00') as points,
+                                    date_format(c.date_registered,'%b %d, %Y') as date_registered
+                                    FROM swingspace.customers c
+                                    inner join users u
+                                    on u.id = c.user_id");
+
+                $row = 7;
+                foreach ($custs as $key => $cust) {
+
+                    $sheet->cells('A'.$row.':L'.$row, function($cells) use($row) {
+                        $cells->setAlignment('left');
+                        $cells->setFont([
+                            'family'     => 'Calibri',
+                            'size'       => '14',
+                        ]);
+                        $cells->setBorder('thin', 'thin', 'thin', 'thin');
+
+                        if ($row % 2 == 0) {
+                            $cells->setBackground('#f3f9fb');
+                        } else {
+                            $cells->setBackground('#87c0cd');
+                        }
+                    });
+
+                    $sheet->cell('B'.$row, $cust->customer_code);
+                    $sheet->cell('C'.$row, $cust->user_name);
+                    $sheet->cell('D'.$row, $cust->email);
+                    $sheet->cell('E'.$row, $cust->date_of_birth);
+                    $sheet->cell('F'.$row, $cust->phone);
+                    $sheet->cell('G'.$row, $cust->mobile);
+                    $sheet->cell('H'.$row, $cust->occupation);
+                    $sheet->cell('I'.$row, $cust->school);
+                    $sheet->cell('J'.$row, $cust->referrer);
+                    $sheet->cell('K'.$row, $cust->points);
+                    $sheet->cell('L'.$row, $cust->date_registered);
+                    $row++;
+                }
+            });
+        })->download('xlsx');
     }
 }

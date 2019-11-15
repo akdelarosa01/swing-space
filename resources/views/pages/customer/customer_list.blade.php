@@ -7,6 +7,9 @@
             <a href="{{ url('/membership') }}" class="btn btn-sm btn-info btn-rounded btn-outline pull-right">
                 <span class="trn">Membership</span>
             </a>
+            <button type="button" id="btn_customer_xl" class="btn btn-sm btn-success btn-rounded btn-outline pull-right">
+                <span class="trn">Customer List</span>
+            </button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
