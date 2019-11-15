@@ -107,6 +107,7 @@ Route::group(['middleware' => ['auth','no.back']], function() {
     Route::get('customer-list', 'Pages\CustomerController@index');
     Route::get('customer-list/show', 'Pages\CustomerController@show');
     Route::post('customer-list/delete', 'Pages\CustomerController@destroy');
+    Route::get('customer-list/customer-list-excel', 'Pages\CustomerController@customerListExcel');
 
     Route::get('membership', 'Pages\MembershipController@index');
     Route::get('membership/{id}/edit', 'Pages\MembershipController@edit');
